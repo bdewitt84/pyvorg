@@ -1,5 +1,6 @@
 # Standard Python imports
 import argparse
+import re
 import tempfile
 import jsonschema
 
@@ -449,6 +450,86 @@ def organize_collection(collection, path, rem_empty=False):
                 remove_empty_dir(path)
 
 
+class CollectionDataframe:
+    def __init__(self, collection: dict=None):
+        # Convert the nested data to a DataFrame
+        # Create an empty DataFrame
+        self.df = pd.DataFrame()
+        if collection is None:
+            logging.warning(
+                'Collection dataframe was created, but no metadata was passed to the constructor. No metadata'
+                'loaded.')
+        else:
+            self.load(collection)
+
+    def filter(self, col, val, comp=None):
+        if comp not in ('<', '>', None):
+            raise ValueError("Optional comparator must be either '<' or '>'.")
+
+        # This method of extracting numeric values of strings is tolerant of
+        # ranges and unicode characters which are often present in OMDB data.
+        # Another method would be to use
+        #
+        # self.df = self.df[self.df[col].apply(pd.to_numeric, errors='coerce') < val]
+        #
+        # However, this results in lost entries with no errors raised.
+        if isinstance(val, (int, float)):
+            if comp == '<':
+                # .extract() uses a regex to get the first number out of every entry in the column,
+                # returns a dataframe, and .squeeze() turns it back into a column.
+                # .to_numeric() turns out extracted stings into floats, wile errors='coerce' ignores
+                # problems that otherwise arise from things like unicode characters.
+                extract_num = self.df[col].str.extract('(\d+)').squeeze()
+                str_to_float = pd.to_numeric(extract_num, errors='coerce')
+                self.df = self.df[str_to_float < val]
+            elif comp == '>':
+                extract_num = self.df[col].str.extract('(\d+)').squeeze()
+                str_to_float = pd.to_numeric(extract_num, errors='coerce')
+                self.df = self.df[str_to_float > val]
+            else:
+                raise ValueError("Comparator must be specified for numeric values.")
+
+        elif isinstance(val, str):
+            if comp == '<':
+                self.df = self.df[self.df[col].str.lower() < str(val).lower()]
+            elif comp == '>':
+                self.df = self.df[self.df[col].str.lower() > str(val).lower()]
+            else:
+                self.df = self.df[self.df[col].str.contains(str(val), case=False, na=False)]
+        else:
+            raise TypeError("Unsupported filter value type. Must be STR, INT, or FLOAT.")
+
+        if comp is None:
+            if isinstance(val, (str, int, float)):
+                self.df = self.df[self.df[col].str.contains(str(val), case=False, na=False)]
+            else:
+                raise TypeError("Unsupported filter value type. Must be STR, INT, or FLOAT.")
+
+    def sort(self, col):
+        if df == None:
+            raise ValueError(f"No dataframe is currently loaded, or it is empty. ")
+        elif col not in self.df.columns:
+            raise ValueError(f"Column {col} not in the current dataframe")
+        else:
+            self.df = self.df.sort_values(by=col)
+
+    def load(self, collection):
+        # This procedure prevents each column from being prefixed with the lengthy sha256 hash
+        # Extract hashes and nested data into separate lists
+        hashes = list(collection.keys())
+        nested_data = list(collection.values())
+
+        # Create a "Video Hash" column
+        self.df["Video Hash"] = hashes
+
+        # Flatten the nested data into columns and put it to the right of the hash column
+        self.df = pd.concat([self.df, pd.json_normalize(nested_data)], axis=1)
+        pd.set_option('display.max_columns', None)
+
+    def __repr__(self):
+        return self.df.__repr__()
+
+
 if __name__ == "__main__":
     load_dotenv('./config.env')
     source = os.getenv('SOURCE_PATH')
@@ -461,21 +542,56 @@ if __name__ == "__main__":
     # save_metadata(collection)
 
     data = load_metadata()
-    # Convert the nested data to a DataFrame
-    # Create an empty DataFrame
-    result_df = pd.DataFrame()
+    df = CollectionDataframe(data)
+    # df.sort('omdb_data.Year')
+    df.filter('omdb_data.Year', 1986, '>')
+    df.filter('omdb_data.Year', 1990, '<')
+    print(df)
 
-    # Extract hashes and nested data into separate lists
-    hashes = list(data.keys())
-    nested_data = list(data.values())
+    # print(df.df['omdb_data.Year'].fillna('0').str.extract('(\d+)').astype(int))
 
-    # Create a "Video Hash" column
-    result_df["Video Hash"] = hashes
+    # Filter by genre example - working
+    # genre = 'Action'
+    # filtered_vids = df.df[df.df['omdb_data.Genre'].str.contains(genre, case=False, na=False)]
+    # filtered_vids.to_html("filtered.html", index=False)
 
-    # Flatten the nested data into columns
-    result_df = pd.concat([result_df, pd.json_normalize(nested_data)], axis=1)
+    # Filter by running time (comparator) example - working
+    # runtime = 100
+    # filtered_vids = df.df[df.df['omdb_data.Runtime'].fillna('0 min').apply(lambda x: int(x.split()[0])) > 130]
 
-    pd.set_option('display.max_columns', None)
+    # print(df.df['omdb_data.Year'])
+    # df.df.dropna(subset='omdb_data.Year', inplace=True)
+    # filtered_vids = df.df[
+    #     df.df['omdb_data.Year'].str.extract('(\d+)').astype(int) > 130
+    #     ]
 
-    # Print the result DataFrame
-    print(result_df)
+    # print(df.df['omdb_data.Year'].str.extract('(\d+)'))
+    # print(df.df['omdb_data.Year'].str.extract('(\d+)').astype(int))
+    # print(df.df['omdb_data.Year'].str.extract('(\d+)').astype(int) > 1990)
+    # filtered_vids = df.df[df.df['omdb_data.Year'].str.extract('(\d+)').astype(int) > 1990]
+    # filtered_vids = df.df[df.df['omdb_data.Year'].str.extract('(\d+)').apply(pd.to_numeric, errors="coerce") > 1990]
+    # filtered_vids = df.df[df.df['omdb_data.Year'].str.extract('(\d+)').squeeze().astype(float, errors='ignore') > 1990]
+
+    # This is what we want ---
+    # year_series = df.df['omdb_data.Year'].str.extract('(\d+)').squeeze()
+    # numeric_years = pd.to_numeric(year_series, errors='coerce')
+    # filtered_vids = df.df[numeric_years > 1990]
+
+    # print(filtered_vids)
+
+    # this works for some reason
+    # filtered_vids = df.df[df.df['omdb_data.Year'].apply(
+    #     lambda x: int(re.search(r'\d{4}', x).group()) if isinstance(x, str) and re.search(r'\d{4}', x) else 0) > 1990]
+
+    # print(filtered_vids)
+
+    # Sort by year example - working
+    # sorted_vids = df.df.sort_values(by="omdb_data.Year")
+    # sorted_vids.to_html("filtered.html", index=False)
+
+    # Chain example - working
+    # genre = 'Action'
+    # filtered_vids = df.df[df.df['omdb_data.Genre'].str.contains(genre, case=False, na=False)]
+    # filtered_vids.to_html("filtered.html", index=False)
+    # sorted_vids = filtered_vids.sort_values(by="omdb_data.Year")
+    # sorted_vids.to_html("filtered.html", index=False)
