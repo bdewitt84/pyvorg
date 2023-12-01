@@ -1,6 +1,8 @@
 # Standard Python imports
 import argparse
+import math
 import re
+import sys
 import tempfile
 import jsonschema
 
@@ -21,6 +23,10 @@ import guessit
 import hashlib
 from pytube import YouTube, Search
 from tqdm import tqdm
+import networkx as nx
+import matplotlib.pyplot as plt
+import plotly.graph_objects as go
+import scipy as sp
 
 # Docs
 # https://pytube.io/en/latest/index.html
@@ -32,10 +38,15 @@ from tqdm import tqdm
 # https://opensubtitles.stoplight.io/docs/opensubtitles-api/e3750fd63a100-getting-started
 # There exists python-opensubtitles
 
+# TODO: Modularize implementation with a package structure
+#       Consider local data management/ API / dataframe
+
 from constants import *
 
 
-# TODO: Refactor all of the functions to process the collection dict along with the video id.
+class RateLimitExceededError(Exception):
+    def __init__(self):
+        super().__init__("Rate limit exceeded.")
 
 
 def handle_file_exceptions(func):
@@ -211,6 +222,8 @@ def get_omdb_data(title):
             dict or None: A dictionary containing movie data if the request is successful,
                           or None if there was an error.
     """
+    # Rate limit is 1000 calls/day
+    # TODO: Implement rate limit
     api_url = 'https://www.omdbapi.com'
 
     params = {
@@ -226,6 +239,12 @@ def get_omdb_data(title):
             data = response.json()
         else:
             logging.warning(f'Error requesting OMDB data for title {title}: ' + response.json()['Error'])
+
+    if response.status_code == 429:
+        # TODO: Implement unit test
+        logging.error('Rate limit exceeded. Status code {}'.format(response.json()['Error']))
+        raise RateLimitExceededError()
+
     else:
         logging.warning('Error processing request. Status code {}'.format(response.status_code))
 
@@ -472,7 +491,7 @@ class CollectionDataframe:
         #
         # self.df = self.df[self.df[col].apply(pd.to_numeric, errors='coerce') < val]
         #
-        # However, this results in lost entries with no errors raised.
+        # However, that results in lost entries.
         if isinstance(val, (int, float)):
             if comp == '<':
                 # .extract() uses a regex to get the first number out of every entry in the column,
@@ -506,7 +525,7 @@ class CollectionDataframe:
                 raise TypeError("Unsupported filter value type. Must be STR, INT, or FLOAT.")
 
     def sort(self, col):
-        if df == None:
+        if self.df is None:
             raise ValueError(f"No dataframe is currently loaded, or it is empty. ")
         elif col not in self.df.columns:
             raise ValueError(f"Column {col} not in the current dataframe")
@@ -524,7 +543,113 @@ class CollectionDataframe:
 
         # Flatten the nested data into columns and put it to the right of the hash column
         self.df = pd.concat([self.df, pd.json_normalize(nested_data)], axis=1)
+
         pd.set_option('display.max_columns', None)
+
+    def generate_m3u_playlist(self):
+        path = './playlist_example.m3u'
+        playlist = ''
+        for _, row in self.df.iterrows():
+            root = row['file_data.root']
+            filename = row['file_data.filename']
+            playlist += os.path.join(root, filename) + '\n'
+
+        with open(path, 'w', encoding='utf-8') as file:
+            file.write(playlist)
+
+    def generate_graph(self):
+        # Generates a graph associating movies by actors and directors
+        g = nx.Graph()
+        nodes = []
+        for index, row in self.df.iterrows():
+            title = row['omdb_data.Title']
+            if title not in nodes:
+                nodes.append(title)                                     # add movie to node list
+                g.add_node(title, type="Movie")                         # create movie node
+                if type(row['omdb_data.Actors']) is str:
+                    actors = row['omdb_data.Actors'].split(',')
+                    for actor in actors:                                # for each actor in movie
+                        if actor not in nodes:                          # if actor not in list
+                            nodes.append(actor)                         # add actors to node list
+                            g.add_node(actor, type="Actor")             # create actor node
+                        g.add_edge(title, actor)                        # add edge from movie to actor
+                if type(row['omdb_data.Director']) is str:
+                    directors = row['omdb_data.Director'].split(',')
+                    for director in directors:                          # for each director in movie
+                        if director not in nodes:                       # if director not in node list
+                            nodes.append(director)                      # add director to node list
+                            g.add_node(director, type="Director")       # create director node
+                        g.add_edge(title, director)                     # add edge from movie to director
+        return g
+
+    def trim_unrelated(self, g: nx.Graph):
+        # actor_nodes = nx.get_node_attributes(g, 'Actor')
+        # print(actor_nodes)
+        self.display_graph(g)
+        trim = []
+        for node, data in g.nodes.data():
+            if (data.get('type') == 'Actor') and (g.degree(node) < 2):
+                trim.append(node)
+            if (data.get('type') == 'Director') and (g.degree(node) < 2):
+                trim.append(node)
+        for node in trim:
+            g.remove_node(node)
+        trim.clear()
+        for node, data in g.nodes.data():
+            print("{}: {}".format(node, g.degree(node)))
+            if (data.get('type') == 'Movie') and (g.degree(node) == 0):
+                trim.append(node)
+        for node in trim:
+            g.remove_node(node)
+        self.display_graph(g)
+
+    def display_graph(self, g):
+        node_colors = []
+        for n in g.nodes:
+            node_type = g.nodes[n]['type']
+            if node_type == 'Actor':
+                node_colors.append('lightblue')
+            elif node_type == 'Director':
+                node_colors.append('lightgreen')
+            elif node_type == 'Movie':
+                node_colors.append('lightcoral')
+            else:
+                node_colors.append('gray')  # Default color for unknown types
+
+        plt.figure(figsize=(50, 50))
+        pos = nx.spring_layout(g, k=None)  # Okayish
+        # pos = nx.arf_layout(g) # Evenly space, generally okay
+        # pos = nx.shell_layout(g) # Terrible, just circular
+        # pos = nx.circular_layout(g, scale=1, dim=1)  # Position nodes
+        # pos = nx.planar_layout(g) # took too long to render
+        # pos = nx.spectral_layout(g, weight=1, scale=0.01, center=(0,0), dim=2) # Promising, but spacing needs to be worked out
+        # pos = nx.kamada_kawai_layout(g)
+        pos = nx.fruchterman_reingold_layout(g, k=25/math.sqrt(g.number_of_nodes()), iterations=1000)
+        nx.draw(g, pos, with_labels=True, node_color=node_colors, node_size=5000, font_size=10, width=1.5)
+        plt.show()
+
+    def display_graph_plotly(self, G):
+        pos = nx.fruchterman_reingold_layout(G, k=0.750, iterations=500)
+        fig = go.Figure(go.Scatter(x=[], y=[], mode='markers', hoverinfo='text'))
+
+        for edge in G.edges():
+            x0, y0 = pos[edge[0]]
+            x1, y1 = pos[edge[1]]
+            fig.add_trace(
+                go.Scatter(x=[x0, x1, None], y=[y0, y1, None], mode='lines', line=dict(width=0.5, color='#888')))
+
+        for node in G.nodes():
+            x, y = pos[node]
+            fig.add_trace(go.Scatter(x=[x], y=[y], mode='markers', hovertext=f'Node {node}', marker=dict(size=10)))
+
+        # Update layout for better presentation
+        fig.update_layout(
+            showlegend=False,
+            hovermode='closest',
+        )
+
+        # Show the plot
+        fig.show()
 
     def __repr__(self):
         return self.df.__repr__()
@@ -543,55 +668,13 @@ if __name__ == "__main__":
 
     data = load_metadata()
     df = CollectionDataframe(data)
-    # df.sort('omdb_data.Year')
-    df.filter('omdb_data.Year', 1986, '>')
-    df.filter('omdb_data.Year', 1990, '<')
-    print(df)
+    # # df.sort('omdb_data.Year')
+    # df.filter('omdb_data.Year', 1986, '>')
+    # df.filter('omdb_data.Year', 1990, '<')
+    # df.df.to_html("flat_test.html", index=False)
 
-    # print(df.df['omdb_data.Year'].fillna('0').str.extract('(\d+)').astype(int))
+    # df.generate_m3u_playlist()
 
-    # Filter by genre example - working
-    # genre = 'Action'
-    # filtered_vids = df.df[df.df['omdb_data.Genre'].str.contains(genre, case=False, na=False)]
-    # filtered_vids.to_html("filtered.html", index=False)
-
-    # Filter by running time (comparator) example - working
-    # runtime = 100
-    # filtered_vids = df.df[df.df['omdb_data.Runtime'].fillna('0 min').apply(lambda x: int(x.split()[0])) > 130]
-
-    # print(df.df['omdb_data.Year'])
-    # df.df.dropna(subset='omdb_data.Year', inplace=True)
-    # filtered_vids = df.df[
-    #     df.df['omdb_data.Year'].str.extract('(\d+)').astype(int) > 130
-    #     ]
-
-    # print(df.df['omdb_data.Year'].str.extract('(\d+)'))
-    # print(df.df['omdb_data.Year'].str.extract('(\d+)').astype(int))
-    # print(df.df['omdb_data.Year'].str.extract('(\d+)').astype(int) > 1990)
-    # filtered_vids = df.df[df.df['omdb_data.Year'].str.extract('(\d+)').astype(int) > 1990]
-    # filtered_vids = df.df[df.df['omdb_data.Year'].str.extract('(\d+)').apply(pd.to_numeric, errors="coerce") > 1990]
-    # filtered_vids = df.df[df.df['omdb_data.Year'].str.extract('(\d+)').squeeze().astype(float, errors='ignore') > 1990]
-
-    # This is what we want ---
-    # year_series = df.df['omdb_data.Year'].str.extract('(\d+)').squeeze()
-    # numeric_years = pd.to_numeric(year_series, errors='coerce')
-    # filtered_vids = df.df[numeric_years > 1990]
-
-    # print(filtered_vids)
-
-    # this works for some reason
-    # filtered_vids = df.df[df.df['omdb_data.Year'].apply(
-    #     lambda x: int(re.search(r'\d{4}', x).group()) if isinstance(x, str) and re.search(r'\d{4}', x) else 0) > 1990]
-
-    # print(filtered_vids)
-
-    # Sort by year example - working
-    # sorted_vids = df.df.sort_values(by="omdb_data.Year")
-    # sorted_vids.to_html("filtered.html", index=False)
-
-    # Chain example - working
-    # genre = 'Action'
-    # filtered_vids = df.df[df.df['omdb_data.Genre'].str.contains(genre, case=False, na=False)]
-    # filtered_vids.to_html("filtered.html", index=False)
-    # sorted_vids = filtered_vids.sort_values(by="omdb_data.Year")
-    # sorted_vids.to_html("filtered.html", index=False)
+    g = df.generate_graph()
+    df.trim_unrelated(g)
+    # df.display_graph_plotly(g)
