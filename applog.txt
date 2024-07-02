@@ -17492,3 +17492,459 @@
 2023-09-24 09:38:04,441 - WARNING - Error requesting OMDB data for title The Man Who Stole The Sun Full-1: Movie not found!
 2023-09-24 09:38:05,373 - WARNING - Error requesting OMDB data for title Mode Seven: Movie not found!
 2023-09-24 09:38:05,788 - WARNING - Error requesting OMDB data for title dummy12345: Movie not found!
+2023-12-02 13:50:22,813 - WARNING - Error processing request. Status code 401
+2023-12-02 13:50:22,968 - WARNING - Error processing request. Status code 401
+2023-12-02 13:50:23,116 - WARNING - Error processing request. Status code 401
+2023-12-02 13:57:14,943 - WARNING - Error processing request. Status code 200
+2023-12-02 13:57:14,944 - INFO - OMDB data for Streets.of.Fire.1984.1080p.BluRay.x265-RARBG.mp4 updated successfully
+2023-12-02 13:57:15,246 - WARNING - Error processing request. Status code 200
+2023-12-02 13:57:15,247 - INFO - OMDB data for The.Outsiders.1983.REMASTERED.THEATRICAL.1080p.BluRay.x265-RARBG.mp4 updated successfully
+2023-12-02 13:57:15,407 - WARNING - Error processing request. Status code 200
+2023-12-02 13:57:15,408 - INFO - OMDB data for Wild Things (1998) BRRip 720p.mp4 updated successfully
+2023-12-02 13:58:21,923 - INFO - OMDB data for Streets.of.Fire.1984.1080p.BluRay.x265-RARBG.mp4 updated successfully
+2023-12-02 13:58:22,021 - INFO - OMDB data for The.Outsiders.1983.REMASTERED.THEATRICAL.1080p.BluRay.x265-RARBG.mp4 updated successfully
+2023-12-02 13:58:22,123 - INFO - OMDB data for Wild Things (1998) BRRip 720p.mp4 updated successfully
+2023-12-02 13:58:53,340 - INFO - OMDB data for Streets.of.Fire.1984.1080p.BluRay.x265-RARBG.mp4 updated successfully
+2023-12-02 13:58:53,435 - INFO - OMDB data for The.Outsiders.1983.REMASTERED.THEATRICAL.1080p.BluRay.x265-RARBG.mp4 updated successfully
+2023-12-02 13:58:53,533 - INFO - OMDB data for Wild Things (1998) BRRip 720p.mp4 updated successfully
+2023-12-02 15:06:03,959 - INFO - passed validation: C:/Users/User/Desktop/Movies\Streets.of.Fire.1984.1080p.BluRay.x265-RARBG.mp4
+2023-12-02 15:06:03,960 - INFO - Created directory C:/Users/User/Desktop/Movies/Sorted\Streets of Fire
+2023-12-02 15:06:03,960 - INFO - Moved C:/Users/User/Desktop/Movies\Streets.of.Fire.1984.1080p.BluRay.x265-RARBG.mp4 
+ to C:/Users/User/Desktop/Movies/Sorted
+2023-12-02 15:06:03,961 - INFO - passed validation: C:/Users/User/Desktop/Movies\The.Outsiders.1983.REMASTERED.THEATRICAL.1080p.BluRay.x265-RARBG.mp4
+2023-12-02 15:06:03,962 - INFO - Created directory C:/Users/User/Desktop/Movies/Sorted\The Outsiders
+2023-12-02 15:06:03,963 - INFO - Moved C:/Users/User/Desktop/Movies\The.Outsiders.1983.REMASTERED.THEATRICAL.1080p.BluRay.x265-RARBG.mp4 
+ to C:/Users/User/Desktop/Movies/Sorted
+2023-12-02 15:06:03,963 - INFO - passed validation: C:/Users/User/Desktop/Movies\Wild Things (1998) BRRip 720p.mp4
+2023-12-02 15:06:03,963 - INFO - Created directory C:/Users/User/Desktop/Movies/Sorted\Wild Things
+2023-12-02 15:06:03,964 - INFO - Moved C:/Users/User/Desktop/Movies\Wild Things (1998) BRRip 720p.mp4 
+ to C:/Users/User/Desktop/Movies/Sorted
+2023-12-02 15:08:06,308 - INFO - passed validation: C:/Users/User/Desktop/Movies\Streets.of.Fire.1984.1080p.BluRay.x265-RARBG.mp4
+2023-12-02 15:08:06,308 - INFO - Created directory C:/Users/User/Desktop/Movies/Sorted\Streets of Fire
+2023-12-02 15:08:06,309 - INFO - Moved C:/Users/User/Desktop/Movies\Streets.of.Fire.1984.1080p.BluRay.x265-RARBG.mp4 
+ to C:/Users/User/Desktop/Movies/Sorted\Streets of Fire
+2023-12-02 15:08:06,309 - INFO - passed validation: C:/Users/User/Desktop/Movies\The.Outsiders.1983.REMASTERED.THEATRICAL.1080p.BluRay.x265-RARBG.mp4
+2023-12-02 15:08:06,310 - INFO - Created directory C:/Users/User/Desktop/Movies/Sorted\The Outsiders
+2023-12-02 15:08:06,310 - INFO - Moved C:/Users/User/Desktop/Movies\The.Outsiders.1983.REMASTERED.THEATRICAL.1080p.BluRay.x265-RARBG.mp4 
+ to C:/Users/User/Desktop/Movies/Sorted\The Outsiders
+2023-12-02 15:08:06,311 - INFO - passed validation: C:/Users/User/Desktop/Movies\Wild Things (1998) BRRip 720p.mp4
+2023-12-02 15:08:06,311 - INFO - Created directory C:/Users/User/Desktop/Movies/Sorted\Wild Things
+2023-12-02 15:08:06,312 - INFO - Moved C:/Users/User/Desktop/Movies\Wild Things (1998) BRRip 720p.mp4 
+ to C:/Users/User/Desktop/Movies/Sorted\Wild Things
+2023-12-02 15:14:21,676 - INFO - passed validation: C:/Users/User/Desktop/Movies\Streets.of.Fire.1984.1080p.BluRay.x265-RARBG.mp4
+2023-12-02 15:14:21,677 - INFO - Created directory C:/Users/User/Desktop/Movies/Sorted\Streets of Fire
+2023-12-02 15:14:21,678 - INFO - Moved C:/Users/User/Desktop/Movies\Streets.of.Fire.1984.1080p.BluRay.x265-RARBG.mp4 
+ to C:/Users/User/Desktop/Movies/Sorted\Streets of Fire
+2023-12-02 15:14:21,678 - INFO - passed validation: C:/Users/User/Desktop/Movies\The.Outsiders.1983.REMASTERED.THEATRICAL.1080p.BluRay.x265-RARBG.mp4
+2023-12-02 15:14:21,684 - INFO - Created directory C:/Users/User/Desktop/Movies/Sorted\The Outsiders
+2023-12-02 15:14:21,685 - INFO - Moved C:/Users/User/Desktop/Movies\The.Outsiders.1983.REMASTERED.THEATRICAL.1080p.BluRay.x265-RARBG.mp4 
+ to C:/Users/User/Desktop/Movies/Sorted\The Outsiders
+2023-12-02 15:14:21,685 - INFO - passed validation: C:/Users/User/Desktop/Movies\Wild Things (1998) BRRip 720p.mp4
+2023-12-02 15:14:21,685 - INFO - Created directory C:/Users/User/Desktop/Movies/Sorted\Wild Things
+2023-12-02 15:14:21,686 - INFO - Moved C:/Users/User/Desktop/Movies\Wild Things (1998) BRRip 720p.mp4 
+ to C:/Users/User/Desktop/Movies/Sorted\Wild Things
+2023-12-02 16:28:23,289 - INFO - OMDB data for Alien(1979)..mp4 updated successfully
+2023-12-02 16:28:23,595 - INFO - OMDB data for Battletoads_-_The_Cartoon_-_Pilot_Episode_-_Full_Episode_-_Battletoads_TV_Series-GlRMunEPAYg.mp4 updated successfully
+2023-12-02 16:28:23,895 - INFO - OMDB data for Harakiri (1962) ORIGINAL TRAILER.mp4 updated successfully
+2023-12-02 16:28:24,200 - INFO - OMDB data for Phenomena (1985) 1080p.mp4 updated successfully
+2023-12-02 16:28:24,494 - INFO - OMDB data for Samurai Rebellion (1967) trailer (Full HD).mp4 updated successfully
+2023-12-02 16:28:24,786 - INFO - OMDB data for Sanjuro.1962.1080p.BluRay.x264-[YTS.AM].mp4 updated successfully
+2023-12-02 16:28:25,081 - INFO - OMDB data for Tenebrae.1982.1080p.BluRay.H264.AAC-RARBG.mp4 updated successfully
+2023-12-02 16:28:25,383 - INFO - OMDB data for Three.Outlaw.Samurai.1964.JAPANESE.1080p.BluRay.H264.AAC-VXT.mp4 updated successfully
+2023-12-02 16:28:25,725 - INFO - OMDB data for video.mp4 updated successfully
+2023-12-02 16:28:26,020 - INFO - OMDB data for [Raw-Deal] California Crisis (\u30ab\u30ea\u30d5\u30a9\u30eb\u30cb\u30a2) [E1BB265E].mp4 updated successfully
+2023-12-02 16:28:26,313 - WARNING - Error requesting OMDB data for title \u5207\u8179: Movie not found!
+2023-12-02 16:28:28,892 - INFO - OMDB data for I Was Born But.mp4 updated successfully
+2023-12-02 16:28:28,996 - INFO - OMDB data for Samurai Rebellion.mp4 updated successfully
+2023-12-02 16:28:31,580 - INFO - OMDB data for Throne of Fire.mp4 updated successfully
+2023-12-02 16:28:34,017 - INFO - OMDB data for Arion (Sub).mp4 updated successfully
+2023-12-02 16:28:34,167 - WARNING - Error requesting OMDB data for title Kanashimi no Belladonna: Movie not found!
+2023-12-02 16:28:36,737 - INFO - OMDB data for Lily CAT (Dub).mp4 updated successfully
+2023-12-02 16:28:37,030 - INFO - OMDB data for Lupin III The Castle of Cagliostro (English Dub).mp4 updated successfully
+2023-12-02 16:28:37,324 - WARNING - Error requesting OMDB data for title Midnight Eye Gokuu: Movie not found!
+2023-12-02 16:28:37,610 - WARNING - Error requesting OMDB data for title Midnight Eye Gokuu II: Movie not found!
+2023-12-02 16:28:37,902 - INFO - OMDB data for Neo Tokyo (Dub).mp4 updated successfully
+2023-12-02 16:28:38,197 - WARNING - Error requesting OMDB data for title Record of Lodoss War Volume 1: Movie not found!
+2023-12-02 16:28:40,644 - INFO - OMDB data for Robot Carnival (Dub).mp4 updated successfully
+2023-12-02 16:28:40,934 - INFO - OMDB data for Space Adventure Cobra 1982.mp4 updated successfully
+2023-12-02 16:28:41,236 - INFO - OMDB data for Sweet Home (Sub).mp4 updated successfully
+2023-12-02 16:28:41,532 - INFO - OMDB data for Venus Wars (Dub).mp4 updated successfully
+2023-12-02 16:28:41,718 - INFO - OMDB data for Wings of Honneamise 1987 720p BluRay x264 [Mkvking.com].mkv updated successfully
+2023-12-02 16:28:44,289 - INFO - OMDB data for Wizardry OVA (Sub).mp4 updated successfully
+2023-12-02 16:28:44,581 - INFO - OMDB data for [ILA] MD Geist - 01 - Directors cut (dual).mp4 updated successfully
+2023-12-02 16:28:44,676 - INFO - OMDB data for [ILA] MD Geist - 02 (dual).mp4 updated successfully
+2023-12-02 16:28:44,971 - INFO - OMDB data for bubblegum-crisis-episode-1.mp4 updated successfully
+2023-12-02 16:28:45,074 - INFO - OMDB data for bubblegum-crisis-episode-2.mp4 updated successfully
+2023-12-02 16:28:45,172 - INFO - OMDB data for bubblegum-crisis-episode-31650316201.2.mp4 updated successfully
+2023-12-02 16:28:45,276 - INFO - OMDB data for bubblegum-crisis-episode-4.mp4 updated successfully
+2023-12-02 16:28:45,426 - INFO - OMDB data for Golgo 13 - The Professional.mp4 updated successfully
+2023-12-02 16:28:47,861 - INFO - OMDB data for Golgo 13- Queen Bee (1998)(Dub).mp4 updated successfully
+2023-12-02 16:28:48,014 - INFO - OMDB data for Mad Bull 34 Part 1 The Scandal .mp4 updated successfully
+2023-12-02 16:28:48,113 - INFO - OMDB data for Mad Bull 34 Part 2 The Manhattan Project.mp4 updated successfully
+2023-12-02 16:28:48,208 - INFO - OMDB data for Mad Bull 34 Part 3 City of Vice.mp4 updated successfully
+2023-12-02 16:28:48,304 - INFO - OMDB data for Mad Bull 34 Part 4 Cop Killer.mp4 updated successfully
+2023-12-02 16:28:48,620 - INFO - OMDB data for Memories (1995) - 01 - Magnetic Rose.mkv updated successfully
+2023-12-02 16:28:48,715 - INFO - OMDB data for Memories (1995) - 02 - Stink Bomb.mkv updated successfully
+2023-12-02 16:28:48,816 - INFO - OMDB data for Memories (1995) - 03 - Cannon Fodder.mkv updated successfully
+2023-12-02 16:28:49,099 - WARNING - Error requesting OMDB data for title Ys Book One 1: Movie not found!
+2023-12-02 16:28:49,388 - WARNING - Error requesting OMDB data for title Ys Book One 2: Movie not found!
+2023-12-02 16:28:49,671 - WARNING - Error requesting OMDB data for title Ys Book One 3: Movie not found!
+2023-12-02 16:28:49,815 - WARNING - Error requesting OMDB data for title Ys Book One 4: Movie not found!
+2023-12-02 16:28:50,115 - WARNING - Error requesting OMDB data for title Ys Book Two 1: Movie not found!
+2023-12-02 16:28:50,396 - WARNING - Error requesting OMDB data for title Ys Book Two 2: Movie not found!
+2023-12-02 16:28:50,696 - WARNING - Error requesting OMDB data for title Ys Book Two 3: Movie not found!
+2023-12-02 16:28:51,002 - WARNING - Error requesting OMDB data for title Ys II 1: Movie not found!
+2023-12-02 16:28:51,310 - WARNING - Error requesting OMDB data for title Ys II 2: Movie not found!
+2023-12-02 16:28:51,463 - WARNING - Error requesting OMDB data for title Ys II 3: Movie not found!
+2023-12-02 16:28:51,780 - WARNING - Error requesting OMDB data for title Ys II 4: Movie not found!
+2023-12-02 16:28:52,071 - INFO - OMDB data for Cyber City Oedo 808 - 1 (Dub).mp4 updated successfully
+2023-12-02 16:28:52,168 - INFO - OMDB data for Cyber City Oedo 808 - 2 (Dub).mp4 updated successfully
+2023-12-02 16:28:52,262 - INFO - OMDB data for Cyber City Oedo 808 - 3 (Dub).mp4 updated successfully
+2023-12-02 16:28:52,421 - WARNING - Error requesting OMDB data for title a137ee3e2a37701695abd791d95bfeaf: Movie not found!
+2023-12-02 16:28:52,574 - INFO - OMDB data for Kwaidan.mp4 updated successfully
+2023-12-02 16:28:52,869 - INFO - OMDB data for Shadow of a Doubt (1943, USA) Directed by Alfred Hitchcock, Featuring Teresa Wright, Joseph Cotten.mp4 updated successfully
+2023-12-02 16:28:53,025 - INFO - OMDB data for Strangers On A Train 720p.mp4 updated successfully
+2023-12-02 16:28:53,175 - INFO - OMDB data for Super Mario Bros 1993 The Morton Jankel Cut Extended VHS1-1A.mp4 updated successfully
+2023-12-02 16:28:53,349 - INFO - OMDB data for Woman in the Dunes (1964) - https-archive.org-details-woman.in.the.-dunes.-1964.-criterion.-1080p.-blu-ray.x-265.-hevc.-aac-sartre.mkv updated successfully
+2023-12-02 16:28:53,637 - INFO - OMDB data for Blade.Runner.1982.1080p.BluRay.x264-[YTS.AM].mp4 updated successfully
+2023-12-02 16:28:53,795 - INFO - OMDB data for Deathstalker.1983.720p.BluRay.x264.AAC-[YTS.MX].mp4 updated successfully
+2023-12-02 16:28:54,092 - INFO - OMDB data for Hara-Kiri.Death.Of.A.Samurai.2011.1080p.BluRay.x264.AAC5.1-[YTS.MX].mp4 updated successfully
+2023-12-02 16:28:54,257 - INFO - OMDB data for High.And.Low.1963.1080p.BluRay.x264.AAC5.1-[YTS.MX].mp4 updated successfully
+2023-12-02 16:28:54,550 - INFO - OMDB data for Lady.Snowblood.1973.1080p.BluRay.x264-[YTS.LT].mp4 updated successfully
+2023-12-02 16:28:54,841 - WARNING - Error requesting OMDB data for title The Man Who Stole The Sun Full-1: Movie not found!
+2023-12-02 16:28:55,142 - INFO - OMDB data for The.Sword.Of.Doom.1966.1080p.BluRay.x264-[YTS.AM].mp4 updated successfully
+2023-12-02 16:28:55,430 - INFO - OMDB data for Yojimbo.1961.1080p.BluRay.x264.AAC-[YTS.MX].mp4 updated successfully
+2023-12-02 16:28:55,718 - WARNING - Error requesting OMDB data for title Mode Seven: Movie not found!
+2023-12-02 16:28:56,015 - WARNING - Error requesting OMDB data for title dummy12345: Movie not found!
+2023-12-02 16:28:56,181 - INFO - OMDB data for Food of the Gods II (1984).mp4 updated successfully
+2023-12-02 16:28:56,346 - INFO - OMDB data for Phantom.Of.The.Paradise.1974.1080p.BluRay.x264-[YTS.AM].mp4 updated successfully
+2023-12-02 16:29:55,939 - INFO - passed validation: C:/Users/User/Videos/Misc Media\Alien(1979)..mp4
+2023-12-02 16:29:55,946 - INFO - Created directory C:/Users/User/Desktop/Movies/Sorted\Alien
+2023-12-02 16:29:55,947 - INFO - Moved C:/Users/User/Videos/Misc Media\Alien(1979)..mp4 
+ to C:/Users/User/Desktop/Movies/Sorted\Alien
+2023-12-02 16:29:55,947 - INFO - passed validation: C:/Users/User/Videos/Misc Media\Battletoads_-_The_Cartoon_-_Pilot_Episode_-_Full_Episode_-_Battletoads_TV_Series-GlRMunEPAYg.mp4
+2023-12-02 16:29:55,947 - INFO - Created directory C:/Users/User/Desktop/Movies/Sorted\Battletoads
+2023-12-02 16:29:55,948 - INFO - Moved C:/Users/User/Videos/Misc Media\Battletoads_-_The_Cartoon_-_Pilot_Episode_-_Full_Episode_-_Battletoads_TV_Series-GlRMunEPAYg.mp4 
+ to C:/Users/User/Desktop/Movies/Sorted\Battletoads
+2023-12-02 16:29:55,948 - INFO - passed validation: C:/Users/User/Videos/Misc Media\Harakiri (1962) ORIGINAL TRAILER.mp4
+2023-12-02 16:29:55,949 - INFO - Created directory C:/Users/User/Desktop/Movies/Sorted\Harakiri
+2023-12-02 16:29:55,949 - INFO - Moved C:/Users/User/Videos/Misc Media\Harakiri (1962) ORIGINAL TRAILER.mp4 
+ to C:/Users/User/Desktop/Movies/Sorted\Harakiri
+2023-12-02 16:29:55,950 - INFO - passed validation: C:/Users/User/Videos/Misc Media\Phenomena (1985) 1080p.mp4
+2023-12-02 16:29:55,950 - INFO - Created directory C:/Users/User/Desktop/Movies/Sorted\Phenomena
+2023-12-02 16:29:55,951 - INFO - Moved C:/Users/User/Videos/Misc Media\Phenomena (1985) 1080p.mp4 
+ to C:/Users/User/Desktop/Movies/Sorted\Phenomena
+2023-12-02 16:29:55,951 - INFO - passed validation: C:/Users/User/Videos/Misc Media\Samurai Rebellion (1967) trailer (Full HD).mp4
+2023-12-02 16:29:55,951 - INFO - Created directory C:/Users/User/Desktop/Movies/Sorted\Samurai Rebellion
+2023-12-02 16:29:55,952 - INFO - Moved C:/Users/User/Videos/Misc Media\Samurai Rebellion (1967) trailer (Full HD).mp4 
+ to C:/Users/User/Desktop/Movies/Sorted\Samurai Rebellion
+2023-12-02 16:29:55,954 - INFO - passed validation: C:/Users/User/Videos/Misc Media\Sanjuro.1962.1080p.BluRay.x264-[YTS.AM].mp4
+2023-12-02 16:29:55,954 - INFO - Created directory C:/Users/User/Desktop/Movies/Sorted\Sanjuro
+2023-12-02 16:29:55,955 - INFO - Moved C:/Users/User/Videos/Misc Media\Sanjuro.1962.1080p.BluRay.x264-[YTS.AM].mp4 
+ to C:/Users/User/Desktop/Movies/Sorted\Sanjuro
+2023-12-02 16:29:55,955 - INFO - passed validation: C:/Users/User/Videos/Misc Media\Tenebrae.1982.1080p.BluRay.H264.AAC-RARBG.mp4
+2023-12-02 16:29:55,956 - INFO - Created directory C:/Users/User/Desktop/Movies/Sorted\Tenebrae
+2023-12-02 16:29:55,957 - INFO - Moved C:/Users/User/Videos/Misc Media\Tenebrae.1982.1080p.BluRay.H264.AAC-RARBG.mp4 
+ to C:/Users/User/Desktop/Movies/Sorted\Tenebrae
+2023-12-02 16:29:55,957 - INFO - passed validation: C:/Users/User/Videos/Misc Media\Three.Outlaw.Samurai.1964.JAPANESE.1080p.BluRay.H264.AAC-VXT.mp4
+2023-12-02 16:29:55,957 - INFO - Created directory C:/Users/User/Desktop/Movies/Sorted\Three Outlaw Samurai
+2023-12-02 16:29:55,958 - INFO - Moved C:/Users/User/Videos/Misc Media\Three.Outlaw.Samurai.1964.JAPANESE.1080p.BluRay.H264.AAC-VXT.mp4 
+ to C:/Users/User/Desktop/Movies/Sorted\Three Outlaw Samurai
+2023-12-02 16:29:55,958 - INFO - passed validation: C:/Users/User/Videos/Misc Media\video.mp4
+2023-12-02 16:29:55,959 - INFO - Created directory C:/Users/User/Desktop/Movies/Sorted\Benny's Video
+2023-12-02 16:29:55,960 - INFO - Moved C:/Users/User/Videos/Misc Media\video.mp4 
+ to C:/Users/User/Desktop/Movies/Sorted\Benny's Video
+2023-12-02 16:29:55,960 - INFO - passed validation: C:/Users/User/Videos/Misc Media\[Raw-Deal] California Crisis (\u30ab\u30ea\u30d5\u30a9\u30eb\u30cb\u30a2) [E1BB265E].mp4
+2023-12-02 16:29:55,960 - INFO - Created directory C:/Users/User/Desktop/Movies/Sorted\California Crisis
+2023-12-02 16:29:55,961 - INFO - Moved C:/Users/User/Videos/Misc Media\[Raw-Deal] California Crisis (\u30ab\u30ea\u30d5\u30a9\u30eb\u30cb\u30a2) [E1BB265E].mp4 
+ to C:/Users/User/Desktop/Movies/Sorted\California Crisis
+2023-12-02 16:29:55,961 - INFO - passed validation: C:/Users/User/Videos/Misc Media\\u5207\u8179(CC\u7248).Harakiri.1962.Criterion.Collection.BluRay.720p.x264.AC3-CMCT-eng-sub (1).mkv
+2023-12-02 16:46:07,775 - INFO - OMDB data for Alien(1979)..mp4 updated successfully
+2023-12-02 16:46:07,875 - INFO - OMDB data for Battletoads_-_The_Cartoon_-_Pilot_Episode_-_Full_Episode_-_Battletoads_TV_Series-GlRMunEPAYg.mp4 updated successfully
+2023-12-02 16:46:07,971 - INFO - OMDB data for Harakiri (1962) ORIGINAL TRAILER.mp4 updated successfully
+2023-12-02 16:46:08,067 - INFO - OMDB data for Phenomena (1985) 1080p.mp4 updated successfully
+2023-12-02 16:46:08,165 - INFO - OMDB data for Samurai Rebellion (1967) trailer (Full HD).mp4 updated successfully
+2023-12-02 16:46:08,267 - INFO - OMDB data for Sanjuro.1962.1080p.BluRay.x264-[YTS.AM].mp4 updated successfully
+2023-12-02 16:46:08,369 - INFO - OMDB data for Tenebrae.1982.1080p.BluRay.H264.AAC-RARBG.mp4 updated successfully
+2023-12-02 16:46:08,474 - INFO - OMDB data for Three.Outlaw.Samurai.1964.JAPANESE.1080p.BluRay.H264.AAC-VXT.mp4 updated successfully
+2023-12-02 16:46:08,582 - INFO - OMDB data for video.mp4 updated successfully
+2023-12-02 16:46:08,677 - INFO - OMDB data for [Raw-Deal] California Crisis (\u30ab\u30ea\u30d5\u30a9\u30eb\u30cb\u30a2) [E1BB265E].mp4 updated successfully
+2023-12-02 16:46:08,788 - WARNING - Error requesting OMDB data for title \u5207\u8179: Movie not found!
+2023-12-02 16:46:08,888 - INFO - OMDB data for I Was Born But.mp4 updated successfully
+2023-12-02 16:46:08,993 - INFO - OMDB data for Samurai Rebellion.mp4 updated successfully
+2023-12-02 16:46:09,092 - INFO - OMDB data for Throne of Fire.mp4 updated successfully
+2023-12-02 16:46:09,184 - INFO - OMDB data for Arion (Sub).mp4 updated successfully
+2023-12-02 16:46:09,284 - WARNING - Error requesting OMDB data for title Kanashimi no Belladonna: Movie not found!
+2023-12-02 16:46:09,378 - INFO - OMDB data for Lily CAT (Dub).mp4 updated successfully
+2023-12-02 16:46:09,474 - INFO - OMDB data for Lupin III The Castle of Cagliostro (English Dub).mp4 updated successfully
+2023-12-02 16:46:09,565 - WARNING - Error requesting OMDB data for title Midnight Eye Gokuu: Movie not found!
+2023-12-02 16:46:09,659 - WARNING - Error requesting OMDB data for title Midnight Eye Gokuu II: Movie not found!
+2023-12-02 16:46:09,751 - INFO - OMDB data for Neo Tokyo (Dub).mp4 updated successfully
+2023-12-02 16:46:09,845 - WARNING - Error requesting OMDB data for title Record of Lodoss War Volume 1: Movie not found!
+2023-12-02 16:46:09,936 - INFO - OMDB data for Robot Carnival (Dub).mp4 updated successfully
+2023-12-02 16:46:10,036 - INFO - OMDB data for Space Adventure Cobra 1982.mp4 updated successfully
+2023-12-02 16:46:10,148 - INFO - OMDB data for Sweet Home (Sub).mp4 updated successfully
+2023-12-02 16:46:10,240 - INFO - OMDB data for Venus Wars (Dub).mp4 updated successfully
+2023-12-02 16:46:10,370 - INFO - OMDB data for Wings of Honneamise 1987 720p BluRay x264 [Mkvking.com].mkv updated successfully
+2023-12-02 16:46:10,465 - INFO - OMDB data for Wizardry OVA (Sub).mp4 updated successfully
+2023-12-02 16:46:10,567 - INFO - OMDB data for [ILA] MD Geist - 01 - Directors cut (dual).mp4 updated successfully
+2023-12-02 16:46:10,664 - INFO - OMDB data for [ILA] MD Geist - 02 (dual).mp4 updated successfully
+2023-12-02 16:46:10,760 - INFO - OMDB data for bubblegum-crisis-episode-1.mp4 updated successfully
+2023-12-02 16:46:10,855 - INFO - OMDB data for bubblegum-crisis-episode-2.mp4 updated successfully
+2023-12-02 16:46:10,974 - INFO - OMDB data for bubblegum-crisis-episode-31650316201.2.mp4 updated successfully
+2023-12-02 16:46:11,065 - INFO - OMDB data for bubblegum-crisis-episode-4.mp4 updated successfully
+2023-12-02 16:46:11,174 - INFO - OMDB data for Golgo 13 - The Professional.mp4 updated successfully
+2023-12-02 16:46:11,277 - INFO - OMDB data for Golgo 13- Queen Bee (1998)(Dub).mp4 updated successfully
+2023-12-02 16:46:11,376 - INFO - OMDB data for Mad Bull 34 Part 1 The Scandal .mp4 updated successfully
+2023-12-02 16:46:11,471 - INFO - OMDB data for Mad Bull 34 Part 2 The Manhattan Project.mp4 updated successfully
+2023-12-02 16:46:11,567 - INFO - OMDB data for Mad Bull 34 Part 3 City of Vice.mp4 updated successfully
+2023-12-02 16:46:11,690 - INFO - OMDB data for Mad Bull 34 Part 4 Cop Killer.mp4 updated successfully
+2023-12-02 16:46:11,791 - INFO - OMDB data for Memories (1995) - 01 - Magnetic Rose.mkv updated successfully
+2023-12-02 16:46:11,893 - INFO - OMDB data for Memories (1995) - 02 - Stink Bomb.mkv updated successfully
+2023-12-02 16:46:11,991 - INFO - OMDB data for Memories (1995) - 03 - Cannon Fodder.mkv updated successfully
+2023-12-02 16:46:12,087 - WARNING - Error requesting OMDB data for title Ys Book One 1: Movie not found!
+2023-12-02 16:46:12,187 - WARNING - Error requesting OMDB data for title Ys Book One 2: Movie not found!
+2023-12-02 16:46:12,284 - WARNING - Error requesting OMDB data for title Ys Book One 3: Movie not found!
+2023-12-02 16:46:12,382 - WARNING - Error requesting OMDB data for title Ys Book One 4: Movie not found!
+2023-12-02 16:46:12,472 - WARNING - Error requesting OMDB data for title Ys Book Two 1: Movie not found!
+2023-12-02 16:46:12,576 - WARNING - Error requesting OMDB data for title Ys Book Two 2: Movie not found!
+2023-12-02 16:46:12,669 - WARNING - Error requesting OMDB data for title Ys Book Two 3: Movie not found!
+2023-12-02 16:46:12,766 - WARNING - Error requesting OMDB data for title Ys II 1: Movie not found!
+2023-12-02 16:46:12,864 - WARNING - Error requesting OMDB data for title Ys II 2: Movie not found!
+2023-12-02 16:46:12,959 - WARNING - Error requesting OMDB data for title Ys II 3: Movie not found!
+2023-12-02 16:46:13,055 - WARNING - Error requesting OMDB data for title Ys II 4: Movie not found!
+2023-12-02 16:46:13,150 - INFO - OMDB data for Cyber City Oedo 808 - 1 (Dub).mp4 updated successfully
+2023-12-02 16:46:13,246 - INFO - OMDB data for Cyber City Oedo 808 - 2 (Dub).mp4 updated successfully
+2023-12-02 16:46:13,342 - INFO - OMDB data for Cyber City Oedo 808 - 3 (Dub).mp4 updated successfully
+2023-12-02 16:46:13,443 - WARNING - Error requesting OMDB data for title a137ee3e2a37701695abd791d95bfeaf: Movie not found!
+2023-12-02 16:46:13,541 - INFO - OMDB data for Kwaidan.mp4 updated successfully
+2023-12-02 16:46:13,640 - INFO - OMDB data for Shadow of a Doubt (1943, USA) Directed by Alfred Hitchcock, Featuring Teresa Wright, Joseph Cotten.mp4 updated successfully
+2023-12-02 16:46:13,739 - INFO - OMDB data for Strangers On A Train 720p.mp4 updated successfully
+2023-12-02 16:46:13,838 - INFO - OMDB data for Super Mario Bros 1993 The Morton Jankel Cut Extended VHS1-1A.mp4 updated successfully
+2023-12-02 16:46:13,948 - INFO - OMDB data for Woman in the Dunes (1964) - https-archive.org-details-woman.in.the.-dunes.-1964.-criterion.-1080p.-blu-ray.x-265.-hevc.-aac-sartre.mkv updated successfully
+2023-12-02 16:46:14,048 - INFO - OMDB data for Blade.Runner.1982.1080p.BluRay.x264-[YTS.AM].mp4 updated successfully
+2023-12-02 16:46:14,147 - INFO - OMDB data for Deathstalker.1983.720p.BluRay.x264.AAC-[YTS.MX].mp4 updated successfully
+2023-12-02 16:46:14,246 - INFO - OMDB data for Hara-Kiri.Death.Of.A.Samurai.2011.1080p.BluRay.x264.AAC5.1-[YTS.MX].mp4 updated successfully
+2023-12-02 16:46:14,341 - INFO - OMDB data for High.And.Low.1963.1080p.BluRay.x264.AAC5.1-[YTS.MX].mp4 updated successfully
+2023-12-02 16:46:14,442 - INFO - OMDB data for Lady.Snowblood.1973.1080p.BluRay.x264-[YTS.LT].mp4 updated successfully
+2023-12-02 16:46:14,537 - WARNING - Error requesting OMDB data for title The Man Who Stole The Sun Full-1: Movie not found!
+2023-12-02 16:46:14,641 - INFO - OMDB data for The.Sword.Of.Doom.1966.1080p.BluRay.x264-[YTS.AM].mp4 updated successfully
+2023-12-02 16:46:14,758 - INFO - OMDB data for Yojimbo.1961.1080p.BluRay.x264.AAC-[YTS.MX].mp4 updated successfully
+2023-12-02 16:46:14,863 - WARNING - Error requesting OMDB data for title Mode Seven: Movie not found!
+2023-12-02 16:46:14,957 - WARNING - Error requesting OMDB data for title dummy12345: Movie not found!
+2023-12-02 16:46:15,053 - INFO - OMDB data for Food of the Gods II (1984).mp4 updated successfully
+2023-12-02 16:46:15,153 - INFO - OMDB data for Phantom.Of.The.Paradise.1974.1080p.BluRay.x264-[YTS.AM].mp4 updated successfully
+2023-12-02 16:53:05,954 - WARNING - Collection dataframe was created, but no metadata was passed to the constructor. No metadataloaded.
+2023-12-02 16:54:45,017 - WARNING - Collection dataframe was created, but no metadata was passed to the constructor. No metadataloaded.
+2023-12-02 17:17:05,677 - INFO - OMDB data for Streets.of.Fire.1984.1080p.BluRay.x265-RARBG.mp4 updated successfully
+2023-12-02 17:17:05,776 - INFO - OMDB data for The.Outsiders.1983.REMASTERED.THEATRICAL.1080p.BluRay.x265-RARBG.mp4 updated successfully
+2023-12-02 17:17:05,874 - INFO - OMDB data for Wild Things (1998) BRRip 720p.mp4 updated successfully
+2023-12-02 17:17:54,970 - INFO - passed validation: C:/Users/User/Desktop/Movies\Streets.of.Fire.1984.1080p.BluRay.x265-RARBG.mp4
+2023-12-02 17:17:54,971 - INFO - Created directory C:/Users/User/Desktop/Movies/Sorted\Streets of Fire
+2023-12-02 17:17:54,971 - INFO - Moved C:/Users/User/Desktop/Movies\Streets.of.Fire.1984.1080p.BluRay.x265-RARBG.mp4 
+ to C:/Users/User/Desktop/Movies/Sorted\Streets of Fire
+2023-12-02 17:17:54,972 - INFO - passed validation: C:/Users/User/Desktop/Movies\The.Outsiders.1983.REMASTERED.THEATRICAL.1080p.BluRay.x265-RARBG.mp4
+2023-12-02 17:17:54,972 - INFO - Created directory C:/Users/User/Desktop/Movies/Sorted\The Outsiders
+2023-12-02 17:17:54,973 - INFO - Moved C:/Users/User/Desktop/Movies\The.Outsiders.1983.REMASTERED.THEATRICAL.1080p.BluRay.x265-RARBG.mp4 
+ to C:/Users/User/Desktop/Movies/Sorted\The Outsiders
+2023-12-02 17:17:54,973 - INFO - passed validation: C:/Users/User/Desktop/Movies\Wild Things (1998) BRRip 720p.mp4
+2023-12-02 17:17:54,974 - INFO - Created directory C:/Users/User/Desktop/Movies/Sorted\Wild Things
+2023-12-02 17:17:54,975 - INFO - Moved C:/Users/User/Desktop/Movies\Wild Things (1998) BRRip 720p.mp4 
+ to C:/Users/User/Desktop/Movies/Sorted\Wild Things
+2024-01-07 15:37:15,488 - INFO - OMDB videos for Alien(1979)..mp4 updated successfully
+2024-01-07 15:37:18,145 - INFO - OMDB videos for Battletoads_-_The_Cartoon_-_Pilot_Episode_-_Full_Episode_-_Battletoads_TV_Series-GlRMunEPAYg.mp4 updated successfully
+2024-01-07 15:37:18,434 - INFO - OMDB videos for Harakiri (1962) ORIGINAL TRAILER.mp4 updated successfully
+2024-01-07 15:37:21,100 - INFO - OMDB videos for Phenomena (1985) 1080p.mp4 updated successfully
+2024-01-07 15:37:21,239 - INFO - OMDB videos for Samurai Rebellion (1967) trailer (Full HD).mp4 updated successfully
+2024-01-07 15:37:21,529 - INFO - OMDB videos for Sanjuro.1962.1080p.BluRay.x264-[YTS.AM].mp4 updated successfully
+2024-01-07 15:37:21,676 - INFO - OMDB videos for Tenebrae.1982.1080p.BluRay.H264.AAC-RARBG.mp4 updated successfully
+2024-01-07 15:37:21,831 - INFO - OMDB videos for Three.Outlaw.Samurai.1964.JAPANESE.1080p.BluRay.H264.AAC-VXT.mp4 updated successfully
+2024-01-07 15:37:22,045 - INFO - OMDB videos for video.mp4 updated successfully
+2024-01-07 15:37:24,693 - INFO - OMDB videos for [Raw-Deal] California Crisis (\u30ab\u30ea\u30d5\u30a9\u30eb\u30cb\u30a2) [E1BB265E].mp4 updated successfully
+2024-01-07 15:37:24,971 - WARNING - Error requesting OMDB videos for title \u5207\u8179: Movie not found!
+2024-01-07 15:37:25,108 - INFO - OMDB videos for Bubblegum Crisis - Ep. 01 - Tinsel City (1987 BluRay - 720p DUAL Audio).mkv updated successfully
+2024-01-07 15:37:25,198 - INFO - OMDB videos for Bubblegum Crisis - Ep. 02 - Born to Kill (1987 BluRay - 720p DUAL Audio).mkv updated successfully
+2024-01-07 15:37:25,289 - INFO - OMDB videos for Bubblegum Crisis - Ep. 03 - Blow Up (1987 BluRay - 720p DUAL Audio).mkv updated successfully
+2024-01-07 15:37:25,378 - INFO - OMDB videos for Bubblegum Crisis - Ep. 04 - Revenge Road (1988 BluRay - 720p DUAL Audio).mkv updated successfully
+2024-01-07 15:37:25,463 - INFO - OMDB videos for Bubblegum Crisis - Ep. 05 - Moonlight Rambler (1988 BluRay - 720p DUAL Audio).mkv updated successfully
+2024-01-07 15:37:25,552 - INFO - OMDB videos for Bubblegum Crisis - Ep. 06 - Red Eye's (1989 BluRay - 720p DUAL Audio).mkv updated successfully
+2024-01-07 15:37:25,649 - INFO - OMDB videos for Bubblegum Crisis - Ep. 07 - Double Vision (1990 BluRay - 720p DUAL Audio).mkv updated successfully
+2024-01-07 15:37:25,733 - INFO - OMDB videos for Bubblegum Crisis - Ep. 08 - Scoop Chase (1991 BluRay - 720p DUAL Audio).mkv updated successfully
+2024-01-07 15:37:26,021 - INFO - OMDB videos for I Was Born But.mp4 updated successfully
+2024-01-07 15:37:26,105 - INFO - OMDB videos for Samurai Rebellion.mp4 updated successfully
+2024-01-07 15:37:28,883 - INFO - OMDB videos for Throne of Fire.mp4 updated successfully
+2024-01-07 15:37:29,167 - WARNING - Error requesting OMDB videos for title Angels Egg: Movie not found!
+2024-01-07 15:37:31,974 - INFO - OMDB videos for Arion (Sub).mp4 updated successfully
+2024-01-07 15:37:32,253 - WARNING - Error requesting OMDB videos for title Kanashimi no Belladonna: Movie not found!
+2024-01-07 15:37:35,366 - INFO - OMDB videos for Lily CAT (Dub).mp4 updated successfully
+2024-01-07 15:37:35,666 - INFO - OMDB videos for Lupin III The Castle of Cagliostro (English Dub).mp4 updated successfully
+2024-01-07 15:37:35,953 - WARNING - Error requesting OMDB videos for title Midnight Eye Gokuu: Movie not found!
+2024-01-07 15:37:36,240 - WARNING - Error requesting OMDB videos for title Midnight Eye Gokuu II: Movie not found!
+2024-01-07 15:37:39,116 - INFO - OMDB videos for Neo Tokyo (Dub).mp4 updated successfully
+2024-01-07 15:37:39,264 - WARNING - Error requesting OMDB videos for title Record of Lodoss War Volume 1: Movie not found!
+2024-01-07 15:37:41,913 - INFO - OMDB videos for Robot Carnival (Dub).mp4 updated successfully
+2024-01-07 15:37:44,569 - INFO - OMDB videos for Space Adventure Cobra 1982.mp4 updated successfully
+2024-01-07 15:37:44,876 - INFO - OMDB videos for Sweet Home (Sub).mp4 updated successfully
+2024-01-07 15:37:47,681 - INFO - OMDB videos for Venus Wars (Dub).mp4 updated successfully
+2024-01-07 15:37:47,833 - INFO - OMDB videos for Wings of Honneamise 1987 720p BluRay x264 [Mkvking.com].mkv updated successfully
+2024-01-07 15:37:50,492 - INFO - OMDB videos for Wizardry OVA (Sub).mp4 updated successfully
+2024-01-07 15:37:53,132 - INFO - OMDB videos for [ILA] MD Geist - 01 - Directors cut (dual).mp4 updated successfully
+2024-01-07 15:37:53,220 - INFO - OMDB videos for [ILA] MD Geist - 02 (dual).mp4 updated successfully
+2024-01-07 15:37:53,362 - INFO - OMDB videos for bubblegum-crisis-episode-1.mp4 updated successfully
+2024-01-07 15:37:53,453 - INFO - OMDB videos for bubblegum-crisis-episode-2.mp4 updated successfully
+2024-01-07 15:37:53,548 - INFO - OMDB videos for bubblegum-crisis-episode-31650316201.2.mp4 updated successfully
+2024-01-07 15:37:53,633 - INFO - OMDB videos for bubblegum-crisis-episode-4.mp4 updated successfully
+2024-01-07 15:37:53,939 - INFO - OMDB videos for Golgo 13 - The Professional.mp4 updated successfully
+2024-01-07 15:37:54,116 - INFO - OMDB videos for Golgo 13- Queen Bee (1998)(Dub).mp4 updated successfully
+2024-01-07 15:37:56,757 - INFO - OMDB videos for Mad Bull 34 Part 1 The Scandal .mp4 updated successfully
+2024-01-07 15:37:56,854 - INFO - OMDB videos for Mad Bull 34 Part 2 The Manhattan Project.mp4 updated successfully
+2024-01-07 15:37:56,939 - INFO - OMDB videos for Mad Bull 34 Part 3 City of Vice.mp4 updated successfully
+2024-01-07 15:37:57,028 - INFO - OMDB videos for Mad Bull 34 Part 4 Cop Killer.mp4 updated successfully
+2024-01-07 15:37:57,195 - INFO - OMDB videos for Memories (1995) - 01 - Magnetic Rose.mkv updated successfully
+2024-01-07 15:37:57,282 - INFO - OMDB videos for Memories (1995) - 02 - Stink Bomb.mkv updated successfully
+2024-01-07 15:37:57,373 - INFO - OMDB videos for Memories (1995) - 03 - Cannon Fodder.mkv updated successfully
+2024-01-07 15:37:57,670 - WARNING - Error requesting OMDB videos for title Ys Book One 1: Movie not found!
+2024-01-07 15:37:57,950 - WARNING - Error requesting OMDB videos for title Ys Book One 2: Movie not found!
+2024-01-07 15:37:58,087 - WARNING - Error requesting OMDB videos for title Ys Book One 3: Movie not found!
+2024-01-07 15:37:58,233 - WARNING - Error requesting OMDB videos for title Ys Book One 4: Movie not found!
+2024-01-07 15:37:58,379 - WARNING - Error requesting OMDB videos for title Ys Book Two 1: Movie not found!
+2024-01-07 15:37:58,665 - WARNING - Error requesting OMDB videos for title Ys Book Two 2: Movie not found!
+2024-01-07 15:37:58,810 - WARNING - Error requesting OMDB videos for title Ys Book Two 3: Movie not found!
+2024-01-07 15:37:59,090 - WARNING - Error requesting OMDB videos for title Ys II 1: Movie not found!
+2024-01-07 15:37:59,230 - WARNING - Error requesting OMDB videos for title Ys II 2: Movie not found!
+2024-01-07 15:37:59,368 - WARNING - Error requesting OMDB videos for title Ys II 3: Movie not found!
+2024-01-07 15:37:59,652 - WARNING - Error requesting OMDB videos for title Ys II 4: Movie not found!
+2024-01-07 15:37:59,940 - INFO - OMDB videos for Cyber City Oedo 808 - 1 (Dub).mp4 updated successfully
+2024-01-07 15:38:00,026 - INFO - OMDB videos for Cyber City Oedo 808 - 2 (Dub).mp4 updated successfully
+2024-01-07 15:38:00,116 - INFO - OMDB videos for Cyber City Oedo 808 - 3 (Dub).mp4 updated successfully
+2024-01-07 15:38:00,256 - WARNING - Error requesting OMDB videos for title a137ee3e2a37701695abd791d95bfeaf: Movie not found!
+2024-01-07 15:38:00,395 - INFO - OMDB videos for Kwaidan.mp4 updated successfully
+2024-01-07 15:38:00,565 - INFO - OMDB videos for Shadow of a Doubt (1943, USA) Directed by Alfred Hitchcock, Featuring Teresa Wright, Joseph Cotten.mp4 updated successfully
+2024-01-07 15:38:03,367 - INFO - OMDB videos for Strangers On A Train 720p.mp4 updated successfully
+2024-01-07 15:38:03,518 - INFO - OMDB videos for Super Mario Bros 1993 The Morton Jankel Cut Extended VHS1-1A.mp4 updated successfully
+2024-01-07 15:38:03,677 - INFO - OMDB videos for Woman in the Dunes (1964) - https-archive.org-details-woman.in.the.-dunes.-1964.-criterion.-1080p.-blu-ray.x-265.-hevc.-aac-sartre.mkv updated successfully
+2024-01-07 15:38:03,959 - INFO - OMDB videos for Blade.Runner.1982.1080p.BluRay.x264-[YTS.AM].mp4 updated successfully
+2024-01-07 15:38:04,100 - INFO - OMDB videos for Deathstalker.1983.720p.BluRay.x264.AAC-[YTS.MX].mp4 updated successfully
+2024-01-07 15:38:04,397 - INFO - OMDB videos for Hara-Kiri.Death.Of.A.Samurai.2011.1080p.BluRay.x264.AAC5.1-[YTS.MX].mp4 updated successfully
+2024-01-07 15:38:04,546 - INFO - OMDB videos for High.And.Low.1963.1080p.BluRay.x264.AAC5.1-[YTS.MX].mp4 updated successfully
+2024-01-07 15:38:04,691 - INFO - OMDB videos for Lady.Snowblood.1973.1080p.BluRay.x264-[YTS.LT].mp4 updated successfully
+2024-01-07 15:38:04,846 - WARNING - Error requesting OMDB videos for title The Man Who Stole The Sun Full-1: Movie not found!
+2024-01-07 15:38:05,147 - INFO - OMDB videos for The.Sword.Of.Doom.1966.1080p.BluRay.x264-[YTS.AM].mp4 updated successfully
+2024-01-07 15:38:05,429 - INFO - OMDB videos for Yojimbo.1961.1080p.BluRay.x264.AAC-[YTS.MX].mp4 updated successfully
+2024-01-07 15:38:05,606 - INFO - OMDB videos for Inferno.1980.1080p.BluRay.x264-[YTS.AM].mp4 updated successfully
+2024-01-07 15:38:05,905 - INFO - OMDB videos for Lone.Wolf.And.Cub.Sword.Of.Vengeance.1972.1080p.BluRay.x264.AAC-[YTS.MX].mp4 updated successfully
+2024-01-07 15:38:06,202 - INFO - OMDB videos for Miami.Connection.1987.1080p.BluRay.x264.AAC-[YTS.MX].mp4 updated successfully
+2024-01-07 15:38:06,485 - WARNING - Error requesting OMDB videos for title Mode Seven: Movie not found!
+2024-01-07 15:38:06,649 - INFO - OMDB videos for Opera.1987.1080p.BluRay.x264-[YTS.AM].mp4 updated successfully
+2024-01-07 15:38:09,305 - INFO - OMDB videos for Shakedown.1988.1080p.BluRay.x264-[YTS.AM].mp4 updated successfully
+2024-01-07 15:38:09,455 - INFO - OMDB videos for Streets.of.Fire.1984.1080p.BluRay.x265-RARBG.mp4 updated successfully
+2024-01-07 15:38:09,594 - INFO - OMDB videos for Suspiria.1977.1080p.BluRay.x264-[YTS.AM].mp4 updated successfully
+2024-01-07 15:38:09,749 - INFO - OMDB videos for The.Terminator.1984.REMASTERED.1080p.BluRay.H264.AAC-LAMA.mp4 updated successfully
+2024-01-07 15:38:09,889 - WARNING - Error requesting OMDB videos for title dummy12345: Movie not found!
+2024-01-07 15:38:10,043 - INFO - OMDB videos for Food of the Gods II (1984).mp4 updated successfully
+2024-01-07 15:38:10,336 - INFO - OMDB videos for Phantom.Of.The.Paradise.1974.1080p.BluRay.x264-[YTS.AM].mp4 updated successfully
+2024-01-07 15:38:10,626 - INFO - OMDB videos for Wizards.1977.720p.BluRay.x264-[YTS.LT].mp4 updated successfully
+2024-01-07 20:54:28,266 - INFO - OMDB videos for Alien(1979)..mp4 updated successfully
+2024-01-07 20:54:28,357 - INFO - OMDB videos for Battletoads_-_The_Cartoon_-_Pilot_Episode_-_Full_Episode_-_Battletoads_TV_Series-GlRMunEPAYg.mp4 updated successfully
+2024-01-07 20:54:28,447 - INFO - OMDB videos for Harakiri (1962) ORIGINAL TRAILER.mp4 updated successfully
+2024-01-07 20:54:28,537 - INFO - OMDB videos for Phenomena (1985) 1080p.mp4 updated successfully
+2024-01-07 20:54:28,634 - INFO - OMDB videos for Samurai Rebellion (1967) trailer (Full HD).mp4 updated successfully
+2024-01-07 20:54:28,725 - INFO - OMDB videos for Sanjuro.1962.1080p.BluRay.x264-[YTS.AM].mp4 updated successfully
+2024-01-07 20:54:28,808 - INFO - OMDB videos for Tenebrae.1982.1080p.BluRay.H264.AAC-RARBG.mp4 updated successfully
+2024-01-07 20:54:28,896 - INFO - OMDB videos for Three.Outlaw.Samurai.1964.JAPANESE.1080p.BluRay.H264.AAC-VXT.mp4 updated successfully
+2024-01-07 20:54:28,981 - INFO - OMDB videos for video.mp4 updated successfully
+2024-01-07 20:54:29,071 - INFO - OMDB videos for [Raw-Deal] California Crisis (\u30ab\u30ea\u30d5\u30a9\u30eb\u30cb\u30a2) [E1BB265E].mp4 updated successfully
+2024-01-07 20:54:29,160 - WARNING - Error requesting OMDB videos for title \u5207\u8179: Movie not found!
+2024-01-07 20:54:29,253 - INFO - OMDB videos for Bubblegum Crisis - Ep. 01 - Tinsel City (1987 BluRay - 720p DUAL Audio).mkv updated successfully
+2024-01-07 20:54:29,337 - INFO - OMDB videos for Bubblegum Crisis - Ep. 02 - Born to Kill (1987 BluRay - 720p DUAL Audio).mkv updated successfully
+2024-01-07 20:54:29,430 - INFO - OMDB videos for Bubblegum Crisis - Ep. 03 - Blow Up (1987 BluRay - 720p DUAL Audio).mkv updated successfully
+2024-01-07 20:54:29,525 - INFO - OMDB videos for Bubblegum Crisis - Ep. 04 - Revenge Road (1988 BluRay - 720p DUAL Audio).mkv updated successfully
+2024-01-07 20:54:29,612 - INFO - OMDB videos for Bubblegum Crisis - Ep. 05 - Moonlight Rambler (1988 BluRay - 720p DUAL Audio).mkv updated successfully
+2024-01-07 20:54:29,712 - INFO - OMDB videos for Bubblegum Crisis - Ep. 06 - Red Eye's (1989 BluRay - 720p DUAL Audio).mkv updated successfully
+2024-01-07 20:54:29,799 - INFO - OMDB videos for Bubblegum Crisis - Ep. 07 - Double Vision (1990 BluRay - 720p DUAL Audio).mkv updated successfully
+2024-01-07 20:54:29,893 - INFO - OMDB videos for Bubblegum Crisis - Ep. 08 - Scoop Chase (1991 BluRay - 720p DUAL Audio).mkv updated successfully
+2024-01-07 20:54:29,984 - INFO - OMDB videos for I Was Born But.mp4 updated successfully
+2024-01-07 20:54:30,080 - INFO - OMDB videos for Samurai Rebellion.mp4 updated successfully
+2024-01-07 20:54:30,167 - INFO - OMDB videos for Throne of Fire.mp4 updated successfully
+2024-01-07 20:54:30,257 - WARNING - Error requesting OMDB videos for title Angels Egg: Movie not found!
+2024-01-07 20:54:30,355 - INFO - OMDB videos for Arion (Sub).mp4 updated successfully
+2024-01-07 20:54:30,442 - WARNING - Error requesting OMDB videos for title Kanashimi no Belladonna: Movie not found!
+2024-01-07 20:54:30,535 - INFO - OMDB videos for Lily CAT (Dub).mp4 updated successfully
+2024-01-07 20:54:30,626 - INFO - OMDB videos for Lupin III The Castle of Cagliostro (English Dub).mp4 updated successfully
+2024-01-07 20:54:30,720 - WARNING - Error requesting OMDB videos for title Midnight Eye Gokuu: Movie not found!
+2024-01-07 20:54:30,806 - WARNING - Error requesting OMDB videos for title Midnight Eye Gokuu II: Movie not found!
+2024-01-07 20:54:30,895 - INFO - OMDB videos for Neo Tokyo (Dub).mp4 updated successfully
+2024-01-07 20:54:30,981 - WARNING - Error requesting OMDB videos for title Record of Lodoss War Volume 1: Movie not found!
+2024-01-07 20:54:31,068 - INFO - OMDB videos for Robot Carnival (Dub).mp4 updated successfully
+2024-01-07 20:54:31,163 - INFO - OMDB videos for Space Adventure Cobra 1982.mp4 updated successfully
+2024-01-07 20:54:31,252 - INFO - OMDB videos for Sweet Home (Sub).mp4 updated successfully
+2024-01-07 20:54:31,342 - INFO - OMDB videos for Venus Wars (Dub).mp4 updated successfully
+2024-01-07 20:54:31,431 - INFO - OMDB videos for Wings of Honneamise 1987 720p BluRay x264 [Mkvking.com].mkv updated successfully
+2024-01-07 20:54:31,519 - INFO - OMDB videos for Wizardry OVA (Sub).mp4 updated successfully
+2024-01-07 20:54:31,610 - INFO - OMDB videos for [ILA] MD Geist - 01 - Directors cut (dual).mp4 updated successfully
+2024-01-07 20:54:31,697 - INFO - OMDB videos for [ILA] MD Geist - 02 (dual).mp4 updated successfully
+2024-01-07 20:54:31,784 - INFO - OMDB videos for bubblegum-crisis-episode-1.mp4 updated successfully
+2024-01-07 20:54:31,876 - INFO - OMDB videos for bubblegum-crisis-episode-2.mp4 updated successfully
+2024-01-07 20:54:31,967 - INFO - OMDB videos for bubblegum-crisis-episode-31650316201.2.mp4 updated successfully
+2024-01-07 20:54:32,054 - INFO - OMDB videos for bubblegum-crisis-episode-4.mp4 updated successfully
+2024-01-07 20:54:32,144 - INFO - OMDB videos for Golgo 13 - The Professional.mp4 updated successfully
+2024-01-07 20:54:32,231 - INFO - OMDB videos for Golgo 13- Queen Bee (1998)(Dub).mp4 updated successfully
+2024-01-07 20:54:32,324 - INFO - OMDB videos for Mad Bull 34 Part 1 The Scandal .mp4 updated successfully
+2024-01-07 20:54:32,418 - INFO - OMDB videos for Mad Bull 34 Part 2 The Manhattan Project.mp4 updated successfully
+2024-01-07 20:54:32,508 - INFO - OMDB videos for Mad Bull 34 Part 3 City of Vice.mp4 updated successfully
+2024-01-07 20:54:32,597 - INFO - OMDB videos for Mad Bull 34 Part 4 Cop Killer.mp4 updated successfully
+2024-01-07 20:54:32,705 - INFO - OMDB videos for Memories (1995) - 01 - Magnetic Rose.mkv updated successfully
+2024-01-07 20:54:32,805 - INFO - OMDB videos for Memories (1995) - 02 - Stink Bomb.mkv updated successfully
+2024-01-07 20:54:32,894 - INFO - OMDB videos for Memories (1995) - 03 - Cannon Fodder.mkv updated successfully
+2024-01-07 20:54:32,988 - WARNING - Error requesting OMDB videos for title Ys Book One 1: Movie not found!
+2024-01-07 20:54:33,082 - WARNING - Error requesting OMDB videos for title Ys Book One 2: Movie not found!
+2024-01-07 20:54:33,174 - WARNING - Error requesting OMDB videos for title Ys Book One 3: Movie not found!
+2024-01-07 20:54:33,263 - WARNING - Error requesting OMDB videos for title Ys Book One 4: Movie not found!
+2024-01-07 20:54:33,351 - WARNING - Error requesting OMDB videos for title Ys Book Two 1: Movie not found!
+2024-01-07 20:54:33,446 - WARNING - Error requesting OMDB videos for title Ys Book Two 2: Movie not found!
+2024-01-07 20:54:33,537 - WARNING - Error requesting OMDB videos for title Ys Book Two 3: Movie not found!
+2024-01-07 20:54:33,625 - WARNING - Error requesting OMDB videos for title Ys II 1: Movie not found!
+2024-01-07 20:54:33,717 - WARNING - Error requesting OMDB videos for title Ys II 2: Movie not found!
+2024-01-07 20:54:33,801 - WARNING - Error requesting OMDB videos for title Ys II 3: Movie not found!
+2024-01-07 20:54:33,892 - WARNING - Error requesting OMDB videos for title Ys II 4: Movie not found!
+2024-01-07 20:54:33,982 - INFO - OMDB videos for Cyber City Oedo 808 - 1 (Dub).mp4 updated successfully
+2024-01-07 20:54:34,073 - INFO - OMDB videos for Cyber City Oedo 808 - 2 (Dub).mp4 updated successfully
+2024-01-07 20:54:34,161 - INFO - OMDB videos for Cyber City Oedo 808 - 3 (Dub).mp4 updated successfully
+2024-01-07 20:54:34,248 - WARNING - Error requesting OMDB videos for title a137ee3e2a37701695abd791d95bfeaf: Movie not found!
+2024-01-07 20:54:34,335 - INFO - OMDB videos for Kwaidan.mp4 updated successfully
+2024-01-07 20:54:34,421 - INFO - OMDB videos for Shadow of a Doubt (1943, USA) Directed by Alfred Hitchcock, Featuring Teresa Wright, Joseph Cotten.mp4 updated successfully
+2024-01-07 20:54:34,514 - INFO - OMDB videos for Strangers On A Train 720p.mp4 updated successfully
+2024-01-07 20:54:34,608 - INFO - OMDB videos for Super Mario Bros 1993 The Morton Jankel Cut Extended VHS1-1A.mp4 updated successfully
+2024-01-07 20:54:34,697 - INFO - OMDB videos for Woman in the Dunes (1964) - https-archive.org-details-woman.in.the.-dunes.-1964.-criterion.-1080p.-blu-ray.x-265.-hevc.-aac-sartre.mkv updated successfully
+2024-01-07 20:54:34,792 - INFO - OMDB videos for Blade.Runner.1982.1080p.BluRay.x264-[YTS.AM].mp4 updated successfully
+2024-01-07 20:54:34,881 - INFO - OMDB videos for Deathstalker.1983.720p.BluRay.x264.AAC-[YTS.MX].mp4 updated successfully
+2024-01-07 20:54:34,964 - INFO - OMDB videos for Hara-Kiri.Death.Of.A.Samurai.2011.1080p.BluRay.x264.AAC5.1-[YTS.MX].mp4 updated successfully
+2024-01-07 20:54:35,062 - INFO - OMDB videos for High.And.Low.1963.1080p.BluRay.x264.AAC5.1-[YTS.MX].mp4 updated successfully
+2024-01-07 20:54:35,150 - INFO - OMDB videos for Lady.Snowblood.1973.1080p.BluRay.x264-[YTS.LT].mp4 updated successfully
+2024-01-07 20:54:35,235 - WARNING - Error requesting OMDB videos for title The Man Who Stole The Sun Full-1: Movie not found!
+2024-01-07 20:54:35,328 - INFO - OMDB videos for The.Sword.Of.Doom.1966.1080p.BluRay.x264-[YTS.AM].mp4 updated successfully
+2024-01-07 20:54:35,415 - INFO - OMDB videos for Yojimbo.1961.1080p.BluRay.x264.AAC-[YTS.MX].mp4 updated successfully
+2024-01-07 20:54:35,503 - INFO - OMDB videos for Inferno.1980.1080p.BluRay.x264-[YTS.AM].mp4 updated successfully
+2024-01-07 20:54:35,589 - INFO - OMDB videos for Lone.Wolf.And.Cub.Sword.Of.Vengeance.1972.1080p.BluRay.x264.AAC-[YTS.MX].mp4 updated successfully
+2024-01-07 20:54:35,682 - INFO - OMDB videos for Miami.Connection.1987.1080p.BluRay.x264.AAC-[YTS.MX].mp4 updated successfully
+2024-01-07 20:54:35,780 - WARNING - Error requesting OMDB videos for title Mode Seven: Movie not found!
+2024-01-07 20:54:35,863 - WARNING - Error requesting OMDB videos for title Mode Seven: Movie not found!
+2024-01-07 20:54:35,950 - INFO - OMDB videos for Opera.1987.1080p.BluRay.x264-[YTS.AM].mp4 updated successfully
+2024-01-07 20:54:36,043 - INFO - OMDB videos for Shakedown.1988.1080p.BluRay.x264-[YTS.AM].mp4 updated successfully
+2024-01-07 20:54:36,133 - INFO - OMDB videos for Streets.of.Fire.1984.1080p.BluRay.x265-RARBG.mp4 updated successfully
+2024-01-07 20:54:36,225 - INFO - OMDB videos for Suspiria.1977.1080p.BluRay.x264-[YTS.AM].mp4 updated successfully
+2024-01-07 20:54:36,311 - INFO - OMDB videos for The.Terminator.1984.REMASTERED.1080p.BluRay.H264.AAC-LAMA.mp4 updated successfully
+2024-01-07 20:54:36,396 - WARNING - Error requesting OMDB videos for title dummy12345: Movie not found!
+2024-01-07 20:54:36,502 - INFO - OMDB videos for Food of the Gods II (1984).mp4 updated successfully
+2024-01-07 20:54:36,594 - INFO - OMDB videos for Phantom.Of.The.Paradise.1974.1080p.BluRay.x264-[YTS.AM].mp4 updated successfully
+2024-01-07 20:54:36,680 - INFO - OMDB videos for Wizards.1977.720p.BluRay.x264-[YTS.LT].mp4 updated successfully
+2024-07-02 13:08:59,756 - WARNING - Error requesting OMDB videos for title bogusmovietitle: Movie not found!
+2024-07-02 13:08:59,768 - INFO - OMDB videos for Mock_Video.mp4 updated successfully
+2024-07-02 13:20:07,952 - WARNING - Error requesting OMDB videos for title bogusmovietitle: Movie not found!
+2024-07-02 13:20:07,954 - INFO - OMDB videos for Mock_Video.mp4 updated successfully
+2024-07-02 13:20:07,972 - INFO - Moved C:\Users\User\AppData\Local\Temp\tmp8bdginz_\tempfile.mp4 
+ to C:\Users\User\AppData\Local\Temp\tmp8bdginz_\dest\
+2024-07-02 13:20:07,978 - INFO - Moved C:\Users\User\AppData\Local\Temp\tmpir_duoq5\dest\tempfile.mp4 
+ to C:\Users\User\AppData\Local\Temp\tmpir_duoq5
+2024-07-02 13:20:08,014 - INFO - Moved C:\Users\User\AppData\Local\Temp\tmpqm9awi0w\dest\tempfile.mp4 
+ to C:\Users\User\AppData\Local\Temp\tmpqm9awi0w
