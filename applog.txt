@@ -17948,3 +17948,48 @@
  to C:\Users\User\AppData\Local\Temp\tmpir_duoq5
 2024-07-02 13:20:08,014 - INFO - Moved C:\Users\User\AppData\Local\Temp\tmpqm9awi0w\dest\tempfile.mp4 
  to C:\Users\User\AppData\Local\Temp\tmpqm9awi0w
+2024-07-02 14:43:04,105 - WARNING - Error requesting OMDB videos for title bogusmovietitle: Movie not found!
+2024-07-02 14:43:04,769 - INFO - OMDB videos for Mock_Video.mp4 updated successfully
+2024-07-02 14:43:04,879 - INFO - Moved C:\Users\User\AppData\Local\Temp\tmpqhzf_slx\tempfile.mp4 
+ to C:\Users\User\AppData\Local\Temp\tmpqhzf_slx\dest\
+2024-07-02 14:43:04,894 - INFO - Moved C:\Users\User\AppData\Local\Temp\tmpdgj7y3tt\dest\tempfile.mp4 
+ to C:\Users\User\AppData\Local\Temp\tmpdgj7y3tt
+2024-07-02 14:43:04,969 - INFO - Moved C:\Users\User\AppData\Local\Temp\tmp0z8x90al\dest\tempfile.mp4 
+ to C:\Users\User\AppData\Local\Temp\tmp0z8x90al
+2024-07-02 14:43:29,708 - WARNING - Error requesting OMDB videos for title bogusmovietitle: Movie not found!
+2024-07-02 14:43:30,456 - INFO - OMDB videos for Mock_Video.mp4 updated successfully
+2024-07-02 14:43:30,521 - INFO - Moved C:\Users\User\AppData\Local\Temp\tmpocepudrz\tempfile.mp4 
+ to C:\Users\User\AppData\Local\Temp\tmpocepudrz\dest\
+2024-07-02 14:43:30,535 - INFO - Moved C:\Users\User\AppData\Local\Temp\tmp7ay5d3yz\dest\tempfile.mp4 
+ to C:\Users\User\AppData\Local\Temp\tmp7ay5d3yz
+2024-07-02 14:43:30,610 - INFO - Moved C:\Users\User\AppData\Local\Temp\tmpp90pl72w\dest\tempfile.mp4 
+ to C:\Users\User\AppData\Local\Temp\tmpp90pl72w
+2024-07-02 16:39:54,137 - WARNING - Error requesting OMDB videos for title bogusmovietitle: Movie not found!
+2024-07-02 16:39:54,336 - INFO - OMDB videos for Mock_Video.mp4 updated successfully
+2024-07-02 16:39:54,401 - INFO - Moved C:\Users\User\AppData\Local\Temp\tmp0lo7jyb7\tempfile.mp4 
+ to C:\Users\User\AppData\Local\Temp\tmp0lo7jyb7\dest\
+2024-07-02 16:39:54,414 - INFO - Moved C:\Users\User\AppData\Local\Temp\tmp9p4aok3t\dest\tempfile.mp4 
+ to C:\Users\User\AppData\Local\Temp\tmp9p4aok3t
+2024-07-02 16:39:54,479 - INFO - Moved C:\Users\User\AppData\Local\Temp\tmp2jhci4kd\dest\tempfile.mp4 
+ to C:\Users\User\AppData\Local\Temp\tmp2jhci4kd
+2024-07-02 16:47:17,252 - WARNING - Error requesting OMDB videos for title bogusmovietitle: Movie not found!
+2024-07-02 16:47:17,307 - INFO - Moved C:\Users\User\AppData\Local\Temp\tmpj6n49gzn\tempfile.mp4 
+ to C:\Users\User\AppData\Local\Temp\tmpj6n49gzn\dest\
+2024-07-02 16:47:17,318 - INFO - Moved C:\Users\User\AppData\Local\Temp\tmpg2ou5hcq\dest\tempfile.mp4 
+ to C:\Users\User\AppData\Local\Temp\tmpg2ou5hcq
+2024-07-02 16:47:17,361 - INFO - Moved C:\Users\User\AppData\Local\Temp\tmptuh180at\dest\tempfile.mp4 
+ to C:\Users\User\AppData\Local\Temp\tmptuh180at
+2024-07-02 16:49:33,045 - WARNING - Error requesting OMDB videos for title bogusmovietitle: Movie not found!
+2024-07-02 16:49:33,099 - INFO - Moved C:\Users\User\AppData\Local\Temp\tmp5lgeplle\tempfile.mp4 
+ to C:\Users\User\AppData\Local\Temp\tmp5lgeplle\dest\
+2024-07-02 16:49:33,110 - INFO - Moved C:\Users\User\AppData\Local\Temp\tmpc4p3bokt\dest\tempfile.mp4 
+ to C:\Users\User\AppData\Local\Temp\tmpc4p3bokt
+2024-07-02 16:49:33,168 - INFO - Moved C:\Users\User\AppData\Local\Temp\tmpl3ylb4wp\dest\tempfile.mp4 
+ to C:\Users\User\AppData\Local\Temp\tmpl3ylb4wp
+2024-07-02 16:50:45,612 - WARNING - Error requesting OMDB videos for title bogusmovietitle: Movie not found!
+2024-07-02 16:50:45,644 - INFO - Moved C:\Users\User\AppData\Local\Temp\tmpk6p6cp24\tempfile.mp4 
+ to C:\Users\User\AppData\Local\Temp\tmpk6p6cp24\dest\
+2024-07-02 16:50:45,652 - INFO - Moved C:\Users\User\AppData\Local\Temp\tmpjuqysvbf\dest\tempfile.mp4 
+ to C:\Users\User\AppData\Local\Temp\tmpjuqysvbf
+2024-07-02 16:50:45,697 - INFO - Moved C:\Users\User\AppData\Local\Temp\tmpj6zdcfg9\dest\tempfile.mp4 
+ to C:\Users\User\AppData\Local\Temp\tmpj6zdcfg9

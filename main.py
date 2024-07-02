@@ -1,20 +1,8 @@
 # Standard Python imports
-import jsonschema
-
-from datetime import datetime
-import json
-import logging
 import os
-
-import requests as requests
-import shutil
 
 # Additional imports
 from dotenv import load_dotenv
-import guessit
-import hashlib
-from pytube import YouTube, Search
-from tqdm import tqdm
 
 # Docs
 # https://pytube.io/en/latest/index.html
@@ -27,26 +15,6 @@ from tqdm import tqdm
 # There exists python-opensubtitles
 
 # TODO: Moving files needs to take associated subtitles, at the very least.
-
-
-# def guess_title(video):
-#     """
-#     Guesses the title of a video based on its filename.
-#
-#     This function uses the 'guessit' library to analyze the filename of a video and
-#     extract a guessed title from it. The function assumes that the video information
-#     is structured within the 'video' dictionary, and the filename is stored in the
-#     'FILE_DATA' subdictionary under the 'FILENAME' key.
-#
-#     Args:
-#         video (dict): A dictionary containing information about the video, typically
-#                       obtained from the video collection. It should have the 'FILE_DATA'
-#                       subdictionary containing the filename under the 'FILENAME' key.
-#
-#     Returns:
-#         str: The guessed title of the video based on its filename.
-#     """
-#     return guessit.guessit(video[FILE_DATA][FILENAME])['title']
 
 
 def organize_collection(collection, path, rem_empty=False):
@@ -62,12 +30,6 @@ def organize_collection(collection, path, rem_empty=False):
     metadata_save(collection)
 
 
-# def update_guessit(video):
-#     filename = video[FILE_DATA][FILENAME]
-#     data = guessit.guessit(filename)
-#     video[GUESSIT_DATA] = data
-
-
 def organize_collection_buffer(collection, path, rem_empty=False):
     buffer = CommandBuffer()
     for entry in collection:
@@ -78,13 +40,6 @@ def organize_collection_buffer(collection, path, rem_empty=False):
             if rem_empty:
                 remove_empty_dir(path)
     metadata_save(collection)
-
-
-def integer_generator():
-    n = 0
-    while True:
-        yield n
-        n = n+1
 
 
 def mimic_folder(src, dest):

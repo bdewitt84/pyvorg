@@ -1,11 +1,21 @@
-import os
+# source/video.py
+
+"""
+Video class representing individual videos and their related functions
+for use by the Collection class.
+"""
+
+# Standard library
 import json
 import logging
+import os
 
+# Local imports
+from api import get_omdb_data
 from constants import *
 from helper import timestamp_generate, hash_sha256
-from api import get_omdb_data
 
+# Third-party packages
 import guessit
 
 

@@ -1,11 +1,20 @@
+# source.collection.py
+
+"""
+    Collection class handles the main functionality of the package, including
+    scanning for files, updating the metadata from online sources, and organizing
+    the video files into a predefined file structure.
+"""
+
+# Standard library
 import json
 import os
 
-from constants import *
-
-from .video import Video
-from .combuffer import CommandBuffer
-from .exceptions import ValidationError
+# Local imports
+from source.combuffer import CommandBuffer
+from source.constants import *
+from source.exceptions import ValidationError
+from source.video import Video
 
 
 class Collection:

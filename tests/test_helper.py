@@ -1,9 +1,17 @@
+# tests/test_helper.py
+
+"""
+Unit tests for source/helper.py
+"""
+import os
+# Standard library
+import tempfile
 import unittest
 from unittest.mock import MagicMock, patch
-import tempfile
 
-from source.helper import *
+# Local imports
 from source.constants import *
+from source.helper import *
 from source.video import Video
 
 
@@ -47,29 +55,29 @@ class TestAddVideo(unittest.TestCase):
             self.assertTrue(timestamp_validate(collection[expected_hash][FILE_DATA][TIMESTAMP]))
             # self.assertEqual(collection[expected_hash][FILE_DATA][TIMESTAMP], expected_timestamp)
 
-
-class TestScanDirectory(unittest.TestCase):
-
-    def setUp(self) -> None:
-        self.collection = {}
-        self.temp_dir = tempfile.TemporaryDirectory()
-
-        test_files = ['video1.mp4', 'video2.mkv', 'notavideo.txt']
-        for filename in test_files:
-            path = os.path.join(self.temp_dir.name, filename)
-            with open(path, 'w') as file:
-                file.write(filename)  # We use unique videos to produce unique hashes
-
-    def tearDown(self) -> None:
-        self.temp_dir.cleanup()
-
-    def test_scan_directory_valid(self):
-        mock_add_video = MagicMock()
-
-        with unittest.mock.patch('helper.add_video', mock_add_video):
-            scan_directory(self.collection, self.temp_dir.name)
-
-        self.assertEqual(mock_add_video.call_count, 2)
+# TODO: Rewrite for Collection.scan_directory()
+# class TestScanDirectory(unittest.TestCase):
+#
+#     def setUp(self) -> None:
+#         self.collection = {}
+#         self.temp_dir = tempfile.TemporaryDirectory()
+#
+#         test_files = ['video1.mp4', 'video2.mkv', 'notavideo.txt']
+#         for filename in test_files:
+#             path = os.path.join(self.temp_dir.name, filename)
+#             with open(path, 'w') as file:
+#                 file.write(filename)  # We use unique videos to produce unique hashes
+#
+#     def tearDown(self) -> None:
+#         self.temp_dir.cleanup()
+#
+#     def test_scan_directory_valid(self):
+#         mock_add_video = MagicMock()
+#
+#         with unittest.mock.patch('helper.add_video', mock_add_video):
+#             scan_directory(self.collection, self.temp_dir.name)
+#
+#         self.assertEqual(mock_add_video.call_count, 2)
 
 
 class TestGenerateVideoDirName(unittest.TestCase):
@@ -81,27 +89,28 @@ class TestGenerateVideoDirName(unittest.TestCase):
             data = 'expected year'
         return data
 
-    @patch('video.Video.get_data',
-           side_effect=lambda key, default='expected default': TestGenerateVideoDirName.mock_get_data(key, default)
-           )
-    def test_generate_video_dir_name(self, mock_get_data):
-        temp_dir = tempfile.TemporaryDirectory()
-        temp_video_path = temp_dir.name + 'temp_vid.mp4'
-
-        with open(temp_video_path, 'w') as temp_file:
-            temp_file.write('test_data')
-            temp_file.close()
-
-        with open(temp_video_path, 'r') as temp_file:
-            video = Video()
-            video.update_file_data(temp_file.name)
-            format_str = '%title (%year)'
-            _, default_title = FORMAT_SPECIFIERS.get('%title')
-            expected_str = default_title + ' (expected year)'
-            result = generate_video_dir_name(video, format_str)
-            self.assertEqual(expected_str, result)
-
-        temp_dir.cleanup()
+    # TODO: Rewrite test for Video.generate_dir_name()
+    # @patch('video.Video.get_data',
+    #        side_effect=lambda key, default='expected default': TestGenerateVideoDirName.mock_get_data(key, default)
+    #        )
+    # def test_generate_video_dir_name(self, mock_get_data):
+    #     temp_dir = tempfile.TemporaryDirectory()
+    #     temp_video_path = temp_dir.name + 'temp_vid.mp4'
+    #
+    #     with open(temp_video_path, 'w') as temp_file:
+    #         temp_file.write('test_data')
+    #         temp_file.close()
+    #
+    #     with open(temp_video_path, 'r') as temp_file:
+    #         video = Video()
+    #         video.update_file_data(temp_file.name)
+    #         format_str = '%title (%year)'
+    #         _, default_title = FORMAT_SPECIFIERS.get('%title')
+    #         expected_str = default_title + ' (expected year)'
+    #         result = generate_video_dir_name(video, format_str)
+    #         self.assertEqual(expected_str, result)
+    #
+    #     temp_dir.cleanup()
 
 
 class TestTimestampValidate(unittest.TestCase):

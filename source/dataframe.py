@@ -1,11 +1,20 @@
+# source/dataframe.py
+
+"""
+Provides extended functionality by converting collection metadata into a Pandas
+dataframe, including sorting, filtering, and the generation and display of graphs.
+"""
+
+# Standard library
 import logging
 import math
 import os
-import matplotlib as plt
-import plotly.graph_objects as go
 
+# Third-party packages
+import matplotlib as plt
 import networkx as nx
 import pandas as pd
+import plotly.graph_objects as go
 
 
 class CollectionDataframe:

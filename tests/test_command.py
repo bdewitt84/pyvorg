@@ -1,6 +1,14 @@
-import unittest
-import tempfile
+# tests/test_command.py
 
+"""
+Unit tests for source/command.py
+"""
+
+# Standard library
+import tempfile
+import unittest
+
+# Local imports
 from source.command import *
 from source.video import Video
 

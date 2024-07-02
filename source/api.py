@@ -1,7 +1,7 @@
 # source/api.py
 
 """
-This module handles API interactions from sources such as OMDB and YouTube, among others.
+    This module handles API interactions from sources such as OMDB and YouTube, among others.
 """
 
 # Standard imports
@@ -10,44 +10,11 @@ import os
 
 # local imports
 from source.constants import *
+from source.exceptions import RateLimitExceededError
 
 # Third part imports
-import requests
 from pytube import YouTube, Search
-
-
-class RateLimitExceededError(Exception):
-    def __init__(self):
-        super().__init__("Rate limit exceeded.")
-
-
-def update_video_omdb_data(video, title):
-    # TODO: Update Docstring to include title parameter
-    """
-    Updates the video dictionary with movie videos from the OMDB API.
-
-    This function retrieves movie videos for the video's guessed title from the OMDB API
-    using the 'get_omdb_data' function, and if successful, updates the provided video
-    dictionary with the retrieved videos under the 'OMDB_DATA' key.
-
-    Args:
-        video (dict): The video dictionary to update with OMDB videos. The dictionary should
-                      contain information about the video, typically obtained from the
-                      video collection.
-        title (str): The title of the movie for which to retrieve OMDB data
-
-    Returns:
-        None
-    """
-    # guess = guess_title(video)
-
-    data = get_omdb_data(title)
-
-    if data:
-        video.update({OMDB_DATA: data})
-        logging.info(f'OMDB videos for {video[FILE_DATA][FILENAME]} updated successfully')
-    else:
-        video.update({OMDB_DATA: f'OMDB search for \"{title}\" returned no results.'})
+import requests
 
 
 def get_omdb_data(title):
@@ -97,19 +64,6 @@ def get_omdb_data(title):
     return data
 
 
-def trailer_find(video, num_results=1):
-    title = video[OMDB_DATA][OMDB_TITLE]
-    search = Search(title + ' official trailer')
-
-    trailer_urls = []
-    for result in range(num_results):
-        trailer_id = search.results[result].video_id
-        trailer_url = 'https://www.youtube.com/watch?v=' + trailer_id
-        trailer_urls.append(trailer_url)
-
-    return trailer_urls
-
-
 def trailer_download(path, youtube_url):
     yt = YouTube(youtube_url)
     title = yt.title
@@ -125,3 +79,45 @@ def trailer_download(path, youtube_url):
             logging.error('No suitable video stream could be found.')
     else:
         logging.error(full_trailer_path + ' already exists.')
+
+
+def trailer_find(video, num_results=1):
+    title = video[OMDB_DATA][OMDB_TITLE]
+    search = Search(title + ' official trailer')
+
+    trailer_urls = []
+    for result in range(num_results):
+        trailer_id = search.results[result].video_id
+        trailer_url = 'https://www.youtube.com/watch?v=' + trailer_id
+        trailer_urls.append(trailer_url)
+
+    return trailer_urls
+
+# TODO: Rewrite for Video.update_omdb
+# def update_video_omdb_data(video, title):
+#     # TODO: Update Docstring to include title parameter
+#     """
+#     Updates the video dictionary with movie videos from the OMDB API.
+#
+#     This function retrieves movie videos for the video's guessed title from the OMDB API
+#     using the 'get_omdb_data' function, and if successful, updates the provided video
+#     dictionary with the retrieved videos under the 'OMDB_DATA' key.
+#
+#     Args:
+#         video (dict): The video dictionary to update with OMDB videos. The dictionary should
+#                       contain information about the video, typically obtained from the
+#                       video collection.
+#         title (str): The title of the movie for which to retrieve OMDB data
+#
+#     Returns:
+#         None
+#     """
+#     # guess = guess_title(video)
+#
+#     data = get_omdb_data(title)
+#
+#     if data:
+#         video.update({OMDB_DATA: data})
+#         logging.info(f'OMDB videos for {video[FILE_DATA][FILENAME]} updated successfully')
+#     else:
+#         video.update({OMDB_DATA: f'OMDB search for \"{title}\" returned no results.'})

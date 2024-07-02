@@ -1,3 +1,11 @@
+# source/constants.py
+
+"""
+Constants used across all packages, mostly to standardize JSON entries.
+Also included are a list of valid video extensions and a JSON schema
+used for validating metadata.
+"""
+
 # String constants
 FILE_DATA = 'file_data'
 OMDB_DATA = 'omdb_data'

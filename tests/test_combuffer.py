@@ -1,7 +1,13 @@
 # tests/test_combuffer.py
 
+"""
+Unit tests for source/combuffer.py
+"""
+
+# Standard library
 import unittest
 
+# Local imports
 from source.combuffer import *
 
 

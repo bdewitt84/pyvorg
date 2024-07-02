@@ -1,5 +1,15 @@
-from queue import Queue
+# source/combuffer.py
+
+"""
+Command buffer implementation used by Collection to enable batching
+of processes and related functions, such as load, save, undo, etc.
+"""
+
+# Standard library
 import pickle
+from queue import Queue
+
+# Local imports
 from .command import *
 
 
