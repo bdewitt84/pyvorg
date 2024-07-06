@@ -19,6 +19,9 @@ import colorlog
 import guessit
 from tqdm import tqdm
 
+# Docs
+# https://guessit.readthedocs.io/en/latest/
+
 
 # @handle_file_exceptions
 def add_video(collection, path):
@@ -45,16 +48,37 @@ def add_video(collection, path):
     collection.update({video_id: video})
 
 
-def generate_video_dir_name_bak(video, path):
-    if (OMDB_DATA in video) and (OMDB_TITLE in video[OMDB_DATA]):
-        dir = os.path.join(path, video[OMDB_DATA][OMDB_TITLE])
-        if OMDB_YEAR in video[OMDB_DATA]:
-            dir += ' (' + video[OMDB_DATA][OMDB_YEAR] + ')'
-        else:
-            dir += ' (n.d.)'
-    else:
-        dir = os.path.join(path, 'unidentified')
-    return dir
+def class_name(obj):
+    return obj.__class__.__name__
+
+
+def file_write(path: str, data: str) -> None:
+    """
+    Attempts to write data to the file at the specified path, raising
+    an exception if the file already exists.
+
+    :param path: (str) Path to file.
+    :param data: (str) Data to write to the file.
+    :return : None
+    :raises FileExistsError: if the file already exists
+    :raises IOError: if an error occurs with the write function
+    """
+    if os.path.exists(path):
+        raise FileExistsError(f"The file '{path}' already exists.")
+    with open(path, 'w') as file:
+        file.write(data)
+
+
+# def generate_video_dir_name_bak(video, path):
+#     if (OMDB_DATA in video) and (OMDB_TITLE in video[OMDB_DATA]):
+#         dir = os.path.join(path, video[OMDB_DATA][OMDB_TITLE])
+#         if OMDB_YEAR in video[OMDB_DATA]:
+#             dir += ' (' + video[OMDB_DATA][OMDB_YEAR] + ')'
+#         else:
+#             dir += ' (n.d.)'
+#     else:
+#         dir = os.path.join(path, 'unidentified')
+#     return dir
 
 
 # def generate_video_dir_name(video, format='%title (%year)'):
@@ -205,6 +229,7 @@ def update_guessit(video):
     filename = video[FILE_DATA][FILENAME]
     data = guessit.guessit(filename)
     video[GUESSIT_DATA] = data
+    print(data)
 
 
 def video_verify(video):
