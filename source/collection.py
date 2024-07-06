@@ -8,6 +8,7 @@
 
 # Standard library
 import json
+import logging
 import os
 
 # Local imports
@@ -16,6 +17,7 @@ from source.constants import *
 from source.exceptions import ValidationError
 from source.video import Video
 from source.helper import file_write
+from source.helper import class_name
 
 
 class Collection:
@@ -46,7 +48,9 @@ class Collection:
 
     @staticmethod
     def default_serializer(obj):
-        return f'Object {type(obj)} is not serializable'
+        msg = f"Object '{class_name(obj)}' is not serializable"
+        logging.warning(msg)
+        return msg
 
     def to_json(self):
         return json.dumps({hash: video.data for hash, video in self.videos.items()},
