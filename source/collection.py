@@ -15,6 +15,7 @@ from source.combuffer import CommandBuffer
 from source.constants import *
 from source.exceptions import ValidationError
 from source.video import Video
+from source.helper import file_write
 
 
 class Collection:
@@ -34,13 +35,24 @@ class Collection:
             self.videos.update({entry: video})
 
     def save_metadata(self, path="./metadata.json"):
-        serializable = {}
+        # serializable = {}
+        #
+        # for video in self.videos.values():
+        #     serializable.update({video.get_hash(): video.data})
+        #
+        # with open(path, 'w') as file:
+        #     json.dump(serializable, file, indent=4, skipkeys=True)
+        file_write(path, self.to_json())
 
-        for video in self.videos.values():
-            serializable.update({video.get_hash(): video.data})
+    @staticmethod
+    def default_serializer(obj):
+        return f'Object {type(obj)} is not serializable'
 
-        with open(path, 'w') as file:
-            json.dump(serializable, file, indent=4, skipkeys=True)
+    def to_json(self):
+        return json.dumps({hash: video.data for hash, video in self.videos.items()},
+                          indent=4,
+                          skipkeys=True,
+                          default=self.default_serializer)
 
     def add_video(self, path):
         video = Video()
@@ -48,17 +60,14 @@ class Collection:
         self.videos.update({video.get_hash(): video})
 
     def get_video(self, hash):
-        video = None
-        if hash in self.videos:
-            video = self.videos.get(hash)
-        return video
+        return self.videos.get(hash)
 
     def update_guessit(self):
         for video in self.videos.values():
             video.update_guessit()
 
     def update_omdb(self):
-        for video in self.videos.values():
+        for video in self.videos:
             video.update_omdb()
 
     def scan_directory(self, path):
@@ -120,6 +129,7 @@ class Collection:
                 print(f'The valid choices are {valid_input}')
         return inp
 
-    def filter_non_serializable(self):
-        for video in self.videos.values():
-            video.data = video.filter_non_serializable_dict(video.data)
+    # We are using a default serializer instead, so this function is deprecated
+    # def filter_non_serializable(self):
+    #     for video in self.videos.values():
+    #         video.data = video.filter_non_serializable_dict(video.data)
