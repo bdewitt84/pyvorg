@@ -129,7 +129,7 @@ class TestSaveMetadata(unittest.TestCase):
             actual_result = file.read()
             self.assertEqual(expected_json, actual_result)
 
-    def test_save_metadate_unserializable(self):
+    def test_save_metadata_unserializable(self):
         # We need a dict for c.videos that will raise a TypeError, ie not one of the basic JSON objects
         c = Collection()
         test_video = Video()
@@ -142,13 +142,12 @@ class TestSaveMetadata(unittest.TestCase):
         expected = """{
     "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9": {
         "user_data": {},
-        "Unserializable": "Object <class 'test_collection.UnserializableObject'> is not serializable"
+        "Unserializable": "Object 'UnserializableObject' is not serializable"
     }
 }"""
         c.save_metadata(self.save_file_path)
         with open(self.save_file_path, 'r') as actual:
             self.assertEqual(expected, actual.read())
-
 
     def test_save_metadata_file_exists(self):
         c = Collection()
