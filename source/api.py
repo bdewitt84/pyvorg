@@ -12,9 +12,13 @@ import os
 from source.constants import *
 from source.exceptions import RateLimitExceededError
 
-# Third part imports
+# Third party imports
 from pytube import YouTube, Search
 import requests
+
+# Docs
+# https://pytube.io/en/latest/index.html
+# https://www.omdbapi.com/
 
 
 def get_omdb_data(title):
