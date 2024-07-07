@@ -102,20 +102,5 @@ class Video:
             name = name.replace(spec, str(data))
         return name
 
-    def filter_non_serializable_dict(self, d):
-        filtered_dict = {}
-        for key, value in d.items():
-            if isinstance(value, dict):
-                filtered_dict[key] = self.filter_non_serializable_dict(value)
-            else:
-                try:
-                    json.dumps({key: value})
-                    filtered_dict[key] = value
-                except TypeError:
-                    # Object is non-serializable, do not add to dict.
-                    print(f'key: {key}, value: {value} is not serializable and was omitted')
-                    pass
-        return filtered_dict
-
-    def filter_non_serializable_list(self, l):
-        pass
+    def to_json(self):
+        return json.dumps(self.data)
