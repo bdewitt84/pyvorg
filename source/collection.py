@@ -15,9 +15,10 @@ import os
 from source.combuffer import CommandBuffer
 from source.constants import *
 from source.exceptions import ValidationError
-from source.video import Video
-from source.helper import file_write
 from source.helper import class_name
+from source.helper import default_serializer
+from source.helper import file_write
+from source.video import Video
 
 
 class Collection:
@@ -25,38 +26,7 @@ class Collection:
         self.videos = {}
         self.cb = CommandBuffer()
         if path:
-            self.load_metadata(path)
-
-    def load_metadata(self, path="./metadata.json"):
-        with open(path, 'r') as file:
-            serializable = json.load(file)
-
-        for entry in serializable:
-            video = Video()
-            video.data = serializable.get(entry)
-            self.videos.update({entry: video})
-
-    def save_metadata(self, path="./metadata.json"):
-        # serializable = {}
-        #
-        # for video in self.videos.values():
-        #     serializable.update({video.get_hash(): video.data})
-        #
-        # with open(path, 'w') as file:
-        #     json.dump(serializable, file, indent=4, skipkeys=True)
-        file_write(path, self.to_json())
-
-    @staticmethod
-    def default_serializer(obj):
-        msg = f"Object '{class_name(obj)}' is not serializable"
-        logging.warning(msg)
-        return msg
-
-    def to_json(self):
-        return json.dumps({hash: video.data for hash, video in self.videos.items()},
-                          indent=4,
-                          skipkeys=True,
-                          default=self.default_serializer)
+            self.metadata_load(path)
 
     def add_video(self, path):
         video = Video()
@@ -66,13 +36,17 @@ class Collection:
     def get_video(self, hash):
         return self.videos.get(hash)
 
-    def update_guessit(self):
-        for video in self.videos.values():
-            video.update_guessit()
+    def metadata_load(self, path="./metadata.json"):
+        with open(path, 'r') as file:
+            serializable = json.load(file)
 
-    def update_omdb(self):
-        for video in self.videos:
-            video.update_omdb()
+        for entry in serializable:
+            video = Video()
+            video.data = serializable.get(entry)
+            self.videos.update({entry: video})
+
+    def metadata_save(self, path="./metadata.json"):
+        file_write(path, self.to_json())
 
     def scan_directory(self, path):
         for root, _, files in os.walk(path):
@@ -81,57 +55,72 @@ class Collection:
                     file_path = os.path.join(root, file)
                     self.add_video(file_path)
 
-    def organize_files(self, dest_dir):
-        cb = CommandBuffer()
+    def to_json(self):
+        return json.dumps({hash: video.data for hash, video in self.videos.items()},
+                          indent=4,
+                          skipkeys=True,
+                          default=default_serializer)
 
+    def update_guessit(self):
         for video in self.videos.values():
-            vid_dir = video.generate_dir_name()
-            dest = os.path.join(dest_dir, vid_dir)
+            video.update_guessit()
 
-            # TODO: Probably add member function to do this so we
-            #       don't have to expose the Commands to the user
-            # cb.add_command(CreateVideoDirectory(video, dest))
-            #
-            # cb.add_command(MoveVideo(video, dest))
+    def update_omdb(self):
+        for video in self.videos:
+            video.update_omdb()
 
-            cb.add_create_video_dir(video, dest)
-            cb.add_move_video(video, dest)
-
-        cb.preview_buffer()
-        user_input = self.user_prompt('(a) Abort\n(c) Continue\n', ['a', 'c'])
-        while user_input != 'a':
-            try:
-                if user_input == 'c':
-                    cb.validate_exec_buffer()
-                    # cb.execute_command_buffer()
-
-                if user_input == 'u':
-                    cb.validate_undo_buffer()
-                    # cb.execute_undo_buffer()
-
-            except ValidationError as e:
-                user_input = self.user_prompt(
-                    f'Validation error: {e}\n(a) Abort\n(c) Continue\n(u) Undo Changes\n',
-                    ['a', 'c', 'u']
-                )
-
-            # except Exception as e:
-            #     user_input = self.user_prompt(
-            #         f'Unexpected exception: {e}\n{e.with_traceback()}(a) Abort\n(c) Continue\n(u) Undo Changes\n',
-            #         ['a', 'c', 'u']
-            #     )
-
-        self.save_metadata()
-
-    def user_prompt(self, prompt, valid_input):
-        valid = False
-        while valid is False:
-            inp = input(prompt).lower()
-            if inp in valid_input:
-                valid = True
-            else:
-                print(f'The valid choices are {valid_input}')
-        return inp
+    # This does not belong in Collection. Port this to a command-line utility
+    # def organize_files(self, dest_dir):
+    #     cb = CommandBuffer()
+    #
+    #     for video in self.videos.values():
+    #         vid_dir = video.generate_dir_name()
+    #         dest = os.path.join(dest_dir, vid_dir)
+    #
+    #         # TODO: Probably add member function to do this so we
+    #         #       don't have to expose the Commands to the user
+    #         # cb.add_command(CreateVideoDirectory(video, dest))
+    #         #
+    #         # cb.add_command(MoveVideo(video, dest))
+    #
+    #         cb.add_create_video_dir(video, dest)
+    #         cb.add_move_video(video, dest)
+    #
+    #     cb.preview_buffer()
+    #     user_input = self.user_prompt('(a) Abort\n(c) Continue\n', ['a', 'c'])
+    #     while user_input != 'a':
+    #         try:
+    #             if user_input == 'c':
+    #                 cb.validate_exec_buffer()
+    #                 # cb.execute_command_buffer()
+    #
+    #             if user_input == 'u':
+    #                 cb.validate_undo_buffer()
+    #                 # cb.execute_undo_buffer()
+    #
+    #         except ValidationError as e:
+    #             user_input = self.user_prompt(
+    #                 f'Validation error: {e}\n(a) Abort\n(c) Continue\n(u) Undo Changes\n',
+    #                 ['a', 'c', 'u']
+    #             )
+    #
+    #         # except Exception as e:
+    #         #     user_input = self.user_prompt(
+    #         #         f'Unexpected exception: {e}\n{e.with_traceback()}(a) Abort\n(c) Continue\n(u) Undo Changes\n',
+    #         #         ['a', 'c', 'u']
+    #         #     )
+    #
+    #     self.save_metadata()
+    #
+    # def user_prompt(self, prompt, valid_input):
+    #     valid = False
+    #     while valid is False:
+    #         inp = input(prompt).lower()
+    #         if inp in valid_input:
+    #             valid = True
+    #         else:
+    #             print(f'The valid choices are {valid_input}')
+    #     return inp
 
     # We are using a default serializer instead, so this function is deprecated
     # def filter_non_serializable(self):
