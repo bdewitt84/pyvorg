@@ -52,6 +52,10 @@ def class_name(obj):
     return obj.__class__.__name__
 
 
+def default_serializer(obj):
+    return f"Object '{class_name(obj)}' is not serializable"
+
+
 def file_write(path: str, data: str) -> None:
     """
     Attempts to write data to the file at the specified path, raising
