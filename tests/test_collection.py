@@ -1,5 +1,5 @@
 # tests/test_collection.py
-
+import json
 # Standard library
 import os.path
 import tempfile
@@ -11,11 +11,12 @@ from collection import *
 
 class UnserializableObject:
     """Used by 'test_save_metadate_unserializable'"""
+
     def __init__(self):
         value = None
 
 
-class TestSaveMetadata(unittest.TestCase):
+class TestMetadataSave(unittest.TestCase):
 
     def setUp(self) -> None:
         self.temp_dir = tempfile.TemporaryDirectory()
@@ -25,7 +26,7 @@ class TestSaveMetadata(unittest.TestCase):
     def tearDown(self) -> None:
         self.temp_dir.cleanup()
 
-    def test_save_metadata_valid(self):
+    def test_metadata_save_valid(self):
         c = Collection()
         test_vid_1 = Video()
         test_vid_2 = Video()
@@ -124,13 +125,12 @@ class TestSaveMetadata(unittest.TestCase):
         }
     }
 }"""
-        c.save_metadata(self.save_file_path)
+        c.metadata_save(self.save_file_path)
         with open(self.save_file_path, 'r') as file:
             actual_result = file.read()
             self.assertEqual(expected_json, actual_result)
 
-    def test_save_metadata_unserializable(self):
-        # We need a dict for c.videos that will raise a TypeError, ie not one of the basic JSON objects
+    def test_metadata_save_unserializable(self):
         c = Collection()
         test_video = Video()
         test_video.data.update(
@@ -145,11 +145,11 @@ class TestSaveMetadata(unittest.TestCase):
         "Unserializable": "Object 'UnserializableObject' is not serializable"
     }
 }"""
-        c.save_metadata(self.save_file_path)
+        c.metadata_save(self.save_file_path)
         with open(self.save_file_path, 'r') as actual:
             self.assertEqual(expected, actual.read())
 
-    def test_save_metadata_file_exists(self):
+    def test_metadata_save_file_exists(self):
         c = Collection()
         test_vid = Video()
         c.videos.update({"5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9": test_vid})
@@ -157,4 +157,75 @@ class TestSaveMetadata(unittest.TestCase):
             file.write('test data')
 
         with self.assertRaises(FileExistsError):
-            c.save_metadata(self.save_file_path)
+            c.metadata_save(self.save_file_path)
+
+
+class TestMetadataLoad(unittest.TestCase):
+    def setUp(self) -> None:
+        self.temp_dir = tempfile.TemporaryDirectory()
+        self.temp_dir_path = self.temp_dir.name
+        self.c = Collection()
+
+    def tearDown(self) -> None:
+        self.temp_dir.cleanup()
+
+    def test_metadata_load_valid(self):
+        data = """
+{
+    "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9": {
+        "user_data": {},
+        "file_data": {
+            "path": "C:/Videos\\\\Extraction.2.2023.1080p.NF.WEBRip.1400MB.DD5.1.x264-GalaxyRG.mkv",
+            "root": "C:/Videos",
+            "filename": "Extraction.2.2023.1080p.NF.WEBRip.1400MB.DD5.1.x264-GalaxyRG.mkv",
+            "hash": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9",
+            "timestamp": "2024-07-05 22:18:38"
+        },
+        "guessit": {
+            "title": "Extraction 2",
+            "year": 2023,
+            "type": "movie"
+        }
+    }
+}"""
+        valid_json_path = os.path.join(self.temp_dir_path, "temp.file")
+        with open(valid_json_path, 'w') as file:
+            file.write(data)
+
+        self.c.metadata_load(valid_json_path)
+        expected_video_data = {
+            "user_data": {},
+            "file_data": {
+                "path": "C:/Videos\\Extraction.2.2023.1080p.NF.WEBRip.1400MB.DD5.1.x264-GalaxyRG.mkv",
+                "root": "C:/Videos",
+                "filename": "Extraction.2.2023.1080p.NF.WEBRip.1400MB.DD5.1.x264-GalaxyRG.mkv",
+                "hash": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9",
+                "timestamp": "2024-07-05 22:18:38"
+            },
+            "guessit": {
+                "title": "Extraction 2",
+                "year": 2023,
+                "type": "movie"
+            }
+        }
+        actual_video_data = self.c.videos.get("5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9").data
+        self.assertEqual(expected_video_data, actual_video_data)
+
+    def test_metadata_load_invalid(self):
+        data = """
+        {
+            "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9": {
+                "user_data": {}
+            }
+        """
+        valid_json_path = os.path.join(self.temp_dir_path, "temp.file")
+        with open(valid_json_path, 'w') as file:
+            file.write(data)
+
+        with self.assertRaises(json.JSONDecodeError):
+            self.c.metadata_load(valid_json_path)
+
+    def test_metadata_load_does_not_exist(self):
+        valid_json_path = os.path.join(self.temp_dir_path, "temp.file")
+        with self.assertRaises(FileNotFoundError):
+            self.c.metadata_load(valid_json_path)
