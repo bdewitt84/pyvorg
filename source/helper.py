@@ -19,6 +19,7 @@ import colorlog
 import guessit
 from tqdm import tqdm
 
+
 # Docs
 # https://guessit.readthedocs.io/en/latest/
 
@@ -71,26 +72,6 @@ def file_write(path: str, data: str) -> None:
         raise FileExistsError(f"The file '{path}' already exists.")
     with open(path, 'w') as file:
         file.write(data)
-
-
-# def generate_video_dir_name_bak(video, path):
-#     if (OMDB_DATA in video) and (OMDB_TITLE in video[OMDB_DATA]):
-#         dir = os.path.join(path, video[OMDB_DATA][OMDB_TITLE])
-#         if OMDB_YEAR in video[OMDB_DATA]:
-#             dir += ' (' + video[OMDB_DATA][OMDB_YEAR] + ')'
-#         else:
-#             dir += ' (n.d.)'
-#     else:
-#         dir = os.path.join(path, 'unidentified')
-#     return dir
-
-
-# def generate_video_dir_name(video, format='%title (%year)'):
-#     name = format
-#     for spec, (key, default) in FORMAT_SPECIFIERS.items():
-#         data = video.get_data(key, default)
-#         name = name.replace(spec, data)
-#     return name
 
 
 def guess_title(video):
@@ -177,9 +158,19 @@ def hash_sha256(path):
 def make_dir(path):
     if not os.path.exists(path):
         os.makedirs(path)
-        logging.info('Created directory {}'.format(path))
+        logging.info(f"Directory '{path}' created")
     else:
-        logging.info('Directory already exists {}'.format(path))
+        logging.info(f"Directory '{path}' already exists")
+
+
+def move_file(src, dst, overwrite=False):
+    if os.path.exists(dst) and not overwrite:
+        msg = f"File '{dst}' already exists"
+        logging.error(msg)
+        raise FileExistsError(msg)
+    else:
+        shutil.move(src, dst)
+        logging.info(f"Moved '{src}' to '{dst}'")
 
 
 def remove_empty_dir(path):
@@ -191,29 +182,6 @@ def remove_empty_dir(path):
     else:
         logging.info('Directory {} not empty, will not be removed'.format(path))
     return removed
-
-# def scan_directory(collection, path):
-#     """
-#     Recursively scans a directory for video files and adds them to the collection.
-#
-#     This function traverses the specified directory and its subdirectories, identifying
-#     video files based on a predefined list of video extensions. For each video file found,
-#     it constructs the full dest and invokes the 'add_video' function to add the video's
-#     information to the provided collection.
-#
-#     Args:
-#         collection (dict): A dictionary representing the collection of video information.
-#                            Videos will be added to this collection.
-#         path (str): The dest of the directory to scan for video files.
-#
-#     Returns:
-#         None
-#     """
-#     for root, _, files in os.walk(path):
-#         for file in files:
-#             if file.endswith(VIDEO_EXTENSIONS):
-#                 file_path = os.path.join(root, file)
-#                 add_video(collection, file_path)
 
 
 def timestamp_generate():
@@ -247,13 +215,6 @@ def video_verify(video):
     else:
         logging.warning('failed validation: {}'.format(path))
     return verified
-
-
-def video_place(video, path):
-    current_path = os.path.join(video[FILE_DATA][ROOT], video[FILE_DATA][FILENAME])
-    shutil.move(current_path, path)
-    video[FILE_DATA].update({ROOT: path})
-    logging.info('Moved {} \n to {}'.format(current_path, path))
 
 
 def logger_init():
