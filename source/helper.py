@@ -94,33 +94,6 @@ def guess_title(video):
     return guessit.guessit(video[FILE_DATA][FILENAME])['title']
 
 
-def handle_file_exceptions(func):
-    """
-    Decorator to handle common file-related exceptions.
-
-    Args:
-        func (function): The function to be decorated.
-
-    Returns:
-        function: The decorated function.
-    """
-
-    def wrapper(*args, **kwargs):
-        # Assuming the dest argument is present in *args
-        path = args[func.__code__.co_varnames.index('dest')]
-        try:
-            if not os.path.exists(path):
-                raise FileNotFoundError(f"The file '{path}' does not exist.")
-            return func(*args, **kwargs)
-        except PermissionError:
-            raise PermissionError(f"Permission denied while accessing '{path}'.")
-
-        # TODO: Consider another one for dest
-
-    return wrapper
-
-
-# @handle_file_exceptions
 def hash_sha256(path):
     """
     Compute the SHA-256 hash of a file located at the given dest.
@@ -155,6 +128,30 @@ def hash_sha256(path):
     return hash
 
 
+def logger_init():
+    logging.basicConfig(filename='./applog.txt',
+                        level=logging.INFO,
+                        format='%(asctime)s - %(levelname)s - %(message)s')
+
+    console_handler = logging.StreamHandler()
+
+    formatter = colorlog.ColoredFormatter(
+        "%(asctime)s - %(log_color)s%(levelname)s - %(message)s",
+        log_colors={
+            'DEBUG': 'white',
+            'INFO': 'white',
+            'WARNING': 'yellow',
+            'ERROR': 'red',
+            'CRITICAL': 'red,bg_yellow',
+        },
+        datefmt="%Y-%m-%d %H:%M:%S"
+    )
+
+    console_handler.setFormatter(formatter)
+    root_logger = logging.getLogger()
+    root_logger.addHandler(console_handler)
+
+
 def make_dir(path):
     if not os.path.exists(path):
         os.makedirs(path)
@@ -165,12 +162,14 @@ def make_dir(path):
 
 def move_file(src, dst, overwrite=False):
     if os.path.exists(dst) and not overwrite:
-        msg = f"File '{dst}' already exists"
+        msg = f"Cannot move file: '{dst}' already exists"
         logging.error(msg)
         raise FileExistsError(msg)
+    elif os.path.exists(dst) and overwrite:
+        logging.info(f"Overwriting '{dst}' with '{src}'")
     else:
-        shutil.move(src, dst)
         logging.info(f"Moved '{src}' to '{dst}'")
+    shutil.move(src, dst)
 
 
 def remove_empty_dir(path):
@@ -202,40 +201,3 @@ def update_guessit(video):
     data = guessit.guessit(filename)
     video[GUESSIT_DATA] = data
     print(data)
-
-
-def video_verify(video):
-    # TODO: Change to verify_file_data(), separate responsibilities from verify_metadata()
-    #       We should probably consider when we want to verify hash as well
-    path = os.path.join(video[FILE_DATA][ROOT], video[FILE_DATA][FILENAME])
-    verified = False
-    if os.path.exists(path):
-        verified = True
-        logging.info('passed validation: {}'.format(path))
-    else:
-        logging.warning('failed validation: {}'.format(path))
-    return verified
-
-
-def logger_init():
-    logging.basicConfig(filename='./applog.txt',
-                        level=logging.INFO,
-                        format='%(asctime)s - %(levelname)s - %(message)s')
-
-    console_handler = logging.StreamHandler()
-
-    formatter = colorlog.ColoredFormatter(
-        "%(asctime)s - %(log_color)s%(levelname)s - %(message)s",
-        log_colors={
-            'DEBUG': 'white',
-            'INFO': 'white',
-            'WARNING': 'yellow',
-            'ERROR': 'red',
-            'CRITICAL': 'red,bg_yellow',
-        },
-        datefmt="%Y-%m-%d %H:%M:%S"
-    )
-
-    console_handler.setFormatter(formatter)
-    root_logger = logging.getLogger()
-    root_logger.addHandler(console_handler)
