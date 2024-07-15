@@ -96,32 +96,3 @@ def trailer_find(video, num_results=1):
         trailer_urls.append(trailer_url)
 
     return trailer_urls
-
-# TODO: Rewrite for Video.update_omdb
-# def update_video_omdb_data(video, title):
-#     # TODO: Update Docstring to include title parameter
-#     """
-#     Updates the video dictionary with movie videos from the OMDB API.
-#
-#     This function retrieves movie videos for the video's guessed title from the OMDB API
-#     using the 'get_omdb_data' function, and if successful, updates the provided video
-#     dictionary with the retrieved videos under the 'OMDB_DATA' key.
-#
-#     Args:
-#         video (dict): The video dictionary to update with OMDB videos. The dictionary should
-#                       contain information about the video, typically obtained from the
-#                       video collection.
-#         title (str): The title of the movie for which to retrieve OMDB data
-#
-#     Returns:
-#         None
-#     """
-#     # guess = guess_title(video)
-#
-#     data = get_omdb_data(title)
-#
-#     if data:
-#         video.update({OMDB_DATA: data})
-#         logging.info(f'OMDB videos for {video[FILE_DATA][FILENAME]} updated successfully')
-#     else:
-#         video.update({OMDB_DATA: f'OMDB search for \"{title}\" returned no results.'})
