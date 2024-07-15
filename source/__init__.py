@@ -1,8 +1,10 @@
 # source/__init__.py
+import os
 
 # Standard library
 
-# Local
+# Local imports
+from source.constants import *
 from source.helper import logger_init
 
 # Third-party packages
@@ -10,5 +12,7 @@ from dotenv import load_dotenv
 
 
 # Initialization
-load_dotenv('./config.env')
+script_path = os.path.dirname(os.path.abspath(__file__))
+config_path = os.path.join(script_path, '..', 'config', 'config.env')
+load_dotenv(config_path)
 logger_init()
