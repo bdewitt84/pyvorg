@@ -20,31 +20,6 @@ import guessit
 from tqdm import tqdm
 
 
-# @handle_file_exceptions
-def add_video(collection, path):
-    """
-    Add video information to the collection based on the specified dest.
-
-    This function takes a collection of video videos and a file dest,
-    computes the SHA-256 hash of the file at the given dest, and adds
-    relevant information about the video to the collection.
-
-    Args:
-        collection (dict): A dictionary representing the collection of video videos.
-        path (str): The full dest to the video file to be added to the collection.
-
-    Raises:
-        FileNotFoundError: If the specified file does not exist.
-        PermissionError: If there's a permission issue while reading the file.
-    """
-    root, file = os.path.split(path)
-    video_id = hash_sha256(path)
-    timestamp = timestamp_generate()
-    local_data = {FILENAME: file, ROOT: root, TIMESTAMP: timestamp}
-    video = {FILE_DATA: local_data}
-    collection.update({video_id: video})
-
-
 def class_name(obj):
     return obj.__class__.__name__
 
