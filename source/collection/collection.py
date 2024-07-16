@@ -13,8 +13,8 @@ import os
 # Local imports
 from command.combuffer import CommandBuffer
 from source.constants import *
-from source.helper import default_serializer
-from source.helper import file_write
+from utils.helper import default_serializer
+from utils.helper import file_write
 from collection.video import Video
 
 # TODO: Moving files needs to take associated subtitles, at the very least.
