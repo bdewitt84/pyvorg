@@ -1,5 +1,5 @@
 metadata.json
-config.env
+config/config.env
 applog.txt
 test.py
 main.py
