@@ -1,7 +1,7 @@
 # source/helper.py
 
 """
-Various helper functions used throughout the package
+    Various helper functions used throughout the package
 """
 
 # Standard library
@@ -18,10 +18,6 @@ from constants import *
 import colorlog
 import guessit
 from tqdm import tqdm
-
-
-# Docs
-# https://guessit.readthedocs.io/en/latest/
 
 
 # @handle_file_exceptions
@@ -129,9 +125,12 @@ def hash_sha256(path):
 
 
 def logger_init():
-    logging.basicConfig(filename='./applog.txt',
-                        level=logging.INFO,
-                        format='%(asctime)s - %(levelname)s - %(message)s')
+    current_path = os.path.dirname(__file__)
+    log_path = os.path.join(current_path, '..', 'logs', 'applog.txt')
+    logging.basicConfig(
+        filename=log_path,
+        level=logging.INFO,
+        format='%(asctime)s - %(levelname)s - %(message)s')
 
     console_handler = logging.StreamHandler()
 
