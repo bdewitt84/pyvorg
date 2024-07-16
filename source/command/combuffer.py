@@ -1,16 +1,22 @@
 # source/combuffer.py
 
 """
-Command buffer implementation used by Collection to enable batching
-of processes and related functions, such as load, save, undo, etc.
+    Command buffer implementation used by Collection to enable batching
+    of processes and related functions, such as load, save, undo, etc.
 """
 
 # Standard library
+import logging
 import pickle
 from queue import Queue
 
+
 # Local imports
-from .command import *
+from source.command.command import Command
+from source.command.command import MoveVideo
+from source.exceptions import ValidationError
+
+# Third-party packages
 
 
 class CommandBuffer:
@@ -24,15 +30,12 @@ class CommandBuffer:
         else:
             raise ValueError("Only objects with type <Command> may be added to the command buffer.")
 
-    def add_create_video_dir(self, video, dest):
-        self.add_command(CreateVideoDirectory(video, dest))
-
     def add_move_video(self, video, dest):
         self.add_command(MoveVideo(video, dest))
 
     def exec_command(self):
         cmd = self.cmd_buffer.get()
-        cmd.execute()
+        cmd.exec()
         self.undo_buffer.append(cmd)
 
     def undo_cmd(self):
@@ -42,6 +45,7 @@ class CommandBuffer:
         else:
             raise IndexError("Cannot undo; command history is empty")
 
+    # Todo: Generate list of errors, present it to user
     def validate_exec_buffer(self):
         if self.cmd_buffer:
             for cmd in self.cmd_buffer.queue:
@@ -49,6 +53,7 @@ class CommandBuffer:
         else:
             print('Nothing to validate, exec_buffer is empty.\n')
 
+    # Todo: Generate list of errors, present it to user
     def validate_undo_buffer(self):
         if self.undo_buffer:
             for cmd in self.undo_buffer:
@@ -76,19 +81,21 @@ class CommandBuffer:
                     logging.error(e)
                     break
         else:
-            raise IndexError("Cannot undi; undo buffer is empty.\n")
+            raise IndexError("Cannot undo; undo buffer is empty.\n")
 
     def preview_buffer(self):
         for cmd in self.cmd_buffer.queue:
             print(cmd)
 
     def save_buffer(self, path='./command_buffer.sav'):
-        # TODO: add empty buffer check to unit test
         if self.cmd_buffer.queue or self.undo_buffer:
             jar = {'buffer': self.cmd_buffer.queue,
                    'history': self.undo_buffer}
             with open(path, 'wb') as file:
                 pickle.dump(jar, file)
+        else:
+            # Buffer is empty
+            pass
 
     def load_buffer(self, path='./command_buffer.sav'):
         with open(path, 'rb') as file:
