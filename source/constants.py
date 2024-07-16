@@ -1,10 +1,14 @@
 # source/constants.py
 
 """
-Constants used across all packages, mostly to standardize JSON entries.
-Also included are a list of valid video extensions and a JSON schema
-used for validating metadata.
+    Constants used across all packages, mostly to standardize JSON entries.
+    Also included are a list of valid video extensions and a JSON schema
+    used for validating metadata.
 """
+
+# Environment variable constants
+ENV_FILE_PATH = './config.env'
+ENV_OMDB_KEY = 'OMDB_KEY'
 
 # String constants
 FILE_DATA = 'file_data'
