@@ -5,8 +5,6 @@
 """
 
 # Standard library
-import os
-import logging
 
 # Local imports
 from source.command.command import Command
@@ -14,7 +12,6 @@ from source.command.command import Command
 # Third-party packages
 
 
-# TODO: Implement this
 class UpdateVideoData(Command):
     def __init__(self, video, api, **kwargs):
         self.undo_data = None
@@ -23,15 +20,22 @@ class UpdateVideoData(Command):
         self.kwargs = kwargs
 
     def exec(self):
-        if self.api.get_name() in self.video.data.keys():
-            self.undo_data = self.video.data[self.api.get_name()]
-        self.api.fetch_video_data(self.kwargs)
+        api_name = self.api.get_name()
+        self.undo_data = self.video.get_api_data(api_name)
+        data = self.api.fetch_video_data(self.kwargs)
+        self.video.set_api_data(api_name, data)
 
     def undo(self):
-        if self.undo_data is not None:
-            self.video.set_api_data()
+        if self.undo_data is None:
+            self.video.data.pop(self.api.get_name())
+        else:
+            self.video.set_api_data(self.api.get_name(), self.undo_data)
+        self.undo_data = None
 
     def validate_exec(self):
+        # command will fail if the video does not exist
+        # if the api is not valid
+        # if the api is not accessible
         pass
 
     def validate_undo(self):
