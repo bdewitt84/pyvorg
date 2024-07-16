@@ -1,18 +1,20 @@
-# tests/test_command.py
+# tests/test_command/test_command.py
 
 """
-Unit tests for source/command.py
+    Unit tests for source/command.py
 """
-import os
+
 # Standard library
 import shutil
 import tempfile
 import unittest
-from unittest.mock import Mock, patch
+from unittest.mock import patch
 
 # Local imports
-from source.command import *
-from source.video import Video
+from source.command.command import *
+from collection.video import Video
+
+# Third-party packages
 
 
 class TestMoveVideoCommand(unittest.TestCase):
@@ -47,7 +49,7 @@ class TestMoveVideoCommand(unittest.TestCase):
 
     def test_exec(self):
         expected_path = os.path.join(self.dest_dir, self.filename)
-        self.cmd.execute()
+        self.cmd.exec()
         actual_path = self.vid.get_path()
         self.assertTrue(os.path.exists(actual_path))
         self.assertEqual(expected_path, actual_path)

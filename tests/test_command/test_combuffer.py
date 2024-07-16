@@ -1,14 +1,15 @@
 # tests/test_combuffer.py
 
 """
-Unit tests for source/combuffer.py
+    Unit tests for source/command/combuffer.py
 """
 
 # Standard library
 import unittest
 
 # Local imports
-from source.combuffer import *
+from source.command.combuffer import *
+from source.command.command import Command
 
 
 class TestCommand(Command):
@@ -25,7 +26,7 @@ class TestCommand(Command):
     def validate_undo(self):
         self.undo_is_valid_called = True
 
-    def execute(self):
+    def exec(self):
         self.execute_called = True
 
     def undo(self):

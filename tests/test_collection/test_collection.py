@@ -6,7 +6,8 @@ import tempfile
 import unittest
 
 # Local imports
-from collection import *
+from source.collection.collection import Collection
+from source.collection.video import Video
 
 
 class UnserializableObject:
