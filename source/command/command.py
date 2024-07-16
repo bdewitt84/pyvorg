@@ -1,9 +1,9 @@
 # source/command.py
 
 """
-Command base class and derived classes providing functions for use
-in the command buffer via the collection class, which include moving
-videos and creating directories.
+    Command base class and derived classes providing functions for use
+    in the command buffer via the collection class, which include moving
+    videos and creating directories.
 """
 
 # Standard library
@@ -23,7 +23,7 @@ class Command:
     def validate_undo(self):
         raise NotImplementedError
 
-    def execute(self):
+    def exec(self):
         raise NotImplementedError
 
     def undo(self):
@@ -37,7 +37,7 @@ class MoveVideo(Command):
         self.undo_dir = None
         self.created_dirs = []
 
-    def execute(self):
+    def exec(self):
         self.undo_dir = self.video.get_path()
         self._move(self.dest_dir)
 
@@ -97,3 +97,28 @@ class MoveVideo(Command):
 
     def __str__(self):
         return f"Move \t{self.video.get_path()} \nto \t\t{self.dest_dir}\n"
+
+
+# TODO: Implement this
+class UpdateVideoData(Command):
+    def __init__(self, video, api, **kwargs):
+        self.undo_data = None
+        self.video = video
+        self.api = api
+        self.kwargs = kwargs
+
+    def exec(self):
+        if self.api.get_name() in self.video.data.keys():
+            self.undo_data = self.video.data[self.api.get_name()]
+        self.api.fetch_video_data(self.kwargs)
+
+    def undo(self):
+        if self.undo_data is not None:
+            self.video.set_api_data()
+
+
+    def validate_exec(self):
+        pass
+
+    def validate_undo(self):
+        pass
