@@ -126,7 +126,7 @@ def hash_sha256(path):
 
 def logger_init():
     current_path = os.path.dirname(__file__)
-    log_path = os.path.join(current_path, '..', 'logs', 'applog.txt')
+    log_path = os.path.join(current_path, '..', '..', 'logs', 'applog.txt')
     logging.basicConfig(
         filename=log_path,
         level=logging.INFO,
