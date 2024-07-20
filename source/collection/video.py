@@ -7,11 +7,12 @@
 
 # Standard library
 import json
+import logging
 import os
 
 # Local imports
 from constants import *
-from helper import timestamp_generate, hash_sha256
+from utils.helper import timestamp_generate, hash_sha256
 
 # Third-party packages
 
@@ -34,6 +35,9 @@ class Video:
         if key is not None:
             data = data.get(key)
         return data
+
+    def get_source_names(self):
+        return [source for source in self.data.keys()]
 
     def get_filename(self):
         return self.data[FILE_DATA][FILENAME]
@@ -124,7 +128,9 @@ class Video:
             self.data.update({FILE_DATA: file_data})
 
         else:
-            raise FileNotFoundError(f"File {path} not found.")
+            msg = f"Cannot update info for '{path}': file not found."
+            logging.error(msg)
+            raise FileNotFoundError(msg)
 
     # def update_guessit(self):
     #     # filename = self.data[FILE_DATA][FILENAME]
