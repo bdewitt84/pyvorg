@@ -1,4 +1,4 @@
-# source.collection.py
+# source.col.py
 
 """
     Collection class handles the main functionality of the package, including
@@ -8,14 +8,17 @@
 
 # Standard library
 import json
+import logging
 import os
 
 # Local imports
-from command.combuffer import CommandBuffer
+from source.api.api_manager import APIManager
+from source.collection.video import Video
+from source.command.combuffer import CommandBuffer
 from source.constants import *
-from utils.helper import default_serializer
-from utils.helper import file_write
-from collection.video import Video
+from source.utils.helper import default_serializer
+from source.utils.helper import file_write
+
 
 # TODO: Moving files needs to take associated subtitles, at the very least.
 #       consider adding a function that searches for the files with an
@@ -34,6 +37,8 @@ class Collection:
         video = Video()
         video.update_file_data(path)
         self.videos.update({video.get_hash(): video})
+        # TODO: logging output conflicts with tqdm, output is messy
+        logging.info(f"Added '{path}' to collection")
 
     def get_video(self, hash):
         return self.videos.get(hash)
@@ -66,6 +71,7 @@ class Collection:
         # cb.execute_cmd_buffer()
 
     def scan_directory(self, path):
+        # TODO: standardize use of path, filename, and root or dir
         for root, _, files in os.walk(path):
             for file in files:
                 if file.endswith(VIDEO_EXTENSIONS):
@@ -77,6 +83,15 @@ class Collection:
                           indent=4,
                           skipkeys=True,
                           default=default_serializer)
+
+    def update_api_data(self):
+        api_man = APIManager()
+        api_man.discover_apis()
+        apis = api_man.get_api_names()
+        for vid in self.videos:
+            for api in apis:
+                if api.get_name() not in vid.get_source_names():
+                    vid.update_api_data(api)
 
     def update_guessit(self):
         for video in self.videos.values():
