@@ -27,6 +27,8 @@ FILENAME = 'filename'
 HASH = 'hash'
 TIMESTAMP = 'timestamp'
 LOCAL_TRAILER = 'local_trailer'
+
+# TODO: move this to config.env
 DATA_PREF_ORDER = [USER_DATA, OMDB_DATA, GUESSIT_DATA]
 
 FORMAT_SPECIFIERS = {
@@ -41,32 +43,3 @@ VIDEO_EXTENSIONS = (            # TODO: Should this be loaded from an external f
         '.mts', '.mxf', '.mxg', '.nsv', '.ogm', '.ogv', '.qt', '.rm', '.rmvb', '.roq',
         '.scm', '.smv', '.swf', '.ts', '.vob', '.webm', '.wmv', '.yuv'
     )
-
-METADATA_SCHEMA = {
-        "type": "object",
-        "patternProperties": {
-            "^[0-9a-fA-F]{64}$": {
-                "type": "object",
-                "properties": {
-                    "file_data": {
-                        "type": "object",
-                        "properties": {
-                            "filename": {"type": "string"},
-                            "root": {"type": "string"},
-                            "timestamp": {"type": "string", "format": "date-time"}
-                        },
-                        "required": ["filename", "root", "timestamp"]
-                    },
-                    "omdb_data": {
-                        "type": "object",
-                        "properties": {
-                            "title": {"type": "string"}
-                        },
-                        "required": ["title"]
-                    }
-                },
-                "required": ["file_data"]
-            }
-        },
-        "additionalProperties": False
-    }
