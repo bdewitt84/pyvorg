@@ -99,14 +99,14 @@ class TestVideo(TestCase):
         }
         result = self.test_vid.get_pref_data(key)
         self.assertEqual(expected_value, result)
-        #
-        # self.test_vid.data = {
-        #     USER_DATA: {},
-        #     OMDB_DATA: {},
-        #     GUESSIT_DATA: {key: expected_value}
-        # }
-        # result = self.test_vid.get_pref_data(key)
-        # self.assertEqual(expected_value, result)
+
+        self.test_vid.data = {
+            USER_DATA: {},
+            OMDB_DATA: {},
+            GUESSIT_DATA: {key: expected_value}
+        }
+        result = self.test_vid.get_pref_data(key)
+        self.assertEqual(expected_value, result)
 
     def test_get_root(self):
         result = self.test_vid.get_root()
