@@ -1,20 +1,21 @@
 # tests/test_api/test_omdb_api.py
 
-# Standard library
-import unittest
-from unittest.mock import Mock, patch
+"""
+    Unit tests for source/api/omdb_api.py
+"""
 
-import requests
+# Standard library
+from unittest import TestCase
+from unittest.mock import Mock, patch
 
 # Local imports
 from source.api.omdb_api import OMDBAPI
-from source.exceptions import RateLimitExceededError
-
 
 # Third-party packages
+import requests
 
 
-class TestOMDBAPI(unittest.TestCase):
+class TestOMDBAPI(TestCase):
     def setUp(self) -> None:
         self.mock_response = Mock()
         self.api = OMDBAPI()
@@ -23,15 +24,26 @@ class TestOMDBAPI(unittest.TestCase):
         pass
 
     @patch('requests.get')
-    def test_fetch_video_data_200(self, mock_get):
+    def test_fetch_video_data_200_found(self, mock_get):
         self.mock_response.status_code = 200
         self.mock_response.json.return_value = {'Response': 'True'}
 
         mock_get.return_value = self.mock_response
-        data = self.api.fetch_video_data('title')
+        data = self.api.fetch_video_data(title='identifiable title')
 
         self.assertTrue(type(data) == dict)
         self.assertEqual(data.get('Response'), 'True')
+
+    @patch('requests.get')
+    def test_fetch_video_data_200_not_found(self, mock_get):
+        self.mock_response.status_code = 200
+        self.mock_response.json.return_value = {'Response': 'False', 'Error': 'Movie not found!'}
+
+        mock_get.return_value = self.mock_response
+        data = self.api.fetch_video_data(title='unidentifiable title')
+
+        self.assertTrue(type(data) == dict)
+        self.assertEqual(data.get('Response'), 'False')
 
     @patch('requests.get')
     def test_fetch_video_data_429(self, mock_get):
@@ -41,4 +53,4 @@ class TestOMDBAPI(unittest.TestCase):
         mock_get.return_value = self.mock_response
 
         with self.assertRaises(requests.HTTPError):
-            self.api.fetch_video_data('title')
+            self.api.fetch_video_data(title='test title')
