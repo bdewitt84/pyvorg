@@ -16,7 +16,7 @@ import logging
 
 # Local imports
 from source.constants import *
-from source.api.api_interface import APIInterface
+from source.api.base_api import BaseAPI
 
 # Third-party packages
 import requests
@@ -35,7 +35,7 @@ K_PLOT = 'plot'
 K_RETURN = 'rtype'
 
 
-class OMDBAPI(APIInterface):
+class OMDBAPI(BaseAPI):
     """
         A class to interact with the OMDB API.
 
@@ -46,14 +46,14 @@ class OMDBAPI(APIInterface):
             api_url (str): The base URL for the OMDB API.
             api_key (str): The API key for accessing the OMDB API.
     """
-    def __init__(self):
+    def __init__(self, name='omdb'):
         """
             Initializes the OMDBAPI class with the base URL and API key.
 
             Raises:
                 ValueError: If the API key is not set in the environment variables.
         """
-        super().__init__()
+        super().__init__(name)
         self.api_url = 'https://www.omdbapi.com'
         self.api_key = os.getenv(ENV_OMDB_KEY)
         if not self.api_key:
@@ -90,10 +90,10 @@ class OMDBAPI(APIInterface):
         return 'omdb'
 
     def get_optional_params(self):
-        return ['year', 'plot', 'rtype']
+        return [K_YEAR, K_PLOT, K_RETURN]
 
     def get_required_params(self):
-        return ['title']
+        return [K_TITLE]
 
     def _construct_params(self, kwargs):
         """
