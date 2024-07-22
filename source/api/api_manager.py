@@ -31,13 +31,13 @@ class APIManager:
         :returns: dict of modules ending in '_api.py' in ./source/api/
         """
         modules = pkgutil.iter_modules(pkg.__path__, pkg.__name__ + '.')
-        print(modules)
         api_mods = {
             name: importlib.import_module(name)
             for finder, name, ispkg
             in modules
             if '_api' in name
         }
+        # print('modules: ' + str(api_mods))
         return api_mods
 
     def discover_api_classes(self, api_mod):
@@ -45,12 +45,13 @@ class APIManager:
         :param api_mods: List of tuples in (str, module) format.
         :return: List of classes that inherit from BaseAPI
         """
-        api_classes = {}
-        for class_name, obj in inspect.getmembers(api_mod, inspect.isclass):
-            if issubclass(obj, BaseAPI):
-                api_classes.update({class_name: obj})
+        api_classes = {
+            class_name: obj
+            for class_name, obj
+            in inspect.getmembers(api_mod, inspect.isclass)
+            if issubclass(obj, BaseAPI) and obj is not BaseAPI
+        }
         return api_classes
-
 
     def register_api(self, name, api_class):
         """
@@ -68,14 +69,13 @@ class APIManager:
             logging.error(msg)
             raise TypeError(msg)
 
-    def init_plugins(self):
+    def init_plugins(self, src_pkg=source.api):
         """
         Discovers and instantiates all api plugins found in ./source/api/.
         To be run before accessing any api plugin functions.
 
         :return: None
         """
-        src_pkg = source.api
         api_mods = self.discover_api_modules(src_pkg)
         for mod_name, mod in api_mods.items():
             for cls_name, cls in self.discover_api_classes(mod).items():
