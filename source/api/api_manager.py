@@ -10,6 +10,7 @@
 # Standard Library
 import importlib
 import inspect
+import logging
 import pkgutil
 
 # Local imports
@@ -23,45 +24,49 @@ class APIManager:
     def __init__(self):
         self.apis = {}
 
-    def discover_api_modules(self):
+    def discover_api_modules(self, pkg):
         """
         Looks for api modules in ./soruce/api/
 
-        :returns: list of modules ending in '_api.py' in ./source/api/
+        :returns: dict of modules ending in '_api.py' in ./source/api/
         """
-        pkgs = pkgutil.iter_modules(source.api.__path__, source.api.__name__ + '.')
+        modules = pkgutil.iter_modules(pkg.__path__, pkg.__name__ + '.')
+        print(modules)
         api_mods = {
             name: importlib.import_module(name)
             for finder, name, ispkg
-            in pkgs
+            in modules
             if '_api' in name
         }
         return api_mods
 
-    def discover_api_classes(self, api_mods):
+    def discover_api_classes(self, api_mod):
         """
-        Takes a list of modules and finds within them any classes that inherit from BaseAPI
-
         :param api_mods: List of tuples in (str, module) format.
         :return: List of classes that inherit from BaseAPI
         """
         api_classes = {}
-        for mod_name, mod in api_mods:
-            for class_name, obj in inspect.getmembers(mod, inspect.isclass):
-                if issubclass(obj, BaseAPI):
-                    api_classes.update({class_name: obj})
+        for class_name, obj in inspect.getmembers(api_mod, inspect.isclass):
+            if issubclass(obj, BaseAPI):
+                api_classes.update({class_name: obj})
         return api_classes
 
-    def register_apis(self, api_classes):
-        """
-        Takes a list of classes which inherit from BaseAPI, instantiates them,
-        then adds the instances to the dict self.api of {name: api} pairs.
 
-        :param api_classes: List of tuples in (str, class) format
+    def register_api(self, name, api_class):
+        """
+        Takes a name and a class which inherrits from BaseAPI, then
+        creates an instance of that class and registers it in self.apis{name:instance}
+
+        :param name: Name of api to store in registry. Used for retrieval.
+        :param api_class: Class to register
         :return: None
         """
-        for name, api_class in api_classes.items():
+        if issubclass(api_class, BaseAPI):
             self.apis.update({name: api_class()})
+        else:
+            msg = f"Argument  '{api_class}'  must inherit from BaseAPI."
+            logging.error(msg)
+            raise TypeError(msg)
 
     def init_plugins(self):
         """
@@ -70,9 +75,11 @@ class APIManager:
 
         :return: None
         """
-        mods = self.discover_api_modules()
-        classes = self.discover_api_classes(mods)
-        self.register_apis(classes)
+        src_pkg = source.api
+        api_mods = self.discover_api_modules(src_pkg)
+        for mod_name, mod in api_mods.items():
+            for cls_name, cls in self.discover_api_classes(mod).items():
+                self.register_api(cls_name, cls)
 
     def get_api(self, api_name):
         """
