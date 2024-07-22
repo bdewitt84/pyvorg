@@ -1,8 +1,11 @@
 # /tests/api/api_manager.py
-
+import importlib
+import os
 # Standard library
+from tempfile import TemporaryDirectory
 from unittest import TestCase
 from unittest.mock import MagicMock, patch
+import sys
 
 # Local imports
 from source.api.api_manager import APIManager
@@ -56,9 +59,10 @@ class TestAPIManager(TestCase):
     def setUp(self) -> None:
         self.test_api_man = APIManager()
         self.test_api = TestAPI()
+        self.temp_dir = TemporaryDirectory()
 
     def tearDown(self) -> None:
-        pass
+        self.temp_dir.cleanup()
 
     def test_discover_api_classes(self):
 
@@ -66,12 +70,9 @@ class TestAPIManager(TestCase):
         fake_api_mod = MagicMock()
         fake_api_mod.FakeAPI1 = FakeAPI1
         fake_api_mod.FakeAPI2 = FakeAPI2
-        api_mods = [
-            ('fake_mod_1', fake_api_mod),
-        ]
 
         # Act
-        result = self.test_api_man.discover_api_classes(api_mods)
+        result = self.test_api_man.discover_api_classes(fake_api_mod)
 
         # Assert
         expected_value = {
@@ -80,27 +81,40 @@ class TestAPIManager(TestCase):
         }
         self.assertEqual(expected_value, result)
 
-    @patch('importlib.import_module')
-    @patch('pkgutil.iter_modules')
-    def test_discover_api_modules(self, mock_iter_modules, mock_import_module):
+    def test_discover_api_modules(self):
+        # Arrange - simulate package
+        fake_pkg_name = 'fake_pkg'
+        fake_pkg_path = os.path.join(self.temp_dir.name, fake_pkg_name)
+        os.mkdir(fake_pkg_path)
+        fake_pkg_init_path = os.path.join(fake_pkg_path, '__init__.py')
+        with open(fake_pkg_init_path, 'w') as file:
+            file.write('# This file makes the directory a package.')
 
-        # Arrange
-        fake_api_1_name = 'source.api.fake_api_1'
-        fake_api_2_name = 'source.api.fake_api_2'
-        mock_iter_modules.return_value = [
-            (None, fake_api_1_name, False),
-            (None, fake_api_2_name, False)
-        ]
-        mock_import_module.side_effect = lambda name: MagicMock(__name__=name)
+        # Arrange - simulate modules
+        fake_mod_1_name = 'fake_api_1'
+        fake_mod_2_name = 'fake_api_2'
+        fake_mod_1_path = os.path.join(fake_pkg_path, fake_mod_1_name + '.py')
+        fake_mod_2_path = os.path.join(fake_pkg_path, fake_mod_2_name + '.py')
+        with open(fake_mod_1_path, 'w') as file:
+            file.write(
+                """from source.api.base_api import BaseAPI\nclass FakeAPI1(BaseAPI):\n    def fetch_video_data(self, **kwargs):\n        pass\n    def get_optional_params(self):\n        pass\n    def get_required_params(self):\n        pass""")
+        with open(fake_mod_2_path, 'w') as file:
+            file.write(
+                """from source.api.base_api import BaseAPI\nclass FakeAPI2(BaseAPI):\n    def fetch_video_data(self, **kwargs):\n        pass\n    def get_optional_params(self):\n        pass\n    def get_required_params(self):\n        pass""")
+
+        # Arrange - import simulated package
+        sys.path.insert(0, self.temp_dir.name)
+        test_pkg = importlib.import_module(fake_pkg_name)
 
         # Act
-        result = self.test_api_man.discover_api_modules()
+        result = self.test_api_man.discover_api_modules(test_pkg)
 
         # Assert
-        expected_value = {fake_api_1_name, fake_api_2_name}
-        self.assertEqual(expected_value, result.keys())
-        self.assertEqual(result.get(fake_api_1_name).__name__, fake_api_1_name)
-        self.assertEqual(result.get(fake_api_2_name).__name__, fake_api_2_name)
+        expected_value = {f'{fake_pkg_name}.{fake_mod_1_name}', f'{fake_pkg_name}.{fake_mod_2_name}'}
+        self.assertEqual(expected_value, set(result.keys()))
+        self.assertTrue(all(mod.__name__ in expected_value for mod in result.values()))
+
+        sys.path.pop(0)
 
     def test_get_api_list(self):
         # Arrange
@@ -124,18 +138,15 @@ class TestAPIManager(TestCase):
         expected_value = ['test_name']
         self.assertEqual(expected_value, result)
 
-    def test_register_apis(self):
+    def test_register_api(self):
         # Arrange
-        apis = {
-            FakeAPI1.__name__: FakeAPI1,
-            FakeAPI2.__name__: FakeAPI2
-        }
 
         # Act
-        self.test_api_man.register_apis(apis)
+        self.test_api_man.register_api(FakeAPI1.__name__, FakeAPI1)
+        self.test_api_man.register_api(FakeAPI2.__name__, FakeAPI2)
 
         # Assert
         self.assertTrue(FakeAPI1.__name__ in self.test_api_man.apis)
         self.assertTrue(FakeAPI2.__name__ in self.test_api_man.apis)
-        self.assertTrue(self.test_api_man.apis.get(FakeAPI1.__name__), FakeAPI1)
-        self.assertTrue(self.test_api_man.apis.get(FakeAPI2.__name__), FakeAPI2)
+        self.assertTrue(isinstance(self.test_api_man.apis.get(FakeAPI1.__name__), FakeAPI1))
+        self.assertTrue(isinstance(self.test_api_man.apis.get(FakeAPI2.__name__), FakeAPI2))
