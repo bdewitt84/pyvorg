@@ -32,6 +32,8 @@ class Collection:
         self.cb = CommandBuffer()
         if path:
             self.metadata_load(path)
+        self.api_manager = APIManager()
+        self.api_manager.init_plugins()
 
     def add_video(self, path):
         video = Video()
@@ -84,19 +86,14 @@ class Collection:
                           skipkeys=True,
                           default=default_serializer)
 
-    def update_api_data(self):
-        api_man = APIManager()
-        api_man.discover_apis()
-        apis = api_man.get_api_names()
-        for vid in self.videos:
-            for api in apis:
-                if api.get_name() not in vid.get_source_names():
-                    vid.update_api_data(api)
+    def update_api_data(self, **kwargs):
+        """
+        Updates all video data using every API currently registered with
+        the current instance of APIManager stored in self.api_manager
 
-    def update_guessit(self):
+        :param kwargs: Keyword arguments to pass to API plugin
+        :return: None
+        """
         for video in self.videos.values():
-            video.update_guessit()
-
-    def update_omdb(self):
-        for video in self.videos:
-            video.update_omdb()
+            for api in self.api_manager.apis.values():
+                video.update_api_data(api, **kwargs)
