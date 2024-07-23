@@ -7,6 +7,7 @@
 # Standard library
 import os
 from unittest import TestCase
+from unittest.mock import Mock
 from tempfile import TemporaryDirectory
 from json.decoder import JSONDecodeError
 
@@ -189,3 +190,48 @@ class TestCollection(TestCase):
 }"""
         result = self.test_collection.to_json()
         self.assertEqual(expected_value, result)
+
+    def test_update_api_data(self):
+        # Arrange
+        fake_vid_1 = Video()
+        fake_vid_1.data = {
+            USER_DATA: {'filename': 'fake_filename_1'},
+            FILE_DATA: {}
+        }
+
+        fake_vid_2 = Video()
+        fake_vid_2.data = {
+            USER_DATA: {'filename': 'fake_filename_2'},
+            FILE_DATA: {}
+        }
+
+        self.test_collection.videos = {'fake_hash_1': fake_vid_1, 'fake_hash_2': fake_vid_2}
+
+        fake_api_1 = Mock()
+        fake_api_1.get_required_params.return_value = ['filename']
+        fake_api_1.get_name.return_value = 'fake_api_1'
+        fake_api_1.fetch_video_data.side_effect = lambda kwargs: {kwargs.get('filename'): kwargs.get('filename') + '_return_data'}
+
+        fake_api_2 = Mock()
+        fake_api_2.get_required_params.return_value = ['filename']
+        fake_api_2.get_name.return_value = 'fake_api_2'
+        fake_api_2.fetch_video_data.side_effect = lambda kwargs: {
+            kwargs.get('filename'): kwargs.get('filename') + '_return_data'}
+
+        self.test_collection.api_manager.apis = {'fake_api_1': fake_api_1, 'fake_api_2': fake_api_2}
+
+        # Act
+        self.test_collection.update_api_data()
+
+        # Assert
+        result_1 = self.test_collection.videos.get('fake_hash_1').data
+        self.assertTrue('fake_api_1' in result_1.keys())
+        self.assertTrue('fake_api_2' in result_1.keys())
+        self.assertTrue(result_1.get('fake_api_1'), 'filename_return_data')
+        self.assertTrue(result_1.get('fake_api_2'), 'filename_return_data')
+
+        result_2 = self.test_collection.videos.get('fake_hash_2').data
+        self.assertTrue('fake_api_1' in result_2.keys())
+        self.assertTrue('fake_api_2' in result_2.keys())
+        self.assertTrue(result_2.get('fake_api_1'), 'filename_return_data')
+        self.assertTrue(result_2.get('fake_api_2'), 'filename_return_data')
