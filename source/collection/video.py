@@ -106,8 +106,27 @@ class Video:
     def to_json(self):
         return json.dumps(self.data)
 
-    def update_api_data(self, api):
-        data = api.fetch_video_data()
+    def update_api_data(self, api, **kwargs):
+        """
+        Fetches data using the api plugin passed into 'api'. Passes any
+        supplied keyword arguments into the API's 'fetch_video_data()'.
+        If none are passed, the video's metadata is searched for matching
+        keys in order of preference according to Video.get_data_pref().
+
+        :param api: Instance of an api plugin with which to retrieve data
+        :param kwargs: Keyword arguments to pass into the API request
+        :return: None
+        """
+        req_p = api.get_required_params()
+        for p in req_p:
+            if p not in kwargs.keys():
+                val = self.get_pref_data(p)
+                kwargs.update({p: val})
+            if kwargs.get(p) is None:
+                raise ValueError(
+                    f"Parameter '{p}' required for '{api.get_name()}' could not be found in video data for '{self}'")
+
+        data = api.fetch_video_data(kwargs)
         self.set_api_data(api.get_name(), data)
 
     def update_file_data(self, path, skip_hash=False):
@@ -131,22 +150,6 @@ class Video:
             msg = f"Cannot update info for '{path}': file not found."
             logging.error(msg)
             raise FileNotFoundError(msg)
-
-    # def update_guessit(self):
-    #     # filename = self.data[FILE_DATA][FILENAME]
-    #     filename = self.get_filename()
-    #     guessit_data = guessit.guessit(filename)
-    #     self.data.update({GUESSIT_DATA: guessit_data})
-    #
-    # def update_omdb(self):
-    #     title = self.get_data('title')
-    #     data = get_omdb_data(title)
-    #
-    #     if data:
-    #         self.data.update({OMDB_DATA: data})
-    #         logging.info(f'OMDB videos for {self.get_filename()} updated successfully')
-    #     else:
-    #         self.data.update({OMDB_DATA: f'OMDB search for \"{title}\" returned no results.'})
 
     def update_hash(self):
         self.data[FILE_DATA][HASH] = hash_sha256(self.data[FILE_DATA][PATH])
