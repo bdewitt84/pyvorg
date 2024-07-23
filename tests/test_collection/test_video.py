@@ -149,12 +149,19 @@ class TestVideo(TestCase):
         self.assertEqual(expected_json, result)
 
     def test_update_api_data(self):
+        # Arrange
+        self.test_vid.data = {USER_DATA: {FILENAME: 'test_filename'}}
         api = Mock()
         api_name = 'test_api'
+        api.get_name.return_value = api_name
+        api.get_required_params.return_value = ['filename']
         expected_data = {'test_key': 'test_value'}
         api.fetch_video_data.return_value = expected_data
-        api.get_name.return_value = api_name
+        
+        # Act
         self.test_vid.update_api_data(api)
+
+        # Assert
         result = self.test_vid.data.get(api_name)
         self.assertEqual(expected_data, result)
 
