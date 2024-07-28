@@ -159,7 +159,7 @@ class TestCollection(TestCase):
         with self.assertRaises(FileNotFoundError):
             self.test_collection.metadata_load(bad_path)
 
-    def test_scan_files(self):
+    def test_scan_directory(self):
         test_files = []
         for i in range(3):
             filename = f"test_file{str(i)}.mp4"
@@ -175,6 +175,20 @@ class TestCollection(TestCase):
         for i in range(3):
             cur = test_files.pop().name
             self.assertTrue(cur in result)
+
+    def test_scan_file(self):
+        # Arrange
+        test_filename = 'test_file.mp4'
+        test_file_path = os.path.join(self.temp_dir.name, test_filename)
+        with open(test_file_path, 'w') as file:
+            file.write('dummy_data')
+
+        # Act
+        self.test_collection.scan_file(test_file_path)
+
+        # Assert
+        result = [vid.data.get(FILE_DATA).get(PATH) for vid in self.test_collection.videos.values()]
+        self.assertTrue(test_file_path in result)
 
     def test_to_json(self):
         test_vid = Video()
