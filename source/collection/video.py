@@ -23,6 +23,21 @@ class Video:
         if path is not None:
             self.update_file_data(path)
 
+    @staticmethod
+    def from_dict(d: dict):
+        # TODO: validate video dict
+        new = Video()
+        new.data = d
+        return new
+
+    @staticmethod
+    def from_json(j: str):
+        data = json.loads(j)
+        # TODO: Validate video json
+        new = Video()
+        new.data = data
+        return new
+
     def generate_dir_name(self, format='%title (%year)'):
         name = format
         for spec, (key, default) in FORMAT_SPECIFIERS.items():
@@ -102,6 +117,9 @@ class Video:
                 key: value
             }
         })
+
+    def to_dict(self):
+        return self.data
 
     def to_json(self):
         return json.dumps(self.data)
