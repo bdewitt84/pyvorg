@@ -45,6 +45,15 @@ def file_write(path: str, data: str) -> None:
         file.write(data)
 
 
+def file_read(path: str) -> str:
+    """
+    :param path:
+    :return:
+    """
+    with open(path, 'r') as file:
+        return file.read()
+
+
 def guess_title(video):
     """
     Guesses the title of a video based on its filename.
@@ -99,6 +108,13 @@ def hash_sha256(path):
     return hash
 
 
+def integer_generator():
+    num = 0
+    while True:
+        yield num
+        num += 1
+
+
 def logger_init():
     current_path = os.path.dirname(__file__)
     log_path = os.path.join(current_path, '..', '..', 'logs', 'applog.txt')
@@ -132,6 +148,20 @@ def make_dir(path):
         logging.info(f"Directory '{path}' created")
     else:
         logging.info(f"Directory '{path}' already exists")
+
+
+def mimic_folder(src, dest):
+    gen = integer_generator()
+    for dirpath, _, filenames in os.walk(src):
+        for name in filenames:
+            src_path = os.path.join(dirpath, name)
+            relative_to_src = dirpath[len(src) + 1:]
+            file_path = os.path.join(dest, relative_to_src, name)
+            new_dir = os.path.join(dest, relative_to_src)
+            os.makedirs(new_dir, exist_ok=True)
+            print('Creating dummy of ' + src_path + ' at\n' + file_path)
+            data = str(next(gen))
+            file_write(file_path, data)
 
 
 def move_file(src, dst, overwrite=False):
