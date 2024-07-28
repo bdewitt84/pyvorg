@@ -44,7 +44,6 @@ class OMDBAPI(BaseAPI):
 
         Attributes:
             api_url (str): The base URL for the OMDB API.
-            api_key (str): The API key for accessing the OMDB API.
     """
     def __init__(self, name='omdb'):
         """
@@ -55,8 +54,7 @@ class OMDBAPI(BaseAPI):
         """
         super().__init__(name)
         self.api_url = 'https://www.omdbapi.com'
-        self.api_key = os.getenv(ENV_OMDB_KEY)
-        if not self.api_key:
+        if not self.get_omdb_api_key():
             raise ValueError(f"No API key set. Add '{ENV_OMDB_KEY} = [your omdb key]' to {ENV_FILE_PATH}.")
 
     def fetch_video_data(self, **kwargs):
@@ -86,6 +84,10 @@ class OMDBAPI(BaseAPI):
 
         return data
 
+    @staticmethod
+    def get_omdb_api_key():
+        return os.getenv(ENV_OMDB_KEY)
+
     def get_name(self):
         return 'omdb'
 
@@ -109,7 +111,7 @@ class OMDBAPI(BaseAPI):
                 ValueError: If required parameters are missing or invalid.
         """
         params = {
-            P_API_KEY: self.api_key,
+            P_API_KEY: self.get_omdb_api_key(),
         }
 
         if K_TITLE in kwargs.keys():
