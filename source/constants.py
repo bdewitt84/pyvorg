@@ -2,8 +2,7 @@
 
 """
     Constants used across all packages, mostly to standardize JSON entries.
-    Also included are a list of valid video extensions and a JSON schema
-    used for validating metadata.
+    Also included are a list of valid video extensions.
 """
 
 # Environment variable constants
