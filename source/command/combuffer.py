@@ -56,7 +56,7 @@ class CommandBuffer:
     # Todo: Generate list of errors, present it to user
     def validate_exec_buffer(self):
         if self.cmd_buffer:
-            for cmd in self.cmd_buffer.queue:
+            for cmd in self.cmd_buffer:
                 cmd.validate_exec()
         else:
             print('Nothing to validate, exec_buffer is empty.\n')
