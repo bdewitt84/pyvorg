@@ -86,12 +86,21 @@ class Collection:
     #     # cb.execute_cmd_buffer()
 
     def scan_directory(self, path):
-        # TODO: standardize use of path, filename, and root or dir
-        for root, _, files in os.walk(path):
-            for file in files:
-                if file.endswith(VIDEO_EXTENSIONS):
+        # TODO: standardize use of path, filename, and root or dir. Currently, slashes go both ways.
+        if os.path.isdir(path):
+            for root, _, files in os.walk(path):
+                for file in files:
                     file_path = os.path.join(root, file)
-                    self.add_video(file_path)
+                    self.scan_file(file_path)
+        else:
+            raise NotADirectoryError(f"Path '{path}' must point to a directory. To scan a file, use scan_file()")
+
+    def scan_file(self, path):
+        if os.path.isfile(path):
+            if path.endswith(VIDEO_EXTENSIONS):
+                self.add_video(path)
+        else:
+            raise IsADirectoryError(f"Path '{path}' must point to a file. To scan a directory, use scan_directory()")
 
     def to_dict(self):
         return {
