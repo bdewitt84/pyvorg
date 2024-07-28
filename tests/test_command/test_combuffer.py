@@ -6,78 +6,89 @@
 
 # Standard library
 import unittest
+from unittest.mock import Mock
 
 # Local imports
 from source.command.combuffer import *
+from tests.test_command.shared import TestCommand
 from source.command.command import Command
 
 
-class TestCommand(Command):
-
-    def __init__(self):
-        self.exec_is_valid_called = False
-        self.undo_is_valid_called = False
-        self.execute_called = False
-        self.undo_called = False
-
-    def validate_exec(self):
-        self.exec_is_valid_called = True
-
-    def validate_undo(self):
-        self.undo_is_valid_called = True
-
-    def exec(self):
-        self.execute_called = True
-
-    def undo(self):
-        self.undo_called = True
-
-
 class TestCommandBuffer(unittest.TestCase):
+    def setUp(self) -> None:
+        self.buffer = CommandBuffer()
 
     def test_add_command_valid(self):
-        buffer = CommandBuffer()
         cmd = TestCommand()
-        buffer.add_command(cmd)
-        self.assertTrue(cmd in buffer.cmd_buffer.queue)
+        self.buffer.add_command(cmd)
+        self.assertTrue(cmd in self.buffer.cmd_buffer)
 
     def test_add_command_invalid(self):
-        buffer = CommandBuffer()
         cmd = False
         with self.assertRaises(ValueError):
-            buffer.add_command(cmd)
+            # Your IDE may report 'cmd' is an unexpected type; this is correct.
+            self.buffer.add_command(cmd)
 
     def test_exec_command(self):
-        buffer = CommandBuffer()
         cmd = TestCommand()
-        buffer.cmd_buffer.put(cmd)
+        self.buffer.cmd_buffer.append(cmd)
 
-        buffer.exec_command()
+        self.buffer.exec_command()
         self.assertTrue(cmd.execute_called)
-        self.assertTrue(buffer.cmd_buffer.empty())
-        self.assertTrue(cmd in buffer.undo_buffer)
+        self.assertFalse(self.buffer.cmd_buffer)
+        self.assertTrue(cmd in self.buffer.undo_buffer)
 
     def test_undo_cmd(self):
-        buffer = CommandBuffer()
         cmd = TestCommand()
-        buffer.undo_buffer.append(cmd)
+        self.buffer.undo_buffer.append(cmd)
 
-        buffer.undo_cmd()
+        self.buffer.undo_cmd()
         self.assertTrue(cmd.undo_called)
-        self.assertFalse(buffer.undo_buffer)
+        self.assertFalse(self.buffer.undo_buffer)
 
     def test_execute_buffer(self):
-        cb = CommandBuffer()
         cmd1 = TestCommand()
         cmd2 = TestCommand()
         cmd3 = TestCommand()
-        cb.cmd_buffer.put(cmd1)
-        cb.cmd_buffer.put(cmd2)
-        cb.cmd_buffer.put(cmd3)
+        self.buffer.cmd_buffer.append(cmd1)
+        self.buffer.cmd_buffer.append(cmd2)
+        self.buffer.cmd_buffer.append(cmd3)
 
-        cb.execute_cmd_buffer()
-        self.assertTrue(cb.cmd_buffer.empty())
+        self.buffer.execute_cmd_buffer()
+        self.assertFalse(self.buffer.cmd_buffer)
         self.assertTrue(cmd1.execute_called)
         self.assertTrue(cmd2.execute_called)
         self.assertTrue(cmd3.execute_called)
-        self.assertTrue(cb.undo_buffer == [cmd1, cmd2, cmd3])
+        self.assertTrue(self.buffer.undo_buffer == [cmd1, cmd2, cmd3])
+
+    def test_execute_undo_buffer(self):
+        # Arrange
+        cmd1 = TestCommand()
+        cmd2 = TestCommand()
+        cmd3 = TestCommand()
+        self.buffer.undo_buffer.append(cmd1)
+        self.buffer.undo_buffer.append(cmd2)
+        self.buffer.undo_buffer.append(cmd3)
+
+        # Act
+        self.buffer.execute_undo_buffer()
+
+        # Assert
+        self.assertFalse(self.buffer.undo_buffer)
+        self.assertTrue(cmd1.undo_called)
+        self.assertTrue(cmd2.undo_called)
+        self.assertTrue(cmd3.undo_called)
+
+    def preview_buffer(self):
+        pass
+
+    def save_buffer(self):
+        vid = Mock()
+        cmd = Mock()
+        cmd.video = vid
+        cmd.str = 'string'
+        cmd.int = 1
+        self.buffer.cmd_buffer.put(cmd)
+
+    def load_buffer(self):
+        pass
