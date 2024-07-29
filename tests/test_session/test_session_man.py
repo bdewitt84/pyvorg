@@ -3,8 +3,9 @@
 """
     Unit tests for SessionManager
 """
-import os
+
 # Standard library
+import os
 from unittest import TestCase
 from unittest.mock import Mock
 from tempfile import TemporaryDirectory
@@ -30,8 +31,10 @@ class TestSessionManager(TestCase):
 
     def test_commit_transaction(self):
         # Arrange
-        test_cmd_1 = TestCommand()
-        test_cmd_2 = TestCommand()
+        test_cmd_1 = Mock()
+        test_cmd_1.exec.return_value = None
+        test_cmd_2 = Mock()
+        test_cmd_2.exec.return_value = None
 
         self.session.cb.cmd_buffer.append(test_cmd_1)
         self.session.cb.cmd_buffer.append(test_cmd_2)
@@ -40,8 +43,11 @@ class TestSessionManager(TestCase):
         self.session.commit_transaction()
 
         # Assert
-        self.assertTrue(test_cmd_1.execute_called)
-        self.assertTrue(test_cmd_2.execute_called)
+        test_cmd_1.exec.assert_called_once()
+        test_cmd_2.exec.assert_called_once()
+
+    def test_export_collection_metadata(self):
+        pass
 
     def test_pickle_session(self):
         # Arrange
@@ -79,6 +85,9 @@ class TestSessionManager(TestCase):
         self.assertTrue('Test cmd 1' in result)
         self.assertTrue('Test cmd 2' in result)
 
+    def test_scan_path(self):
+        pass
+
     def test_stage_organize_video_files(self):
         pass
 
@@ -115,4 +124,3 @@ class TestSessionManager(TestCase):
         self.assertTrue(test_cmd_1.undo_called)
         self.assertTrue(test_cmd_2.undo_called)
         self.assertTrue(self.session.cb.undo_buffer)
-
