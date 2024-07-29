@@ -70,12 +70,7 @@ class SessionManager:
         pass
 
     def scan_path(self, path):
-        if os.path.isdir(path):
-            self.col.scan_directory(path)
-        elif os.path.isfile(path):
-            self.col.scan_file(path)
-        else:
-            raise ValueError(f"'{path}' is not recognized by the OS as a valid path")
+        self.col.scan_path(path)
 
     def stage_organize_video_files(self):
         for video in self.col.get_videos():
