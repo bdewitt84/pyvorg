@@ -7,7 +7,7 @@
 # Standard library
 import os
 from unittest import TestCase
-from unittest.mock import Mock
+from unittest.mock import Mock, patch
 from tempfile import TemporaryDirectory
 from json.decoder import JSONDecodeError
 
@@ -29,15 +29,15 @@ class TestCollection(TestCase):
 
     def setUp(self) -> None:
         self.test_collection = Collection()
-        self.temp_dir = TemporaryDirectory()
+        self.test_dir = TemporaryDirectory()
 
     def tearDown(self) -> None:
-        self.temp_dir.cleanup()
+        self.test_dir.cleanup()
 
     def test_add_video_file_exists(self):
         expected_filename = 'test.vid'
-        expected_file_path = os.path.join(self.temp_dir.name, expected_filename)
-        expected_root = self.temp_dir.name
+        expected_file_path = os.path.join(self.test_dir.name, expected_filename)
+        expected_root = self.test_dir.name
         expected_hash = 'e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855'
 
         with open(expected_file_path, 'w') as file:
@@ -56,7 +56,7 @@ class TestCollection(TestCase):
         self.assertEqual(expected_hash, result_hash)
 
     def test_add_video_does_not_exist(self):
-        bad_path = os.path.join(self.temp_dir.name, 'does_not_exist.file')
+        bad_path = os.path.join(self.test_dir.name, 'does_not_exist.file')
         with self.assertRaises(FileNotFoundError):
             self.test_collection.add_video(bad_path)
 
@@ -69,7 +69,7 @@ class TestCollection(TestCase):
 
     def test_metadata_save(self):
         test_file_name = 'save.data'
-        test_file_path = os.path.join(self.temp_dir.name, test_file_name)
+        test_file_path = os.path.join(self.test_dir.name, test_file_name)
         test_vid_1 = Video()
         test_vid_2 = Video()
         test_vid_1.data.update({"test_key": "test_value"})
@@ -100,7 +100,7 @@ class TestCollection(TestCase):
         test_vid = Video()
         self.test_collection.videos.update({'fake_hash': test_vid})
         bad_filename = 'does_not_exist.file'
-        save_file_path = os.path.join(self.temp_dir.name, bad_filename)
+        save_file_path = os.path.join(self.test_dir.name, bad_filename)
 
         with open(save_file_path, 'w') as file:
             file.write('test data')
@@ -110,7 +110,7 @@ class TestCollection(TestCase):
 
     def test_metadata_load_valid(self):
         test_filename = 'load.file'
-        test_file_path = os.path.join(self.temp_dir.name, test_filename)
+        test_file_path = os.path.join(self.test_dir.name, test_filename)
 
         file_data = """{
     "fake_hash_1": {
@@ -146,7 +146,7 @@ class TestCollection(TestCase):
 
     def test_metadata_load_invalid(self):
         test_filename = 'invalid.json'
-        test_file_path = os.path.join(self.temp_dir.name, test_filename)
+        test_file_path = os.path.join(self.test_dir.name, test_filename)
         with open(test_file_path, 'w') as file:
             file.write('invalid json data')
 
@@ -155,7 +155,7 @@ class TestCollection(TestCase):
 
     def test_metadata_load_does_not_exist(self):
         bad_filename = 'does_not_exist.file'
-        bad_path = os.path.join(self.temp_dir.name, bad_filename)
+        bad_path = os.path.join(self.test_dir.name, bad_filename)
         with self.assertRaises(FileNotFoundError):
             self.test_collection.metadata_load(bad_path)
 
@@ -163,12 +163,12 @@ class TestCollection(TestCase):
         test_files = []
         for i in range(3):
             filename = f"test_file{str(i)}.mp4"
-            path = os.path.join(self.temp_dir.name, filename)
+            path = os.path.join(self.test_dir.name, filename)
             with open(path, 'w') as file:
                 file.write(str(i))
                 test_files.append(file)
 
-        self.test_collection.scan_directory(self.temp_dir.name)
+        self.test_collection.scan_directory(self.test_dir.name)
 
         result = [vid.data.get(FILE_DATA).get(PATH) for vid in self.test_collection.videos.values()]
 
@@ -179,7 +179,7 @@ class TestCollection(TestCase):
     def test_scan_file(self):
         # Arrange
         test_filename = 'test_file.mp4'
-        test_file_path = os.path.join(self.temp_dir.name, test_filename)
+        test_file_path = os.path.join(self.test_dir.name, test_filename)
         with open(test_file_path, 'w') as file:
             file.write('dummy_data')
 
@@ -189,6 +189,62 @@ class TestCollection(TestCase):
         # Assert
         result = [vid.data.get(FILE_DATA).get(PATH) for vid in self.test_collection.videos.values()]
         self.assertTrue(test_file_path in result)
+
+    @patch('source.collection.col.Collection.scan_directory')
+    @patch('source.collection.col.Collection.scan_file')
+    def test_scan_path_file(self, mock_scan_file, mock_scan_directory):
+        # Arrange
+        filename = 'test_video.mp4'
+        path = os.path.join(self.test_dir.name, filename)
+
+        with open(path, 'w') as file:
+            file.write('dummy data')
+
+        args = Mock()
+        args.command = 'scan'
+        args.path = path
+
+        # Act
+        self.test_collection.scan_path(path)
+
+        # Assert
+        mock_scan_file.assert_called_once_with(path)
+        mock_scan_directory.assert_not_called()
+
+    @patch('source.collection.col.Collection.scan_directory')
+    @patch('source.collection.col.Collection.scan_file')
+    def test_scan_path_file(self, mock_scan_file, mock_scan_directory):
+        # Arrange
+        path = self.test_dir.name
+
+        args = Mock()
+        args.command = 'scan'
+        args.path = path
+
+        # Act
+        self.test_collection.scan_path(path)
+
+        # Assert
+        mock_scan_directory.assert_called_once_with(path)
+        mock_scan_file.assert_not_called()
+
+    @patch('source.collection.col.Collection.scan_directory')
+    @patch('source.collection.col.Collection.scan_file')
+    def test_scan_path_invalid(self, mock_scan_file, mock_scan_directory):
+        # Arrange
+        path = 'invalid path'
+
+        args = Mock()
+        args.command = 'scan'
+        args.path = path
+
+        # Act
+        with self.assertRaises(ValueError):
+            self.test_collection.scan_path(path)
+
+        # Assert
+        mock_scan_directory.assert_not_called()
+        mock_scan_file.assert_not_called()
 
     def test_to_json(self):
         test_vid = Video()
