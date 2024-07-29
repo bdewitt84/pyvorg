@@ -61,7 +61,7 @@ def parse_args(args):
     scan_parser = subparcers.add_parser('scan', help=scan_help)
     scan_path_help = "path to directory containing files to scan"
     scan_parser.add_argument(
-        '-p', '--path',
+        'path',
         metavar='PATH',
         help=scan_path_help
     )
@@ -77,27 +77,29 @@ def parse_args(args):
     return parser.parse_args(args)
 
 
-def handle_parsed_args(args):
-
-    session = SessionManager.unpickle_session()
+def handle_parsed_args(args, session):
 
     if args.command == 'commit':
         print("Committing staged operations")
+        session.commit_transaction()
 
     elif args.command == 'export':
         print(f"Exporting collection data to '{args.path}'")
+        session.export_collection_metadata(args.path)
 
     elif args.command == 'fetch':
         print(f"Staging files for fetching data from {args.plugins}")
 
     elif args.command == 'organize':
         print(f"Staging files for organization at '{args.path}'")
+        session
 
     elif args.command == 'profile':
         print(f"Switching profile to {args.name}")
 
     elif args.command == 'scan':
         print(f"Scanning '{args.path}'")
+        session.scan_path(args.path)
 
     elif args.command == 'undo':
         print(f"Undoing last commit")
