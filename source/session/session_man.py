@@ -6,7 +6,6 @@
 """
 
 # Standard library
-import json
 import os
 import pickle
 
@@ -17,9 +16,10 @@ from source.command.combuffer import CommandBuffer
 from source.command.update_video_data import UpdateVideoData
 from source.command.move_video import MoveVideo
 
-from source.utils.helper import file_write, file_read
+from source.utils.helper import file_write
 
 # Third-party packages
+# n\a
 
 
 class SessionManager:
@@ -66,6 +66,17 @@ class SessionManager:
     def preview_transaction(self):
         return self.cb.__str__()
 
+    def set_profile(self):
+        pass
+
+    def scan_path(self, path):
+        if os.path.isdir(path):
+            self.col.scan_directory(path)
+        elif os.path.isfile(path):
+            self.col.scan_file(path)
+        else:
+            raise ValueError(f"'{path}' is not recognized by the OS as a valid path")
+
     def stage_organize_video_files(self):
         for video in self.col.get_videos():
             dest = os.path.join(os.getenv('DEST_PATH'), video.generate_dir_name())
@@ -84,5 +95,3 @@ class SessionManager:
     def unpickle_session(path='./session.pickle'):
         with open(path, 'rb') as file:
             return pickle.load(file)
-
-
