@@ -102,6 +102,14 @@ class Collection:
         else:
             raise IsADirectoryError(f"Path '{path}' must point to a file. To scan a directory, use scan_directory()")
 
+    def scan_path(self, path):
+        if os.path.isdir(path):
+            self.scan_directory(path)
+        elif os.path.isfile(path):
+            self.scan_file(path)
+        else:
+            raise ValueError(f"'{path}' is not recognized by the OS as a valid path")
+
     def to_dict(self):
         return {
             hash: video.data
