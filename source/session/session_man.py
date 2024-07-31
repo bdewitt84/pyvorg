@@ -31,6 +31,9 @@ class SessionManager:
 
         self.apiman.init_plugins()
 
+    def clear_transaction(self):
+        self.cb.clear_exec_buffer()
+
     def commit_transaction(self):
         self.cb.execute_cmd_buffer()
 
