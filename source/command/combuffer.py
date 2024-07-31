@@ -21,19 +21,22 @@ from source.exceptions import ValidationError
 
 class CommandBuffer:
     def __init__(self):
-        # self.cmd_buffer = Queue()
         self.cmd_buffer = deque()
         self.undo_buffer = []
 
     def add_command(self, cmd: Command):
         if isinstance(cmd, Command):
-            # self.cmd_buffer.put(cmd)
             self.cmd_buffer.append(cmd)
         else:
             raise ValueError("Only objects with type <Command> may be added to the command buffer.")
 
+    def clear_exec_buffer(self):
+        self.cmd_buffer.clear()
+
+    def clear_undo_buffer(self):
+        self.undo_buffer.clear()
+
     def exec_command(self):
-        # cmd = self.cmd_buffer.get()
         cmd = self.cmd_buffer.popleft()
         cmd.exec()
         self.undo_buffer.append(cmd)
@@ -87,16 +90,6 @@ class CommandBuffer:
         for cmd in self.cmd_buffer:
             print(cmd)
 
-    # def save_buffer(self, path='./command_buffer.sav'):
-    #     if self.cmd_buffer.queue or self.undo_buffer:
-    #         jar = {'buffer': self.cmd_buffer.queue,
-    #                'history': self.undo_buffer}
-    #         with open(path, 'wb') as file:
-    #             pickle.dump(jar, file)
-    #     else:
-    #         # Buffer is empty
-    #         pass
-
     def to_dict(self):
         # TODO: Implement
         pass
@@ -104,12 +97,6 @@ class CommandBuffer:
     def to_json(self):
         # TODO: Implement
         pass
-
-    # def load_buffer(self, path='./command_buffer.sav'):
-    #     with open(path, 'rb') as file:
-    #         jar = pickle.load(file)
-    #     self.cmd_buffer.queue = jar.get('buffer')
-    #     self.undo_buffer = jar.get('history')
 
     def __str__(self):
         ret = ''
