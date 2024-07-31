@@ -28,18 +28,19 @@ def default_serializer(obj):
     return f"Object '{class_name(obj)}' is not serializable"
 
 
-def file_write(path: str, data: str) -> None:
+def file_write(path: str, data: str, overwrite=False) -> None:
     """
     Attempts to write data to the file at the specified path, raising
     an exception if the file already exists.
 
     :param path: (str) Path to file.
     :param data: (str) Data to write to the file.
+    :param overwrite: (bool) Overwrite if file exists
     :return : None
     :raises FileExistsError: if the file already exists
     :raises IOError: if an error occurs with the write function
     """
-    if os.path.exists(path):
+    if os.path.exists(path) and not overwrite:
         raise FileExistsError(f"The file '{path}' already exists.")
     with open(path, 'w') as file:
         file.write(data)
