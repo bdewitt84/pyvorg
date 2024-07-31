@@ -5,13 +5,13 @@
 """
 
 # Standard library
-import argparse
-from argparse import ArgumentParser
+from argparse import ArgumentParser, HelpFormatter
 
 # Local imports
-from source.session.session_man import SessionManager
+# n/a
 
 # Third-party packages
+# n/a
 
 
 def parse_args(args):
@@ -20,7 +20,7 @@ def parse_args(args):
     parser = ArgumentParser(
         prog='Video Manager',
         usage=usage_help,
-        formatter_class=argparse.HelpFormatter,
+        formatter_class=HelpFormatter,
         add_help=True
     )
 
@@ -39,12 +39,13 @@ def parse_args(args):
     fetch_help = "stage files in collection to be updated with metadata fetched using the specified plugin"
     fetch_parser = subparcers.add_parser('fetch', help=fetch_help)
     fetch_plugin_help = "name of plugin used to fetch data. can be invoked multiple times"
-    fetch_plugins = ['fake', 'list', 'of', 'plugins']
+    fetch_plugins = ['test']
     fetch_parser.add_argument(
-        '-p', '--plugin',
+        'plugins',
         help=fetch_plugin_help,
         choices=fetch_plugins,
-        action='append'
+        metavar='PLUGIN',
+        nargs='+'
     )
 
     # Organize
@@ -89,13 +90,16 @@ def handle_parsed_args(args, session):
 
     elif args.command == 'fetch':
         print(f"Staging files for fetching data from {args.plugins}")
+        for plugin in args.plugins:
+            session.stage_update_api_metadata(plugin)
 
     elif args.command == 'organize':
         print(f"Staging files for organization at '{args.path}'")
-        session
+        session.stage_organize_video_files()
 
     elif args.command == 'profile':
         print(f"Switching profile to {args.name}")
+        session.set_profile(args.name)
 
     elif args.command == 'scan':
         print(f"Scanning '{args.path}'")
@@ -103,10 +107,12 @@ def handle_parsed_args(args, session):
 
     elif args.command == 'undo':
         print(f"Undoing last commit")
+        session.undo_transaction()
 
     elif args.command == 'view':
         print(f"Viewing staged operations")
+        session.preview_transaction()
 
     else:
-        print(f"Unrecognized command. Use -h or --help to see list of commands. Use <command> -h to see command "
-              f"specific help")
+        print(f"Unrecognized command. Use -h or --help to see list of commands. Use <command> -h to see help specific "
+              f"to the command.")
