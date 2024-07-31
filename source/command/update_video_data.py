@@ -5,9 +5,11 @@
 """
 
 # Standard library
+import json
 
 # Local imports
 from source.command.command import Command
+from source.collection.video import Video
 
 # Third-party packages
 
@@ -40,3 +42,6 @@ class UpdateVideoData(Command):
 
     def validate_undo(self):
         pass
+
+    def __str__(self):
+        return f"Fetch '{self.api}' data for '{self.video}'"
