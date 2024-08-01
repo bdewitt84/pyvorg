@@ -22,10 +22,8 @@ class UpdateVideoData(Command):
         self.kwargs = kwargs
 
     def exec(self):
-        api_name = self.api.get_name()
-        self.undo_data = self.video.get_api_data(api_name)
-        data = self.api.fetch_video_data(self.kwargs)
-        self.video.set_api_data(api_name, data)
+        self.undo_data = self.video.get_api_data(self.api.get_name)
+        self.video.update_api_data(self.api)
 
     def undo(self):
         if self.undo_data is None:
@@ -44,4 +42,4 @@ class UpdateVideoData(Command):
         pass
 
     def __str__(self):
-        return f"Fetch '{self.api}' data for '{self.video}'"
+        return f"Fetch '{self.api}' data for '{self.video.get_path()}'"
