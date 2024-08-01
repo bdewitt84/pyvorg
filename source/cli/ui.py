@@ -39,7 +39,7 @@ def parse_args(args):
     fetch_help = "stage files in collection to be updated with metadata fetched using the specified plugin"
     fetch_parser = subparcers.add_parser('fetch', help=fetch_help)
     fetch_plugin_help = "name of plugin used to fetch data. can be invoked multiple times"
-    fetch_plugins = ['test']
+    fetch_plugins = ['GuessitAPI']
     fetch_parser.add_argument(
         'plugins',
         help=fetch_plugin_help,
@@ -111,8 +111,13 @@ def handle_parsed_args(args, session):
 
     elif args.command == 'view':
         print(f"Viewing staged operations")
-        session.preview_transaction()
+        print(session.get_transaction_preview())
 
     else:
         print(f"Unrecognized command. Use -h or --help to see list of commands. Use <command> -h to see help specific "
               f"to the command.")
+
+
+def run(args, session):
+    parsed_args = parse_args(args)
+    handle_parsed_args(parsed_args, session)
