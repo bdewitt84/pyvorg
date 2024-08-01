@@ -126,4 +126,4 @@ class TestSessionManager(TestCase):
         # Assert
         self.assertTrue(test_cmd_1.undo_called)
         self.assertTrue(test_cmd_2.undo_called)
-        self.assertTrue(self.session.cb.undo_buffer)
+        self.assertFalse(self.session.cb.undo_buffer)
