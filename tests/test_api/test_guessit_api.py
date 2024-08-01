@@ -40,7 +40,7 @@ class TestGuessitAPI(TestCase):
 
     def test_get_api_name(self):
         result = self.test_api.get_name()
-        expected_value = 'guessit'
+        expected_value = "GuessitAPI"
         self.assertEqual(expected_value, result)
 
     def test_get_required_params(self):
