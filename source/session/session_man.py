@@ -40,7 +40,7 @@ class SessionManager:
     def export_collection_metadata(self, path):
         file_write(path, self.col.to_json())
 
-    def preview_transaction(self):
+    def get_transaction_preview(self):
         return self.cb.__str__()
 
     def scan_path(self, path):
@@ -52,10 +52,10 @@ class SessionManager:
             cmd = MoveVideo(video, dest)
             self.cb.add_command(cmd)
 
-    def stage_update_api_metadata(self, api):
+    def stage_update_api_metadata(self, api_name):
+        api = self.apiman.get_api(api_name)
         for video in self.col.get_videos():
             cmd = UpdateVideoData(video, api)
-            print(cmd)
             self.cb.add_command(cmd)
 
     def undo_transaction(self):
