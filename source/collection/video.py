@@ -142,9 +142,9 @@ class Video:
                 kwargs.update({p: val})
             if kwargs.get(p) is None:
                 raise ValueError(
-                    f"Parameter '{p}' required for '{api.get_name()}' could not be found in video data for '{self}'")
+                    f"Parameter '{p}' required for '{api.get_name()}' could not be found in video data for '{self.get_filename()}'")
 
-        data = api.fetch_video_data(kwargs)
+        data = api.fetch_video_data(**kwargs)
         self.set_api_data(api.get_name(), data)
 
     def update_file_data(self, path, skip_hash=False):
