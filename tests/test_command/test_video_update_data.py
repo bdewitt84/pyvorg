@@ -32,10 +32,16 @@ class TestVideoUpdate(TestCase):
         pass
 
     def test_exec(self):
+        # Arrange
+        test_video = Mock()
+        test_video.update_api_data.return_value = 'return data'
+        self.test_cmd.video = test_video
+
+        # Act
         self.test_cmd.exec()
-        expected_value = {self.mock_api_name: {self.test_key: self.test_value}, USER_DATA: {}}
-        result = self.test_vid.data
-        self.assertEqual(expected_value, result)
+
+        # Assert
+        test_video.update_api_data.assert_called_with(self.mock_api)
 
     def test_undo(self):
         self.test_cmd.undo_data = {self.test_key: self.test_value}
