@@ -28,7 +28,7 @@ TIMESTAMP = 'timestamp'
 LOCAL_TRAILER = 'local_trailer'
 
 # TODO: move this to config.env
-DATA_PREF_ORDER = [USER_DATA, OMDB_DATA, GUESSIT_DATA]
+DATA_PREF_ORDER = [USER_DATA, FILE_DATA, OMDB_DATA, GUESSIT_DATA]
 
 FORMAT_SPECIFIERS = {
     '%title': ('title', 'unknown title'),
