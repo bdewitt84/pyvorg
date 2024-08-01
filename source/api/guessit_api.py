@@ -22,11 +22,10 @@ from source.api.base_api import BaseAPI
 
 
 class GuessitAPI(BaseAPI):
-    def __init__(self, name='guessit'):
+    def __init__(self, name=None):
         super().__init__(name)
 
     def fetch_video_data(self, **kwargs):
-
         if 'filename' in kwargs.keys():
             filename = kwargs.get('filename')
             guessit_data = guessit(filename)
