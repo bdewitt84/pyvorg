@@ -7,10 +7,11 @@
 # Standard library
 import os
 from unittest import TestCase
-from unittest.mock import Mock, patch
+from unittest.mock import Mock, patch, call
 from tempfile import TemporaryDirectory
 from json.decoder import JSONDecodeError
 
+import source.collection.col
 # Local imports
 from source.constants import *
 from source.collection.col import Collection
@@ -263,33 +264,19 @@ class TestCollection(TestCase):
 
     def test_update_api_data(self):
         # Arrange
-        fake_vid_1 = Video()
-        fake_vid_1.data = {
-            USER_DATA: {'filename': 'fake_filename_1'},
-            FILE_DATA: {}
-        }
+        test_vid_1 = Mock()
+        test_vid_1.update_api_data.return_value = 'return data 1'
+        test_vid_2 = Mock()
+        test_vid_2.update_api_data.return_value = 'return data 2'
 
-        fake_vid_2 = Video()
-        fake_vid_2.data = {
-            USER_DATA: {'filename': 'fake_filename_2'},
-            FILE_DATA: {}
-        }
+        test_api = Mock()
 
-        self.test_collection.videos = {'fake_hash_1': fake_vid_1, 'fake_hash_2': fake_vid_2}
-
-        fake_api = Mock()
-        fake_api.get_required_params.return_value = ['filename']
-        fake_api.get_name.return_value = 'fake_api'
-        fake_api.fetch_video_data.side_effect = lambda kwargs: {kwargs.get('filename'): kwargs.get('filename') + '_return_data'}
+        self.test_collection.videos.update({'test_vid_1_key': test_vid_1})
+        self.test_collection.videos.update({'test_vid_2_key': test_vid_2})
 
         # Act
-        self.test_collection.update_api_data(fake_api)
+        self.test_collection.update_api_data(test_api)
 
         # Assert
-        result_1 = self.test_collection.videos.get('fake_hash_1').data
-        self.assertTrue('fake_api' in result_1.keys())
-        self.assertTrue(result_1.get('fake_api'), 'filename_return_data')
-
-        result_2 = self.test_collection.videos.get('fake_hash_2').data
-        self.assertTrue('fake_api' in result_2.keys())
-        self.assertTrue(result_2.get('fake_api'), 'filename_return_data')
+        test_vid_1.update_api_data.assert_called_with(test_api)
+        test_vid_2.update_api_data.assert_called_with(test_api)
