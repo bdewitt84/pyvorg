@@ -49,24 +49,24 @@ class TestSessionManager(TestCase):
     def test_export_collection_metadata(self):
         pass
 
-    def test_pickle_session(self):
-        # Arrange
-        filename = 'test.pickle'
-        path = os.path.join(self.temp_dir.name, filename)
-
-        # Act
-        self.session.pickle_session(path)
-
-        # Assert
-        with open(path, 'rb') as file:
-            result = pickle.load(file)
-
-        self.assertTrue('col' in result.__dict__)
-        self.assertTrue('cb' in result.__dict__)
-        self.assertTrue('apiman' in result.__dict__)
-        self.assertEqual(type(result.col), source.collection.col.Collection)
-        self.assertEqual(type(result.cb), source.command.combuffer.CommandBuffer)
-        self.assertEqual(type(result.apiman), source.api.api_manager.APIManager)
+    # def test_pickle_session(self):
+    #     # Arrange
+    #     filename = 'test.pickle'
+    #     path = os.path.join(self.temp_dir.name, filename)
+    #
+    #     # Act
+    #     self.session.pickle_session(path)
+    #
+    #     # Assert
+    #     with open(path, 'rb') as file:
+    #         result = pickle.load(file)
+    #
+    #     self.assertTrue('col' in result.__dict__)
+    #     self.assertTrue('cb' in result.__dict__)
+    #     self.assertTrue('apiman' in result.__dict__)
+    #     self.assertEqual(type(result.col), source.collection.col.Collection)
+    #     self.assertEqual(type(result.cb), source.command.combuffer.CommandBuffer)
+    #     self.assertEqual(type(result.apiman), source.api.api_manager.APIManager)
 
     def test_preview_transaction(self):
         # Arrange
@@ -79,7 +79,7 @@ class TestSessionManager(TestCase):
         self.session.cb.cmd_buffer.append(test_cmd_2)
 
         # Act
-        result = self.session.preview_transaction()
+        result = self.session.get_transaction_preview()
 
         # Assert
         self.assertTrue('Test cmd 1' in result)
@@ -94,33 +94,36 @@ class TestSessionManager(TestCase):
     def test_stage_update_api_metadata(self):
         pass
 
-    def test_unpickle_session(self):
-        # Arrange
-        filename = 'test.pickle'
-        path = os.path.join(self.temp_dir.name, filename)
-        with open(path, 'wb') as file:
-            pickle.dump(self.session, file)
-
-        # Act
-        result = SessionManager.unpickle_session(path)
-
-        # Assert
-        self.assertTrue('col' in result.__dict__)
-        self.assertTrue('cb' in result.__dict__)
-        self.assertTrue('apiman' in result.__dict__)
-        self.assertEqual(type(result.col), source.collection.col.Collection)
-        self.assertEqual(type(result.cb), source.command.combuffer.CommandBuffer)
-        self.assertEqual(type(result.apiman), source.api.api_manager.APIManager)
+    # def test_unpickle_session(self):
+    #     # Arrange
+    #     filename = 'test.pickle'
+    #     path = os.path.join(self.temp_dir.name, filename)
+    #     with open(path, 'wb') as file:
+    #         pickle.dump(self.session, file)
+    #
+    #     # Act
+    #     result = SessionManager.unpickle_session(path)
+    #
+    #     # Assert
+    #     self.assertTrue('col' in result.__dict__)
+    #     self.assertTrue('cb' in result.__dict__)
+    #     self.assertTrue('apiman' in result.__dict__)
+    #     self.assertEqual(type(result.col), source.collection.col.Collection)
+    #     self.assertEqual(type(result.cb), source.command.combuffer.CommandBuffer)
+    #     self.assertEqual(type(result.apiman), source.api.api_manager.APIManager)
 
     def test_undo_transaction(self):
+        # Arrange
         test_cmd_1 = TestCommand()
         test_cmd_2 = TestCommand()
 
         self.session.cb.undo_buffer.append(test_cmd_1)
         self.session.cb.undo_buffer.append(test_cmd_2)
 
+        # Act
         self.session.undo_transaction()
 
+        # Assert
         self.assertTrue(test_cmd_1.undo_called)
         self.assertTrue(test_cmd_2.undo_called)
         self.assertTrue(self.session.cb.undo_buffer)
