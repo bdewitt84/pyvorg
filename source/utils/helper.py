@@ -24,6 +24,23 @@ def class_name(obj):
     return obj.__class__.__name__
 
 
+def create_dummy_videos(path, n):
+    """
+    Creates n dummy videos at directory 'path'
+    :param path: Directory where dummy videos will be created
+    :param n: number of dummy videos to create
+    :returns: list of videos
+    """
+    videos = []
+    for i in range(n):
+        filename = 'test_video_' + str(i) + '.mp4'
+        filepath = os.path.join(path, filename)
+        with open(filepath, 'w') as file:
+            file.write(str(i))
+        videos.append(filepath)
+    return videos
+
+
 def default_serializer(obj):
     return f"Object '{class_name(obj)}' is not serializable"
 
