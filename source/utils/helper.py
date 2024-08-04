@@ -55,26 +55,6 @@ def file_read(path: str) -> str:
         return file.read()
 
 
-def guess_title(video):
-    """
-    Guesses the title of a video based on its filename.
-
-    This function uses the 'guessit' library to analyze the filename of a video and
-    extract a guessed title from it. The function assumes that the video information
-    is structured within the 'video' dictionary, and the filename is stored in the
-    'FILE_DATA' subdictionary under the 'FILENAME' key.
-
-    Args:
-        video (dict): A dictionary containing information about the video, typically
-                      obtained from the video collection. It should have the 'FILE_DATA'
-                      subdictionary containing the filename under the 'FILENAME' key.
-
-    Returns:
-        str: The guessed title of the video based on its filename.
-    """
-    return guessit.guessit(video[FILE_DATA][FILENAME])['title']
-
-
 def hash_sha256(path):
     """
     Compute the SHA-256 hash of a file located at the given dest.
@@ -105,8 +85,8 @@ def hash_sha256(path):
             for chunk in iter(lambda: file.read(chunk_size), b''):
                 hasher.update(chunk)
                 progress_bar.update(len(chunk))
-    hash = hasher.hexdigest()
-    return hash
+    sha256_hash = hasher.hexdigest()
+    return sha256_hash
 
 
 def integer_generator():
