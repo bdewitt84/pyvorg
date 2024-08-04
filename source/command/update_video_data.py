@@ -42,4 +42,4 @@ class UpdateVideoData(Command):
         pass
 
     def __str__(self):
-        return f"Fetch '{self.api}' data for '{self.video.get_path()}'"
+        return f"Fetch '{self.api.get_name()}' data for '{self.video.get_path()}'"
