@@ -14,6 +14,7 @@ import os
 # Local imports
 from source.collection.video import Video
 from source.constants import *
+from source.filter import Filter
 from source.utils.helper import default_serializer
 from source.utils.helper import file_write
 
@@ -38,8 +39,15 @@ class Collection:
         video = Video()
         video.update_file_data(path)
         self.videos.update({video.get_hash(): video})
-        # TODO: logging output conflicts with tqdm, output is messy
         logging.info(f"Added '{path}' to collection")
+
+    @staticmethod
+    def filter_videos(videos, string):
+        f = Filter.from_string(string)
+        return [video
+                for video
+                in videos
+                if f.matches(video.get_pref_data(f.key))]
 
     @staticmethod
     def from_dict(d):
@@ -55,8 +63,11 @@ class Collection:
     def get_video(self, hash):
         return self.videos.get(hash)
 
-    def get_videos(self):
-        return self.videos.values()
+    def get_videos(self, filter_string=None):
+        ret = self.videos.values()
+        if filter is not None:
+            ret = self.filter_videos(ret, filter_string)
+        return ret
 
     def metadata_load(self, path="./metadata.json"):
         with open(path, 'r') as file:
@@ -71,9 +82,6 @@ class Collection:
         file_write(path, self.to_json())
 
     # def organize_files(self, dest):
-    #     # TODO: This ought to create (and return?) a transaction (command buffer)
-    #     #       Then we give the user a chance to preview it
-    #     #       Finally the user may execute the transaction
     #
     #     cb = CommandBuffer()
     #     os.makedirs(dest, exist_ok=True)
