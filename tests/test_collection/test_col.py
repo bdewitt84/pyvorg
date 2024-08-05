@@ -61,12 +61,54 @@ class TestCollection(TestCase):
         with self.assertRaises(FileNotFoundError):
             self.test_collection.add_video(bad_path)
 
+    @patch('source.collection.col.Filter.from_string')
+    def test_filter_videos(self, mock_from_string):
+        # Arrange
+        test_video_1 = Mock()
+        test_video_2 = Mock()
+
+        test_video_1.get_pref_data.return_value = "match"
+        test_video_2.get_pref_data.return_value = "not a match"
+
+        videos = [test_video_1, test_video_2]
+
+        test_filter = Mock()
+        test_filter.matches.side_effect = lambda x: True if x == "match" else False
+        mock_from_string.return_value = test_filter
+
+        test_filter_string = "test filter string"
+
+        # Act
+        result = self.test_collection.filter_videos(videos, test_filter_string)
+
+        # Assert
+        mock_from_string.assert_called_once_with(test_filter_string)
+        self.assertTrue(test_video_1 in result, "'test_video_1' should be in the result")
+        self.assertTrue(test_video_2 not in result, "'test_video_2' should not be in the result")
+
     def test_get_video(self):
         expected_value = 'test_value'
         test_hash = 'fake_hash'
         self.test_collection.videos.update({test_hash: expected_value})
         result = self.test_collection.get_video(test_hash)
         self.assertEqual(expected_value, result)
+
+    @patch('source.collection.col.Collection.filter_videos')
+    def test_get_video_with_filter(self, mock_filter_videos):
+        # Arrange
+        test_filter_string = "test filter string"
+        mock_filter_videos.return_value = None
+        test_vid_1 = Mock()
+        self.test_collection.videos = {"video 1": test_vid_1}
+
+        # Act
+        self.test_collection.get_videos(test_filter_string)
+
+        # Assert
+        # Note that dict values are not directly comparable, so we cannot test the first argument conventionally
+        # Instead, we isolate and check the second argument
+        mock_filter_videos.assert_called_once()
+        self.assertEqual(mock_filter_videos.call_args.args[1], test_filter_string)
 
     def test_metadata_save(self):
         test_file_name = 'save.data'
