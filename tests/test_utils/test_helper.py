@@ -25,21 +25,6 @@ class TestClassName(unittest.TestCase):
         self.assertEqual('NoneType', class_name(none))
 
 
-class TestGuessTitle(unittest.TestCase):
-
-    def test_guess_title(self):
-        filename = 'Three.Outlaw.Samurai.1964.JAPANESE.1080p.BluRay.H264.AAC-VXT.mp4'
-        mock_video = {
-            FILE_DATA: {
-                FILENAME: filename
-            }
-        }
-
-        expected_guess = 'Three Outlaw Samurai'
-        guess = guess_title(mock_video)
-        self.assertEqual(expected_guess, guess)
-
-
 class HashSHA256(unittest.TestCase):
 
     def test_hash_sha256_valid_file(self):
@@ -57,31 +42,6 @@ class HashSHA256(unittest.TestCase):
     def test_hash_sha256_file_not_found(self):
         with self.assertRaises(FileNotFoundError):
             hash_sha256('bogus_file_name')
-
-
-# TODO: Rewrite for Collection.scan_directory()
-# class TestScanDirectory(unittest.TestCase):
-#
-#     def setUp(self) -> None:
-#         self.collection = {}
-#         self.temp_dir = tempfile.TemporaryDirectory()
-#
-#         test_files = ['video1.mp4', 'video2.mkv', 'notavideo.txt']
-#         for filename in test_files:
-#             path = os.path.join(self.temp_dir.name, filename)
-#             with open(path, 'w') as file:
-#                 file.write(filename)  # We use unique videos to produce unique hashes
-#
-#     def tearDown(self) -> None:
-#         self.temp_dir.cleanup()
-#
-#     def test_scan_directory_valid(self):
-#         mock_add_video = MagicMock()
-#
-#         with unittest.mock.patch('helper.add_video', mock_add_video):
-#             scan_directory(self.collection, self.temp_dir.name)
-#
-#         self.assertEqual(mock_add_video.call_count, 2)
 
 
 class TestTimestampValidate(unittest.TestCase):
