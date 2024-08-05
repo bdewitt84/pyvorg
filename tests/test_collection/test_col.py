@@ -233,6 +233,22 @@ class TestCollection(TestCase):
         result = [vid.data.get(FILE_DATA).get(PATH) for vid in self.test_collection.videos.values()]
         self.assertTrue(test_file_path in result)
 
+    @patch('source.collection.col.Collection.scan_path_list')
+    @patch('source.collection.col.glob')
+    def test_scan_glob(self, mock_glob, mock_scan_path_list):
+        # Arrange
+        expected_list = [
+            "list item 1",
+            "list item 2"
+        ]
+        mock_glob.return_value = expected_list
+
+        # Act
+        self.test_collection.scan_glob("./glob_string.*")
+
+        # Assert
+        mock_scan_path_list.assert_called_once_with(expected_list)
+
     @patch('source.collection.col.Collection.scan_directory')
     @patch('source.collection.col.Collection.scan_file')
     def test_scan_path_file(self, mock_scan_file, mock_scan_directory):
@@ -270,6 +286,24 @@ class TestCollection(TestCase):
         # Assert
         mock_scan_directory.assert_called_once_with(path)
         mock_scan_file.assert_not_called()
+
+    @patch('source.collection.col.Collection.scan_path')
+    def test_scan_path_list(self, mock_scan_path):
+        # Arrange
+        path_1 = "path 1"
+        path_2 = "path 2"
+
+        path_list = [
+            path_1,
+            path_2
+        ]
+
+        # Act
+        self.test_collection.scan_path_list(path_list)
+
+        # Assert
+        mock_scan_path.assert_any_call(path_1)
+        mock_scan_path.assert_any_call(path_2)
 
     @patch('source.collection.col.Collection.scan_directory')
     @patch('source.collection.col.Collection.scan_file')
