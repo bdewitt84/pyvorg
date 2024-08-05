@@ -7,6 +7,7 @@
 """
 
 # Standard library
+from glob import glob
 import json
 import logging
 import os
@@ -15,8 +16,7 @@ import os
 from source.collection.video import Video
 from source.constants import *
 from source.filter import Filter
-from source.utils.helper import default_serializer
-from source.utils.helper import file_write
+from source.utils.helper import default_serializer, file_write
 
 # Third-party packages
 # N/A
@@ -81,17 +81,8 @@ class Collection:
     def metadata_save(self, path="./metadata.json"):
         file_write(path, self.to_json())
 
-    # def organize_files(self, dest):
-    #
-    #     cb = CommandBuffer()
-    #     os.makedirs(dest, exist_ok=True)
-    #     for video in self.videos.values():
-    #         vid_dest = os.path.join(dest, video.generate_dir_name())
-    #         cb.add_move_video(video, vid_dest)
-    #     cb.preview_buffer()
-    #     cb.validate_exec_buffer()
-    #     # get user confirmation
-    #     # cb.execute_cmd_buffer()
+    def organize_files(self, dest):
+        pass
 
     def scan_directory(self, path):
         # TODO: standardize use of path, filename, and root or dir. Currently, slashes go both ways.
@@ -117,6 +108,14 @@ class Collection:
             self.scan_file(path)
         else:
             raise ValueError(f"'{path}' is not recognized by the OS as a valid path")
+
+    def scan_path_list(self, path_list):
+        for path in path_list:
+            self.scan_path(path)
+
+    def scan_glob(self, glob_string):
+        path_list = glob(glob_string)
+        self.scan_path_list(path_list)
 
     def to_dict(self):
         return {
