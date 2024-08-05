@@ -272,7 +272,7 @@ class TestCollection(TestCase):
 
     @patch('source.collection.col.Collection.scan_directory')
     @patch('source.collection.col.Collection.scan_file')
-    def test_scan_path_file(self, mock_scan_file, mock_scan_directory):
+    def test_scan_path_directory(self, mock_scan_file, mock_scan_directory):
         # Arrange
         path = self.test_dir.name
 
