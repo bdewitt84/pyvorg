@@ -93,8 +93,27 @@ class TestCollection(TestCase):
         result = self.test_collection.get_video(test_hash)
         self.assertEqual(expected_value, result)
 
-    @patch('source.collection.col.Collection.filter_videos')
-    def test_get_video_with_filter(self, mock_filter_videos):
+    def test_get_videos(self):
+        # Arrange
+        video_1 = Mock()
+        video_2 = Mock()
+        videos = {
+            "hash_1": video_1,
+            "hash_2": video_2
+        }
+
+        self.test_collection.videos = videos
+
+        # Act
+        result = self.test_collection.get_videos()
+
+        # Assert
+        self.assertTrue(len(result) == 2)
+        self.assertTrue(video_1 in result)
+        self.assertTrue(video_2 in result)
+
+    @patch('source.collection.col.Collection.apply_filter')
+    def test_get_videos_with_filter(self, mock_filter_videos):
         # Arrange
         test_filter_string = "test filter string"
         mock_filter_videos.return_value = None
