@@ -24,42 +24,82 @@ def parse_args(args):
         add_help=True
     )
 
-    subparcers = parser.add_subparsers(dest='command')
+    filter_help = "should write some proper help for filters"
+
+    subparsers = parser.add_subparsers(dest='command')
+
+    # Clear
+    # TODO: Implement
+    clear_help = "clear all staged operations from command buffer"
+    clear_parser = subparsers.add_parser('clear', help=clear_help)
 
     # Commit
     commit_help = "execute staged operations"
-    commit_parser = subparcers.add_parser('commit', help=commit_help)
+    commit_parser = subparsers.add_parser('commit', help=commit_help)
 
     # Export
+    # TODO: Implement filter --done?
     export_help = "export collection metadata as a json file"
-    export_parser = subparcers.add_parser('export', help=export_help)
-    export_parser.add_argument('path', metavar='PATH')
+    export_parser = subparsers.add_parser('export', help=export_help)
+    export_parser.add_argument(
+        'path',
+        metavar='<PATH>')
+    export_parser.add_argument(
+        '-f', '--filter',
+        dest='filters',
+        help=filter_help,
+        metavar='<FILTER EXPRESSION>',
+        action='append',
+        default=None
+    )
 
     # Fetch
+    # TODO: Implement filter
     fetch_help = "stage files in collection to be updated with metadata fetched using the specified plugin"
-    fetch_parser = subparcers.add_parser('fetch', help=fetch_help)
-    fetch_plugin_help = "name of plugin used to fetch data. can be invoked multiple times"
+    fetch_parser = subparsers.add_parser('fetch', help=fetch_help)
+    fetch_plugins_help = "name of plugin used to fetch data. can be invoked multiple times"
     fetch_plugins = ['GuessitAPI']
     fetch_parser.add_argument(
         'plugins',
-        help=fetch_plugin_help,
+        help=fetch_plugins_help,
         choices=fetch_plugins,
-        metavar='PLUGIN',
+        metavar='<PLUGIN>',
         nargs='+'
+    )
+    fetch_parser.add_argument(
+        'f', '--filter',
+        dest='filters',
+        help=filter_help,
+        metavar='<FILTER EXPRESSION>',
+        action='append',
+        default=None
     )
 
     # Organize
+    # TODO: Implement filter
     organize_help = "stage files in collection to be moved to a subdirectory in 'dest'"
-    organize_parser = subparcers.add_parser('organize', help=organize_help)
+    organize_parser = subparsers.add_parser(
+        'organize',
+        help=organize_help)
+    organize_parser.add_argument(
+        '-f', '--filter',
+        dest='filters',
+        help=filter_help,
+        metavar='<FILTER EXPRESSION>',
+        action='append',
+        default=None
+    )
 
     # Profile
     profile_help = "switch to another profile"
-    profile_parser = subparcers.add_parser('profile', help = profile_help)
-    profile_parser.add_argument('path', metavar='PATH')
+    profile_parser = subparsers.add_parser('profile', help=profile_help)
+    profile_parser.add_argument(
+        'path',
+        metavar='<PATH>')
 
     # Scan
     scan_help = "scan source directory for video files and adds them to the collection"
-    scan_parser = subparcers.add_parser('scan', help=scan_help)
+    scan_parser = subparsers.add_parser('scan', help=scan_help)
     scan_path_help = "path to directory containing files to scan"
     scan_parser.add_argument(
         'path',
@@ -69,16 +109,23 @@ def parse_args(args):
 
     # Undo
     undo_help = "undo last commit"
-    undo_parser = subparcers.add_parser('undo', help=undo_help)
+    undo_parser = subparsers.add_parser(
+        'undo',
+        help=undo_help)
 
     # View
     view_help = "view currently staged operations"
-    view_parser = subparcers.add_parser('view', help=view_help)
+    view_parser = subparsers.add_parser(
+        'view',
+        help=view_help)
 
     return parser.parse_args(args)
 
 
 def handle_parsed_args(args, session):
+    if args.command == 'clear':
+        print(f"Clearing all transactions from command buffer")
+        session.clear_transaction()
 
     if args.command == 'commit':
         print("Committing staged operations")
@@ -86,16 +133,16 @@ def handle_parsed_args(args, session):
 
     elif args.command == 'export':
         print(f"Exporting collection data to '{args.path}'")
-        session.export_collection_metadata(args.path)
+        session.export_collection_metadata(args.path, args.filters)
 
     elif args.command == 'fetch':
         print(f"Staging files for fetching data from {args.plugins}")
         for plugin in args.plugins:
-            session.stage_update_api_metadata(plugin)
+            session.stage_update_api_metadata(plugin, args.filters)
 
     elif args.command == 'organize':
         print(f"Staging files for organization at '{args.path}'")
-        session.stage_organize_video_files()
+        session.stage_organize_video_files(args.filters)
 
     elif args.command == 'profile':
         print(f"Switching profile to {args.name}")
@@ -103,7 +150,7 @@ def handle_parsed_args(args, session):
 
     elif args.command == 'scan':
         print(f"Scanning '{args.path}'")
-        session.scan_path(args.path)
+        session.scan_glob(args.path)
 
     elif args.command == 'undo':
         print(f"Undoing last commit")
