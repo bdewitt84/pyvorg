@@ -62,7 +62,7 @@ class TestCollection(TestCase):
             self.test_collection.add_video(bad_path)
 
     @patch('source.collection.col.Filter.from_string')
-    def test_filter_videos(self, mock_from_string):
+    def test_apply_filter(self, mock_from_string):
         # Arrange
         test_video_1 = Mock()
         test_video_2 = Mock()
@@ -79,7 +79,7 @@ class TestCollection(TestCase):
         test_filter_string = "test filter string"
 
         # Act
-        result = self.test_collection.filter_videos(videos, test_filter_string)
+        result = self.test_collection.apply_filter(videos, test_filter_string)
 
         # Assert
         mock_from_string.assert_called_once_with(test_filter_string)
