@@ -121,12 +121,13 @@ class TestCollection(TestCase):
         self.test_collection.videos = {"video 1": test_vid_1}
 
         # Act
-        self.test_collection.get_videos(test_filter_string)
+        self.test_collection.get_videos([test_filter_string])
 
         # Assert
-        # Note that dict values are not directly comparable, so we cannot test the first argument conventionally
-        # Instead, we isolate and check the second argument
+        # Note that dict values are not directly comparable, so we work around it by
+        # converting the dict values to a list
         mock_filter_videos.assert_called_once()
+        self.assertEqual(list(mock_filter_videos.call_args.args[0]), [test_vid_1])
         self.assertEqual(mock_filter_videos.call_args.args[1], test_filter_string)
 
     def test_metadata_save(self):
