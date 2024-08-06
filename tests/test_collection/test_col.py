@@ -340,6 +340,37 @@ class TestCollection(TestCase):
         mock_scan_directory.assert_not_called()
         mock_scan_file.assert_not_called()
 
+    @patch('source.collection.col.Collection.get_videos')
+    def test_to_dict(self, mock_get_videos):
+        # Arrange
+        video_1 = Mock()
+        video_2 = Mock()
+
+        video_1.data = {"test key 1": "test data 1"}
+        video_2.data = {"test key 2": "test data 2"}
+
+        video_1.get_hash.return_value = "hash_1"
+        video_2.get_hash.return_value = "hash_2"
+
+        mock_get_videos.return_value = [
+            video_1,
+            video_2
+        ]
+
+        # Act
+        result = self.test_collection.to_dict()
+
+        print(result)
+
+        # Assert
+        mock_get_videos.assert_called_once_with(None)
+        expected_result = {
+            "hash_1": {"test key 1": "test data 1"},
+            "hash_2": {"test key 2": "test data 2"}
+        }
+
+        self.assertEqual(expected_result, result)
+
     def test_to_json(self):
         test_vid = Video()
         unserializable = UnserializableObject()
