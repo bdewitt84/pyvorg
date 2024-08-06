@@ -42,8 +42,8 @@ class Collection:
         logging.info(f"Added '{path}' to collection")
 
     @staticmethod
-    def filter_videos(videos, string):
-        f = Filter.from_string(string)
+    def apply_filter(videos, filter_string):
+        f = Filter.from_string(filter_string)
         return [video
                 for video
                 in videos
