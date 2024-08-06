@@ -117,15 +117,16 @@ class Collection:
         path_list = glob(glob_string)
         self.scan_path_list(path_list)
 
-    def to_dict(self):
+    def to_dict(self, filter_strings=None):
+        filtered = self.get_videos(filter_strings)
         return {
-            hash: video.data
-            for hash, video
-            in self.videos.items()
+            video.get_hash(): video.data
+            for video
+            in filtered
         }
 
-    def to_json(self):
-        return json.dumps(self.to_dict(),
+    def to_json(self, filter_strings=None):
+        return json.dumps(self.to_dict(filter_strings),
                           indent=4,
                           skipkeys=True,
                           default=default_serializer)
