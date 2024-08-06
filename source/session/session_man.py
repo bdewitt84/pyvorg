@@ -53,9 +53,10 @@ class SessionManager:
             cmd = MoveVideo(video, dest)
             self.cb.add_command(cmd)
 
-    def stage_update_api_metadata(self, api_name):
+    def stage_update_api_metadata(self, api_name, filter_strings=None):
         api = self.apiman.get_api(api_name)
-        for video in self.col.get_videos():
+        videos = self.col.get_videos(filter_strings)
+        for video in videos:
             cmd = UpdateVideoData(video, api)
             self.cb.add_command(cmd)
 
