@@ -37,8 +37,8 @@ class SessionManager:
     def commit_transaction(self):
         self.cb.execute_cmd_buffer()
 
-    def export_collection_metadata(self, path):
-        file_write(path, self.col.to_json())
+    def export_collection_metadata(self, path, filter_strings=None):
+        file_write(path, self.col.to_json(filter_strings))
 
     def get_transaction_preview(self):
         return self.cb.__str__()
