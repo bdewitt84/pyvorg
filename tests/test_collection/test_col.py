@@ -23,7 +23,7 @@ from source.collection.video import Video
 class UnserializableObject:
     """Used by 'test_save_metadate_unserializable'"""
     def __init__(self):
-        value = None
+        pass
 
 
 class TestCollection(TestCase):
