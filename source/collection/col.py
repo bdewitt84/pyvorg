@@ -11,6 +11,8 @@ from glob import glob
 import json
 import logging
 import os
+# TODO: Change everything to paths at some level
+from pathlib import Path
 
 # Local imports
 from source.collection.video import Video
@@ -135,7 +137,6 @@ class Collection:
     def update_api_data(self, api, **kwargs):
         """
         Updates all videos with data fetched from supplied API plugin
-
         :param api: API plugin to fetch data
         :param kwargs: Keyword arguments to pass to API plugin
         :return: None
