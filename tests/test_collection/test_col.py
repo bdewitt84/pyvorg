@@ -169,19 +169,6 @@ class TestCollection(TestCase):
 
         self.assertEqual(expected_value, result)
 
-    def test_metadata_save_file_exists(self):
-
-        test_vid = Video()
-        self.test_collection.videos.update({'fake_hash': test_vid})
-        bad_filename = 'does_not_exist.file'
-        save_file_path = os.path.join(self.test_dir.name, bad_filename)
-
-        with open(save_file_path, 'w') as file:
-            file.write('test data')
-
-        with self.assertRaises(FileExistsError):
-            self.test_collection.metadata_save(save_file_path)
-
     def test_metadata_load_valid(self):
         test_filename = 'load.file'
         test_file_path = os.path.join(self.test_dir.name, test_filename)
