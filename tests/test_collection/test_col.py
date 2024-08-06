@@ -7,17 +7,16 @@
 # Standard library
 import os
 from unittest import TestCase
-from unittest.mock import Mock, patch, call
+from unittest.mock import Mock, patch
 from tempfile import TemporaryDirectory
 from json.decoder import JSONDecodeError
 
-import source.collection.col
 # Local imports
 from source.constants import *
 from source.collection.col import Collection
-from source.collection.video import Video
 
 # Third-party packages
+# n/a
 
 
 class UnserializableObject:
