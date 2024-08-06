@@ -63,10 +63,11 @@ class Collection:
     def get_video(self, hash):
         return self.videos.get(hash)
 
-    def get_videos(self, filter_string=None):
+    def get_videos(self, filter_strings=None):
         ret = self.videos.values()
-        if filter is not None:
-            ret = self.filter_videos(ret, filter_string)
+        if filter_strings:
+            for string in filter_strings:
+                ret = self.apply_filter(ret, string)
         return ret
 
     def metadata_load(self, path="./metadata.json"):
