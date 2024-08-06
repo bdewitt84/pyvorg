@@ -372,18 +372,26 @@ class TestCollection(TestCase):
         self.assertEqual(expected_result, result)
 
     def test_to_json(self):
-        test_vid = Video()
+        # Arrange
+        test_vid = Mock()
+        test_vid.get_hash.return_value = "fake_hash"
         unserializable = UnserializableObject()
         test_vid.data = {'key 1': 'serializable', 'key 2': unserializable}
         test_vide_hash = 'fake_hash'
-        self.test_collection.videos.update({test_vide_hash: test_vid})
+        self.test_collection.videos = {
+            test_vide_hash: test_vid
+        }
+
+        # Act
+        result = self.test_collection.to_json()
+
+        # Assert
         expected_value = """{
     "fake_hash": {
         "key 1": "serializable",
         "key 2": "Object 'UnserializableObject' is not serializable"
     }
 }"""
-        result = self.test_collection.to_json()
         self.assertEqual(expected_value, result)
 
     def test_update_api_data(self):
