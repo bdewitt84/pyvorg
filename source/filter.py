@@ -53,6 +53,8 @@ class Filter:
             return float(string)
         except ValueError:
             pass
+        except TypeError:
+            pass
 
         match = re.match(r"\d+", string)
         if match:
