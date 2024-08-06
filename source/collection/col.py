@@ -76,10 +76,10 @@ class Collection:
         with open(path, 'r') as file:
             serializable = json.load(file)
 
-        for entry in serializable:
+        for hash, data in serializable.items():
             video = Video()
-            video.data = serializable.get(entry)
-            self.videos.update({entry: video})
+            video.data = data
+            self.videos.update({hash: video})
 
     def metadata_save(self, path="./metadata.json"):
         file_write(path, self.to_json())
