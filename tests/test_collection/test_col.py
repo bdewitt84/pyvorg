@@ -131,28 +131,39 @@ class TestCollection(TestCase):
         self.assertEqual(mock_filter_videos.call_args.args[1], test_filter_string)
 
     def test_metadata_save(self):
+        # Arrange
         test_file_name = 'save.data'
         test_file_path = os.path.join(self.test_dir.name, test_file_name)
-        test_vid_1 = Video()
-        test_vid_2 = Video()
-        test_vid_1.data.update({"test_key": "test_value"})
-        test_vid_2.data.update({"test_key": "test_value"})
 
-        self.test_collection.videos.update({"fake_hash_1": test_vid_1})
-        self.test_collection.videos.update({"fake_hash_2": test_vid_2})
+        test_vid_1 = Mock()
+        test_vid_2 = Mock()
+
+        test_vid_1.data = {"test_key": "test_value"}
+        test_vid_2.data = {"test_key": "test_value"}
+
+        test_vid_1.get_hash.return_value = "fake_hash_1"
+        test_vid_2.get_hash.return_value = "fake_hash_2"
+
+        self.test_collection.videos = {
+            "fake_hash_1": test_vid_1,
+            "fake_hash_2": test_vid_2
+        }
+
+        print(self.test_collection.to_dict())
 
         expected_value = """{
     "fake_hash_1": {
-        "user_data": {},
         "test_key": "test_value"
     },
     "fake_hash_2": {
-        "user_data": {},
         "test_key": "test_value"
     }
 }"""
 
+        # Act
         self.test_collection.metadata_save(test_file_path)
+
+        # Assert
         with open(test_file_path, 'r') as file:
             result = file.read()
 
