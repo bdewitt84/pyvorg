@@ -177,4 +177,7 @@ class Video:
             raise FileNotFoundError(msg)
 
     def update_hash(self):
-        self.data[FILE_DATA][HASH] = hash_sha256(self.data[FILE_DATA][PATH])
+        self.set_hash(hash_sha256(self.get_path()))
+
+    def set_hash(self, sha256):
+        self.data[FILE_DATA][HASH] = sha256
