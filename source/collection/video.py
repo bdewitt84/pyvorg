@@ -68,7 +68,7 @@ class Video:
         return self.data[FILE_DATA][HASH]
 
     def get_path(self):
-        return self.data[FILE_DATA][PATH]
+        return Path(self.data[FILE_DATA][PATH]).resolve()
 
     def get_pref_data(self, key, default=None):
         """
