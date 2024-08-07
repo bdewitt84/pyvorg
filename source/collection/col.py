@@ -100,6 +100,8 @@ class Collection:
     def scan_file(self, path: Path) -> None:
         if not path.is_file():
             raise IsADirectoryError(f"Path '{path}' must point to a file. To scan a directory, use scan_directory()")
+        elif path.suffix[1:] in VIDEO_EXTENSIONS:
+            self.add_video(path)
 
     def scan_path(self, path):
         if os.path.isdir(path):
