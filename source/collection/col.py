@@ -111,7 +111,7 @@ class Collection:
         elif path.is_file():
             self.scan_file(path)
 
-    def scan_path_list(self, path_list):
+    def scan_path_list(self, path_list: list) -> None:
         for path in path_list:
             self.scan_path(path)
 
