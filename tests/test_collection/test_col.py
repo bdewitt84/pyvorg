@@ -129,7 +129,7 @@ class TestCollection(TestCase):
     def test_metadata_save(self):
         # Arrange
         test_file_name = 'save.data'
-        test_file_path = os.path.join(self.test_dir.name, test_file_name)
+        test_file_path = Path(self.test_dir.name, test_file_name)
 
         test_vid_1 = Mock()
         test_vid_2 = Mock()
@@ -147,6 +147,10 @@ class TestCollection(TestCase):
 
         print(self.test_collection.to_dict())
 
+        # Act
+        self.test_collection.metadata_save(test_file_path)
+
+        # Assert
         expected_value = """{
     "fake_hash_1": {
         "test_key": "test_value"
@@ -156,10 +160,6 @@ class TestCollection(TestCase):
     }
 }"""
 
-        # Act
-        self.test_collection.metadata_save(test_file_path)
-
-        # Assert
         with open(test_file_path, 'r') as file:
             result = file.read()
 
