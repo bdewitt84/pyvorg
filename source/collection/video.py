@@ -154,19 +154,19 @@ class Video:
         data = api.fetch_video_data(**kwargs)
         self.set_api_data(api.get_name(), data)
 
-    def update_file_data(self, path, skip_hash=False):
-        if os.path.exists(path):
+    def update_file_data(self, path: Path, skip_hash=False):
+        if path.exists():
             root, file = os.path.split(path)
             timestamp = timestamp_generate()
             if skip_hash is False:
-                hash = hash_sha256(path)
+                sha_256 = hash_sha256(path)
             else:
-                hash = ''
+                sha_256 = ''
             file_data = {
                 PATH: path,
-                ROOT: root,
+                ROOT: Path(root).resolve(),
                 FILENAME: file,
-                HASH: hash,
+                HASH: sha_256,
                 TIMESTAMP: timestamp
             }
             self.data.update({FILE_DATA: file_data})
