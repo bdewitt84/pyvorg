@@ -77,8 +77,11 @@ class TestVideo(TestCase):
         self.assertEqual(expected_hash, result, f"Should be '{expected_hash}'.")
 
     def test_get_path(self):
+        # Act
         result = self.test_vid.get_path()
-        expected_path = self.temp_vid_path
+
+        # Assert
+        expected_path = Path(self.temp_vid_path)
         self.assertEqual(expected_path, result)
 
     def test_get_pref_data(self):
