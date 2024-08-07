@@ -89,21 +89,16 @@ class Collection:
     def organize_files(self, dest):
         pass
 
-    def scan_directory(self, path):
-        # TODO: standardize use of path, filename, and root or dir. Currently, slashes go both ways.
-        if os.path.isdir(path):
-            for root, _, files in os.walk(path):
-                for file in files:
-                    file_path = os.path.join(root, file)
-                    self.scan_file(file_path)
-        else:
+    def scan_directory(self, path: Path) -> None:
+        if not path.is_dir():
             raise NotADirectoryError(f"Path '{path}' must point to a directory. To scan a file, use scan_file()")
-
-    def scan_file(self, path):
-        if os.path.isfile(path):
-            if path.endswith(VIDEO_EXTENSIONS):
-                self.add_video(path)
         else:
+            for glob_path in path.rglob('*'):
+                if glob_path.is_file():
+                    self.scan_file(glob_path)
+
+    def scan_file(self, path: Path) -> None:
+        if not path.is_file():
             raise IsADirectoryError(f"Path '{path}' must point to a file. To scan a directory, use scan_directory()")
 
     def scan_path(self, path):
