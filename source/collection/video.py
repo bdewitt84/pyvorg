@@ -32,6 +32,12 @@ class Video:
         return new
 
     @staticmethod
+    def from_file(path: Path):
+        new = Video()
+        new.update_file_data(path)
+        return new
+
+    @staticmethod
     def from_json(j: str):
         data = json.loads(j)
         # TODO: Validate video json
