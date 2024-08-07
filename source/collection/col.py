@@ -30,7 +30,7 @@ from source.utils.helper import default_serializer, file_write
 
 
 class Collection:
-    def __init__(self, path: Path = None):
+    def __init__(self, path=None):
         self.videos = {}
         if path is not None:
             self.path = path
