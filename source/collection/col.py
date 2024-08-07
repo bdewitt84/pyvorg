@@ -103,10 +103,12 @@ class Collection:
         elif path.suffix[1:] in VIDEO_EXTENSIONS:
             self.add_video(path)
 
-    def scan_path(self, path):
-        if os.path.isdir(path):
+    def scan_path(self, path: Path) -> None:
+        if not path.exists():
+            raise ValueError(f"'{path}' is not recognized by the OS as a valid path")
+        if path.is_dir():
             self.scan_directory(path)
-        elif os.path.isfile(path):
+        elif path.is_file():
             self.scan_file(path)
         else:
             raise ValueError(f"'{path}' is not recognized by the OS as a valid path")
