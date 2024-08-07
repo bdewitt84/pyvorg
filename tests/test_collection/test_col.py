@@ -50,7 +50,10 @@ class TestCollection(TestCase):
         self.assertEqual(self.test_collection.videos, {'fake hash': test_video})
 
     def test_add_video_does_not_exist(self):
-        bad_path = os.path.join(self.test_dir.name, 'does_not_exist.file')
+        # Arrange
+        bad_path = Path(self.test_dir.name, 'does_not_exist.fil')
+
+        # Act and Assert
         with self.assertRaises(FileNotFoundError):
             self.test_collection.add_video(bad_path)
 
