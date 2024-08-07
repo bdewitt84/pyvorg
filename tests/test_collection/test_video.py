@@ -6,10 +6,10 @@
 
 # Standard library
 import os.path
+from pathlib import Path
 from tempfile import TemporaryDirectory
 from unittest.mock import Mock, patch
 from unittest import TestCase
-
 
 # Local imports
 from source.constants import *
