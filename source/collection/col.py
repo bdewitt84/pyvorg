@@ -110,8 +110,6 @@ class Collection:
             self.scan_directory(path)
         elif path.is_file():
             self.scan_file(path)
-        else:
-            raise ValueError(f"'{path}' is not recognized by the OS as a valid path")
 
     def scan_path_list(self, path_list):
         for path in path_list:
