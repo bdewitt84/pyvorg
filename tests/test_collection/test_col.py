@@ -278,9 +278,9 @@ class TestCollection(TestCase):
     def test_scan_path_file(self, mock_scan_file, mock_scan_directory):
         # Arrange
         filename = 'test_video.mp4'
-        path = os.path.join(self.test_dir.name, filename)
+        path = Path(self.test_dir.name, filename)
 
-        with open(path, 'w') as file:
+        with path.open('w') as file:
             file.write('dummy data')
 
         args = Mock()
