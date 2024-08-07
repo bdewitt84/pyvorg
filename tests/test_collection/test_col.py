@@ -217,7 +217,7 @@ class TestCollection(TestCase):
 
     def test_metadata_load_does_not_exist(self):
         bad_filename = 'does_not_exist.file'
-        bad_path = os.path.join(self.test_dir.name, bad_filename)
+        bad_path = Path(self.test_dir.name, bad_filename)
         with self.assertRaises(FileNotFoundError):
             self.test_collection.metadata_load(bad_path)
 
