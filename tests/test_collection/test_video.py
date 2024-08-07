@@ -168,25 +168,28 @@ class TestVideo(TestCase):
         result = self.test_vid.data.get(api_name)
         self.assertEqual(expected_data, result)
 
-    def test_update_file_data(self):
-        expected_filename = 'temp2.vid'
-        expected_root = self.temp_dir.name
-        expected_hash = '26637da1bd793f9011a3d304372a9ec44e36cc677d2bbfba32a2f31f912358fe'
-        expected_path = os.path.join(expected_root, expected_filename)
-        with open(expected_path, 'w') as file:
-            file.write('test data 2')
-        self.test_vid.update_file_data(expected_path)
+    @patch('source.collection.video.hash_sha256')
+    @patch('source.collection.video.timestamp_generate')
+    def test_update_file_data(self, mock_timestamp_generate, mock_hash_sha256):
+        # Arrange
+        test_file = Path(self.temp_dir.name, 'fake.file')
+        with test_file.open('w') as file:
+            file.write('dummy data')
+        mock_hash_sha256.return_value = 'fake hash'
+        mock_timestamp_generate.return_value = 'fake timestamp'
 
-        result_file_data = self.test_vid.data.get(FILE_DATA)
-        result_filename = result_file_data.get(FILENAME)
-        result_path = result_file_data.get(PATH)
-        result_root = result_file_data.get(ROOT)
-        result_hash = result_file_data.get(HASH)
+        # Act
+        self.test_vid.update_file_data(test_file)
 
-        self.assertEqual(expected_filename, result_filename)
-        self.assertEqual(expected_path, result_path)
-        self.assertEqual(expected_root, result_root)
-        self.assertEqual(expected_hash, result_hash)
+        # Assert
+        expected = {
+                PATH: test_file,
+                ROOT: test_file.parent,
+                FILENAME: test_file.name,
+                HASH: 'fake hash',
+                TIMESTAMP: 'fake timestamp'
+            }
+        self.assertEqual(expected, self.test_vid.data[FILE_DATA])
 
     def test_update_hash(self):
         with open(self.temp_vid_path, 'w') as file:
