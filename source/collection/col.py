@@ -71,14 +71,17 @@ class Collection:
                 ret = self.apply_filter(ret, string)
         return ret
 
-    def metadata_load(self, path="./metadata.json"):
-        with open(path, 'r') as file:
+    def metadata_load(self, path: Path = None) -> None:
+        if path is None:
+            path = Path('./metadata.json')
+
+        with path.open('r') as file:
             serializable = json.load(file)
 
-        for hash, data in serializable.items():
+        for sha_256, data in serializable.items():
             video = Video()
             video.data = data
-            self.videos.update({hash: video})
+            self.videos.update({sha_256: video})
 
     def metadata_save(self, path="./metadata.json"):
         file_write(path, self.to_json())
