@@ -333,7 +333,7 @@ class TestCollection(TestCase):
     @patch('source.collection.col.Collection.scan_file')
     def test_scan_path_invalid(self, mock_scan_file, mock_scan_directory):
         # Arrange
-        path = 'invalid path'
+        path = Path('invalid path')
 
         args = Mock()
         args.command = 'scan'
