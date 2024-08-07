@@ -259,20 +259,19 @@ class TestCollection(TestCase):
         mock_add_video.called_once_with(test_file_path)
 
     @patch('source.collection.col.Collection.scan_path_list')
-    @patch('source.collection.col.glob')
-    def test_scan_glob(self, mock_glob, mock_scan_path_list):
+    def test_scan_glob(self, mock_scan_path_list):
         # Arrange
-        expected_list = [
-            "list item 1",
-            "list item 2"
-        ]
-        mock_glob.return_value = expected_list
+        path = Mock()
+        path.glob.return_value = ["path 1", "path 2"]
+        path.rglob.return_value = ["path 1", "path 2", "path 3"]
+        wildcard = '*.*'
 
-        # Act
-        self.test_collection.scan_glob("./glob_string.*")
+        # Act and Assert
+        self.test_collection.scan_glob(path, wildcard)
+        mock_scan_path_list.assert_called_with(["path 1", "path 2"])
 
-        # Assert
-        mock_scan_path_list.assert_called_once_with(expected_list)
+        self.test_collection.scan_glob(path, wildcard, recurse=True)
+        mock_scan_path_list.assert_called_with(["path 1", "path 2", "path 3"])
 
     @patch('source.collection.col.Collection.scan_directory')
     @patch('source.collection.col.Collection.scan_file')
