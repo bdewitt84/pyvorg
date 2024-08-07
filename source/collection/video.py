@@ -19,8 +19,7 @@ from utils.helper import timestamp_generate, hash_sha256
 
 
 class Video:
-    def __init__(self, path=None):
-        # TODO: Use Path objects
+    def __init__(self, path: Path = None):
         self.data = {USER_DATA: {}}
         if path is not None:
             self.update_file_data(path)
