@@ -115,9 +115,12 @@ class Collection:
         for path in path_list:
             self.scan_path(path)
 
-    def scan_glob(self, glob_string):
-        path_list = glob(glob_string)
-        self.scan_path_list(path_list)
+    def scan_glob(self, path: Path, wildcard_expression: str, recurse=False) -> None:
+        if recurse:
+            paths = path.rglob(wildcard_expression)
+        else:
+            paths = path.glob(wildcard_expression)
+        self.scan_path_list(list(paths))
 
     def to_dict(self, filter_strings=None):
         filtered = self.get_videos(filter_strings)
