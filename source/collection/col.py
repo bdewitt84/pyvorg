@@ -11,7 +11,6 @@ from glob import glob
 import json
 import logging
 import os
-# TODO: Change everything to paths at some level
 from pathlib import Path
 
 # Local imports
