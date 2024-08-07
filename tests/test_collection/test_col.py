@@ -166,8 +166,9 @@ class TestCollection(TestCase):
         self.assertEqual(expected_value, result)
 
     def test_metadata_load_valid(self):
+        # Arrange
         test_filename = 'load.file'
-        test_file_path = os.path.join(self.test_dir.name, test_filename)
+        test_file_path = Path(self.test_dir.name, test_filename)
 
         file_data = """{
     "fake_hash_1": {
@@ -183,8 +184,10 @@ class TestCollection(TestCase):
         with open(test_file_path, 'w') as file:
             file.write(file_data)
 
+        # Act
         self.test_collection.metadata_load(test_file_path)
 
+        # Assert
         expected_value_1 = {
             "user_data": {},
             "test_key": "test_value"
