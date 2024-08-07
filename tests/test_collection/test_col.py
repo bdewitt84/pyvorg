@@ -221,36 +221,42 @@ class TestCollection(TestCase):
         with self.assertRaises(FileNotFoundError):
             self.test_collection.metadata_load(bad_path)
 
-    def test_scan_directory(self):
-        test_files = []
-        for i in range(3):
-            filename = f"test_file{str(i)}.mp4"
-            path = os.path.join(self.test_dir.name, filename)
-            with open(path, 'w') as file:
-                file.write(str(i))
-                test_files.append(file)
+    @patch('source.collection.col.Collection.scan_file')
+    def test_scan_directory(self, mock_scan_file):
+        # Arrange
+        mock_dir_path = Mock()
 
-        self.test_collection.scan_directory(self.test_dir.name)
+        mock_file_path_1 = Mock()
+        mock_file_path_2 = Mock()
+        mock_file_path_3 = Mock()
 
-        result = [vid.data.get(FILE_DATA).get(PATH) for vid in self.test_collection.videos.values()]
+        mock_file_path_1.is_file.return_value = True
+        mock_file_path_2.is_file.return_value = True
+        mock_file_path_3.is_file.return_value = False
 
-        for i in range(3):
-            cur = test_files.pop().name
-            self.assertTrue(cur in result)
+        mock_dir_path.rglob.return_value = [mock_file_path_1, mock_file_path_2, mock_file_path_3]
 
-    def test_scan_file(self):
+        # Act
+        self.test_collection.scan_directory(mock_dir_path)
+
+        # Assert
+        expected_calls = [call(mock_file_path_1), call(mock_file_path_2)]
+        mock_scan_file.assert_has_calls(expected_calls, any_order=False)
+        self.assertEqual(mock_scan_file.call_count, 2)
+
+    @patch('source.collection.col.Collection.add_video')
+    def test_scan_file(self, mock_add_video):
         # Arrange
         test_filename = 'test_file.mp4'
-        test_file_path = os.path.join(self.test_dir.name, test_filename)
-        with open(test_file_path, 'w') as file:
+        test_file_path = Path(self.test_dir.name, test_filename)
+        with test_file_path.open('w') as file:
             file.write('dummy_data')
 
         # Act
         self.test_collection.scan_file(test_file_path)
 
         # Assert
-        result = [vid.data.get(FILE_DATA).get(PATH) for vid in self.test_collection.videos.values()]
-        self.assertTrue(test_file_path in result)
+        mock_add_video.called_once_with(test_file_path)
 
     @patch('source.collection.col.Collection.scan_path_list')
     @patch('source.collection.col.glob')
