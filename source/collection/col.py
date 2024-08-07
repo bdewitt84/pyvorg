@@ -61,8 +61,8 @@ class Collection:
     def from_json(j):
         return Collection.from_dict(json.loads(j))
 
-    def get_video(self, hash):
-        return self.videos.get(hash)
+    def get_video(self, sha_256):
+        return self.videos.get(sha_256)
 
     def get_videos(self, filter_strings=None):
         ret = self.videos.values()
