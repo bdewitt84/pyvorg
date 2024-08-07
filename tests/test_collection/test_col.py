@@ -298,7 +298,7 @@ class TestCollection(TestCase):
     @patch('source.collection.col.Collection.scan_file')
     def test_scan_path_directory(self, mock_scan_file, mock_scan_directory):
         # Arrange
-        path = self.test_dir.name
+        path = Path(self.test_dir.name)
 
         args = Mock()
         args.command = 'scan'
