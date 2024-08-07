@@ -54,8 +54,8 @@ class Collection:
     def from_dict(d):
         # Todo: Validate input dictionary
         new = Collection()
-        for hash, dict in d:
-            new.videos.update({hash, Video.from_dict(dict)})
+        for sha_256, nested_dictionary in d:
+            new.videos.update({sha_256, Video.from_dict(nested_dictionary)})
 
     @staticmethod
     def from_json(j):
