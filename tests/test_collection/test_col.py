@@ -314,8 +314,8 @@ class TestCollection(TestCase):
     @patch('source.collection.col.Collection.scan_path')
     def test_scan_path_list(self, mock_scan_path):
         # Arrange
-        path_1 = "path 1"
-        path_2 = "path 2"
+        path_1 = Path("path 1")
+        path_2 = Path("path 2")
 
         path_list = [
             path_1,
