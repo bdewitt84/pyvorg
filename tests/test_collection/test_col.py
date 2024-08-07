@@ -13,7 +13,6 @@ from unittest import TestCase
 from unittest.mock import call, Mock, patch
 
 # Local imports
-from source.constants import *
 from source.collection.col import Collection
 
 # Third-party packages
@@ -35,26 +34,20 @@ class TestCollection(TestCase):
     def tearDown(self) -> None:
         self.test_dir.cleanup()
 
-    def test_add_video_file_exists(self):
-        expected_filename = 'test.vid'
-        expected_file_path = os.path.join(self.test_dir.name, expected_filename)
-        expected_root = self.test_dir.name
-        expected_hash = 'e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855'
+    @patch('source.collection.col.Video.from_file')
+    def test_add_video_file_exists(self, mock_from_file):
+        # Arrange
+        path = Path('fake path')
+        test_video = Mock()
+        test_video.get_hash.return_value = 'fake hash'
+        mock_from_file.return_value = test_video
 
-        with open(expected_file_path, 'w') as file:
-            self.test_collection.add_video(file.name)
+        # Act
+        self.test_collection.add_video(path)
 
-        added_vid = self.test_collection.videos.get(expected_hash)
-        file_data = added_vid.data.get(FILE_DATA)
-        result_path = file_data.get(PATH)
-        result_root = file_data.get(ROOT)
-        result_filename = file_data.get(FILENAME)
-        result_hash = file_data.get(HASH)
-
-        self.assertEqual(expected_file_path, result_path)
-        self.assertEqual(expected_root, result_root)
-        self.assertEqual(expected_filename, result_filename)
-        self.assertEqual(expected_hash, result_hash)
+        # Assert
+        mock_from_file.called_once_with(path)
+        self.assertEqual(self.test_collection.videos, {'fake hash': test_video})
 
     def test_add_video_does_not_exist(self):
         bad_path = os.path.join(self.test_dir.name, 'does_not_exist.file')
