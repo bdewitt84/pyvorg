@@ -37,9 +37,8 @@ class Collection:
         else:
             self.path = Path(os.getenv('SOURCE_PATH'))
 
-    def add_video(self, path):
-        video = Video()
-        video.update_file_data(path)
+    def add_video(self, path: Path):
+        video = Video.from_file(path)
         self.videos.update({video.get_hash(): video})
         logging.info(f"Added '{path}' to collection")
 
