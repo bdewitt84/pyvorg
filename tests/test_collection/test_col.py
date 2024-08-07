@@ -205,11 +205,13 @@ class TestCollection(TestCase):
         self.assertEqual(expected_value_2, result_2)
 
     def test_metadata_load_invalid(self):
+        # Arrange
         test_filename = 'invalid.json'
-        test_file_path = os.path.join(self.test_dir.name, test_filename)
+        test_file_path = Path(self.test_dir.name, test_filename)
         with open(test_file_path, 'w') as file:
             file.write('invalid json data')
 
+        # Act and Assert
         with self.assertRaises(JSONDecodeError):
             self.test_collection.metadata_load(test_file_path)
 
