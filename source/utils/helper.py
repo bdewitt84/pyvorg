@@ -190,17 +190,6 @@ def dir_is_empty(path: Path) -> bool:
     return not any(path.iterdir())
 
 
-def remove_empty_dir(path: Path) -> bool:
-    removed = False
-    if not path.iterdir():
-        path.rmdir()
-        logging.info('Removed empty directory {}'.format(path))
-        removed = True
-    else:
-        logging.info('Directory {} not empty, will not be removed'.format(path))
-    return removed
-
-
 def timestamp_generate():
     return datetime.utcnow().strftime("%Y-%m-%d %H:%M:%S")
 
