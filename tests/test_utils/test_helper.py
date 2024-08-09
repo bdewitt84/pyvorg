@@ -74,3 +74,16 @@ class TestHelper(TestCase):
 
         with self.assertRaises(FileExistsError):
             file_write(already_exists, self.test_data)
+
+    def test_file_read(self):
+        # Arrange
+        file_exists = Path(self.temp_dir.name) / 'exists.file'
+        file_does_not_exist = Path(self.temp_dir.name) / 'does_not_exist.file'
+
+        file_exists.write_text(self.test_data)
+
+        # Act and assert
+        file_read(file_exists)
+
+        with self.assertRaises(FileNotFoundError):
+            file_read(file_does_not_exist)
