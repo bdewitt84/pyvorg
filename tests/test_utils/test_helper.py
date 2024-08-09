@@ -108,3 +108,42 @@ class TestHelper(TestCase):
 
         with self.assertRaises(FileNotFoundError):
             file_read(file_does_not_exist)
+
+    def test_mimic_folder(self):
+        # Arrange
+        temp_dir = Path(self.temp_dir.name)
+        src_tree = temp_dir / 'src_tree'
+        dst_tree = temp_dir / 'dst_tree'
+
+        make = [
+            temp_dir / 'src_tree',
+            temp_dir / 'src_tree' / 'root.file',
+            temp_dir / 'src_tree' / 'sub_dir_1',
+            temp_dir / 'src_tree' / 'sub_dir_1' / 'sub.file',
+            temp_dir / 'src_tree' / 'sub_dir_1' / 'sub_sub_dir',
+            temp_dir / 'src_tree' / 'sub_dir_1' / 'sub_sub_dir' / 'sub_sub.file',
+            temp_dir / 'src_tree' / 'sub_dir_2',
+            temp_dir / 'dst_tree'
+        ]
+
+        for path in make:
+            if path.is_file():
+                with path.open('w'):
+                    pass
+            elif path.is_dir():
+                path.mkdir()
+
+        # Act
+        mimic_folder(src_tree, dst_tree)
+
+        result = []
+        for dirpath, _, files in os.walk(dst_tree):
+            result.append(Path(dirpath).relative_to(dst_tree))
+            for file in files:
+                result.append((Path(file).relative_to(dst_tree)))
+
+        # Assert
+        src_tree_dirs = [Path(dirpath).relative_to(src_tree) for dirpath, _, _ in os.walk(src_tree)]
+        dst_tree_dirs = [Path(dirpath).relative_to(dst_tree) for dirpath, _, _ in os.walk(dst_tree)]
+        self.assertEqual(src_tree_dirs, dst_tree_dirs)
+
