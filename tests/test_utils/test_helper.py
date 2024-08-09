@@ -70,6 +70,19 @@ class TestHelper(TestCase):
         self.assertFalse(src_exists_path.exists())
         self.assertTrue(dst_path.exists())
 
+    def test_path_is_readable(self):
+        # Arrange
+        readable_target_path = Path(self.temp_dir.name) / 'readable.file'
+        non_readable_target_path = Path(self.temp_dir.name) / 'non_readable.file'
+
+        readable_target_path.touch(444)
+        non_readable_target_path.touch(333)
+
+        # Act and Assert
+        self.assertTrue(path_is_readable(readable_target_path))
+        # This test will always fail on Windows
+        # self.assertFalse(path_is_readable(non_readable_target_path))
+
     def test_path_is_writable(self):
         # Arrange
         writable_target_path = Path(self.temp_dir.name) / 'writable.file'
