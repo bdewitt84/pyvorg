@@ -25,8 +25,7 @@ def class_name(obj):
     return obj.__class__.__name__
 
 
-def create_dummy_videos(path, n):
-    # TODO: Use Path objects
+def create_dummy_videos(path: Path, n):
     """
     Creates n dummy videos at directory 'path'
     :param path: Directory where dummy videos will be created
@@ -36,8 +35,8 @@ def create_dummy_videos(path, n):
     videos = []
     for i in range(n):
         filename = 'test_video_' + str(i) + '.mp4'
-        filepath = os.path.join(path, filename)
-        with open(filepath, 'w') as file:
+        filepath = Path(path) / filename
+        with path.open('w') as file:
             file.write(str(i))
         videos.append(filepath)
     return videos
@@ -147,47 +146,44 @@ def logger_init():
     root_logger.addHandler(console_handler)
 
 
-def make_dir(path):
-    # TODO: Use Path objects
-    if not os.path.exists(path):
-        os.makedirs(path)
+def make_dir(path: Path):
+    if not path.exists():
+        path.mkdir()
         logging.info(f"Directory '{path}' created")
     else:
         logging.info(f"Directory '{path}' already exists")
 
 
-def mimic_folder(src, dest):
+def mimic_folder(src_tree: Path, dest_tree: Path) -> None:
     gen = integer_generator()
-    for dirpath, _, filenames in os.walk(src):
+    for dirpath, _, filenames in os.walk(src_tree):
         for name in filenames:
-            src_path = os.path.join(dirpath, name)
-            relative_to_src = dirpath[len(src) + 1:]
-            file_path = os.path.join(dest, relative_to_src, name)
-            new_dir = os.path.join(dest, relative_to_src)
-            os.makedirs(new_dir, exist_ok=True)
-            print('Creating dummy of ' + src_path + ' at\n' + file_path)
-            data = str(next(gen))
-            file_write(file_path, data)
+            src_file_path = Path(dirpath) / name
+            relative_to_src = src_file_path.relative_to(src_tree)
+            dest_file_path = dest_tree / relative_to_src
+
+            print('Creating dummy of ' + src_file_path + ' at\n' + dest_file_path)
+            dummy_file_data = str(next(gen))
+            dest_file_path.parent.mkdir(parents=True, exist_ok=True)
+            file_write(dest_file_path, dummy_file_data, overwrite=False)
 
 
-def move_file(src, dst, overwrite=False):
-    # TODO: Use Path objects
-    if os.path.exists(dst) and not overwrite:
-        msg = f"Cannot move file: '{dst}' already exists"
-        logging.error(msg)
-        raise FileExistsError(msg)
-    elif os.path.exists(dst) and overwrite:
-        logging.info(f"Overwriting '{dst}' with '{src}'")
-    else:
-        logging.info(f"Moved '{src}' to '{dst}'")
+def move_file(src: Path, dst: Path, overwrite=False) -> None:
+    if dst.exists():
+        if not overwrite:
+            msg = f"Cannot move file: '{dst}' already exists"
+            logging.error(msg)
+            raise FileExistsError(msg)
+        logging.warning(f"Overwriting '{dst}' with '{src}'")
     shutil.move(src, dst)
+    logging.info(f"Moved '{src}' to '{dst}'")
 
 
-def path_is_writable(path: Path):
+def path_is_writable(path: Path) -> bool:
     return os.access(path, os.W_OK)
 
 
-def path_is_readable(path: Path):
+def path_is_readable(path: Path) -> bool:
     return os.access(path, os.R_OK)
 
 
@@ -197,11 +193,10 @@ def dir_is_empty(path: Path) -> bool:
     return not any(path.iterdir())
 
 
-def remove_empty_dir(path):
-    # TODO: Use Path objects
+def remove_empty_dir(path: Path) -> bool:
     removed = False
-    if os.listdir(path) == 0:
-        os.rmdir(path)
+    if not path.iterdir():
+        path.rmdir()
         logging.info('Removed empty directory {}'.format(path))
         removed = True
     else:
