@@ -9,6 +9,7 @@ from datetime import datetime
 import hashlib
 import logging
 import os
+from pathlib import Path
 import shutil
 
 # Local imports
@@ -25,6 +26,7 @@ def class_name(obj):
 
 
 def create_dummy_videos(path, n):
+    # TODO: Use Path objects
     """
     Creates n dummy videos at directory 'path'
     :param path: Directory where dummy videos will be created
@@ -45,7 +47,7 @@ def default_serializer(obj):
     return f"Object '{class_name(obj)}' is not serializable"
 
 
-def file_write(path: str, data: str, overwrite=False) -> None:
+def file_write(path: Path, data: str, overwrite=False) -> None:
     """
     Attempts to write data to the file at the specified path, raising
     an exception if the file already exists.
@@ -57,22 +59,25 @@ def file_write(path: str, data: str, overwrite=False) -> None:
     :raises FileExistsError: if the file already exists
     :raises IOError: if an error occurs with the write function
     """
-    if os.path.exists(path) and not overwrite:
-        raise FileExistsError(f"The file '{path}' already exists.")
-    with open(path, 'w') as file:
+    if path.exists() and not overwrite:
+        raise FileExistsError(f"The file '{path}' already exists")
+    with path.open('w') as file:
         file.write(data)
 
 
-def file_read(path: str) -> str:
+def file_read(path: Path) -> str:
     """
-    :param path:
-    :return:
+    Reads data from file at 'path'
+    :param path: Path of file to be read
+    :return: string containing file data
     """
-    with open(path, 'r') as file:
+    if not path.exists():
+        raise FileNotFoundError(f"The file '{path}' cannot be found")
+    with path.open('r') as file:
         return file.read()
 
 
-def hash_sha256(path):
+def hash_sha256(path: Path):
     """
     Compute the SHA-256 hash of a file located at the given dest.
 
@@ -92,7 +97,8 @@ def hash_sha256(path):
     hasher = hashlib.sha256()
     file_size = os.path.getsize(path)
 
-    with open(path, 'rb') as file:
+    # with open(path, 'rb') as file:
+    with path.open('rb') as file:
         chunk_size = 65536  # 64kb
         with tqdm(total=file_size, unit='MB', unit_scale=True, position=0) as progress_bar:
             max_desc_width = 80 - len(' [Hashing]')
@@ -114,6 +120,7 @@ def integer_generator():
 
 
 def logger_init():
+    # TODO: Use Path objects?
     current_path = os.path.dirname(__file__)
     log_path = os.path.join(current_path, '..', '..', 'logs', 'applog.txt')
     logging.basicConfig(
@@ -141,6 +148,7 @@ def logger_init():
 
 
 def make_dir(path):
+    # TODO: Use Path objects
     if not os.path.exists(path):
         os.makedirs(path)
         logging.info(f"Directory '{path}' created")
@@ -163,6 +171,7 @@ def mimic_folder(src, dest):
 
 
 def move_file(src, dst, overwrite=False):
+    # TODO: Use Path objects
     if os.path.exists(dst) and not overwrite:
         msg = f"Cannot move file: '{dst}' already exists"
         logging.error(msg)
@@ -174,7 +183,22 @@ def move_file(src, dst, overwrite=False):
     shutil.move(src, dst)
 
 
+def path_is_writable(path: Path):
+    return os.access(path, os.W_OK)
+
+
+def path_is_readable(path: Path):
+    return os.access(path, os.R_OK)
+
+
+def dir_is_empty(path: Path) -> bool:
+    if not path.is_dir():
+        raise NotADirectoryError("'path' must be a pathlib Path object that points to a directory")
+    return not any(path.iterdir())
+
+
 def remove_empty_dir(path):
+    # TODO: Use Path objects
     removed = False
     if os.listdir(path) == 0:
         os.rmdir(path)
