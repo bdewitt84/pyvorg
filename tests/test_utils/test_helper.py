@@ -49,6 +49,27 @@ class TestHelper(TestCase):
         with self.assertRaises(FileNotFoundError):
             hash_sha256('bogus_file_name')
 
+    def test_move_file(self):
+        # Arrange
+        src_exists_path = Path(self.temp_dir.name) / 'exists.file'
+        src_does_not_exist_path = Path(self.temp_dir.name) / 'does_not_exist.file'
+        with src_exists_path.open('w'):
+            pass
+        dst_path = Path(self.temp_dir.name) / 'dst_folder'
+
+        # Act
+        with self.assertRaises(FileNotFoundError):
+            move_file(src_does_not_exist_path, dst_path)
+
+        move_file(src_exists_path, dst_path)
+
+        # Assert
+        with self.assertRaises(FileExistsError):
+            move_file(src_exists_path, dst_path)
+
+        self.assertFalse(src_exists_path.exists())
+        self.assertTrue(dst_path.exists())
+
     def test_timestamp_validate(self):
         # Arrange
         valid_timestamp = '2000-01-01 01:00:00'
