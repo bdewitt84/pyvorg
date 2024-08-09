@@ -70,6 +70,18 @@ class TestHelper(TestCase):
         self.assertFalse(src_exists_path.exists())
         self.assertTrue(dst_path.exists())
 
+    def test_path_is_writable(self):
+        # Arrange
+        writable_target_path = Path(self.temp_dir.name) / 'writable.file'
+        non_writable_target_path = Path(self.temp_dir.name) / 'non_writable.file'
+
+        writable_target_path.touch(222)
+        non_writable_target_path.touch(555)
+
+        # Act and Assert
+        self.assertTrue(path_is_writable(writable_target_path))
+        self.assertFalse(path_is_writable(non_writable_target_path))
+
     def test_timestamp_validate(self):
         # Arrange
         valid_timestamp = '2000-01-01 01:00:00'
