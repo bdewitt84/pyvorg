@@ -157,14 +157,11 @@ def make_dir(path: Path):
 def mimic_folder(src_tree: Path, dest_tree: Path) -> None:
     gen = integer_generator()
     for dirpath, _, filenames in os.walk(src_tree):
+        relative_to_src = Path(dirpath).relative_to(src_tree)
+        Path(dest_tree, relative_to_src).mkdir(exist_ok=True)
         for name in filenames:
-            src_file_path = Path(dirpath) / name
-            relative_to_src = src_file_path.relative_to(src_tree)
-            dest_file_path = dest_tree / relative_to_src
-
-            print('Creating dummy of ' + src_file_path + ' at\n' + dest_file_path)
+            dest_file_path = dest_tree / relative_to_src / name
             dummy_file_data = str(next(gen))
-            dest_file_path.parent.mkdir(parents=True, exist_ok=True)
             file_write(dest_file_path, dummy_file_data, overwrite=False)
 
 
