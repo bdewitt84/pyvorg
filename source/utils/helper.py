@@ -11,13 +11,13 @@ import logging
 import os
 from pathlib import Path
 import shutil
+from typing import Callable
 
 # Local imports
-from constants import *
+# n/a
 
 # Third-party imports
 import colorlog
-import guessit
 from tqdm import tqdm
 
 
@@ -97,7 +97,6 @@ def hash_sha256(path: Path):
     hasher = hashlib.sha256()
     file_size = os.path.getsize(path)
 
-    # with open(path, 'rb') as file:
     with path.open('rb') as file:
         chunk_size = 65536  # 64kb
         with tqdm(total=file_size, unit='MB', unit_scale=True, position=0) as progress_bar:
