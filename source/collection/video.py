@@ -81,21 +81,22 @@ class Video:
         :returns: Value corresponding to key if found, else default
         """
 
-        # TODO: Enhance the preference order routine. Revisit this once
-        #       the API management is sorted out
+        # TODO: use the new get_sources method to eliminate a branch
 
         ret = default
-        if key in self.data[USER_DATA]:
-            ret = self.data[USER_DATA][key]
-        else:
-            for src in DATA_PREF_ORDER:
-                if src in self.data and isinstance(self.data[src], dict):
-                    for k in self.data[src].keys():
-                        if key.lower() == k.lower():
-                            ret = self.data[src][k]
-                            break
-                if ret != default:
-                    break
+        ordered_source = DATA_PREF_ORDER
+        for source in self.get_source_names():
+            if source not in ordered_source:
+                ordered_source.append(source)
+
+        for src in ordered_source:
+            if src in self.data and isinstance(self.data[src], dict):
+                for k in self.data[src].keys():
+                    if key.lower() == k.lower():
+                        ret = self.data[src][k]
+                        break
+            if ret != default:
+                break
 
         return ret
 
