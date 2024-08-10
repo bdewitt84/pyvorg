@@ -62,6 +62,13 @@ class Video:
     def get_source_names(self):
         return [source for source in self.data.keys()]
 
+    def get_source_fields(self) -> list:
+        return [
+            key
+            for source in self.data.values()
+            for key in source.keys()
+        ]
+
     def get_filename(self):
         return self.data[FILE_DATA][FILENAME]
 
