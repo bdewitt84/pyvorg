@@ -25,21 +25,22 @@ def class_name(obj):
     return obj.__class__.__name__
 
 
-def create_dummy_videos(path: Path, n):
+def create_dummy_files(path: Path, n, func: Callable = lambda x: 'dummy_file_' + str(x) + '.file'):
     """
     Creates n dummy videos at directory 'path'
+    :param func: Function that takes an int and returns a string
     :param path: Directory where dummy videos will be created
     :param n: number of dummy videos to create
     :returns: list of videos
     """
-    videos = []
+    file_paths = []
     for i in range(n):
-        filename = 'test_video_' + str(i) + '.mp4'
-        filepath = Path(path) / filename
-        with path.open('w') as file:
+        filename = func(i)
+        file_path = Path(path) / filename
+        with file_path.open('w') as file:
             file.write(str(i))
-        videos.append(filepath)
-    return videos
+        file_paths.append(file_path)
+    return file_paths
 
 
 def default_serializer(obj):
