@@ -49,7 +49,7 @@ class SessionManager:
     def stage_organize_video_files(self, filter_strings=None):
         videos = self.col.get_videos(filter_strings)
         for video in videos:
-            dest = os.path.join(os.getenv('DEST_PATH'), video.generate_dir_name())
+            dest = Path(os.getenv('DEST_PATH')) / video.generate_dir_name()
             cmd = MoveVideo(video, dest)
             self.cb.add_command(cmd)
 
