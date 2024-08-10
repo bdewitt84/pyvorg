@@ -9,6 +9,7 @@
 import json
 import logging
 import os
+import re
 from pathlib import Path
 
 # Local imports
@@ -45,12 +46,12 @@ class Video:
         new.data = data
         return new
 
-    def generate_dir_name(self, format='%title (%year)'):
-        name = format
-        for spec, (key, default) in FORMAT_SPECIFIERS.items():
-            data = self.get_pref_data(key, default)
-            name = name.replace(spec, str(data))
-        return name
+    def generate_dir_name(self, format_string='%title (%year)'):
+        matches = re.findall(r"(%\w+)(=[\w()_,.]*)?", format_string)
+        for specifier, default_value in matches:
+            metadata_value = self.get_pref_data(specifier[1:], default_value[1:])
+            format_string = format_string.replace(specifier+default_value, metadata_value)
+        return format_string
 
     def get_api_data(self, api_name, key=None):
         data = self.data.get(api_name)
