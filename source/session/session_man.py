@@ -15,7 +15,6 @@ from source.collection.col import Collection
 from source.command.combuffer import CommandBuffer
 from source.command.update_video_data import UpdateVideoData
 from source.command.move_video import MoveVideo
-# from source.session.profile_man import ProfileManager
 
 from source.utils.helper import file_write
 
