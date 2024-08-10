@@ -202,10 +202,3 @@ def timestamp_validate(timestamp):
     except ValueError:
         valid = False
     return valid
-
-
-def update_guessit(video):
-    filename = video[FILE_DATA][FILENAME]
-    data = guessit.guessit(filename)
-    video[GUESSIT_DATA] = data
-    print(data)
