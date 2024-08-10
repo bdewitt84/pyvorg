@@ -150,7 +150,7 @@ def handle_parsed_args(args, session):
 
     elif args.command == 'scan':
         print(f"Scanning '{args.path}'")
-        session.scan_glob(args.path)
+        session.scan_path(args.path)
 
     elif args.command == 'undo':
         print(f"Undoing last commit")
