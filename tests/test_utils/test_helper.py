@@ -187,4 +187,3 @@ class TestHelper(TestCase):
         src_tree_dirs = [Path(dirpath).relative_to(src_tree) for dirpath, _, _ in os.walk(src_tree)]
         dst_tree_dirs = [Path(dirpath).relative_to(dst_tree) for dirpath, _, _ in os.walk(dst_tree)]
         self.assertEqual(src_tree_dirs, dst_tree_dirs)
-
