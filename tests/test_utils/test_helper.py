@@ -63,7 +63,7 @@ class TestHelper(TestCase):
         self.assertEqual(expected_hash, computed_hash)
 
         with self.assertRaises(FileNotFoundError):
-            hash_sha256('bogus_file_name')
+            hash_sha256('bogus_file_name')  # type:ignore
 
     def test_move_file(self):
         # Arrange
