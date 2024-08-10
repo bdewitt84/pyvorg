@@ -32,6 +32,22 @@ class TestHelper(TestCase):
         self.assertEqual('bool', class_name(boolean))
         self.assertEqual('NoneType', class_name(none))
 
+    def test_create_dummy_files(self):
+        # Arrange
+        target_path = Path(self.temp_dir.name)
+
+        # Act
+        create_dummy_files(target_path, 3, lambda x: 'dummy_video_' + str(x) + '.mp4')
+
+        # Assert
+        expected = [
+            Path(target_path) / 'dummy_video_0.mp4',
+            Path(target_path) / 'dummy_video_1.mp4',
+            Path(target_path) / 'dummy_video_2.mp4'
+        ]
+        result = [file for file in target_path.iterdir()]
+        self.assertEqual(expected, result)
+
     def test_hash_sha256(self):
         # Arrange
         filename = 'test.file'
