@@ -67,7 +67,7 @@ def parse_args(args):
         nargs='+'
     )
     fetch_parser.add_argument(
-        'f', '--filter',
+        '-f', '--filter',
         dest='filters',
         help=filter_help,
         metavar='<FILTER EXPRESSION>',
