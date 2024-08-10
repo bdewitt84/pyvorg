@@ -7,6 +7,7 @@
 
 # Standard library
 import os
+from pathlib import Path
 
 # Local imports
 from source.api.api_manager import APIManager
