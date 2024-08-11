@@ -43,8 +43,17 @@ class SessionManager:
     def get_transaction_preview(self):
         return self.cb.__str__()
 
-    def scan_path(self, path):
-        self.col.scan_path(path)
+    def scan_glob(self, glob_string: Path):
+        root = glob_string.parent
+        glob = glob_string.name
+        self.col.scan_glob(root, glob)
+
+    def scan_path(self, path_string):
+        if '*' in path_string:
+            self.scan_glob(Path(path_string))
+        else:
+            path_obj = Path(path_string).resolve()
+            self.col.scan_path(path_obj)
 
     def stage_organize_video_files(self, filter_strings=None):
         videos = self.col.get_videos(filter_strings)
