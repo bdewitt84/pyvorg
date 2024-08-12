@@ -10,11 +10,12 @@ import hashlib
 import logging
 import os
 from pathlib import Path
+import platform
 import shutil
 from typing import Callable
 
 # Local imports
-# n/a
+from constants import APP_NAME
 
 # Third-party imports
 import colorlog
@@ -75,6 +76,41 @@ def file_read(path: Path) -> str:
         raise FileNotFoundError(f"The file '{path}' cannot be found")
     with path.open('r') as file:
         return file.read()
+
+
+def get_user_cache_dir():
+    system = platform.system()
+
+    if system == 'Windows':
+        return Path(os.getenv('APPDATA')) / 'local' / APP_NAME / 'Cache'
+
+
+def get_user_config_dir():
+    system = platform.system()
+
+    if system == 'Windows':
+        return Path(os.getenv('APPDATA')) / 'local' / APP_NAME / 'Config'
+
+
+def get_user_exports_dir():
+    system = platform.system()
+
+    if system == 'Windows':
+        return Path.home() / 'Documents' / APP_NAME / 'Export'
+
+
+def get_user_profile_dir():
+    system = platform.system()
+
+    if system == 'Windows':
+        return Path(os.getenv('APPDATA')) / 'local' / APP_NAME / 'Profiles'
+
+
+def get_user_logs_dir():
+    system = platform.system()
+
+    if system == 'Windows':
+        return Path(os.getenv('APPDATA')) / 'local' / APP_NAME / 'Logs'
 
 
 def hash_sha256(path: Path):
