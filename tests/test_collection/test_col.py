@@ -71,7 +71,7 @@ class TestCollection(TestCase):
         mock_from_file.return_value = test_video
 
         # Act
-        self.test_collection.add_video(path)
+        self.test_collection.add_video_file(path)
 
         # Assert
         mock_from_file.called_once_with(path)
@@ -83,7 +83,7 @@ class TestCollection(TestCase):
 
         # Act and Assert
         with self.assertRaises(FileNotFoundError):
-            self.test_collection.add_video(bad_path)
+            self.test_collection.add_video_file(bad_path)
 
     @patch('source.collection.col.Filter.from_string')
     def test_apply_filter(self, mock_from_string):
