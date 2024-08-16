@@ -8,7 +8,7 @@
 from pathlib import Path
 from tempfile import TemporaryDirectory
 from unittest import TestCase
-from unittest.mock import Mock, patch
+from unittest.mock import call, Mock, patch
 
 # Local imports
 from source.collection.col import Collection
@@ -33,8 +33,28 @@ class TestCollection(TestCase):
         self.test_dir.cleanup()
 
     def test_add_file(self):
-        # TODO: Implement
-        pass
+        # Arrange
+        filename = 'test.mp4'
+        filepath = Path(self.test_dir.name) / filename
+        filepath.touch()
+
+        # Act
+        self.test_collection.add_file(filepath)
+
+        # Assert
+        self.assertTrue(filepath in video.data['file_data']['path'] for video in self.test_collection.videos.keys())
+
+    @patch('source.collection.col.Collection.add_file')
+    def test_add_files(self, mock_add_file):
+        # Arrange
+        path_1 = Path('fake_path_1')
+        path_2 = Path('fake_path_2')
+        path_3 = Path('fake_path_3')
+        files = [
+            path_1,
+            path_2,
+            path_3
+        ]
 
     def test_Add_files(self):
         # TODO: Implement
@@ -88,13 +108,30 @@ class TestCollection(TestCase):
         self.assertTrue(test_video_1 in result, "'test_video_1' should be in the result")
         self.assertTrue(test_video_2 not in result, "'test_video_2' should not be in the result")
 
-    def test_from_dict(self):
-        # TODO: Implement
-        pass
+    @patch('source.collection.col.Video.from_dict')
+    def test_from_dict(self, mock_video_from_dict):
+        # Arrange
+        test_vid_dict = {'test_key': 'test_value'}
+        test_col_dict = {'test_id': test_vid_dict}
 
-    def test_from_json(self):
-        # TODO: Implement
-        pass
+        # Act
+        result = Collection.from_dict(test_col_dict)
+
+        # Assert
+        mock_video_from_dict.assert_has_calls([call(test_vid_dict)])
+        self.assertTrue(self.test_collection.videos.get('test_id'))
+
+    @patch('source.collection.col.Collection.from_dict')
+    def test_from_json(self, mock_from_dict):
+        # Arrange
+        test_json_string = r'{"test_key": "test_value"}'
+
+        # Act
+        self.test_collection.from_json(test_json_string)
+
+        # Assert
+        expected_dict = {'test_key': 'test_value'}
+        mock_from_dict.assert_called_once_with(expected_dict)
 
     def test_get_video(self):
         expected_value = 'test_value'
@@ -141,8 +178,21 @@ class TestCollection(TestCase):
         self.assertEqual(mock_filter_videos.call_args.args[1], test_filter_string)
 
     def test_remove_from_collection(self):
-        # TODO: Implement
-        pass
+        # Arrange
+        vid_dont_remove = Mock()
+        vid_remove = Mock()
+
+        self.test_collection.videos = {
+            'fake_key_1': vid_dont_remove,
+            'fake_key_2': vid_remove
+        }
+
+        # Act
+        self.test_collection.remove_from_collection([vid_remove])
+
+        # Assert
+        self.assertTrue(vid_remove not in self.test_collection.videos.values())
+        self.assertTrue(vid_dont_remove in self.test_collection.videos.values())
 
     @patch('source.collection.col.Collection.get_videos')
     def test_to_dict(self, mock_get_videos):
