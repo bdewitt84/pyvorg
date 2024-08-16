@@ -31,7 +31,8 @@ class Collection:
 
     def add_file(self, file_path: Path) -> None:
         if get_file_type(file_path) == 'video':
-            self.add_video(file_path)
+            self.add_video_file(file_path)
+        # Placeholder for other media types
 
     def add_files(self, file_paths: list[Path]) -> None:
         for path in file_paths:
