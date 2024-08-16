@@ -23,7 +23,8 @@ from source.utils.helper import \
 
 
 class MoveVideo(Command):
-    def __init__(self, video, dest_dir: Path):
+    def __init__(self, video, dest_dir: Path, *args, **kwargs):
+        super().__init__(*args, **kwargs)
         self.video = video
         self.dest_dir = dest_dir
         self.origin_dir = None
