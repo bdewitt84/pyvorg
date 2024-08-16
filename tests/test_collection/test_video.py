@@ -61,23 +61,6 @@ class TestVideo(TestCase):
         result = self.test_vid.generate_dir_name('%title (%year)')
         self.assertEqual('test title (1970)', result)
 
-    def test_get_api_data_no_key(self):
-        api_name = 'test_api'
-        expected = {'test_key': 'test_value'}
-        self.test_vid.data.update({api_name: expected})
-        self.test_vid.get_api_data(api_name)
-        result = self.test_vid.get_api_data(api_name)
-        self.assertEqual(expected, result)
-
-    def test_get_api_data_with_key(self):
-        api_name = 'test_api'
-        key = 'test_key'
-        expected_value = 'test_value'
-        api_data = {key: expected_value}
-        self.test_vid.data.update({api_name: api_data})
-        result = self.test_vid.get_api_data(api_name, key)
-        self.assertEqual(expected_value, result)
-
     def test_get_filename(self):
         result = self.test_vid.get_filename()
         expected_filename = self.temp_vid_filename
@@ -126,7 +109,32 @@ class TestVideo(TestCase):
     def test_get_root(self):
         result = self.test_vid.get_root()
         expected_root = self.temp_dir.name
-        self.assertEqual(expected_root, result)
+        self.assertEqual(expected_root, str(result))
+
+    def test_get_source_data_no_key(self):
+        api_name = 'test_api'
+        expected = {'test_key': 'test_value'}
+        self.test_vid.data.update({api_name: expected})
+        self.test_vid.get_source_data(api_name)
+        result = self.test_vid.get_source_data(api_name)
+        self.assertEqual(expected, result)
+
+    def test_get_source_data_with_key(self):
+        api_name = 'test_api'
+        key = 'test_key'
+        expected_value = 'test_value'
+        api_data = {key: expected_value}
+        self.test_vid.data.update({api_name: api_data})
+        result = self.test_vid.get_source_data(api_name, key)
+        self.assertEqual(expected_value, result)
+
+    def test_get_source_keys(self):
+        # TODO: Implement
+        pass
+
+    def test_get_source_names(self):
+        # TODO: Implement
+        pass
 
     def test_get_user_data(self):
         key = 'test_key'
