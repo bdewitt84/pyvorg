@@ -4,10 +4,12 @@
     Constants used across all packages, mostly to standardize JSON entries.
     Also included are a list of valid video extensions.
 """
+APP_NAME = 'Pyvorg'
 
 # Environment variable constants
 ENV_FILE_PATH = './config.env'
 ENV_OMDB_KEY = 'OMDB_KEY'
+ENV_DEST_PATH = 'DEST_PATH'
 
 # String constants
 FILE_DATA = 'file_data'
