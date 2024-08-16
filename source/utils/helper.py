@@ -135,35 +135,65 @@ def get_user_cache_dir():
     system = platform.system()
 
     if system == 'Windows':
-        return Path(os.getenv('APPDATA')) / 'local' / APP_NAME / 'Cache'
+        cache_dir = Path(os.getenv('LOCALAPPDATA')) / APP_NAME / 'Cache'
+    else:
+        # TODO: Implement default case
+        cache_dir = Path()
+
+    cache_dir.mkdir(parents=True, exist_ok=True)
+    return cache_dir
 
 
 def get_user_config_dir():
     system = platform.system()
 
     if system == 'Windows':
-        return Path(os.getenv('APPDATA')) / 'local' / APP_NAME / 'Config'
+        config_dir = Path(os.getenv('LOCALAPPDATA')) / APP_NAME / 'Config'
+    else:
+        # TODO: Implement default case
+        config_dir = Path()
+
+    config_dir.mkdir(parents=True, exist_ok=True)
+    return config_dir
 
 
-def get_user_exports_dir():
+def get_user_export_dir():
     system = platform.system()
 
     if system == 'Windows':
-        return Path.home() / 'Documents' / APP_NAME / 'Export'
+        export_dir = Path.home() / 'Documents' / APP_NAME / 'Export'
+    else:
+        # TODO: Implement default case
+        export_dir = Path()
+
+    export_dir.mkdir(parents=True, exist_ok=True)
+    return export_dir
 
 
 def get_user_profile_dir():
     system = platform.system()
 
     if system == 'Windows':
-        return Path(os.getenv('APPDATA')) / 'local' / APP_NAME / 'Profiles'
+        profile_dir = Path(os.getenv('LOCALAPPDATA')) / APP_NAME / 'Profiles'
+    else:
+        # TODO Implement default case
+        profile_dir = Path()
+
+    profile_dir.mkdir(parents=True, exist_ok=True)
+    return profile_dir
 
 
 def get_user_logs_dir():
     system = platform.system()
 
     if system == 'Windows':
-        return Path(os.getenv('APPDATA')) / 'local' / APP_NAME / 'Logs'
+        logs_dir = Path(os.getenv('LOCALAPPDATA')) / APP_NAME / 'Logs'
+    else:
+        # TODO: Implement default case
+        logs_dir = Path()
+
+    logs_dir.mkdir(parents=True, exist_ok=True)
+    return logs_dir
 
 
 def hash_sha256(path: Path):
