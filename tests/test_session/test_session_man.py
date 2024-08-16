@@ -36,11 +36,11 @@ class TestSessionManager(TestCase):
         test_cmd_2 = Mock()
         test_cmd_2.exec.return_value = None
 
-        self.session.cb.cmd_buffer.append(test_cmd_1)
-        self.session.cb.cmd_buffer.append(test_cmd_2)
+        self.session.command_buffer.cmd_buffer.append(test_cmd_1)
+        self.session.command_buffer.cmd_buffer.append(test_cmd_2)
 
         # Act
-        self.session.commit_transaction()
+        self.session.commit_staged_operations()
 
         # Assert
         test_cmd_1.exec.assert_called_once()
@@ -61,12 +61,12 @@ class TestSessionManager(TestCase):
     #     with open(path, 'rb') as file:
     #         result = pickle.load(file)
     #
-    #     self.assertTrue('col' in result.__dict__)
-    #     self.assertTrue('cb' in result.__dict__)
-    #     self.assertTrue('apiman' in result.__dict__)
-    #     self.assertEqual(type(result.col), source.collection.col.Collection)
-    #     self.assertEqual(type(result.cb), source.command.combuffer.CommandBuffer)
-    #     self.assertEqual(type(result.apiman), source.api.api_manager.APIManager)
+    #     video.assertTrue('collection' in result.__dict__)
+    #     video.assertTrue('command_buffer' in result.__dict__)
+    #     video.assertTrue('api_manager' in result.__dict__)
+    #     video.assertEqual(type(result.collection), source.collection.collection.Collection)
+    #     video.assertEqual(type(result.command_buffer), source.command.combuffer.CommandBuffer)
+    #     video.assertEqual(type(result.api_manager), source.api.api_manager.APIManager)
 
     def test_preview_transaction(self):
         # Arrange
@@ -75,8 +75,8 @@ class TestSessionManager(TestCase):
         test_cmd_2 = Mock()
         test_cmd_2.__str__ = lambda x: 'Test cmd 2'
 
-        self.session.cb.cmd_buffer.append(test_cmd_1)
-        self.session.cb.cmd_buffer.append(test_cmd_2)
+        self.session.command_buffer.cmd_buffer.append(test_cmd_1)
+        self.session.command_buffer.cmd_buffer.append(test_cmd_2)
 
         # Act
         result = self.session.get_transaction_preview()
@@ -105,20 +105,20 @@ class TestSessionManager(TestCase):
     #     result = SessionManager.unpickle_session(path)
     #
     #     # Assert
-    #     self.assertTrue('col' in result.__dict__)
-    #     self.assertTrue('cb' in result.__dict__)
-    #     self.assertTrue('apiman' in result.__dict__)
-    #     self.assertEqual(type(result.col), source.collection.col.Collection)
-    #     self.assertEqual(type(result.cb), source.command.combuffer.CommandBuffer)
-    #     self.assertEqual(type(result.apiman), source.api.api_manager.APIManager)
+    #     video.assertTrue('collection' in result.__dict__)
+    #     video.assertTrue('command_buffer' in result.__dict__)
+    #     video.assertTrue('api_manager' in result.__dict__)
+    #     video.assertEqual(type(result.collection), source.collection.collection.Collection)
+    #     video.assertEqual(type(result.command_buffer), source.command.combuffer.CommandBuffer)
+    #     video.assertEqual(type(result.api_manager), source.api.api_manager.APIManager)
 
     def test_undo_transaction(self):
         # Arrange
         test_cmd_1 = TestCommand()
         test_cmd_2 = TestCommand()
 
-        self.session.cb.undo_buffer.append(test_cmd_1)
-        self.session.cb.undo_buffer.append(test_cmd_2)
+        self.session.command_buffer.undo_buffer.append(test_cmd_1)
+        self.session.command_buffer.undo_buffer.append(test_cmd_2)
 
         # Act
         self.session.undo_transaction()
@@ -126,4 +126,4 @@ class TestSessionManager(TestCase):
         # Assert
         self.assertTrue(test_cmd_1.undo_called)
         self.assertTrue(test_cmd_2.undo_called)
-        self.assertFalse(self.session.cb.undo_buffer)
+        self.assertFalse(self.session.command_buffer.undo_buffer)
