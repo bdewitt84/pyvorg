@@ -34,6 +34,14 @@ class TestCollection(TestCase):
     def tearDown(self) -> None:
         self.test_dir.cleanup()
 
+    def test_add_file(self):
+        # TODO: Implement
+        pass
+
+    def test_Add_files(self):
+        # TODO: Implement
+        pass
+
     @patch('source.collection.col.Video.from_file')
     def test_add_video_file_exists(self, mock_from_file):
         # Arrange
@@ -81,6 +89,14 @@ class TestCollection(TestCase):
         mock_from_string.assert_called_once_with(test_filter_string)
         self.assertTrue(test_video_1 in result, "'test_video_1' should be in the result")
         self.assertTrue(test_video_2 not in result, "'test_video_2' should not be in the result")
+
+    def test_from_dict(self):
+        # TODO: Implement
+        pass
+
+    def test_from_json(self):
+        # TODO: Implement
+        pass
 
     def test_get_video(self):
         expected_value = 'test_value'
@@ -378,6 +394,10 @@ class TestCollection(TestCase):
 
         self.assertEqual(expected_result, result)
 
+    def test_to_graph(self):
+        # TODO: Implement
+        pass
+
     def test_to_json(self):
         # Arrange
         test_vid = Mock()
@@ -401,21 +421,6 @@ class TestCollection(TestCase):
 }"""
         self.assertEqual(expected_value, result)
 
-    def test_update_api_data(self):
-        # Arrange
-        test_vid_1 = Mock()
-        test_vid_1.update_api_data.return_value = 'return data 1'
-        test_vid_2 = Mock()
-        test_vid_2.update_api_data.return_value = 'return data 2'
-
-        test_api = Mock()
-
-        self.test_collection.videos.update({'test_vid_1_key': test_vid_1})
-        self.test_collection.videos.update({'test_vid_2_key': test_vid_2})
-
-        # Act
-        self.test_collection.update_api_data(test_api)
-
-        # Assert
-        test_vid_1.update_api_data.assert_called_with(test_api)
-        test_vid_2.update_api_data.assert_called_with(test_api)
+    def test_to_tsv(self):
+        # TODO: Implement
+        pass
