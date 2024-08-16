@@ -37,7 +37,7 @@ class Collection:
         for path in file_paths:
             self.add_file(path)
 
-    def add_video(self, file_path: Path) -> None:
+    def add_video_file(self, file_path: Path) -> None:
         new_video = Video.from_file(file_path)
         self.videos.update({new_video.get_hash(): new_video})
         logging.info(f"Added '{file_path}' to collection")
