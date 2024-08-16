@@ -78,6 +78,37 @@ def file_read(path: Path) -> str:
         return file.read()
 
 
+def generate_destination_paths(videos, dst_tree: Path = None):
+    # TODO: Consider making this MoveCommand's responsibility
+    if dst_tree is None:
+        dst_tree = Path(get_default_dst_tree())
+        return [dst_tree / video.generate_dir_name() for video in videos]
+
+
+def get_default_dst_tree():
+    return os.getenv(ENV_DEST_PATH)
+
+
+def get_files_from_path(root: Path, recursive: bool = False, glob_pattern: str = '*') -> list[Path]:
+    if recursive:
+        return list(root.rglob(glob_pattern))
+    else:
+        return list(root.glob(glob_pattern))
+
+
+def get_file_type(path: Path) -> str:
+    if not path.is_file():
+        raise TypeError(f"'{path}' is not recognized as a valid file")
+    if path.suffix in VIDEO_EXTENSIONS:
+        return 'video'
+    else:
+        return ''
+
+
+def get_preferred_sources() -> list[str]:
+    return DATA_PREF_ORDER
+
+
 def get_user_cache_dir():
     system = platform.system()
 
@@ -210,6 +241,14 @@ def move_file(src: Path, dst: Path, overwrite=False) -> None:
         logging.warning(f"Overwriting '{dst}' with '{src}'")
     shutil.move(src, dst)
     logging.info(f"Moved '{src}' to '{dst}'")
+
+
+def parse_glob_string(path_string: str) -> (Path, str):
+    path = Path(path_string)
+    if '*' in path_string:
+        return path.parent, path.name
+    else:
+        return path, '*'
 
 
 def path_is_writable(path: Path) -> bool:
