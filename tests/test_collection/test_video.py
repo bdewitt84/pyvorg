@@ -157,7 +157,7 @@ class TestVideo(TestCase):
         api_name = 'test_api'
         data = {'test_key': 'test_value'}
         self.test_vid.data.update({api_name: data})
-        self.test_vid.set_api_data(api_name, data)
+        self.test_vid.set_source_data(api_name, data)
         result = self.test_vid.data.get(api_name)
         self.assertEqual(data, result)
 
