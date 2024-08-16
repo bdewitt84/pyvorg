@@ -80,6 +80,7 @@ class TestVideo(TestCase):
         self.assertEqual(expected_path, result)
 
     def test_get_pref_data(self):
+        # Todo: mock the call to get preferred sources, or just refactor as a parameter
         key = 'test_key'
         expected_value = 'pass'
         self.test_vid.data = {
@@ -107,6 +108,7 @@ class TestVideo(TestCase):
         self.assertEqual(expected_value, result)
 
     def test_get_root(self):
+        # Todo: take a better look at testing paths vs strings here
         result = self.test_vid.get_root()
         expected_root = self.temp_dir.name
         self.assertEqual(expected_root, str(result))
@@ -172,6 +174,7 @@ class TestVideo(TestCase):
         pass
 
     def test_to_json(self):
+        # TODO: Certainly there must be a better way
         result = self.test_vid.to_json()
         expected_path = self.temp_vid_path.replace('\\', '\\\\')
         expected_root = self.temp_dir.name.replace('\\', '\\\\')
