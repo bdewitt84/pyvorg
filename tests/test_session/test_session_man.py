@@ -1,7 +1,7 @@
 # /tests/test_session/test_session_manager.py
 
 """
-    Unit tests for SessionManager
+    Unit tests for PyvorgSession
 """
 
 # Standard library
@@ -15,7 +15,7 @@ import pickle
 import source.api.api_manager
 import source.collection.col
 import source.command.combuffer
-from source.session.session_man import SessionManager
+from source.session.session_man import PyvorgSession
 from tests.test_command.shared import TestCommand
 
 # Third-party Packages
@@ -23,7 +23,7 @@ from tests.test_command.shared import TestCommand
 
 class TestSessionManager(TestCase):
     def setUp(self) -> None:
-        self.session = SessionManager()
+        self.session = PyvorgSession()
         self.temp_dir = TemporaryDirectory()
 
     def tearDown(self) -> None:
