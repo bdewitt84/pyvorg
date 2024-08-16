@@ -5,12 +5,10 @@
 """
 
 # Standard library
-import os
 from pathlib import Path
-from json.decoder import JSONDecodeError
 from tempfile import TemporaryDirectory
 from unittest import TestCase
-from unittest.mock import call, Mock, patch
+from unittest.mock import Mock, patch
 
 # Local imports
 from source.collection.col import Collection
