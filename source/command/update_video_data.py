@@ -9,9 +9,10 @@ import json
 
 # Local imports
 from source.command.command import Command
-from source.collection.video import Video
+from source.utils.helper import update_api_data
 
 # Third-party packages
+# n/a
 
 
 class UpdateVideoData(Command):
@@ -22,14 +23,14 @@ class UpdateVideoData(Command):
         self.kwargs = kwargs
 
     def exec(self):
-        self.undo_data = self.video.get_api_data(self.api.get_name)
-        self.video.update_api_data(self.api)
+        self.undo_data = self.video.get_source_data(self.api.get_name)
+        update_api_data(self.video, self.api)
 
     def undo(self):
         if self.undo_data is None:
             self.video.data.pop(self.api.get_name())
         else:
-            self.video.set_api_data(self.api.get_name(), self.undo_data)
+            self.video.set_source_data(self.api.get_name(), self.undo_data)
         self.undo_data = None
 
     def validate_exec(self):
