@@ -44,6 +44,18 @@ class TestVideo(TestCase):
     def tearDown(self) -> None:
         self.temp_dir.cleanup()
 
+    def test_from_dict(self):
+        # TODO: Implement
+        pass
+
+    def test_from_file(self):
+        # TODO: Implement
+        pass
+
+    def test_from_json(self):
+        # TODO: Implement
+        pass
+
     def test_generate_dir_name(self):
         self.test_vid.data.get('user_data').update({'title': 'test title', 'year': '1970'})
         result = self.test_vid.generate_dir_name('%title (%year)')
@@ -127,7 +139,11 @@ class TestVideo(TestCase):
         result = self.test_vid.get_user_data(key)
         self.assertEqual(expected_value, result)
 
-    def test_set_api_data(self):
+    def test_set_hash(self):
+        # TODO: Implement
+        pass
+
+    def test_set_source_data(self):
         api_name = 'test_api'
         data = {'test_key': 'test_value'}
         self.test_vid.data.update({api_name: data})
@@ -142,6 +158,10 @@ class TestVideo(TestCase):
         expected_data = {key: value}
         result = self.test_vid.data.get(USER_DATA)
         self.assertEqual(expected_data, result)
+
+    def test_to_dict(self):
+        # TODO: Implement
+        pass
 
     def test_to_json(self):
         result = self.test_vid.to_json()
