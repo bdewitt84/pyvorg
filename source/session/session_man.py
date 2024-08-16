@@ -22,6 +22,12 @@ from source.utils.helper import file_write, get_files_from_path, parse_glob_stri
 # n\a
 
 
+# TODO: Moving file_paths needs to take associated subtitles, at the very least.
+#       consider adding a function that searches for the file_paths with an
+#       identical prefix but different extension. key:value pair could be
+#       filename:type, ie video.srt:subtitles
+
+
 class PyvorgSession:
     # Todo: Decouple components once we get things hammered out
     def __init__(self):
@@ -42,6 +48,10 @@ class PyvorgSession:
 
     def get_transaction_preview(self) -> str:
         return str(self.command_buffer)
+
+    def import_collection_metadata(self, path: Path) -> None:
+        # TODO: Import this later
+        pass
 
     def scan_files_in_path(self, path_string: str, recursive: bool = False) -> None:
         root, glob_pattern = parse_glob_string(path_string)
