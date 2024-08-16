@@ -12,9 +12,6 @@ from tempfile import TemporaryDirectory
 import pickle
 
 # Local imports
-import source.api.api_manager
-import source.collection.col
-import source.command.combuffer
 from source.session.session_man import PyvorgSession
 from tests.test_command.shared import TestCommand
 
