@@ -26,6 +26,28 @@ def class_name(obj):
     return obj.__class__.__name__
 
 
+# API VIDEO UPDATE FUNCS
+
+def update_api_data(video, api: BaseAPI, **kwargs) -> None:
+    required_params = api.get_required_params()
+    fill_kwargs_from_metadata(video, kwargs, required_params)
+    if missing := find_missing_params(required_params, kwargs):
+        raise ValueError(f"Parameters {missing} were not supplied and could not be retrieved from '{video}' metadata")
+    data = api.fetch_video_data(**kwargs)
+    video.set_source_data(api.get_name(), data)
+
+
+def fill_kwargs_from_metadata(video, params: dict, keys: list[str]):
+    for key in keys:
+        if key not in params.keys():
+            val = video.get_pref_data(key)
+            params.update({key: val})
+
+
+def find_missing_params(required_params: list[str], params: dict):
+    return [key for key in required_params if params.get(key) is None]
+
+
 def create_dummy_files(path: Path, n, func: Callable = lambda x: 'dummy_file_' + str(x) + '.file'):
     """
     Creates n dummy videos at directory 'path'
