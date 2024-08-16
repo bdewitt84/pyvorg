@@ -59,7 +59,7 @@ class Collection:
             new_col.add_video_instance(Video.from_dict(nested_dictionary))
 
     @staticmethod
-    def from_json(source: json):
+    def from_json(source: str):
         return Collection.from_dict(json.loads(source))
 
     def get_video(self, sha_256: str) -> Video:
