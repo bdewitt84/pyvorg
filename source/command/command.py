@@ -15,6 +15,9 @@ from utils.helper import make_dir, move_file
 
 
 class Command:
+    def __init__(self, *args, **kwargs):
+        pass
+
     def exec(self):
         raise NotImplementedError
 
