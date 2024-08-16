@@ -8,13 +8,13 @@
 # Standard library
 import json
 import logging
-import os
-import re
 from pathlib import Path
+from typing import Any, Optional
+import re
 
 # Local imports
 from constants import *
-from utils.helper import timestamp_generate, hash_sha256
+from source.utils.helper import get_preferred_sources, hash_sha256, timestamp_generate
 
 # Third-party packages
 
@@ -26,167 +26,129 @@ class Video:
             self.update_file_data(path)
 
     @staticmethod
-    def from_dict(d: dict):
+    def from_dict(source: dict):
         # TODO: validate video dict
         new = Video()
-        new.data = d
+        new.data = source
         return new
 
     @staticmethod
-    def from_file(path: Path):
+    def from_file(file_path: Path):
         new = Video()
-        new.update_file_data(path)
+        new.update_file_data(file_path)
         return new
 
     @staticmethod
-    def from_json(j: str):
-        data = json.loads(j)
+    def from_json(source_json: str):
+        data = json.loads(source_json)
         # TODO: Validate video json
         new = Video()
         new.data = data
         return new
 
-    def generate_dir_name(self, format_string='%title (%year)'):
+    def generate_dir_name(self, format_string: str = '%title (%year)') -> str:
+        # TODO: this should be refactored to some other class
+        #       Perhaps just rename to generate_string_from_metadata?
         matches = re.findall(r"(%\w+)(=[\w()_,.]*)?", format_string)
         for specifier, default_value in matches:
             metadata_value = self.get_pref_data(specifier[1:], default_value[1:])
             format_string = format_string.replace(specifier+default_value, metadata_value)
         return format_string
 
-    def get_api_data(self, api_name, key=None):
+    def get_source_data(self, api_name: str, key: Optional[str] = None) -> Any:
         data = self.data.get(api_name)
         if key is not None:
             data = data.get(key)
         return data
 
-    def get_source_names(self):
-        return [source for source in self.data.keys()]
+    def get_source_names(self) -> list[str]:
+        return list(self.data.keys())
 
-    def get_source_fields(self) -> list:
-        return [
-            key
-            for source in self.data.values()
-            for key in source.keys()
-        ]
+    def get_source_keys(self, source_name: Optional[str] = None) -> list:
+        if source_name:
+            if self.data.get(source_name):
+                return list(self.data.get(source_name).keys())
+            else:
+                return []
+        else:
+            return [key for source in self.data.values() for key in source.keys()]
 
-    def get_filename(self):
+    def get_filename(self) -> str:
         return self.data[FILE_DATA][FILENAME]
 
-    def get_hash(self):
+    def get_hash(self) -> str:
         return self.data[FILE_DATA][HASH]
 
-    def get_path(self):
+    def get_path(self) -> Path:
         return Path(self.data[FILE_DATA][PATH]).resolve()
 
-    def get_pref_data(self, key, default=None):
-        """
-        Looks for the key in video data in order of source preference
-        designated by DATA_PREF_ORDER, and returns the associated value
-        if it is found. Otherwise, the default parameter is returned.
-
-        :param key: The key to search for in the video data
-        :param default: Default value to return if the key is not found
-        :returns: Value corresponding to key if found, else default
-        """
-
-        # TODO: use the new get_sources method to eliminate a branch
-
-        ret = default
-        ordered_source = DATA_PREF_ORDER
+    def append_available_sources(self, sources: list) -> None:
         for source in self.get_source_names():
-            if source not in ordered_source:
-                ordered_source.append(source)
+            if source not in sources:
+                sources.append(source)
 
-        for src in ordered_source:
-            if src in self.data and isinstance(self.data[src], dict):
-                for k in self.data[src].keys():
-                    if key.lower() == k.lower():
-                        ret = self.data[src][k]
-                        break
-            if ret != default:
-                break
+    def get_pref_data(self, key: str, default: Optional[str] = None, fill: bool = True) -> Any:
+        ordered_sources = get_preferred_sources()
 
-        return ret
+        if fill is True:
+            self.append_available_sources(ordered_sources)
 
-    def get_root(self):
-        return self.data[FILE_DATA][ROOT]
+        for source in ordered_sources:
+            for source_key in self.get_source_keys(source):
+                if key.lower() == source_key.lower():
+                    return self.get_source_data(source, source_key)
+        return default
 
-    def get_user_data(self, key):
+    def get_root(self) -> Path:
+        return Path(self.data[FILE_DATA][ROOT])
+
+    def get_user_data(self, key: str) -> str:
         return self.data[USER_DATA][key]
 
-    def set_api_data(self, api_name, data):
+    def set_source_data(self, api_name: str, data: dict) -> None:
         self.data.update({api_name: data})
 
-    def set_user_data(self, key, value):
-        """
-        Used to manually set a key value pair in the video data.
-        Will be stored in the USER_DATA entry, which takes priority
-        over other sources. e.g., the user can override values returned
-        from an API such as an incorrect title.
-
-        :param key: Key name to store in data.[USER_DATA]
-        :param value: Value to associate with key
-        :return: None
-        """
-        self.data.update({
-            USER_DATA: {
-                key: value
+    def set_user_data(self, key: str, value):
+        # TODO: Should this simply be part of set_source_data?
+        #       consider renaming to override?
+        self.data.update(
+            {
+                USER_DATA: {
+                    key: value
+                }
             }
-        })
+        )
 
-    def to_dict(self):
+    def to_dict(self) -> dict:
         return self.data
 
-    def to_json(self):
+    def to_json(self) -> str:
         return json.dumps(self.data)
 
-    def update_api_data(self, api, **kwargs):
-        """
-        Fetches data using the api plugin passed into 'api'. Passes any
-        supplied keyword arguments into the API's 'fetch_video_data()'.
-        If none are passed, the video's metadata is searched for matching
-        keys in order of preference according to Video.get_data_pref().
-
-        :param api: Instance of an api plugin with which to retrieve data
-        :param kwargs: Keyword arguments to pass into the API request
-        :return: None
-        """
-        req_p = api.get_required_params()
-        for p in req_p:
-            if p not in kwargs.keys():
-                val = self.get_pref_data(p)
-                kwargs.update({p: val})
-            if kwargs.get(p) is None:
-                raise ValueError(
-                    f"Parameter '{p}' required for '{api.get_name()}' could not be found in video data for "
-                    f"'{self.get_filename()}'")
-        data = api.fetch_video_data(**kwargs)
-        self.set_api_data(api.get_name(), data)
-
-    def update_file_data(self, path: Path, skip_hash=False):
-        if path.exists():
-            root, file = os.path.split(path)
-            timestamp = timestamp_generate()
-            if skip_hash is False:
-                sha_256 = hash_sha256(path)
-            else:
-                sha_256 = ''
-            file_data = {
-                PATH: path,
-                ROOT: Path(root).resolve(),
-                FILENAME: file,
-                HASH: sha_256,
-                TIMESTAMP: timestamp
-            }
-            self.data.update({FILE_DATA: file_data})
-
-        else:
+    def update_file_data(self, path: Path, skip_hash: bool = False) -> None:
+        if not path.exists() or not path.is_file():
             msg = f"Cannot update info for '{path}': file not found."
             logging.error(msg)
             raise FileNotFoundError(msg)
 
-    def update_hash(self):
+        path = path.resolve()
+
+        file_data = {
+            PATH: path,
+            ROOT: path.parent,
+            FILENAME: path.name,
+            HASH: '',
+            TIMESTAMP: timestamp_generate()
+        }
+
+        if skip_hash is False:
+            file_data.update({HASH: hash_sha256(path)})
+
+        self.data.update({FILE_DATA: file_data})
+
+    def update_hash(self) -> None:
+        # TODO: Should this be Videos responsibility?
         self.set_hash(hash_sha256(self.get_path()))
 
-    def set_hash(self, sha256):
+    def set_hash(self, sha256) -> None:
         self.data[FILE_DATA][HASH] = sha256
