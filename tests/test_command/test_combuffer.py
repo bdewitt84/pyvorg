@@ -11,23 +11,21 @@ from unittest.mock import Mock
 # Local imports
 from source.command.combuffer import *
 from tests.test_command.shared import TestCommand
-from source.command.command import Command
 
 
 class TestCommandBuffer(unittest.TestCase):
     def setUp(self) -> None:
         self.buffer = CommandBuffer()
 
-    def test_add_command_valid(self):
+    def test_stage_command_valid(self):
         cmd = TestCommand()
-        self.buffer.add_command(cmd)
+        self.buffer.stage_command(cmd)
         self.assertTrue(cmd in self.buffer.cmd_buffer)
 
-    def test_add_command_invalid(self):
+    def test_stage_command_invalid(self):
         cmd = False
         with self.assertRaises(ValueError):
-            # Your IDE may report 'cmd' is an unexpected type; this is correct.
-            self.buffer.add_command(cmd)
+            self.buffer.stage_command(cmd)  # type:ignore
 
     def test_exec_command(self):
         cmd = TestCommand()
