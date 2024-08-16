@@ -43,6 +43,9 @@ class Collection:
         self.videos.update({new_video.get_hash(): new_video})
         logging.info(f"Added '{file_path}' to collection")
 
+    def add_video_instance(self, video: Video) -> None:
+        self.videos.update({video.get_hash(): video})
+
     @staticmethod
     def apply_filter(videos, filter_string) -> list[Video]:
         f = Filter.from_string(filter_string)
