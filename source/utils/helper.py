@@ -240,9 +240,7 @@ def integer_generator():
 
 
 def logger_init():
-    # TODO: Use Path objects?
-    current_path = os.path.dirname(__file__)
-    log_path = os.path.join(current_path, '..', '..', 'logs', 'applog.txt')
+    log_path = get_user_logs_dir() / 'logs.txt'
     logging.basicConfig(
         filename=log_path,
         level=logging.INFO,
