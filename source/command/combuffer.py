@@ -6,15 +6,11 @@
 """
 
 # Standard library
-import logging
-import pickle
-# from queue import Queue
 from collections import deque
+from typing import Type, Iterable
 
 # Local imports
 from source.command.command import Command
-# from source.command.move_video import MoveVideo
-from source.exceptions import ValidationError
 
 # Third-party packages
 
