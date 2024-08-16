@@ -31,17 +31,20 @@ class TestVideoUpdate(TestCase):
     def tearDown(self) -> None:
         pass
 
-    def test_exec(self):
+    @patch('source.command.update_video_data.update_api_data')
+    def test_exec(self, mock_update_api_data):
+        # TODO: mock call to fill_kwargs_from_metadata
         # Arrange
         test_video = Mock()
-        test_video.update_api_data.return_value = 'return data'
+        test_video.get_source_data.return_value = 'return data'
         self.test_cmd.video = test_video
 
         # Act
         self.test_cmd.exec()
 
         # Assert
-        test_video.update_api_data.assert_called_with(self.mock_api)
+        mock_update_api_data.assert_called_with(test_video, self.mock_api)
+        self.assertEqual(self.test_cmd.undo_data, 'return data')
 
     def test_undo(self):
         self.test_cmd.undo_data = {self.test_key: self.test_value}
