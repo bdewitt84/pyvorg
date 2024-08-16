@@ -6,8 +6,9 @@
 
 # Standard library
 from unittest import TestCase
-from unittest.mock import Mock
+from unittest.mock import Mock, patch
 
+import source.utils.helper
 # Local imports
 from source.collection.video import Video
 from source.command.update_video_data import UpdateVideoData
