@@ -16,7 +16,8 @@ from source.utils.helper import update_api_data
 
 
 class UpdateVideoData(Command):
-    def __init__(self, video, api, **kwargs):
+    def __init__(self, video, api, *args, **kwargs):
+        super().__init__(*args, **kwargs)
         self.undo_data = None
         self.video = video
         self.api = api
