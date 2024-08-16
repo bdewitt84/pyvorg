@@ -73,8 +73,12 @@ class Collection:
         return ret
 
     def remove_from_collection(self, videos: list[Video]) -> None:
-        # TODO: Implement later
-        pass
+        self.videos = {
+            key: value
+            for key, value
+            in self.videos.items()
+            if value not in videos
+        }
 
     def to_dict(self, filter_strings: str = None) -> dict:
         filtered = self.get_videos(filter_strings)
