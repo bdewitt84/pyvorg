@@ -59,8 +59,16 @@ class TestVideo(TestCase):
         self.assertEqual(result.get_source_data('test_source', 'source_key'), 'source_value')
 
     def test_from_file(self):
-        # TODO: Implement
-        pass
+        # Arrange
+        filename = 'test.file'
+        path = Path(self.temp_dir.name) / filename
+        path.touch()
+
+        # Act
+        result = Video.from_file(path)
+
+        # Assert
+        self.assertEqual(result.get_path(), path)
 
     def test_from_json(self):
         # TODO: Implement
