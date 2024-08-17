@@ -204,8 +204,14 @@ class TestVideo(TestCase):
         self.assertEqual(expected_value, result)
 
     def test_set_hash(self):
-        # TODO: Implement
-        pass
+        # Arrange
+        hash_value = 'fake_hash'
+
+        # Act
+        self.test_vid.set_hash(hash_value)
+
+        # Assert
+        self.assertEqual(hash_value, self.test_vid.get_hash())
 
     def test_set_source_data(self):
         api_name = 'test_api'
