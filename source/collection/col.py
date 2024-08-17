@@ -64,6 +64,10 @@ class Collection:
     def from_json(source: str):
         return Collection.from_dict(json.loads(source))
 
+    @staticmethod
+    def generate_video_id(video: Video):
+        return video.get_hash()
+
     def get_video(self, sha_256: str) -> Video:
         return self.videos.get(sha_256)
 
