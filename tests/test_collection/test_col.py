@@ -110,18 +110,27 @@ class TestCollection(TestCase):
         self.assertTrue(test_video_1 in result, "'test_video_1' should be in the result")
         self.assertTrue(test_video_2 not in result, "'test_video_2' should not be in the result")
 
-    @patch('source.collection.col.Video.from_dict')
-    def test_from_dict(self, mock_video_from_dict):
+    @patch('source.collection.col.Collection.generate_video_id')
+    def test_from_dict_(self, mock_generate_video_id):
         # Arrange
-        test_vid_dict = {'test_key': 'test_value'}
-        test_col_dict = {'test_id': test_vid_dict}
+        test_dict = {
+            'fake_hash_1': {
+                'video_data': 'video_1_data'
+                },
+            'fake_hash_2': {
+                'video_data': 'video_2_data'
+            }
+        }
+        mock_generate_video_id.side_effect = lambda x: x.data.get('video_data')
 
         # Act
-        result = Collection.from_dict(test_col_dict)
+        result = Collection.from_dict(test_dict)
 
         # Assert
-        mock_video_from_dict.assert_has_calls([call(test_vid_dict)])
-        self.assertTrue(self.test_collection.videos.get('test_id'))
+        self.assertEqual(2, len(result.videos))
+        self.assertIn('video_1_data', result.videos.keys())
+        self.assertIn('video_2_data', result.videos.keys())
+
 
     @patch('source.collection.col.Collection.from_dict')
     def test_from_json(self, mock_from_dict):
