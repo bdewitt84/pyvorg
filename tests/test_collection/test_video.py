@@ -45,8 +45,18 @@ class TestVideo(TestCase):
         self.temp_dir.cleanup()
 
     def test_from_dict(self):
-        # TODO: Implement
-        pass
+        # Arrange
+        video_dict = {
+            'test_source': {
+                'source_key': 'source_value'
+            }
+        }
+
+        # Act
+        result = Video.from_dict(video_dict)
+
+        # Assert
+        self.assertEqual(result.get_source_data('test_source', 'source_key'), 'source_value')
 
     def test_from_file(self):
         # TODO: Implement
