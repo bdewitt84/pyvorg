@@ -71,8 +71,14 @@ class TestVideo(TestCase):
         self.assertEqual(result.get_path(), path)
 
     def test_from_json(self):
-        # TODO: Implement
-        pass
+        # Arrange
+        test_json = r'{"test_source":{"source_key":"source_value"}}'
+
+        # Act
+        result = Video.from_json(test_json)
+
+        # Assert
+        self.assertEqual(result.get_source_data('test_source', 'source_key'), 'source_value')
 
     def test_generate_dir_name(self):
         self.test_vid.data.get('user_data').update({'title': 'test title', 'year': '1970'})
