@@ -230,8 +230,14 @@ class TestVideo(TestCase):
         self.assertEqual(expected_data, result)
 
     def test_to_dict(self):
-        # TODO: Implement
-        pass
+        # Arrange
+        self.test_vid.data = {'test_key': 'test_value'}
+
+        # Act
+        result = self.test_vid.to_dict()
+
+        # Assert
+        self.assertEqual('test_value', result.get('test_key'))
 
     def test_to_json(self):
         # TODO: Certainly there must be a better way
