@@ -155,8 +155,23 @@ class TestVideo(TestCase):
         self.assertEqual(expected_value, result)
 
     def test_get_source_keys(self):
-        # TODO: Implement
-        pass
+        # Arrange
+        self.test_vid.data = {
+            'source_1': {
+                'source_1_key_1': 'source_1_val_1',
+                'source_1_key_2': 'source_1_val_2'
+            },
+            'source_2': {
+                'source_2_key_1': 'source_2_val_1',
+                'source_2_key_2': 'source_2_val_2'
+            }
+        }
+
+        # Act
+        result = self.test_vid.get_source_keys()
+
+        # Assert
+        self.assertEqual(['source_1_key_1', 'source_1_key_2', 'source_2_key_1', 'source_2_key_2'], result)
 
     def test_get_source_names(self):
         # TODO: Implement
