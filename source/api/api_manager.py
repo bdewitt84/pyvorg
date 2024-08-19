@@ -12,6 +12,7 @@ import importlib
 import inspect
 import logging
 import pkgutil
+from typing import Optional
 
 # Local imports
 from source.api.base_api import BaseAPI
@@ -24,25 +25,24 @@ class APIManager:
     def __init__(self):
         self.apis = {}
 
-    def discover_api_modules(self, pkg):
+    def discover_api_modules(self, package):
         """
         Looks for api modules in ./soruce/api/
 
         :returns: dict of modules ending in '_api.py' in ./source/api/
         """
-        modules = pkgutil.iter_modules(pkg.__path__, pkg.__name__ + '.')
+        modules = pkgutil.iter_modules(package.__path__, package.__name__ + '.')
         api_mods = {
             name: importlib.import_module(name)
             for finder, name, ispkg
             in modules
             if '_api' in name
         }
-        # print('modules: ' + str(api_mods))
         return api_mods
 
     def discover_api_classes(self, api_mod):
         """
-        :param api_mods: List of tuples in (str, module) format.
+        :param api_mod: List of tuples in (str, module) format.
         :return: List of classes that inherit from BaseAPI
         """
         api_classes = {
@@ -55,8 +55,8 @@ class APIManager:
 
     def register_api(self, name, api_class):
         """
-        Takes a name and a class which inherrits from BaseAPI, then
-        creates an instance of that class and registers it in self.apis{name:instance}
+        Takes a name and a class which inherits from BaseAPI, then
+        creates an instance of that class and registers it in video.apis{name:instance}
 
         :param name: Name of api to store in registry. Used for retrieval.
         :param api_class: Class to register
