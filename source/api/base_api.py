@@ -18,7 +18,7 @@ class BaseAPI(ABC):
             self.name = name
 
     @abstractmethod
-    def fetch_video_data(self, **kwargs):
+    def fetch_video_data(self, **kwargs) -> dict:
         raise NotImplementedError("This function must be implemented in a subclass")
 
     @classmethod
@@ -33,11 +33,11 @@ class BaseAPI(ABC):
         return self.name
 
     @abstractmethod
-    def get_optional_params(self):
+    def get_optional_params(self) -> list[str]:
         raise NotImplementedError("This function must be implemented in a subclass")
 
     @abstractmethod
-    def get_required_params(self):
+    def get_required_params(self) -> list[str]:
         raise NotImplementedError("This function must be implemented in a subclass")
 
     @classmethod
