@@ -93,13 +93,11 @@ class APIManager:
         else:
             raise ValueError(f"'{api_name}' is not registered in the api manager.")
 
-    def get_api_list(self):
-        """
-        Returns list of instances of each plugin initialized by APIManager
-
-        :return: list
-        """
-        return [api for api in self.apis.values()]
+    def get_apis(self, names: Optional[list[str]]) -> list:
+        if names:
+            return [self.get_api(name) for name in names if self.get_api(name) is not None]  # Problem is here
+        else:
+            return [api for api in self.apis.values()]
 
     def get_api_names(self):
         """
