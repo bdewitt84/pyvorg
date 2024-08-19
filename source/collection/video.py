@@ -10,11 +10,11 @@ import json
 import logging
 from pathlib import Path
 from typing import Any, Optional
-import re
 
 # Local imports
 from constants import *
-from source.utils.helper import get_preferred_sources, hash_sha256, timestamp_generate
+from source.utils.fileservice import hash_sha256
+from source.utils.helper import get_preferred_sources, timestamp_generate
 
 # Third-party packages
 
@@ -45,15 +45,6 @@ class Video:
         new = Video()
         new.data = data
         return new
-
-    def generate_dir_name(self, format_string: str = '%title (%year)') -> str:
-        # TODO: this should be refactored to some other class
-        #       Perhaps just rename to generate_string_from_metadata?
-        matches = re.findall(r"(%\w+)(=[\w()_,.]*)?", format_string)
-        for specifier, default_value in matches:
-            metadata_value = self.get_pref_data(specifier[1:], default_value[1:])
-            format_string = format_string.replace(specifier+default_value, metadata_value)
-        return format_string
 
     def get_source_data(self, api_name: str, key: Optional[str] = None) -> Any:
         data = self.data.get(api_name)
