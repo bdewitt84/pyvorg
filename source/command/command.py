@@ -11,7 +11,6 @@ import logging
 import os
 
 # Local imports
-from utils.helper import make_dir, move_file
 
 
 class Command:
