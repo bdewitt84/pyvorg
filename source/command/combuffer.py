@@ -20,14 +20,6 @@ class CommandBuffer:
         self.cmd_buffer = deque()
         self.undo_buffer = []
 
-    def build_command(self, cmd: Type[Command], *args, **kwargs):
-        # TODO: Consider using a factory pattern
-        return cmd(*args, **kwargs)
-
-    def build_commands(self, cmd: Type[Command], params_list: Iterable[tuple]) -> list[Command]:
-        # TODO: Consider using a factory pattern
-        return [cmd(*params) for params in params_list]
-
     def clear_exec_buffer(self):
         self.cmd_buffer.clear()
 
