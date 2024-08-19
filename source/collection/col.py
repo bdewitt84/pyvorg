@@ -13,8 +13,8 @@ from pathlib import Path
 
 # Local imports
 from source.collection.video import Video
-from source.filter import Filter
-from source.utils.helper import default_serializer, get_file_type
+from source.utils.helper import default_serializer
+from source.utils.fileservice import get_file_type
 
 # Third-party packages
 # N/A
@@ -30,15 +30,18 @@ class Collection:
             self.path = Path(os.getenv('SOURCE_PATH'))
 
     def add_file(self, file_path: Path) -> None:
+        # TODO: Refactor to service later
         if get_file_type(file_path) == 'video':
             self.add_video_file(file_path)
         # Placeholder for other media types
 
     def add_files(self, file_paths: list[Path]) -> None:
+        # TODO: Refactor to service later
         for path in file_paths:
             self.add_file(path)
 
     def add_video_file(self, file_path: Path) -> None:
+        # TODO: Refactor to service later
         new_video = Video.from_file(file_path)
         self.videos.update({new_video.get_hash(): new_video})
         logging.info(f"Added '{file_path}' to collection")
@@ -68,8 +71,8 @@ class Collection:
     def generate_video_id(video: Video):
         return video.get_hash()
 
-    def get_video(self, sha_256: str) -> Video:
-        return self.videos.get(sha_256)
+    def get_video(self, key: str) -> Video:
+        return self.videos.get(key)
 
     def get_videos(self, filter_strings=None) -> list[Video]:
         ret = self.videos.values()
