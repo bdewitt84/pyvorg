@@ -69,12 +69,15 @@ class Collection:
     def get_video(self, key: str) -> Video:
         return self.videos.get(key)
 
-    def get_videos(self, filter_strings=None) -> list[Video]:
-        ret = self.videos.values()
-        if filter_strings:
-            for string in filter_strings:
-                ret = self.apply_filter(ret, string)
-        return ret
+    # def get_videos(self, filter_strings=None) -> list[Video]:
+    #     ret = self.videos.values()
+    #     if filter_strings:
+    #         for string in filter_strings:
+    #             ret = self.apply_filter(ret, string)
+    #     return ret
+
+    def get_videos(self) -> list[Video]:
+        return list(self.videos.values())
 
     def remove_from_collection(self, videos: list[Video]) -> None:
         self.videos = {

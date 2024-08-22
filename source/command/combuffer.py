@@ -39,7 +39,7 @@ class CommandBuffer:
         # TODO: implement
         pass
 
-    def stage_command(self, cmd: Command) -> None:
+    def add_command(self, cmd: Command) -> None:
         if not isinstance(cmd, Command):
             raise ValueError("Only objects with type <Command> may be added to the command buffer.")
         self.cmd_buffer.append(cmd)
