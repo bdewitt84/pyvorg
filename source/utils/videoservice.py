@@ -24,3 +24,15 @@ def generate_str_from_metadata(self, format_string: str = '%title (%year)') -> s
         metadata_value = self.get_pref_data(specifier[1:], default_value[1:])
         format_string = format_string.replace(specifier+default_value, metadata_value)
     return format_string
+
+
+def build_cmd_kwargs(videos, req_params):
+    list_of_param_dicts: [dict] = []
+    for video in videos:
+        cur_dict = {}
+        for param in req_params:
+            cur_dict.update(
+                {param: video.get_pref_data(param)}
+            )
+        list_of_param_dicts.append(cur_dict)
+    return list_of_param_dicts
