@@ -23,8 +23,8 @@ def get_exec_preview(command_buffer):
     return str(command_buffer)
 
 
-def build_command(cmd: Type[Command], *args, **kwargs):
-    # TODO: Consider using a factory pattern
+def build_command(cmd_name: str, *args, **kwargs):
+    cmd = get_command_from_name(cmd_name)
     return cmd(*args, **kwargs)
 
 
