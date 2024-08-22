@@ -50,11 +50,6 @@ class Collection:
         self.videos.update({self.generate_video_id(video): video})
 
     @staticmethod
-    def apply_filter(videos, filter_string) -> list[Video]:
-        f = Filter.from_string(filter_string)
-        return [video for video in videos if f.matches(video.get_pref_data(f.key))]
-
-    @staticmethod
     def from_dict(source: dict):
         # Todo: Validate input dictionary
         new_col = Collection()
