@@ -4,7 +4,8 @@
 import importlib
 import inspect
 import pkgutil
-from typing import Optional, Typefrom types import ModuleType
+from typing import Optional, Type
+from types import ModuleType
 
 # Local imports
 from source.api.base_api import BaseAPI

@@ -4,7 +4,8 @@ import os
 # Standard library
 
 # Local imports
-from utils.helper import logger_init
+from source.utils.helper import logger_init
+from source.utils.fileservice import get_user_logs_dir
 
 # Third-party packages
 from dotenv import load_dotenv
@@ -14,4 +15,4 @@ from dotenv import load_dotenv
 script_path = os.path.dirname(os.path.abspath(__file__))
 config_path = os.path.join(script_path, '..', 'config', 'config.env')
 load_dotenv(config_path)
-logger_init()
+logger_init(get_user_logs_dir())
