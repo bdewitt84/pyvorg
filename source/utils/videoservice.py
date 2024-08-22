@@ -11,7 +11,7 @@ from source.collection.video import Video
 
 
 def create_videos_from_file_paths(file_paths: list[Path]):
-    pass
+    return [Video.from_file(path) for path in file_paths]
 
 
 def generate_destination_paths(videos, dst_tree: Path = None):
