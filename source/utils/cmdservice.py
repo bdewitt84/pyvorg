@@ -49,3 +49,7 @@ def get_command_from_name(command_name) -> Type:
 def stage_commands(command_buffer: CommandBuffer, cmds: list[Command]) -> None:
     for cmd in cmds:
         command_buffer.add_command(cmd)
+
+
+def execute_undo_buffer(command_buffer: CommandBuffer):
+    command_buffer.execute_undo_buffer()
