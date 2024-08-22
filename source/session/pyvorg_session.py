@@ -66,11 +66,15 @@ class PyvorgSession:
         colsvc.add_videos(self.collection, videos)
 
     def stage_organize_video_files(self, filter_strings: Optional[list[str]] = None) -> None:
+        # Collect parameter data
         videos = colsvc.get_filtered_videos(self.collection, filter_strings)
         paths = vidsvc.generate_destination_paths(videos)
+        # Pack parameters
         params = zip(videos, paths)
+        # Build commands
         cmds = cmdsvc.build_commands('MoveVideo', params)
-        cmdsvc.stage_commands(cmds)
+        # Stage commands
+        cmdsvc.stage_commands(self.command_buffer, cmds)
 
     def stage_update_api_metadata(self, api_name: str, filter_strings: Optional[list[str]]) -> None:
         # Collect parameter data
