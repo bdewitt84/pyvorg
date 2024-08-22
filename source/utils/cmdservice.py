@@ -44,3 +44,8 @@ def get_command_from_name(command_name) -> Type:
         return UpdateVideoData
     else:
         raise ValueError(f"'{command_name}' is not a valid command name")
+
+
+def stage_commands(command_buffer: CommandBuffer, cmds: list[Command]) -> None:
+    for cmd in cmds:
+        command_buffer.add_command(cmd)
