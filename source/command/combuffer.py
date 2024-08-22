@@ -44,10 +44,6 @@ class CommandBuffer:
             raise ValueError("Only objects with type <Command> may be added to the command buffer.")
         self.cmd_buffer.append(cmd)
 
-    def stage_commands(self, cmds: list[Command]) -> None:
-        for cmd in cmds:
-            self.stage_command(cmd)
-
     def undo_cmd(self):
         if self.undo_buffer:
             cmd = self.undo_buffer.pop()
