@@ -45,12 +45,10 @@ class PyvorgSession:
         cmdsvc.execute_cmd_buffer(self.command_buffer)
 
     def export_collection_metadata(self, path: Path, filter_strings=None) -> None:
-        # metadata = self.collection.to_json(filter_strings)
-        metadata = colsvc.get_metadata(self.collection)
+        metadata = colsvc.get_metadata(self.collection, filter_strings)
         filesvc.file_write(path, metadata)
 
     def get_preview_of_staged_operations(self) -> str:
-        # return str(self.command_buffer)
         return cmdsvc.get_exec_preview(self.command_buffer)
 
     def import_collection_metadata(self, path: Path) -> None:
