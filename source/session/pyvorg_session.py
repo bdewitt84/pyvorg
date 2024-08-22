@@ -73,12 +73,17 @@ class PyvorgSession:
         cmdsvc.stage_commands(cmds)
 
     def stage_update_api_metadata(self, api_name: str, filter_strings: Optional[list[str]]) -> None:
+        # Collect parameter data
         videos = colsvc.get_filtered_videos(self.collection, filter_strings)
-        api = pluginsvc.get_apis(api_name)
-        req_params = pluginsvc.get_reqired_params(api)
-        filler = vidsvc.get_metadata(videos, req_params)
-        filled_params = pluginsvc.fill_params(req_params, filler)
-        cmdsvc.build_commands('UpdateVideoData', videos, filled_params)
+        api_instance = pluginsvc.get_plugin_instance(api_name)
+        req_plugin_params = pluginsvc.get_required_params(api_instance)
+        cmd_kwargs = vidsvc.build_cmd_kwargs(videos, req_plugin_params)
+        # Pack parameters
+        params = zip(videos, repeat(api_instance), cmd_kwargs)
+        # Build commands
+        cmds = cmdsvc.build_commands('UpdateVideoData', params)
+        # Stage commands
+        cmdsvc.stage_commands(self.command_buffer, cmds)
 
     def undo_transaction(self) -> None:
         # self.command_buffer.execute_undo_buffer()
