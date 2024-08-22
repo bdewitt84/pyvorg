@@ -6,15 +6,14 @@
 """
 
 # Standard library
+from itertools import repeat
 from pathlib import Path
 from typing import Optional
 
+
 # Local imports
-from source.api.api_manager import APIManager
 from source.collection.col import Collection
 from source.command.combuffer import CommandBuffer
-from source.command.update_video_data import UpdateVideoData
-from source.command.move_video import MoveVideo
 
 from source.utils import cmdservice as cmdsvc,\
                          collectionservice as colsvc,\
@@ -90,5 +89,4 @@ class PyvorgSession:
         cmdsvc.stage_commands(self.command_buffer, cmds)
 
     def undo_transaction(self) -> None:
-        # self.command_buffer.execute_undo_buffer()
-        cmdsvc.execute_buffer(self.command_buffer)
+        cmdsvc.execute_undo_buffer(self.command_buffer)
