@@ -29,7 +29,6 @@ def build_command(cmd_name: str, *args, **kwargs):
 
 
 def build_commands(cmd_name: str, params_list: Iterable[tuple]) -> list[Command]:
-    # TODO: Consider using a factory pattern
     cmd = get_command_from_name(cmd_name)
     return [cmd(*params) for params in params_list]
 
