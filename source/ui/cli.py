@@ -168,6 +168,6 @@ def handle_parsed_args(parsed_args: Namespace, session: PyvorgSession) -> None:
               f"to the command.")
 
 
-def run(args: Namespace, session: PyvorgSession):
+def run(args: list[str], session: PyvorgSession):
     parsed_args = parse_args(args)
     handle_parsed_args(parsed_args, session)
