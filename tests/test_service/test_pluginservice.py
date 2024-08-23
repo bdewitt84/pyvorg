@@ -9,9 +9,8 @@ from tempfile import TemporaryDirectory
 import sys
 
 # Local imports
+from source.service import pluginservice as plugin_svc
 from source.api.base_api import BaseAPI
-from service import pluginservice as plugin_svc
-
 
 # Third-party packages
 
@@ -26,7 +25,7 @@ class TestPluginService(TestCase):
         fake_pkg_path = os.path.join(self.temp_dir.name, self.fake_pkg_name)
         self.temp_path = fake_pkg_path
         os.mkdir(fake_pkg_path)
-        fake_pkg_init_path = os.path.join(fake_pkg_path, '../test_utils/__init__.py')
+        fake_pkg_init_path = os.path.join(fake_pkg_path, '__init__.py')
         with open(fake_pkg_init_path, 'w') as file:
             file.write('# This file makes the directory a package.')
 
@@ -89,7 +88,7 @@ class TestPluginService(TestCase):
         self.assertEqual(expected_value, set(result.keys()))
         self.assertTrue(all(mod.__name__ in expected_value for mod in result.values()))
 
-    @patch('source.utils.pluginservice.discover_api_modules')
+    @patch('source.service.pluginservice.discover_api_modules')
     def test_discover_plugins(self, mock_discover_api_modules):
         # Arrange
         class FakePlugin(BaseAPI):
