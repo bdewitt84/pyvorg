@@ -18,6 +18,12 @@ from constants import *
 from tqdm import tqdm
 
 
+def dir_is_empty(path: Path) -> bool:
+    if not path.is_dir():
+        raise NotADirectoryError("'path' must be a pathlib Path object that points to a directory")
+    return not any(path.iterdir())
+
+
 def file_write(path: Path, data: str, overwrite=False) -> None:
     """
     Attempts to write data to the file at the specified path, raising
@@ -46,6 +52,40 @@ def file_read(path: Path) -> str:
         raise FileNotFoundError(f"The file '{path}' cannot be found")
     with path.open('r') as file:
         return file.read()
+
+
+def get_files_from_path(root: Path, recursive: bool = False, glob_pattern: str = '*') -> list[Path]:
+    if recursive:
+        return list(root.rglob(glob_pattern))
+    else:
+        return list(root.glob(glob_pattern))
+
+
+def get_file_type(path: Path) -> str:
+    if not path.is_file():
+        raise TypeError(f"'{path}' is not recognized as a valid file")
+    if path.suffix in VIDEO_EXTENSIONS:
+        return 'video'
+    else:
+        return ''
+
+
+def hash_sha256(path: Path):
+    hasher = sha256()
+    file_size = os.path.getsize(path)
+
+    with path.open('rb') as file:
+        chunk_size = 65536  # 64kb
+        with tqdm(total=file_size, unit='MB', unit_scale=True, position=0) as progress_bar:
+            max_desc_width = 80 - len(' [Hashing]')
+            file_name = os.path.basename(path)
+            file_name = file_name[:max_desc_width].ljust(max_desc_width)
+            progress_bar.set_description(f'[Hashing] {file_name}')
+            for chunk in iter(lambda: file.read(chunk_size), b''):
+                hasher.update(chunk)
+                progress_bar.update(len(chunk))
+    sha256_hash = hasher.hexdigest()
+    return sha256_hash
 
 
 def make_dir(path: Path):
@@ -97,43 +137,3 @@ def path_is_writable(path: Path) -> bool:
 
 def path_is_readable(path: Path) -> bool:
     return os.access(path, os.R_OK)
-
-
-def dir_is_empty(path: Path) -> bool:
-    if not path.is_dir():
-        raise NotADirectoryError("'path' must be a pathlib Path object that points to a directory")
-    return not any(path.iterdir())
-
-
-def get_files_from_path(root: Path, recursive: bool = False, glob_pattern: str = '*') -> list[Path]:
-    if recursive:
-        return list(root.rglob(glob_pattern))
-    else:
-        return list(root.glob(glob_pattern))
-
-
-def get_file_type(path: Path) -> str:
-    if not path.is_file():
-        raise TypeError(f"'{path}' is not recognized as a valid file")
-    if path.suffix in VIDEO_EXTENSIONS:
-        return 'video'
-    else:
-        return ''
-
-
-def hash_sha256(path: Path):
-    hasher = sha256()
-    file_size = os.path.getsize(path)
-
-    with path.open('rb') as file:
-        chunk_size = 65536  # 64kb
-        with tqdm(total=file_size, unit='MB', unit_scale=True, position=0) as progress_bar:
-            max_desc_width = 80 - len(' [Hashing]')
-            file_name = os.path.basename(path)
-            file_name = file_name[:max_desc_width].ljust(max_desc_width)
-            progress_bar.set_description(f'[Hashing] {file_name}')
-            for chunk in iter(lambda: file.read(chunk_size), b''):
-                hasher.update(chunk)
-                progress_bar.update(len(chunk))
-    sha256_hash = hasher.hexdigest()
-    return sha256_hash
