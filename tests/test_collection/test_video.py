@@ -80,10 +80,11 @@ class TestVideo(TestCase):
         # Assert
         self.assertEqual(result.get_source_data('test_source', 'source_key'), 'source_value')
 
-    def test_generate_dir_name(self):
-        self.test_vid.data.get('user_data').update({'title': 'test title', 'year': '1970'})
-        result = self.test_vid.generate_dir_name('%title (%year)')
-        self.assertEqual('test title (1970)', result)
+    # TODO: Refactored to service layer
+    # def test_generate_dir_name(self):
+    #     self.test_vid.data.get('user_data').update({'title': 'test title', 'year': '1970'})
+    #     result = self.test_vid.generate_dir_name('%title (%year)')
+    #     self.assertEqual('test title (1970)', result)
 
     def test_get_filename(self):
         result = self.test_vid.get_filename()
