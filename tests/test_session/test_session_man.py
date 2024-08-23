@@ -76,7 +76,7 @@ class TestSessionManager(TestCase):
         self.session.command_buffer.cmd_buffer.append(test_cmd_2)
 
         # Act
-        result = self.session.get_transaction_preview()
+        result = self.session.get_preview_of_staged_operations()
 
         # Assert
         self.assertTrue('Test cmd 1' in result)
