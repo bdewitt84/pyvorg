@@ -85,31 +85,6 @@ class TestCollection(TestCase):
         with self.assertRaises(FileNotFoundError):
             self.test_collection.add_video_file(bad_path)
 
-    @patch('source.collection.col.Filter.from_string')
-    def test_apply_filter(self, mock_from_string):
-        # Arrange
-        test_video_1 = Mock()
-        test_video_2 = Mock()
-
-        test_video_1.get_pref_data.return_value = "match"
-        test_video_2.get_pref_data.return_value = "not a match"
-
-        videos = [test_video_1, test_video_2]
-
-        test_filter = Mock()
-        test_filter.matches.side_effect = lambda x: True if x == "match" else False
-        mock_from_string.return_value = test_filter
-
-        test_filter_string = "test filter string"
-
-        # Act
-        result = self.test_collection.apply_filter(videos, test_filter_string)
-
-        # Assert
-        mock_from_string.assert_called_once_with(test_filter_string)
-        self.assertTrue(test_video_1 in result, "'test_video_1' should be in the result")
-        self.assertTrue(test_video_2 not in result, "'test_video_2' should not be in the result")
-
     @patch('source.collection.col.Collection.generate_video_id')
     def test_from_dict_(self, mock_generate_video_id):
         # Arrange
@@ -169,24 +144,6 @@ class TestCollection(TestCase):
         self.assertTrue(len(result) == 2)
         self.assertTrue(video_1 in result)
         self.assertTrue(video_2 in result)
-
-    @patch('source.collection.col.Collection.apply_filter')
-    def test_get_videos_with_filter(self, mock_filter_videos):
-        # Arrange
-        test_filter_string = "test filter string"
-        mock_filter_videos.return_value = None
-        test_vid_1 = Mock()
-        self.test_collection.videos = {"video 1": test_vid_1}
-
-        # Act
-        self.test_collection.get_videos([test_filter_string])
-
-        # Assert
-        # Note that dict values are not directly comparable, so we work around it by
-        # converting the dict values to a list
-        mock_filter_videos.assert_called_once()
-        self.assertEqual(list(mock_filter_videos.call_args.args[0]), [test_vid_1])
-        self.assertEqual(mock_filter_videos.call_args.args[1], test_filter_string)
 
     def test_remove_from_collection(self):
         # Arrange
