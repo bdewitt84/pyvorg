@@ -10,7 +10,7 @@ from source.collection.video import Video
 # Third-party packages
 
 
-def create_videos_from_file_paths(file_paths: list[Path]):
+def create_videos_from_file_paths(file_paths: list[Path]) -> list[Video]:
     return [Video.from_file(path) for path in file_paths]
 
 
@@ -26,7 +26,7 @@ def generate_str_from_metadata(video, format_string: str) -> str:
     return format_string
 
 
-def build_cmd_kwargs(videos, req_params):
+def build_cmd_kwargs(videos: list[Video], req_params: list[str]) -> list[dict]:
     list_of_param_dicts: [dict] = []
     for video in videos:
         cur_dict = {}
