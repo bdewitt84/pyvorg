@@ -77,6 +77,14 @@ def parse_args(args):
     organize_parser = subparsers.add_parser(
         'organize',
         help=organize_help)
+    format_str_help = 'format string for generating directory names'
+    organize_parser.add_argument(
+        'format_string',
+        dest='format_str',
+        help=format_str_help,
+        metavar='<FORMAT STRING>',
+        default=None
+    )
     organize_parser.add_argument(
         '-f', '--filter',
         dest='filters',
@@ -137,7 +145,7 @@ def handle_parsed_args(args: Namespace, session: PyvorgSession) -> None:
 
     elif args.command == 'organize':
         print(f"Staging files for organization at '{args.path}'")
-        session.stage_organize_video_files(args.filters)
+        session.stage_organize_video_files(args.filters, args.format_str)
 
     elif args.command == 'profile':
         print(f"Switching profile to {args.name}")
