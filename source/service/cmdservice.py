@@ -1,4 +1,4 @@
-# source/utils/cmdservice.py
+# source/service/cmdservice.py
 
 # Standard library
 from typing import Iterable, Type

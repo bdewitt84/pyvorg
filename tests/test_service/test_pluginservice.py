@@ -1,4 +1,4 @@
-# source/tests/test_utils/test_pluginservice.py
+# source/tests/test_service/test_pluginservice.py
 
 # Standard library
 import importlib
@@ -8,10 +8,10 @@ from unittest.mock import patch, MagicMock
 from tempfile import TemporaryDirectory
 import sys
 
-import source.utils.pluginservice
 # Local imports
 from source.api.base_api import BaseAPI
-from source.utils import pluginservice as plugin_svc
+from service import pluginservice as plugin_svc
+
 
 # Third-party packages
 
@@ -26,7 +26,7 @@ class TestPluginService(TestCase):
         fake_pkg_path = os.path.join(self.temp_dir.name, self.fake_pkg_name)
         self.temp_path = fake_pkg_path
         os.mkdir(fake_pkg_path)
-        fake_pkg_init_path = os.path.join(fake_pkg_path, '__init__.py')
+        fake_pkg_init_path = os.path.join(fake_pkg_path, '../test_utils/__init__.py')
         with open(fake_pkg_init_path, 'w') as file:
             file.write('# This file makes the directory a package.')
 

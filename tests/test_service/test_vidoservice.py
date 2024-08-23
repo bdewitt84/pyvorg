@@ -1,4 +1,4 @@
-# tests/test_utils/test_videoservice.py
+# tests/test_service/test_videoservice.py
 
 # Standard library
 from pathlib import Path
@@ -7,7 +7,7 @@ from unittest import TestCase
 from unittest.mock import patch, Mock
 
 # Local imports
-import source.utils.videoservice as vid_svc
+import service.videoservice as vid_svc
 from source.utils.helper import create_dummy_files
 
 # Third-party packages

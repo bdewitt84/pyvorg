@@ -1,4 +1,4 @@
-# source/utils/collectionservice.py
+# source/service/collectionservice.py
 
 # Standard library
 from typing import Optional

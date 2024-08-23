@@ -1,11 +1,11 @@
-# tests/test_utils/test_collectionservice.py
+# tests/test_service/test_collectionservice.py
 
 # Standard library
 from unittest import TestCase
 from unittest.mock import call, Mock
 
 # Local imports
-import source.utils.collectionservice as col_svc
+import service.collectionservice as col_svc
 
 # Third-party packages
 
