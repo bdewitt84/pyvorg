@@ -126,40 +126,40 @@ def parse_args(args):
     return parser.parse_args(args)
 
 
-def handle_parsed_args(args: Namespace, session: PyvorgSession) -> None:
-    if args.command == 'clear':
+def handle_parsed_args(parsed_args: Namespace, session: PyvorgSession) -> None:
+    if parsed_args.command == 'clear':
         print(f"Clearing all transactions from command buffer")
         session.clear_staged_operations()
 
-    if args.command == 'commit':
+    if parsed_args.command == 'commit':
         print("Committing staged operations")
         session.commit_staged_operations()
 
-    elif args.command == 'export':
-        print(f"Exporting collection data to '{args.path}'")
-        session.export_collection_metadata(args.path, args.filters)
+    elif parsed_args.command == 'export':
+        print(f"Exporting collection data to '{parsed_args.path}'")
+        session.export_collection_metadata(parsed_args.path, parsed_args.filters)
 
-    elif args.command == 'fetch':
-        print(f"Staging fetch from {args.plugins}")
-        session.stage_update_api_metadata(args.plugins, args.filters)
+    elif parsed_args.command == 'fetch':
+        print(f"Staging fetch from {parsed_args.plugins}")
+        session.stage_update_api_metadata(parsed_args.plugins, parsed_args.filters)
 
-    elif args.command == 'organize':
-        print(f"Staging files for organization at '{args.path}'")
-        session.stage_organize_video_files(args.filters, args.format_str)
+    elif parsed_args.command == 'organize':
+        print(f"Staging files for organization at '{parsed_args.path}'")
+        session.stage_organize_video_files(parsed_args.filters, parsed_args.format_str)
 
-    elif args.command == 'profile':
-        print(f"Switching profile to {args.name}")
-        # session.set_profile(args.name)
+    elif parsed_args.command == 'profile':
+        print(f"Switching profile to {parsed_args.name}")
+        # session.set_profile(parsed_args.name)
 
-    elif args.command == 'scan':
-        print(f"Scanning '{args.path}'")
-        session.scan_files_in_path(args.path)
+    elif parsed_args.command == 'scan':
+        print(f"Scanning '{parsed_args.path}'")
+        session.scan_files_in_path(parsed_args.path)
 
-    elif args.command == 'undo':
+    elif parsed_args.command == 'undo':
         print(f"Undoing last commit")
         session.undo_transaction()
 
-    elif args.command == 'view':
+    elif parsed_args.command == 'view':
         print(f"Viewing staged operations")
         print(session.get_preview_of_staged_operations())
 
