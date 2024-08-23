@@ -33,6 +33,8 @@ def get_filtered_videos(collection: Collection, filter_strings: list[str]) -> li
 
 
 def import_metadata(collection, metadata, overwrite=True):
+    # TODO: Consider using or writing Collection methods
+    #       so we don't have to directly access video member
     if overwrite:
         collection.videos = collection.videos | metadata
     else:
