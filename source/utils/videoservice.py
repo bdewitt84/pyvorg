@@ -18,10 +18,10 @@ def generate_destination_paths(videos, dst_tree: Path = None):
     return [dst_tree / generate_str_from_metadata(video) for video in videos]
 
 
-def generate_str_from_metadata(self, format_string: str = '%title (%year)') -> str:
+def generate_str_from_metadata(video, format_string: str) -> str:
     matches = re.findall(r"(%\w+)(=[\w()_,.]*)?", format_string)
     for specifier, default_value in matches:
-        metadata_value = self.get_pref_data(specifier[1:], default_value[1:])
+        metadata_value = video.get_pref_data(specifier[1:], default_value[1:])
         format_string = format_string.replace(specifier+default_value, metadata_value)
     return format_string
 
