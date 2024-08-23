@@ -29,7 +29,6 @@ def parse_args(args):
     subparsers = parser.add_subparsers(dest='command')
 
     # Clear
-    # TODO: Implement
     clear_help = "clear all staged operations from command buffer"
     clear_parser = subparsers.add_parser('clear', help=clear_help)
 
@@ -38,7 +37,6 @@ def parse_args(args):
     commit_parser = subparsers.add_parser('commit', help=commit_help)
 
     # Export
-    # TODO: Implement filter --done?
     export_help = "export collection metadata as a json file"
     export_parser = subparsers.add_parser('export', help=export_help)
     export_parser.add_argument(
@@ -54,7 +52,6 @@ def parse_args(args):
     )
 
     # Fetch
-    # TODO: Implement filter
     fetch_help = "stage files in collection to be updated with metadata fetched using the specified plugin"
     fetch_parser = subparsers.add_parser('fetch', help=fetch_help)
     fetch_plugins_help = "name of plugin used to fetch data. can be invoked multiple times"
@@ -76,7 +73,6 @@ def parse_args(args):
     )
 
     # Organize
-    # TODO: Implement filter
     organize_help = "stage files in collection to be moved to a subdirectory in 'dest'"
     organize_parser = subparsers.add_parser(
         'organize',
