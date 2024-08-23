@@ -1,14 +1,14 @@
-# /source/cli/ui.py
+# /source/ui/cli.py
 
 """
     Command line interface application for the video manager
 """
 
 # Standard library
-from argparse import ArgumentParser, HelpFormatter
+from argparse import ArgumentParser, HelpFormatter, Namespace
 
 # Local imports
-# n/a
+from source.session.pyvorg_session import PyvorgSession
 
 # Third-party packages
 # n/a
@@ -103,7 +103,7 @@ def parse_args(args):
     scan_path_help = "path to directory containing files to scan"
     scan_parser.add_argument(
         'path',
-        metavar='PATH',
+        metavar='<PATH>',
         help=scan_path_help
     )
 
@@ -122,23 +122,22 @@ def parse_args(args):
     return parser.parse_args(args)
 
 
-def handle_parsed_args(args, session):
+def handle_parsed_args(args: Namespace, session: PyvorgSession) -> None:
     if args.command == 'clear':
         print(f"Clearing all transactions from command buffer")
-        session.clear_transaction()
+        session.clear_staged_operations()
 
     if args.command == 'commit':
         print("Committing staged operations")
-        session.commit_transaction()
+        session.commit_staged_operations()
 
     elif args.command == 'export':
         print(f"Exporting collection data to '{args.path}'")
         session.export_collection_metadata(args.path, args.filters)
 
     elif args.command == 'fetch':
-        print(f"Staging files for fetching data from {args.plugins}")
-        for plugin in args.plugins:
-            session.stage_update_api_metadata(plugin, args.filters)
+        print(f"Staging fetch from {args.plugins}")
+        session.stage_update_api_metadata(args.plugins, args.filters)
 
     elif args.command == 'organize':
         print(f"Staging files for organization at '{args.path}'")
@@ -146,11 +145,11 @@ def handle_parsed_args(args, session):
 
     elif args.command == 'profile':
         print(f"Switching profile to {args.name}")
-        session.set_profile(args.name)
+        # session.set_profile(args.name)
 
     elif args.command == 'scan':
         print(f"Scanning '{args.path}'")
-        session.scan_path(args.path)
+        session.scan_files_in_path(args.path)
 
     elif args.command == 'undo':
         print(f"Undoing last commit")
@@ -158,13 +157,13 @@ def handle_parsed_args(args, session):
 
     elif args.command == 'view':
         print(f"Viewing staged operations")
-        print(session.get_transaction_preview())
+        print(session.get_preview_of_staged_operations())
 
     else:
         print(f"Unrecognized command. Use -h or --help to see list of commands. Use <command> -h to see help specific "
               f"to the command.")
 
 
-def run(args, session):
+def run(args: Namespace, session: PyvorgSession):
     parsed_args = parse_args(args)
     handle_parsed_args(parsed_args, session)
