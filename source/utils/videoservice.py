@@ -14,8 +14,8 @@ def create_videos_from_file_paths(file_paths: list[Path]) -> list[Video]:
     return [Video.from_file(path) for path in file_paths]
 
 
-def generate_destination_paths(videos, dst_tree: Path = None):
-    return [dst_tree / generate_str_from_metadata(video) for video in videos]
+def generate_destination_paths(videos, dst_tree: Path, format_string: str) -> list[Path]:
+    return [dst_tree / generate_str_from_metadata(video, format_string) for video in videos]
 
 
 def generate_str_from_metadata(video, format_string: str) -> str:
