@@ -19,13 +19,13 @@ class TestCommandBuffer(unittest.TestCase):
 
     def test_stage_command_valid(self):
         cmd = TestCommand()
-        self.buffer.stage_command(cmd)
+        self.buffer.add_command(cmd)
         self.assertTrue(cmd in self.buffer.cmd_buffer)
 
     def test_stage_command_invalid(self):
         cmd = False
         with self.assertRaises(ValueError):
-            self.buffer.stage_command(cmd)  # type:ignore
+            self.buffer.add_command(cmd)  # type:ignore
 
     def test_exec_command(self):
         cmd = TestCommand()
