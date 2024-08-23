@@ -64,7 +64,7 @@ def parse_args(args):
         help=fetch_plugins_help,
         choices=fetch_plugins,
         metavar='<PLUGIN>',
-        nargs='+'
+        # nargs='+'
     )
     fetch_parser.add_argument(
         '-f', '--filter',
