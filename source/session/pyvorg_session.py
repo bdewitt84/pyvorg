@@ -63,10 +63,13 @@ class PyvorgSession:
         videos = vidsvc.create_videos_from_file_paths(file_paths)
         colsvc.add_videos(self.collection, videos)
 
-    def stage_organize_video_files(self, filter_strings: Optional[list[str]] = None) -> None:
+    def stage_organize_video_files(self, format_str: Optional[str] = None, filter_strings: Optional[list[str]] = None) -> None:
+        # Assign defaults
+        if format_str is None:
+            format_str = cfg_svc.get_default_format_str()
         # Collect parameter data
         videos = colsvc.get_filtered_videos(self.collection, filter_strings)
-        paths = vidsvc.generate_destination_paths(videos)
+        paths = vidsvc.generate_destination_paths(videos, format_str)
         # Pack parameters
         params = zip(videos, paths)
         # Build commands
