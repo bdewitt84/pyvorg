@@ -15,12 +15,13 @@ from typing import Optional
 from source.collection.col import Collection
 from source.command.combuffer import CommandBuffer
 
-from source.utils import cmdservice as cmdsvc,\
-                         collectionservice as colsvc,\
-                         fileservice as filesvc,\
-                         pluginservice as pluginsvc,\
-                         stateservice as statesvc,\
-                         videoservice as vidsvc
+from service import cmdservice as cmdsvc,\
+                    configservice as cfg_svc,\
+                    videoservice as vidsvc,\
+                    collectionservice as colsvc,\
+                    pluginservice as pluginsvc,\
+                    fileservice as filesvc
+
 
 # Third-party packages
 # n\a

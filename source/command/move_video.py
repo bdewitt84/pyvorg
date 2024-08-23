@@ -12,7 +12,7 @@ import logging
 
 # Local imports
 from source.command.command import Command
-from source.utils.fileservice import \
+from service.fileservice import \
     dir_is_empty, \
     make_dir, \
     move_file, \
