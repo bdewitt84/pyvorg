@@ -9,10 +9,9 @@ import os
 from unittest import TestCase
 from unittest.mock import Mock
 from tempfile import TemporaryDirectory
-import pickle
 
 # Local imports
-from source.session.session_man import PyvorgSession
+from source.session.pyvorg_session import PyvorgSession
 from tests.test_command.shared import TestCommand
 
 # Third-party Packages
