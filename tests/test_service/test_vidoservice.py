@@ -34,7 +34,7 @@ class TestVideoService(TestCase):
         self.assertTrue(any(files[2] == video.get_path() for video in result))
         self.assertFalse(any('not_a_real_path' == video.get_path() for video in result))
 
-    @patch('source.utils.videoservice.generate_str_from_metadata')
+    @patch('source.service.videoservice.generate_str_from_metadata')
     def test_generate_destination_paths(self, mock_generate_str):
         # Arrange
         mock_vid_1 = Mock()

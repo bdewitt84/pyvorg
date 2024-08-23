@@ -5,7 +5,7 @@ import os
 
 # Local imports
 from source.utils.helper import logger_init
-from service.fileservice import get_user_logs_dir
+from service.configservice import get_user_logs_dir
 
 # Third-party packages
 from dotenv import load_dotenv
