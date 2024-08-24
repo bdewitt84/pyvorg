@@ -7,7 +7,7 @@ from unittest import TestCase
 from unittest.mock import patch, Mock
 
 # Local imports
-import service.videoservice as vid_svc
+import source.service.videoservice as vid_svc
 from source.utils.helper import create_dummy_files
 
 # Third-party packages
