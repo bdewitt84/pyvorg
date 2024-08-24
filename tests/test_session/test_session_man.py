@@ -5,14 +5,13 @@
 """
 
 # Standard library
-import os
 from unittest import TestCase
 from unittest.mock import Mock
 from tempfile import TemporaryDirectory
 
 # Local imports
 from source.facade.pyvorg_session import PyvorgSession
-from tests.test_command.shared import TestCommand
+from test_state.shared import TestCommand
 
 # Third-party Packages
 

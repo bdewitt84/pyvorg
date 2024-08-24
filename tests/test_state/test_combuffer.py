@@ -10,7 +10,7 @@ from unittest.mock import Mock
 
 # Local imports
 from state.combuffer import *
-from tests.test_command.shared import TestCommand
+from test_state.shared import TestCommand
 
 
 class TestCommandBuffer(unittest.TestCase):

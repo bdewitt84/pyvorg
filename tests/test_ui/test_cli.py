@@ -1,4 +1,4 @@
-# ./tests/test_cli/test_ui.py
+# ./tests/test_ui/test_ui.py
 
 """
     Unit tests for ui.py

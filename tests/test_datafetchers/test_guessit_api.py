@@ -1,4 +1,4 @@
-# tests/test_api/test_guessit_api.py
+# tests/test_datafetchers/test_guessit_api.py
 
 """
     Unit tests for GuessitAPI

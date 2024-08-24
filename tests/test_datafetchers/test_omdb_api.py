@@ -1,4 +1,4 @@
-# tests/test_api/test_omdb_api.py
+# tests/test_datafetchers/test_omdb_api.py
 
 """
     Unit tests for source/datafetchers/omdb_api.py

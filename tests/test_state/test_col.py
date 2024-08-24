@@ -1,4 +1,4 @@
-# tests/test_collection/test_col.py
+# tests/test_state/test_col.py
 
 """
     Unit tests for Collection
