@@ -8,7 +8,7 @@ from tempfile import TemporaryDirectory
 from unittest import TestCase
 
 # Local imports
-from source.facade.pyvorg_session import PyvorgSession
+from source.facade.facade import Facade
 
 # Third-party packages
 
@@ -16,7 +16,7 @@ from source.facade.pyvorg_session import PyvorgSession
 class TestUI(TestCase):
     def setUp(self) -> None:
         self.test_dir = TemporaryDirectory()
-        self.session = PyvorgSession()
+        self.session = Facade()
 
     def tearDown(self) -> None:
         self.test_dir.cleanup()

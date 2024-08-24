@@ -3,11 +3,11 @@ import sys
 
 # Local imports
 from source.ui.cli import run
-from source.facade.pyvorg_session import PyvorgSession
+from source.facade.facade import Facade
 
 # Third-party packages
 
 
 if __name__ == "__main__":
-    session = PyvorgSession()
+    session = Facade()
     run(sys.argv[1:], session)

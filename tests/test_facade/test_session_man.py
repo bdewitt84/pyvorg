@@ -1,7 +1,7 @@
-# /tests/test_session/test_session_manager.py
+# /tests/test_facade/test_session_manager.py
 
 """
-    Unit tests for PyvorgSession
+    Unit tests for Facade
 """
 
 # Standard library
@@ -10,7 +10,7 @@ from unittest.mock import Mock
 from tempfile import TemporaryDirectory
 
 # Local imports
-from source.facade.pyvorg_session import PyvorgSession
+from source.facade.facade import Facade
 from test_state.shared import TestCommand
 
 # Third-party Packages
@@ -18,7 +18,7 @@ from test_state.shared import TestCommand
 
 class TestSessionManager(TestCase):
     def setUp(self) -> None:
-        self.session = PyvorgSession()
+        self.session = Facade()
         self.temp_dir = TemporaryDirectory()
 
     def tearDown(self) -> None:

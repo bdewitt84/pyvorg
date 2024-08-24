@@ -8,7 +8,7 @@
 from argparse import ArgumentParser, HelpFormatter, Namespace
 
 # Local imports
-from source.facade.pyvorg_session import PyvorgSession
+from source.facade.facade import Facade
 
 # Third-party packages
 # n/a
@@ -126,7 +126,7 @@ def parse_args(args):
     return parser.parse_args(args)
 
 
-def handle_parsed_args(parsed_args: Namespace, session: PyvorgSession) -> None:
+def handle_parsed_args(parsed_args: Namespace, session: Facade) -> None:
     if parsed_args.command == 'clear':
         print(f"Clearing all transactions from command buffer")
         session.clear_staged_operations()
@@ -168,6 +168,6 @@ def handle_parsed_args(parsed_args: Namespace, session: PyvorgSession) -> None:
               f"to the command.")
 
 
-def run(args: list[str], session: PyvorgSession):
+def run(args: list[str], session: Facade):
     parsed_args = parse_args(args)
     handle_parsed_args(parsed_args, session)

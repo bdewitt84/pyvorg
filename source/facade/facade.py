@@ -1,4 +1,4 @@
-# ./source/facade/pyvorg_session.py
+# ./source/facade/facade.py
 
 """
     Acts as entry point for user interface.
@@ -33,7 +33,7 @@ from service import cmdservice as cmdsvc,\
 #       filename:type, ie video.srt:subtitles
 
 
-class PyvorgSession:
+class Facade:
     # Todo: Decouple components once we get things hammered out
     def __init__(self):
         self.command_buffer = CommandBuffer()
