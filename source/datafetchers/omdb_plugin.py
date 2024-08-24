@@ -84,12 +84,12 @@ class OMDBAPI(DataFetcher):
 
         return data
 
+    def get_name(self):
+        return 'omdb'
+
     @staticmethod
     def get_omdb_api_key():
         return os.getenv(ENV_OMDB_KEY)
-
-    def get_name(self):
-        return 'omdb'
 
     def get_optional_params(self):
         return [K_YEAR, K_PLOT, K_RETURN]
