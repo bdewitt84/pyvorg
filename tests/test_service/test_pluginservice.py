@@ -9,7 +9,7 @@ from tempfile import TemporaryDirectory
 import sys
 
 # Local imports
-from source.service import pluginservice as plugin_svc
+from source.service import plugin_svc as plugin_svc
 from source.datafetchers.base_fetcher import DataFetcher
 
 # Third-party packages
@@ -87,7 +87,7 @@ class TestPluginService(TestCase):
         self.assertEqual(expected_value, set(result.keys()))
         self.assertTrue(all(mod.__name__ in expected_value for mod in result.values()))
 
-    @patch('source.service.pluginservice.discover_api_modules')
+    @patch('source.service.plugin_svc.discover_api_modules')
     def test_discover_plugins(self, mock_discover_api_modules):
         # Arrange
         class FakePlugin(DataFetcher):

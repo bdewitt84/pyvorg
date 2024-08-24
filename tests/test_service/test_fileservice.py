@@ -7,7 +7,7 @@ from tempfile import TemporaryDirectory
 from unittest import TestCase
 
 # Local imports
-import source.service.fileservice as file_svc
+import source.service.file_svc as file_svc
 
 # Third-party packages
 

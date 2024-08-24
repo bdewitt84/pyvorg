@@ -5,7 +5,7 @@ from unittest import TestCase
 from unittest.mock import call, Mock
 
 # Local imports
-import service.collectionservice as col_svc
+import service.collection_svc as col_svc
 
 # Third-party packages
 

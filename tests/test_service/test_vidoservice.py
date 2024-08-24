@@ -7,7 +7,7 @@ from unittest import TestCase
 from unittest.mock import patch, Mock
 
 # Local imports
-import source.service.videoservice as vid_svc
+import source.service.video_svc as vid_svc
 from source.utils.helper import create_dummy_files
 
 # Third-party packages
@@ -34,7 +34,7 @@ class TestVideoService(TestCase):
         self.assertTrue(any(files[2] == video.get_path() for video in result))
         self.assertFalse(any('not_a_real_path' == video.get_path() for video in result))
 
-    @patch('source.service.videoservice.generate_str_from_metadata')
+    @patch('source.service.video_svc.generate_str_from_metadata')
     def test_generate_destination_paths(self, mock_generate_str):
         # Arrange
         mock_vid_1 = Mock()
