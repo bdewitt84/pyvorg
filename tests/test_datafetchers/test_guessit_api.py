@@ -9,7 +9,7 @@ from unittest import TestCase
 from unittest.mock import Mock
 
 # Local imports
-from source.datafetchers.guessit_api import GuessitAPI
+from source.datafetchers.guessit_plugin import GuessitAPI
 
 # Third-party packages
 
@@ -23,7 +23,7 @@ class TestGuessitAPI(TestCase):
     def tearDown(self) -> None:
         pass
 
-    def test_fetch_video_data(self):
+    def test_fetch_data(self):
         result = self.test_api.fetch_data(filename=self.test_filename)
         expected_value = {
             'title': 'Alien',

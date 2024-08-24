@@ -1,7 +1,7 @@
 # tests/test_datafetchers/test_omdb_api.py
 
 """
-    Unit tests for source/datafetchers/omdb_api.py
+    Unit tests for source/datafetchers/omdb_plugin.py
 """
 
 # Standard library
@@ -9,7 +9,7 @@ from unittest import TestCase
 from unittest.mock import Mock, patch
 
 # Local imports
-from source.datafetchers.omdb_api import OMDBAPI
+from source.datafetchers.omdb_plugin import OMDBAPI
 
 # Third-party packages
 import requests
