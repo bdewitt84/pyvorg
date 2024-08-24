@@ -1,7 +1,7 @@
 # tests/test_api/test_omdb_api.py
 
 """
-    Unit tests for source/api/omdb_api.py
+    Unit tests for source/datafetchers/omdb_api.py
 """
 
 # Standard library
@@ -9,7 +9,7 @@ from unittest import TestCase
 from unittest.mock import Mock, patch
 
 # Local imports
-from source.api.omdb_api import OMDBAPI
+from source.datafetchers.omdb_api import OMDBAPI
 
 # Third-party packages
 import requests
@@ -29,7 +29,7 @@ class TestOMDBAPI(TestCase):
         self.mock_response.json.return_value = {'Response': 'True'}
 
         mock_get.return_value = self.mock_response
-        data = self.api.fetch_video_data(title='identifiable title')
+        data = self.api.fetch_data(title='identifiable title')
 
         self.assertTrue(type(data) == dict)
         self.assertEqual(data.get('Response'), 'True')
@@ -40,7 +40,7 @@ class TestOMDBAPI(TestCase):
         self.mock_response.json.return_value = {'Response': 'False', 'Error': 'Movie not found!'}
 
         mock_get.return_value = self.mock_response
-        data = self.api.fetch_video_data(title='unidentifiable title')
+        data = self.api.fetch_data(title='unidentifiable title')
 
         self.assertTrue(type(data) == dict)
         self.assertEqual(data.get('Response'), 'False')
@@ -53,4 +53,4 @@ class TestOMDBAPI(TestCase):
         mock_get.return_value = self.mock_response
 
         with self.assertRaises(requests.HTTPError):
-            self.api.fetch_video_data(title='test title')
+            self.api.fetch_data(title='test title')

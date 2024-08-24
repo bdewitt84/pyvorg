@@ -10,7 +10,7 @@ import sys
 
 # Local imports
 from source.service import pluginservice as plugin_svc
-from source.api.base_api import BaseAPI
+from source.datafetchers.base_api import DataFetcher
 
 # Third-party packages
 
@@ -36,10 +36,10 @@ class TestPluginService(TestCase):
         fake_mod_2_path = os.path.join(fake_pkg_path, self.fake_mod_2_name + '.py')
         with open(fake_mod_1_path, 'w') as file:
             file.write(
-                """from source.api.base_api import BaseAPI\nclass FakeAPI1(BaseAPI):\n    def fetch_video_data(self, **kwargs):\n        pass\n    def get_optional_params(self):\n        pass\n    def get_required_params(self):\n        pass""")
+                """from source.datafetchers.base_api import DataFetcher\nclass FakeAPI1(DataFetcher):\n    def fetch_data(self, **kwargs):\n        pass\n    def get_optional_params(self):\n        pass\n    def get_required_params(self):\n        pass""")
         with open(fake_mod_2_path, 'w') as file:
             file.write(
-                """from source.api.base_api import BaseAPI\nclass FakeAPI2(BaseAPI):\n    def fetch_video_data(self, **kwargs):\n        pass\n    def get_optional_params(self):\n        pass\n    def get_required_params(self):\n        pass""")
+                """from source.datafetchers.base_api import DataFetcher\nclass FakeAPI2(DataFetcher):\n    def fetch_data(self, **kwargs):\n        pass\n    def get_optional_params(self):\n        pass\n    def get_required_params(self):\n        pass""")
 
         # Prepare path for imports
         sys.path.insert(0, self.temp_dir.name)
@@ -49,7 +49,7 @@ class TestPluginService(TestCase):
         sys.path.pop(0)
 
     def test_discover_api_classes(self):
-        class FakeAPI(BaseAPI):
+        class FakeAPI(DataFetcher):
             pass
 
         class NotAnAPI:
@@ -91,7 +91,7 @@ class TestPluginService(TestCase):
     @patch('source.service.pluginservice.discover_api_modules')
     def test_discover_plugins(self, mock_discover_api_modules):
         # Arrange
-        class FakePlugin(BaseAPI):
+        class FakePlugin(DataFetcher):
             pass
 
         class NotAPlugin:

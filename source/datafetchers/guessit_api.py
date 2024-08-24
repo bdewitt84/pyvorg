@@ -1,4 +1,4 @@
-# source/api/guessit_api.py
+# source/datafetchers/guessit_api.py
 
 """
     API interface for Guessit
@@ -16,16 +16,16 @@ from guessit import guessit
 # Standard library
 
 # Local imports
-from source.api.base_api import BaseAPI
+from source.datafetchers.base_api import DataFetcher
 
 # Third-party packages
 
 
-class GuessitAPI(BaseAPI):
+class GuessitAPI(DataFetcher):
     def __init__(self, name=None):
         super().__init__(name)
 
-    def fetch_video_data(self, **kwargs):
+    def fetch_data(self, **kwargs):
         if 'filename' in kwargs.keys():
             filename = kwargs.get('filename')
             guessit_data = guessit(filename)

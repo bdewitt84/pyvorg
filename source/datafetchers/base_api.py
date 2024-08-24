@@ -1,16 +1,16 @@
-# source/api/base_api.py
+# source/datafetchers/base_api.py
 
 """
     Base class for the plugin interface. Plugins must inherit from this class
-    in order to be detected by APIManager and used by Collection.
+    in order to be detected by pluginservice and used by Collection.
 """
 import json
 # Standard library
 from abc import ABC, abstractmethod
 
 
-# class BaseAPI(ABC, metaclass=MetaAPI):
-class BaseAPI(ABC):
+# class DataFetcher(ABC, metaclass=MetaAPI):
+class DataFetcher(ABC):
     def __init__(self, name=None):
         if name is None:
             self.name = self.__class__.__name__
@@ -18,7 +18,7 @@ class BaseAPI(ABC):
             self.name = name
 
     @abstractmethod
-    def fetch_video_data(self, **kwargs) -> dict:
+    def fetch_data(self, **kwargs) -> dict:
         raise NotImplementedError("This function must be implemented in a subclass")
 
     @classmethod

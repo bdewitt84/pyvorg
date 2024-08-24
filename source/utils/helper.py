@@ -11,7 +11,7 @@ from pathlib import Path
 from typing import Callable
 
 # Local imports
-from source.api.base_api import BaseAPI
+from source.datafetchers.base_api import DataFetcher
 from constants import DATA_PREF_ORDER
 
 # Third-party imports
@@ -24,12 +24,12 @@ def class_name(obj):
 
 # API VIDEO UPDATE FUNCS
 
-def update_api_data(video, api: BaseAPI, **kwargs) -> None:
+def update_api_data(video, api: DataFetcher, **kwargs) -> None:
     required_params = api.get_required_params()
     fill_kwargs_from_metadata(video, kwargs, required_params)
     if missing := find_missing_params(required_params, kwargs):
         raise ValueError(f"Parameters {missing} were not supplied and could not be retrieved from '{video}' metadata")
-    data = api.fetch_video_data(**kwargs)
+    data = api.fetch_data(**kwargs)
     video.set_source_data(api.get_name(), data)
 
 

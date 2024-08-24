@@ -1,4 +1,4 @@
-# source/api/omdb_api.py
+# source/datafetchers/omdb_api.py
 
 """
     API interface for OMDB (Open Movie Database)
@@ -16,7 +16,7 @@ import logging
 
 # Local imports
 from source.constants import *
-from source.api.base_api import BaseAPI
+from source.datafetchers.base_api import DataFetcher
 
 # Third-party packages
 import requests
@@ -35,7 +35,7 @@ K_PLOT = 'plot'
 K_RETURN = 'rtype'
 
 
-class OMDBAPI(BaseAPI):
+class OMDBAPI(DataFetcher):
     """
         A class to interact with the OMDB API.
 
@@ -57,7 +57,7 @@ class OMDBAPI(BaseAPI):
         if not self.get_omdb_api_key():
             raise ValueError(f"No API key set. Add '{ENV_OMDB_KEY} = [your omdb key]' to {ENV_FILE_PATH}.")
 
-    def fetch_video_data(self, **kwargs):
+    def fetch_data(self, **kwargs):
         """
             Fetches video data from the OMDB API based on provided parameters.
 
@@ -119,7 +119,7 @@ class OMDBAPI(BaseAPI):
             params[P_TITLE] = title
         else:
             raise ValueError(f"A title is required to query OMDB. Add '{K_TITLE}=[your title]' to the parameters of "
-                             f"fetch_video_data(). Example: fetch_video_data({K_TITLE}='Alien')")
+                             f"fetch_data(). Example: fetch_data({K_TITLE}='Alien')")
 
         if K_YEAR in kwargs.keys():
             params[P_YEAR] = kwargs.get(K_YEAR)

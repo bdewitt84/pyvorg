@@ -255,9 +255,9 @@ class TestVideo(TestCase):
     #     api = Mock()
     #     api_name = 'test_api'
     #     api.get_name.return_value = api_name
-    #     api.get_required_params.return_value = ['filename']
+    #     datafetchers.get_required_params.return_value = ['filename']
     #     expected_data = {'test_key': 'test_value'}
-    #     api.fetch_video_data.return_value = expected_data
+    #     api.fetch_data.return_value = expected_data
     #
     #     # Act
     #     self.test_vid.update_api_data(api)

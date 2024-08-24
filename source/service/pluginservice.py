@@ -8,18 +8,18 @@ from typing import Optional, Type
 from types import ModuleType
 
 # Local imports
-from source.api.base_api import BaseAPI
-import source.api
+from source.datafetchers.base_api import DataFetcher
+import source.datafetchers
 
 # Third-party plugins
 
 
-def discover_api_classes(api_mod) -> (str, Type[BaseAPI]):
+def discover_api_classes(api_mod) -> (str, Type[DataFetcher]):
     return {
         class_name: obj
         for class_name, obj
         in inspect.getmembers(api_mod, inspect.isclass)
-        if issubclass(obj, BaseAPI) and obj is not BaseAPI
+        if issubclass(obj, DataFetcher) and obj is not DataFetcher
     }
 
 
@@ -44,12 +44,12 @@ def discover_plugins(package: ModuleType):
     }
 
 
-def get_plugin_instance(api_name: str) -> Optional[BaseAPI]:
+def get_plugin_instance(api_name: str) -> Optional[DataFetcher]:
     # TODO: Consider raising if None
     # TODO: need to request or pass the plugin package instead
     plugin_class = discover_plugins(source.api).get(api_name)
     return plugin_class()
 
 
-def get_required_params(api: BaseAPI):
+def get_required_params(api: DataFetcher):
     return api.get_required_params()
