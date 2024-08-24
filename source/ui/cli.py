@@ -24,7 +24,10 @@ def parse_args(args):
         add_help=True
     )
 
-    filter_help = "should write some proper help for filters"
+    # TODO: write help strings
+    filter_help = "Write help string for filter_help"
+    export_path_help = "Write help string for export_path_help"
+    profile_path_help = "Write help string for profile_path_help"
 
     subparsers = parser.add_subparsers(dest='command')
 
@@ -41,15 +44,8 @@ def parse_args(args):
     export_parser = subparsers.add_parser('export', help=export_help)
     export_parser.add_argument(
         'path',
+        help=export_path_help,
         metavar='<PATH>')
-    export_parser.add_argument(
-        '-f', '--filter',
-        dest='filters',
-        help=filter_help,
-        metavar='<FILTER EXPRESSION>',
-        action='append',
-        default=None
-    )
 
     # Fetch
     fetch_help = "stage files in collection to be updated with metadata fetched using the specified plugin"
@@ -99,6 +95,7 @@ def parse_args(args):
     profile_parser = subparsers.add_parser('profile', help=profile_help)
     profile_parser.add_argument(
         'path',
+        help=profile_path_help,
         metavar='<PATH>')
 
     # Scan
@@ -137,7 +134,7 @@ def handle_parsed_args(parsed_args: Namespace, session: Facade) -> None:
 
     elif parsed_args.command == 'export':
         print(f"Exporting collection data to '{parsed_args.path}'")
-        session.export_collection_metadata(parsed_args.path, parsed_args.filters)
+        session.export_collection_metadata(parsed_args.path)
 
     elif parsed_args.command == 'fetch':
         print(f"Staging fetch from {parsed_args.plugins}")

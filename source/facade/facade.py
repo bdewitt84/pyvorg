@@ -45,8 +45,8 @@ class Facade:
     def commit_staged_operations(self) -> None:
         cmdsvc.execute_cmd_buffer(self.command_buffer)
 
-    def export_collection_metadata(self, path: Path, filter_strings=None) -> None:
-        metadata = colsvc.get_metadata(self.collection, filter_strings)
+    def export_collection_metadata(self, path: Path) -> None:
+        metadata = colsvc.get_metadata(self.collection)
         filesvc.file_write(path, metadata)
 
     def get_preview_of_staged_operations(self) -> str:
