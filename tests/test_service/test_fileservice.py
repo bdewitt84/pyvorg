@@ -5,7 +5,6 @@ import os
 from pathlib import Path
 from tempfile import TemporaryDirectory
 from unittest import TestCase
-from unittest.mock import call, patch, Mock
 
 # Local imports
 import source.service.fileservice as file_svc
@@ -51,14 +50,16 @@ class TestFileService(TestCase):
         with self.assertRaises(FileNotFoundError):
             file_svc.file_read(file_does_not_exist)
 
-    def make_dir(self):
-        # TODO: Implement
+    def test_make_dir(self):
         # Arrange
+        path = Path(self.temp_dir.name)
 
         # Act
+        file_svc.make_dir(path)
 
         # Assert
-        pass
+        self.assertTrue(path.exists())
+        self.assertTrue(path.is_dir())
 
     def test_mimic_folder(self):
         # Arrange
@@ -119,14 +120,16 @@ class TestFileService(TestCase):
         self.assertFalse(src_exists_path.exists())
         self.assertTrue(dst_path.exists())
 
-    def parse_glob_string(self):
-        # TODO: Implement
+    def test_parse_glob_string(self):
         # Arrange
+        glob_str = './fake_root/fake_sub/*.*'
 
         # Act
+        result_path, result_glob = file_svc.parse_glob_string(glob_str)
 
         # Assert
-        pass
+        self.assertEqual(result_path, Path('fake_root/fake_sub'))
+        self.assertEqual(result_glob, '*.*')
 
     def test_path_is_writable(self):
         # Arrange
@@ -153,32 +156,61 @@ class TestFileService(TestCase):
         # This test will always fail on Windows
         # self.assertFalse(path_is_readable(non_readable_target_path))
 
-    def dir_is_empty(self):
-        # TODO: Implement
-        # Arrange
+    def test_dir_is_empty(self):
+        empty_dir = Path(self.temp_dir.name) / 'empty_dir'
+        not_empty_dir = Path(self.temp_dir.name) / 'not_empty_dir'
+        dummy_file = not_empty_dir / 'dummy.file'
+
+        empty_dir.mkdir()
+        not_empty_dir.mkdir()
+        dummy_file.touch()
 
         # Act
+        result_empty = file_svc.dir_is_empty(empty_dir)
+        result_not_empty = file_svc.dir_is_empty(not_empty_dir)
 
         # Assert
-        pass
+        self.assertTrue(result_empty)
+        self.assertFalse(result_not_empty)
 
-    def get_files_from_path(self):
-        # TODO: Implement
+    def test_get_files_from_path(self):
         # Arrange
+        test_path = Path(self.temp_dir.name)
+        test_file_1 = test_path / 'test_file.1'
+        test_file_2 = test_path / 'test_file.2'
+        fake_file = test_path / 'doesnt_exist.file'
+
+        test_file_1.touch()
+        test_file_2.touch()
 
         # Act
+        result = file_svc.get_files_from_path(test_path)
 
         # Assert
-        pass
+        self.assertIn(test_file_1, result)
+        self.assertIn(test_file_2, result)
+        self.assertNotIn(fake_file, result)
 
-    def get_file_type(self):
-        # TODO: Implement
+    def test_get_file_type(self):
         # Arrange
+        test_path = Path(self.temp_dir.name)
+        dummy_mp4 = test_path / 'dummy.mp4'
+        dummy_avi = test_path / 'dummy.avi'
+        dummy_txt = test_path / 'dummy.txt'
+
+        files_to_create = [dummy_mp4, dummy_avi, dummy_txt]
+        for file in files_to_create:
+            file.touch()
 
         # Act
+        result_mp4 = file_svc.get_file_type(dummy_mp4)
+        result_avi = file_svc.get_file_type(dummy_avi)
+        result_txt = file_svc.get_file_type(dummy_txt)
 
         # Assert
-        pass
+        self.assertEqual(result_mp4, 'video')
+        self.assertEqual(result_avi, 'video')
+        self.assertEqual(result_txt, '')
 
     def test_hash_sha256(self):
         # Arrange
