@@ -8,7 +8,7 @@
 from argparse import ArgumentParser, HelpFormatter, Namespace
 
 # Local imports
-from source.session.pyvorg_session import PyvorgSession
+from source.facade.pyvorg_session import PyvorgSession
 
 # Third-party packages
 # n/a
@@ -149,7 +149,7 @@ def handle_parsed_args(parsed_args: Namespace, session: PyvorgSession) -> None:
 
     elif parsed_args.command == 'profile':
         print(f"Switching profile to {parsed_args.name}")
-        # session.set_profile(parsed_args.name)
+        # facade.set_profile(parsed_args.name)
 
     elif parsed_args.command == 'scan':
         print(f"Scanning '{parsed_args.path}'")

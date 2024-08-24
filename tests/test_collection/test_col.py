@@ -11,7 +11,7 @@ from unittest import TestCase
 from unittest.mock import call, Mock, patch
 
 # Local imports
-from source.collection.col import Collection
+from source.state.col import Collection
 
 # Third-party packages
 # n/a
@@ -44,7 +44,7 @@ class TestCollection(TestCase):
         # Assert
         self.assertTrue(filepath in video.data['file_data']['path'] for video in self.test_collection.videos.keys())
 
-    @patch('source.collection.col.Collection.add_file')
+    @patch('source.state.col.Collection.add_file')
     def test_add_files(self, mock_add_file):
         # Arrange
         path_1 = Path('fake_path_1')
@@ -62,7 +62,7 @@ class TestCollection(TestCase):
         # Assert
         mock_add_file.assert_has_calls([call(path_1), call(path_2), call(path_3)])
 
-    @patch('source.collection.col.Video.from_file')
+    @patch('source.state.col.Video.from_file')
     def test_add_video_file_exists(self, mock_from_file):
         # Arrange
         path = Path('fake path')
@@ -85,7 +85,7 @@ class TestCollection(TestCase):
         with self.assertRaises(FileNotFoundError):
             self.test_collection.add_video_file(bad_path)
 
-    @patch('source.collection.col.Collection.generate_video_id')
+    @patch('source.state.col.Collection.generate_video_id')
     def test_from_dict_(self, mock_generate_video_id):
         # Arrange
         test_dict = {
@@ -106,7 +106,7 @@ class TestCollection(TestCase):
         self.assertIn('video_1_data', result.videos.keys())
         self.assertIn('video_2_data', result.videos.keys())
 
-    @patch('source.collection.col.Collection.from_dict')
+    @patch('source.state.col.Collection.from_dict')
     def test_from_json(self, mock_from_dict):
         # Arrange
         test_json_string = r'{"test_key": "test_value"}'
@@ -161,7 +161,7 @@ class TestCollection(TestCase):
         self.assertTrue(vid_remove not in self.test_collection.videos.values())
         self.assertTrue(vid_dont_remove in self.test_collection.videos.values())
 
-    @patch('source.collection.col.Collection.get_videos')
+    @patch('source.state.col.Collection.get_videos')
     def test_to_dict(self, mock_get_videos):
         # Arrange
         video_1 = Mock()

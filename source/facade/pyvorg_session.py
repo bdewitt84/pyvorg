@@ -1,4 +1,4 @@
-# ./source/session/pyvorg_session.py
+# ./source/facade/pyvorg_session.py
 
 """
     Acts as entry point for user interface.
@@ -12,8 +12,8 @@ from typing import Optional
 
 
 # Local imports
-from source.collection.col import Collection
-from source.command.combuffer import CommandBuffer
+from state.col import Collection
+from state.combuffer import CommandBuffer
 
 from service import cmdservice as cmdsvc,\
                     configservice as cfg_svc,\

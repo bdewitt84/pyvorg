@@ -3,16 +3,12 @@
 """
     Unit tests for ui.py
 """
-import os
 # Standard library
 from tempfile import TemporaryDirectory
 from unittest import TestCase
-from unittest.mock import Mock, patch
 
 # Local imports
-import source.ui.cli as ui
-import source.collection.col
-from source.session.pyvorg_session import PyvorgSession
+from source.facade.pyvorg_session import PyvorgSession
 
 # Third-party packages
 

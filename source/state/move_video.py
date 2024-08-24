@@ -11,7 +11,7 @@ import json
 import logging
 
 # Local imports
-from source.command.command import Command
+from state.command import Command
 from service.fileservice import \
     dir_is_empty, \
     make_dir, \

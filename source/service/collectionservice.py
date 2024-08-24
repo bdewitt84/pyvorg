@@ -1,10 +1,9 @@
 # source/service/collectionservice.py
 
 # Standard library
-from typing import Optional
 
 # Local imports
-from source.collection.col import Collection
+from state.col import Collection
 from source.filter import Filter
 
 # Third-party packages

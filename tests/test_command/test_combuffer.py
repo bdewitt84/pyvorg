@@ -9,7 +9,7 @@ import unittest
 from unittest.mock import Mock
 
 # Local imports
-from source.command.combuffer import *
+from state.combuffer import *
 from tests.test_command.shared import TestCommand
 
 

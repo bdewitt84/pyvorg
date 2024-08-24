@@ -12,7 +12,7 @@ import os
 from pathlib import Path
 
 # Local imports
-from source.collection.video import Video
+from state.video import Video
 from source.utils.helper import default_serializer
 from service.fileservice import get_file_type
 

@@ -7,10 +7,9 @@
 
 # Standard library
 from collections import deque
-from typing import Type, Iterable
 
 # Local imports
-from source.command.command import Command
+from state.command import Command
 
 # Third-party packages
 

@@ -5,10 +5,9 @@
 """
 
 # Standard library
-import json
 
 # Local imports
-from source.command.command import Command
+from state.command import Command
 from source.utils.helper import update_api_data
 
 # Third-party packages

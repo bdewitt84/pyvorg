@@ -8,12 +8,12 @@
 import os.path
 from pathlib import Path
 from tempfile import TemporaryDirectory
-from unittest.mock import Mock, patch
+from unittest.mock import patch
 from unittest import TestCase
 
 # Local imports
 from source.constants import *
-from source.collection.video import Video
+from source.state.video import Video
 
 
 # Third-party packages
@@ -266,8 +266,8 @@ class TestVideo(TestCase):
     #     result = self.test_vid.data.get(api_name)
     #     self.assertEqual(expected_data, result)
 
-    @patch('source.collection.video.hash_sha256')
-    @patch('source.collection.video.timestamp_generate')
+    @patch('source.state.video.hash_sha256')
+    @patch('source.state.video.timestamp_generate')
     def test_update_file_data(self, mock_timestamp_generate, mock_hash_sha256):
         # Arrange
         test_file = Path(self.temp_dir.name, 'fake.file')

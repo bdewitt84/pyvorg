@@ -11,7 +11,7 @@ import unittest
 from unittest.mock import call, Mock, patch
 
 # Local imports
-from source.command.move_video import MoveVideo
+from source.state.move_video import MoveVideo
 
 # Third-party packages
 
@@ -50,7 +50,7 @@ class TestMoveVideoCommand(unittest.TestCase):
     def tearDown(self) -> None:
         self.temp_dir.cleanup()
 
-    @patch('source.command.move_video.MoveVideo._move')
+    @patch('source.state.move_video.MoveVideo._move')
     def test_exec(self, mock_move):
         # Act
         self.test_cmd.exec()
@@ -59,8 +59,8 @@ class TestMoveVideoCommand(unittest.TestCase):
         self.assertEqual(self.test_cmd.origin_dir, self.src_dir)
         mock_move.assert_called_once_with(self.dest_dir)
 
-    @patch('source.command.move_video.move_file')
-    @patch('source.command.move_video.MoveVideo._make_dirs')
+    @patch('source.state.move_video.move_file')
+    @patch('source.state.move_video.MoveVideo._make_dirs')
     def test_move(self, mock_make_dirs, mock_move_file):
         # Arrange
         dest_path = self.dest_dir / self.filename
@@ -73,8 +73,8 @@ class TestMoveVideoCommand(unittest.TestCase):
         mock_move_file.assert_called_once_with(self.vid.get_path(), dest_path)
         self.vid.update_file_data.assert_called_once_with(dest_path)
 
-    @patch('source.command.move_video.MoveVideo._undo_make_dirs')
-    @patch('source.command.move_video.MoveVideo._move')
+    @patch('source.state.move_video.MoveVideo._undo_make_dirs')
+    @patch('source.state.move_video.MoveVideo._move')
     def test_undo(self, mock_move, mock_undo_make_dirs):
         # Arrange
         self.test_cmd.origin_dir = 'fake_path'
@@ -86,7 +86,7 @@ class TestMoveVideoCommand(unittest.TestCase):
         mock_move.assert_called_once_with('fake_path')
         mock_undo_make_dirs.assert_called_once()
 
-    @patch('source.command.move_video.dir_is_empty')
+    @patch('source.state.move_video.dir_is_empty')
     def test_undo_make_dirs(self, mock_dir_is_empty):
         # Arrange
         empty_dir = Mock()
@@ -112,7 +112,7 @@ class TestMoveVideoCommand(unittest.TestCase):
         not_empty_dir.rmdir.assert_not_called()
         doesnt_exist_dir.remdir.assert_not_called()
 
-    @patch('source.command.move_video.MoveVideo._validate_move')
+    @patch('source.state.move_video.MoveVideo._validate_move')
     def test_validate_exec(self, mock_validate_move):
         # Arrange
         self.vid.get_filename.return_value = 'video.file'
@@ -127,7 +127,7 @@ class TestMoveVideoCommand(unittest.TestCase):
         dest_path = Path('target dir') / 'video.file'
         mock_validate_move.assert_called_once_with(src_path, dest_path)
 
-    @patch('source.command.move_video.MoveVideo._validate_move')
+    @patch('source.state.move_video.MoveVideo._validate_move')
     def test_validate_undo(self, mock_validate_move):
         # Arrange
         self.vid.get_filename.return_value = 'video.file'
@@ -142,8 +142,8 @@ class TestMoveVideoCommand(unittest.TestCase):
         dest_path = Path('original dir') / 'video.file'
         mock_validate_move.assert_called_with(src_path, dest_path)
 
-    @patch('source.command.move_video.path_is_readable')
-    @patch('source.command.move_video.path_is_writable')
+    @patch('source.state.move_video.path_is_readable')
+    @patch('source.state.move_video.path_is_writable')
     def test_validate_move(self, mock_path_is_writable, mock_path_is_readable):
         # Notes: Mocks return True by default when used as a condition in an
         #        if statement. This unit test doesn't test the false branch

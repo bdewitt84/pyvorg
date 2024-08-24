@@ -3,7 +3,7 @@ import sys
 
 # Local imports
 from source.ui.cli import run
-from source.session.pyvorg_session import PyvorgSession
+from source.facade.pyvorg_session import PyvorgSession
 
 # Third-party packages
 

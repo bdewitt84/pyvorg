@@ -11,7 +11,7 @@ from unittest.mock import Mock
 from tempfile import TemporaryDirectory
 
 # Local imports
-from source.session.pyvorg_session import PyvorgSession
+from source.facade.pyvorg_session import PyvorgSession
 from tests.test_command.shared import TestCommand
 
 # Third-party Packages
