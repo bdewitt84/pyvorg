@@ -8,7 +8,7 @@ from typing import Optional, Type
 from types import ModuleType
 
 # Local imports
-from source.datafetchers.base_api import DataFetcher
+from source.datafetchers.base_fetcher import DataFetcher
 import source.datafetchers
 
 # Third-party plugins
@@ -29,7 +29,7 @@ def discover_api_modules(package: ModuleType) -> (str, Type):
         name: importlib.import_module(name)
         for _, name, _
         in modules
-        if '_api' in name
+        if '_plugin' in name
     }
 
 

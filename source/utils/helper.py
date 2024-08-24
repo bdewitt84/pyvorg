@@ -11,7 +11,7 @@ from pathlib import Path
 from typing import Callable
 
 # Local imports
-from source.datafetchers.base_api import DataFetcher
+from source.datafetchers.base_fetcher import DataFetcher
 from constants import DATA_PREF_ORDER
 
 # Third-party imports

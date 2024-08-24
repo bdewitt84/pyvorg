@@ -1,4 +1,4 @@
-# /source/datafetchers/movieposterdb_api.py
+# /source/datafetchers/movieposterdb_plugin.py
 
 # TODO: Implement
 #       https://api.movieposterdb.com/docs/#docs/documentation/
