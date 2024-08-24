@@ -106,7 +106,6 @@ class TestCollection(TestCase):
         self.assertIn('video_1_data', result.videos.keys())
         self.assertIn('video_2_data', result.videos.keys())
 
-
     @patch('source.collection.col.Collection.from_dict')
     def test_from_json(self, mock_from_dict):
         # Arrange
@@ -185,7 +184,7 @@ class TestCollection(TestCase):
         print(result)
 
         # Assert
-        mock_get_videos.assert_called_once_with(None)
+        mock_get_videos.assert_called_once()
         expected_result = {
             "hash_1": {"test key 1": "test data 1"},
             "hash_2": {"test key 2": "test data 2"}

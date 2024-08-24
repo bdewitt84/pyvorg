@@ -80,20 +80,19 @@ class Collection:
             if value not in videos
         }
 
-    def to_dict(self, filter_strings: str = None) -> dict:
-        filtered = self.get_videos(filter_strings)
+    def to_dict(self) -> dict:
         return {
             video.get_hash(): video.data
             for video
-            in filtered
+            in self.get_videos()
         }
 
     def to_graph(self):
         # TODO: Implement later
         pass
 
-    def to_json(self, filter_strings: str = None) -> str:
-        return json.dumps(self.to_dict(filter_strings),
+    def to_json(self) -> str:
+        return json.dumps(self.to_dict(),
                           indent=4,
                           skipkeys=True,
                           default=default_serializer)
