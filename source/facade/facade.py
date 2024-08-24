@@ -16,7 +16,7 @@ from state.col import Collection
 from state.combuffer import CommandBuffer
 
 from service import cmd_svc as cmdsvc,\
-                    configs_svc as cfg_svc,\
+                    config_svc as cfg_svc,\
                     video_svc as vidsvc,\
                     collection_svc as colsvc,\
                     plugin_svc as pluginsvc,\
