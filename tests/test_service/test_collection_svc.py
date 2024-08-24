@@ -1,4 +1,4 @@
-# tests/test_service/test_collectionservice.py
+# tests/test_service/test_collection_svc.py
 
 # Standard library
 from unittest import TestCase

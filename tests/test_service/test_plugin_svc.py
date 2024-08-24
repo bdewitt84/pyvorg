@@ -1,4 +1,4 @@
-# source/tests/test_service/test_pluginservice.py
+# source/tests/test_service/test_plugin_svc.py
 
 # Standard library
 import importlib
