@@ -1,4 +1,4 @@
-# source/service/configservice.py
+# source/service/configs_svc.py
 
 # Standard library
 import os

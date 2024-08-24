@@ -12,7 +12,7 @@ import logging
 
 # Local imports
 from state.command import Command
-from service.fileservice import \
+from service.file_svc import \
     dir_is_empty, \
     make_dir, \
     move_file, \

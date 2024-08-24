@@ -14,7 +14,7 @@ from pathlib import Path
 # Local imports
 from state.video import Video
 from source.utils.helper import default_serializer
-from service.fileservice import get_file_type
+from service.file_svc import get_file_type
 
 # Third-party packages
 # N/A
