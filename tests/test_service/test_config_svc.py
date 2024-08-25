@@ -16,7 +16,7 @@ import source.service.cmd_svc as cmd_svc
 # n/a
 
 
-def test_get_default_dst_tree():
+def test_get_default_organize_path():
     # Arrange
     # Act
     # Assert
