@@ -54,3 +54,44 @@ class TestOMDBAPI(TestCase):
 
         with self.assertRaises(requests.HTTPError):
             self.api.fetch_data(title='test title')
+
+    def test_get_name(self):
+        # TODO: Implement
+        # Arrange
+        # Act
+        # Assert
+        pass
+
+    def test_get_omdb_api_key(self):
+        # TODO: Implement
+        # Arrange
+        # Act
+        # Assert
+        pass
+
+    def test_get_optional_params(self):
+        # TODO: Implement
+        # Arrange
+        # Act
+        # Assert
+        pass
+
+    def test_get_required_params(self):
+        # TODO: Implement
+        # Arrange
+        # Act
+        # Assert
+        pass
+
+    def test_construct_params(self):
+        # TODO: Implement
+        # Arrange
+        # Act
+        # Assert
+        pass
+
+    def test_query_omdb(self):
+        # Arrange
+        # Act
+        # Assert
+        pass
