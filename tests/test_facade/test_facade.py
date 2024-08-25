@@ -24,7 +24,14 @@ class TestSessionManager(TestCase):
     def tearDown(self) -> None:
         self.temp_dir.cleanup()
 
-    def test_commit_transaction(self):
+    def test_clear_staged_operations(self):
+        # TODO: Implement
+        # Arrange
+        # Act
+        # Assert
+        pass
+
+    def test_commit_staged_operations(self):
         # Arrange
         test_cmd_1 = Mock()
         test_cmd_1.exec.return_value = None
@@ -44,26 +51,7 @@ class TestSessionManager(TestCase):
     def test_export_collection_metadata(self):
         pass
 
-    # def test_pickle_session(self):
-    #     # Arrange
-    #     filename = 'test.pickle'
-    #     path = os.path.join(self.temp_dir.name, filename)
-    #
-    #     # Act
-    #     self.session.pickle_session(path)
-    #
-    #     # Assert
-    #     with open(path, 'rb') as file:
-    #         result = pickle.load(file)
-    #
-    #     video.assertTrue('collection' in result.__dict__)
-    #     video.assertTrue('command_buffer' in result.__dict__)
-    #     video.assertTrue('api_manager' in result.__dict__)
-    #     video.assertEqual(type(result.collection), source.collection.collection.Collection)
-    #     video.assertEqual(type(result.command_buffer), source.command.combuffer.CommandBuffer)
-    #     video.assertEqual(type(result.api_manager), source.api.api_manager.APIManager)
-
-    def test_preview_transaction(self):
+    def test_preview_of_staged_operations(self):
         # Arrange
         test_cmd_1 = Mock()
         test_cmd_1.__str__ = lambda x: 'Test cmd 1'
@@ -80,32 +68,29 @@ class TestSessionManager(TestCase):
         self.assertTrue('Test cmd 1' in result)
         self.assertTrue('Test cmd 2' in result)
 
-    def test_scan_path(self):
+    def test_import_collections_metadata(self):
+        # TODO: Implement
+        # Arrange
+        # Act
+        # Assert
+        pass
+
+    def test_scan_files_in_path(self):
+        # TODO: Implement
+        # Arrange
+        # Act
+        # Assert
         pass
 
     def test_stage_organize_video_files(self):
+        # TODO: Implement
+        # Arrange
+        # Act
+        # Assert
         pass
 
     def test_stage_update_api_metadata(self):
         pass
-
-    # def test_unpickle_session(self):
-    #     # Arrange
-    #     filename = 'test.pickle'
-    #     path = os.path.join(self.temp_dir.name, filename)
-    #     with open(path, 'wb') as file:
-    #         pickle.dump(self.session, file)
-    #
-    #     # Act
-    #     result = SessionManager.unpickle_session(path)
-    #
-    #     # Assert
-    #     video.assertTrue('collection' in result.__dict__)
-    #     video.assertTrue('command_buffer' in result.__dict__)
-    #     video.assertTrue('api_manager' in result.__dict__)
-    #     video.assertEqual(type(result.collection), source.collection.collection.Collection)
-    #     video.assertEqual(type(result.command_buffer), source.command.combuffer.CommandBuffer)
-    #     video.assertEqual(type(result.api_manager), source.api.api_manager.APIManager)
 
     def test_undo_transaction(self):
         # Arrange
