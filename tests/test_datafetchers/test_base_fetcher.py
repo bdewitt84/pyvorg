@@ -14,66 +14,52 @@ from source.datafetchers.base_fetcher import DataFetcher
 # Third-party packages
 
 
-class TestGuessitAPI(TestCase):
+class TestDataFetcher(TestCase):
 
     def setUp(self) -> None:
-        pass
+        class SubClass(DataFetcher):
+            def __init__(self):
+                super().__init__()
+
+            def fetch_data(self, **kwargs):
+                super().fetch_data()
+
+            def get_optional_params(self):
+                super().get_optional_params()
+
+            def get_required_params(self):
+                super().get_required_params()
+
+        self.SubClass = SubClass
+        self.subclass = SubClass()
 
     def tearDown(self) -> None:
         pass
 
     def test_fetch_data(self):
-        # TODO: Implement
         # Arrange
         # Act
         # Assert
-        pass
-
-    def test_from_dict(self):
-        # TODO: Implement
-        # Arrange
-        # Act
-        # Assert
-        pass
-
-    def test_from_json(self):
-        # TODO: Implement
-        # Arrange
-        # Act
-        # Assert
-        pass
+        with self.assertRaises(NotImplementedError):
+            self.subclass.fetch_data()
 
     def test_get_name(self):
-        # TODO: Implement
         # Arrange
         # Act
+        result = self.subclass.get_name()
         # Assert
-        pass
+        self.assertEqual('SubClass', result)
 
     def test_get_optional_params(self):
-        # TODO: Implement
         # Arrange
         # Act
         # Assert
-        pass
+        with self.assertRaises(NotImplementedError):
+            self.subclass.get_optional_params()
 
     def test_get_required_params(self):
-        # TODO: Implement
         # Arrange
         # Act
         # Assert
-        pass
-
-    def test_to_dict(self):
-        # TODO: Implement
-        # Arrange
-        # Act
-        # Assert
-        pass
-
-    def test_to_json(self):
-        # TODO: Implement
-        # Arrange
-        # Act
-        # Assert
-        pass
+        with self.assertRaises(NotImplementedError):
+            self.subclass.get_required_params()
