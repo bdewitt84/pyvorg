@@ -48,6 +48,41 @@ class TestHelper(TestCase):
         result = [file for file in target_path.iterdir()]
         self.assertEqual(expected, result)
 
+    def test_default_serializer(self):
+        # TODO: Implement
+        # Arrange
+        # Act
+        # Assert
+        pass
+
+    def test_fill_kwargs_from_metadata(self):
+        # TODO: Implement
+        # Arrange
+        # Act
+        # Assert
+        pass
+
+    def test_find_missing_params(self):
+        # TODO: Implement
+        # Arrange
+        # Act
+        # Assert
+        pass
+
+    def test_get_preferred_source(self):
+        # TODO: Implement
+        # Arrange
+        # Act
+        # Assert
+        pass
+
+    def test_logger_init(self):
+        # TODO: Implement
+        # Arrange
+        # Act
+        # Assert
+        pass
+
     def test_timestamp_generate(self):
         # TODO: Implement
         pass
@@ -60,3 +95,10 @@ class TestHelper(TestCase):
         # Act and assert
         self.assertTrue(timestamp_validate(valid_timestamp))
         self.assertFalse(timestamp_validate(invalid_timestamp))
+
+    def test_update_api_data(self):
+        # TODO: Implement
+        # Arrange
+        # Act
+        # Assert
+        pass
