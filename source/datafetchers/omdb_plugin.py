@@ -41,9 +41,6 @@ class OMDBFetcher(DataFetcher):
 
         This class provides methods to fetch video data from the OMDBFetcher API based on various parameters
         such as title, year, plot type, and return format.
-
-        Attributes:
-            api_url (str): The base URL for the OMDBFetcher API.
     """
     def __init__(self):
         """
@@ -53,7 +50,7 @@ class OMDBFetcher(DataFetcher):
                 ValueError: If the API key is not set in the environment variables.
         """
         super().__init__()
-        self.api_url = 'https://www.omdbapi.com'
+        # self.api_url = 'https://www.omdbapi.com'
         if not self.get_omdb_api_key():
             raise ValueError(f"No API key set. Add '{ENV_OMDB_KEY} = [your omdb key]' to {ENV_FILE_PATH}.")
 
@@ -83,6 +80,10 @@ class OMDBFetcher(DataFetcher):
         data = self._query_omdb(params)
 
         return data
+
+    @staticmethod
+    def get_api_url():
+        return 'https://www.omdbapi.com'
 
     @staticmethod
     def get_omdb_api_key():
@@ -157,7 +158,7 @@ class OMDBFetcher(DataFetcher):
             :raises:
                 requests.HTTPError: If the request fails due to client or server errors.
         """
-        response = requests.get(self.api_url, params=params)
+        response = requests.get(self.get_api_url(), params=params)
 
         title = params.get(P_TITLE)
 
