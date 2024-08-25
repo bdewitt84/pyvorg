@@ -44,3 +44,6 @@ class TestUI(TestCase):
 
     def test_parse_args(self):
         pass
+
+    def test_run(self):
+        pass
