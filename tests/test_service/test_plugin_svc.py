@@ -110,3 +110,17 @@ class TestPluginService(TestCase):
         self.assertIn('plugin_class', result.keys())
         self.assertNotIn(NotAPlugin, result.values())
         self.assertNotIn('not_a_plugin_class', result.keys())
+
+    def test_get_plugin_instance(self):
+        # TODO: Implement
+        # Arrange
+        # Act
+        # Assert
+        pass
+
+    def test_get_required_params(self):
+        # TODO: Implement
+        # Arrange
+        # Act
+        # Assert
+        pass
