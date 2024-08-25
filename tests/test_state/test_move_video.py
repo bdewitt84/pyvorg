@@ -59,19 +59,33 @@ class TestMoveVideoCommand(unittest.TestCase):
         self.assertEqual(self.test_cmd.origin_dir, self.src_dir)
         mock_move.assert_called_once_with(self.dest_dir)
 
-    @patch('source.state.move_video.move_file')
-    @patch('source.state.move_video.MoveVideo._make_dirs')
-    def test_move(self, mock_make_dirs, mock_move_file):
+    def test_from_dict(self):
+        # TODO: Implement
         # Arrange
-        dest_path = self.dest_dir / self.filename
-
         # Act
-        self.test_cmd._move(self.dest_dir)
-
         # Assert
-        mock_make_dirs.assert_called_once_with(self.dest_dir)
-        mock_move_file.assert_called_once_with(self.vid.get_path(), dest_path)
-        self.vid.update_file_data.assert_called_once_with(dest_path)
+        pass
+
+    def test_from_json(self):
+        # TODO: Implement
+        # Arrange
+        # Act
+        # Assert
+        pass
+
+    def test_to_dict(self):
+        # TODO: Implement
+        # Arrange
+        # Act
+        # Assert
+        pass
+
+    def test_to_json(self):
+        # TODO: Implement
+        # Arrange
+        # Act
+        # Assert
+        pass
 
     @patch('source.state.move_video.MoveVideo._undo_make_dirs')
     @patch('source.state.move_video.MoveVideo._move')
@@ -85,32 +99,6 @@ class TestMoveVideoCommand(unittest.TestCase):
         # Assert
         mock_move.assert_called_once_with('fake_path')
         mock_undo_make_dirs.assert_called_once()
-
-    @patch('source.state.move_video.dir_is_empty')
-    def test_undo_make_dirs(self, mock_dir_is_empty):
-        # Arrange
-        empty_dir = Mock()
-        not_empty_dir = Mock()
-        doesnt_exist_dir = Mock()
-
-        empty_dir.exists.return_value = True
-        not_empty_dir.exists.return_value = True
-        doesnt_exist_dir.exists.return_value = True
-
-        empty_dir.empty = True
-        not_empty_dir.empty = False
-
-        mock_dir_is_empty.side_effect = lambda x: True if x.empty else False
-
-        self.test_cmd.created_dirs = [empty_dir, not_empty_dir, doesnt_exist_dir]
-
-        # Act
-        self.test_cmd._undo_make_dirs()
-
-        # Assert
-        empty_dir.rmdir.assert_called_once()
-        not_empty_dir.rmdir.assert_not_called()
-        doesnt_exist_dir.remdir.assert_not_called()
 
     @patch('source.state.move_video.MoveVideo._validate_move')
     def test_validate_exec(self, mock_validate_move):
@@ -141,6 +129,46 @@ class TestMoveVideoCommand(unittest.TestCase):
         src_path = Path('current dir') / 'video.file'
         dest_path = Path('original dir') / 'video.file'
         mock_validate_move.assert_called_with(src_path, dest_path)
+
+    @patch('source.state.move_video.move_file')
+    @patch('source.state.move_video.MoveVideo._make_dirs')
+    def test_move(self, mock_make_dirs, mock_move_file):
+        # Arrange
+        dest_path = self.dest_dir / self.filename
+
+        # Act
+        self.test_cmd._move(self.dest_dir)
+
+        # Assert
+        mock_make_dirs.assert_called_once_with(self.dest_dir)
+        mock_move_file.assert_called_once_with(self.vid.get_path(), dest_path)
+        self.vid.update_file_data.assert_called_once_with(dest_path)
+
+    @patch('source.state.move_video.dir_is_empty')
+    def test_undo_make_dirs(self, mock_dir_is_empty):
+        # Arrange
+        empty_dir = Mock()
+        not_empty_dir = Mock()
+        doesnt_exist_dir = Mock()
+
+        empty_dir.exists.return_value = True
+        not_empty_dir.exists.return_value = True
+        doesnt_exist_dir.exists.return_value = True
+
+        empty_dir.empty = True
+        not_empty_dir.empty = False
+
+        mock_dir_is_empty.side_effect = lambda x: True if x.empty else False
+
+        self.test_cmd.created_dirs = [empty_dir, not_empty_dir, doesnt_exist_dir]
+
+        # Act
+        self.test_cmd._undo_make_dirs()
+
+        # Assert
+        empty_dir.rmdir.assert_called_once()
+        not_empty_dir.rmdir.assert_not_called()
+        doesnt_exist_dir.remdir.assert_not_called()
 
     @patch('source.state.move_video.path_is_readable')
     @patch('source.state.move_video.path_is_writable')
