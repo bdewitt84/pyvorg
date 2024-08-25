@@ -11,11 +11,8 @@ from abc import ABC, abstractmethod
 
 # class DataFetcher(ABC, metaclass=MetaAPI):
 class DataFetcher(ABC):
-    def __init__(self, name=None):
-        if name is None:
-            self.name = self.__class__.__name__
-        else:
-            self.name = name
+    def __init__(self):
+        pass
 
     @abstractmethod
     def fetch_data(self, **kwargs) -> dict:
@@ -30,7 +27,7 @@ class DataFetcher(ABC):
         return cls.from_dict(json.loads(j))
 
     def get_name(self):
-        return self.name
+        return self.__class__.__name__
 
     @abstractmethod
     def get_optional_params(self) -> list[str]:

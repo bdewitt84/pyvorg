@@ -22,8 +22,8 @@ from source.datafetchers.base_fetcher import DataFetcher
 
 
 class GuessitAPI(DataFetcher):
-    def __init__(self, name=None):
-        super().__init__(name)
+    def __init__(self):
+        super().__init__()
 
     def fetch_data(self, **kwargs):
         if 'filename' in kwargs.keys():

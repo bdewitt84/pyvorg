@@ -45,14 +45,14 @@ class OMDBAPI(DataFetcher):
         Attributes:
             api_url (str): The base URL for the OMDB API.
     """
-    def __init__(self, name='omdb'):
+    def __init__(self):
         """
             Initializes the OMDBAPI class with the base URL and API key.
 
             Raises:
                 ValueError: If the API key is not set in the environment variables.
         """
-        super().__init__(name)
+        super().__init__()
         self.api_url = 'https://www.omdbapi.com'
         if not self.get_omdb_api_key():
             raise ValueError(f"No API key set. Add '{ENV_OMDB_KEY} = [your omdb key]' to {ENV_FILE_PATH}.")
@@ -83,9 +83,6 @@ class OMDBAPI(DataFetcher):
         data = self._query_omdb(params)
 
         return data
-
-    def get_name(self):
-        return 'omdb'
 
     @staticmethod
     def get_omdb_api_key():
