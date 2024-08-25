@@ -10,7 +10,7 @@ from unittest.mock import Mock
 
 # Local imports
 from state.combuffer import *
-from test_state.shared import TestCommand
+from test_state.shared import FauxCmd
 
 
 class TestCommandBuffer(unittest.TestCase):
@@ -21,7 +21,7 @@ class TestCommandBuffer(unittest.TestCase):
         pass
 
     def test_add_command_valid(self):
-        cmd = TestCommand()
+        cmd = FauxCmd()
         self.buffer.add_command(cmd)
         self.assertTrue(cmd in self.buffer.cmd_buffer)
 
@@ -45,9 +45,9 @@ class TestCommandBuffer(unittest.TestCase):
         pass
 
     def test_execute_cmd_buffer(self):
-        cmd1 = TestCommand()
-        cmd2 = TestCommand()
-        cmd3 = TestCommand()
+        cmd1 = FauxCmd()
+        cmd2 = FauxCmd()
+        cmd3 = FauxCmd()
         self.buffer.cmd_buffer.append(cmd1)
         self.buffer.cmd_buffer.append(cmd2)
         self.buffer.cmd_buffer.append(cmd3)
@@ -60,7 +60,7 @@ class TestCommandBuffer(unittest.TestCase):
         self.assertTrue(self.buffer.undo_buffer == [cmd1, cmd2, cmd3])
 
     def test_exec_command(self):
-        cmd = TestCommand()
+        cmd = FauxCmd()
         self.buffer.cmd_buffer.append(cmd)
 
         self.buffer.exec_command()
@@ -70,9 +70,9 @@ class TestCommandBuffer(unittest.TestCase):
 
     def test_execute_undo_buffer(self):
         # Arrange
-        cmd1 = TestCommand()
-        cmd2 = TestCommand()
-        cmd3 = TestCommand()
+        cmd1 = FauxCmd()
+        cmd2 = FauxCmd()
+        cmd3 = FauxCmd()
         self.buffer.undo_buffer.append(cmd1)
         self.buffer.undo_buffer.append(cmd2)
         self.buffer.undo_buffer.append(cmd3)
@@ -103,7 +103,7 @@ class TestCommandBuffer(unittest.TestCase):
         pass
 
     def test_undo_cmd(self):
-        cmd = TestCommand()
+        cmd = FauxCmd()
         self.buffer.undo_buffer.append(cmd)
 
         self.buffer.undo_cmd()

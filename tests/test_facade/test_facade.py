@@ -11,7 +11,7 @@ from tempfile import TemporaryDirectory
 
 # Local imports
 from source.facade.facade import Facade
-from test_state.shared import TestCommand
+from test_state.shared import FauxCmd
 
 # Third-party Packages
 
@@ -94,8 +94,8 @@ class TestSessionManager(TestCase):
 
     def test_undo_transaction(self):
         # Arrange
-        test_cmd_1 = TestCommand()
-        test_cmd_2 = TestCommand()
+        test_cmd_1 = FauxCmd()
+        test_cmd_2 = FauxCmd()
 
         self.session.command_buffer.undo_buffer.append(test_cmd_1)
         self.session.command_buffer.undo_buffer.append(test_cmd_2)

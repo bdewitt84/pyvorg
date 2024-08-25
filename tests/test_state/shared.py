@@ -12,7 +12,7 @@ from state.command import Command
 # Third-party packages
 
 
-class TestCommand(Command):
+class FauxCmd(Command):
 
     def __init__(self):
         self.exec_is_valid_called = False
