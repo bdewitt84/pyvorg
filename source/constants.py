@@ -4,12 +4,15 @@
     Constants used across all packages, mostly to standardize JSON entries.
     Also included are a list of valid video extensions.
 """
+
+# TODO: Consider using enums
+
 APP_NAME = 'Pyvorg'
 
 # Environment variable constants
 ENV_FILE_PATH = './config.env'
 ENV_OMDB_KEY = 'OMDB_KEY'
-ENV_DEST_PATH = 'DEST_PATH'
+ENV_ORGANIZE_PATH = 'ORGANIZE_PATH'
 
 # String constants
 FILE_DATA = 'file_data'
@@ -37,7 +40,8 @@ FORMAT_SPECIFIERS = {
     '%year': ('year', 'n.d.')
 }
 
-VIDEO_EXTENSIONS = (            # TODO: Should this be loaded from an external file? Consider keeping this as a default
+# TODO: This be loaded from an external file. Consider keeping this as a default
+VIDEO_EXTENSIONS = (
         '.3g2', '.3gp', '.amv', '.asf', '.avi', '.divx', '.drc', '.f4v', '.flv', '.gvi',
         '.gxf', '.ismv', '.iso', '.m1v', '.m2v', '.m2ts', '.m4v', '.mkv', '.mov', '.mp2',
         '.mp4', '.mp4v', '.mpe', '.mpeg', '.mpeg1', '.mpeg2', '.mpeg4', '.mpg', '.mpv2',

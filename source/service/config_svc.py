@@ -7,14 +7,14 @@ import platform
 
 # Local imports
 from constants import APP_NAME,\
-                      ENV_DEST_PATH
+                      ENV_ORGANIZE_PATH
 
 # Third-party packages
 # n\a
 
 
-def get_default_dst_tree():
-    return os.getenv(ENV_DEST_PATH)
+def get_default_organize_path():
+    return os.getenv(ENV_ORGANIZE_PATH)
 
 
 def get_default_format_str():
