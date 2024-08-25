@@ -44,6 +44,13 @@ class TestVideo(TestCase):
     def tearDown(self) -> None:
         self.temp_dir.cleanup()
 
+    def test_append_available_sources(self):
+        # TODO: Implement
+        # Arrange
+        # Act
+        # Assert
+        pass
+
     def test_from_dict(self):
         # Arrange
         video_dict = {
@@ -79,12 +86,6 @@ class TestVideo(TestCase):
 
         # Assert
         self.assertEqual(result.get_source_data('test_source', 'source_key'), 'source_value')
-
-    # TODO: Refactored to service layer
-    # def test_generate_dir_name(self):
-    #     self.test_vid.data.get('user_data').update({'title': 'test title', 'year': '1970'})
-    #     result = self.test_vid.generate_dir_name('%title (%year)')
-    #     self.assertEqual('test title (1970)', result)
 
     def test_get_filename(self):
         result = self.test_vid.get_filename()
@@ -248,23 +249,6 @@ class TestVideo(TestCase):
         # Ugly formatting is necessary for the equality check
         expected_json = f"""{{"user_data": {{}}, "file_data": {{"path": "{expected_path}", "root": "{expected_root}", "filename": "{self.temp_vid_filename}", "hash": "916f0027a575074ce72a331777c3478d6513f786a591bd892da1a577bf2335f9", "timestamp": "1970-01-01 00:00:01"}}}}"""
         self.assertEqual(expected_json, result)
-
-    # def test_update_api_data(self):
-    #     # Arrange
-    #     self.test_vid.data = {USER_DATA: {FILENAME: 'test_filename'}}
-    #     api = Mock()
-    #     api_name = 'test_api'
-    #     api.get_name.return_value = api_name
-    #     datafetchers.get_required_params.return_value = ['filename']
-    #     expected_data = {'test_key': 'test_value'}
-    #     api.fetch_data.return_value = expected_data
-    #
-    #     # Act
-    #     self.test_vid.update_api_data(api)
-    #
-    #     # Assert
-    #     result = self.test_vid.data.get(api_name)
-    #     self.assertEqual(expected_data, result)
 
     @patch('source.state.video.hash_sha256')
     @patch('source.state.video.timestamp_generate')
