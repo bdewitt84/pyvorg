@@ -1,12 +1,12 @@
 # source/datafetchers/omdb_plugin.py
 
 """
-    API interface for OMDB (Open Movie Database)
+    API interface for OMDBFetcher (Open Movie Database)
 
-    This module defines the OMDBAPI class, which provides methods for fetching video data
-    from the OMDB API.
+    This module defines the OMDBFetcher class, which provides methods for fetching video data
+    from the OMDBFetcher API.
 
-    OMDB documentation:
+    OMDBFetcher documentation:
         https://www.omdbapi.com/
 """
 
@@ -21,7 +21,7 @@ from source.datafetchers.base_fetcher import DataFetcher
 # Third-party packages
 import requests
 
-# OMDB parameter constants
+# OMDBFetcher parameter constants
 P_TITLE = 't'
 P_YEAR = 'y'
 P_PLOT = 'plot'
@@ -35,19 +35,19 @@ K_PLOT = 'plot'
 K_RETURN = 'rtype'
 
 
-class OMDBAPI(DataFetcher):
+class OMDBFetcher(DataFetcher):
     """
-        A class to interact with the OMDB API.
+        A class to interact with the OMDBFetcher API.
 
-        This class provides methods to fetch video data from the OMDB API based on various parameters
+        This class provides methods to fetch video data from the OMDBFetcher API based on various parameters
         such as title, year, plot type, and return format.
 
         Attributes:
-            api_url (str): The base URL for the OMDB API.
+            api_url (str): The base URL for the OMDBFetcher API.
     """
     def __init__(self):
         """
-            Initializes the OMDBAPI class with the base URL and API key.
+            Initializes the OMDBFetcher class with the base URL and API key.
 
             Raises:
                 ValueError: If the API key is not set in the environment variables.
@@ -59,9 +59,9 @@ class OMDBAPI(DataFetcher):
 
     def fetch_data(self, **kwargs):
         """
-            Fetches video data from the OMDB API based on provided parameters.
+            Fetches video data from the OMDBFetcher API based on provided parameters.
 
-            This method constructs the appropriate query parameters and makes a request to the OMDB API.
+            This method constructs the appropriate query parameters and makes a request to the OMDBFetcher API.
             It handles the response and returns the video data if the request is successful.
 
             :param kwargs:
@@ -72,7 +72,7 @@ class OMDBAPI(DataFetcher):
                     rtype (str): The return format, either 'json' or 'xml'. Defaults to 'json'. (optional)
 
             :returns:
-                dict: The video data retrieved from the OMDB API.
+                dict: The video data retrieved from the OMDBFetcher API.
 
             :raises:
                 ValueError: If required parameters are missing or invalid.
@@ -96,7 +96,7 @@ class OMDBAPI(DataFetcher):
 
     def _construct_params(self, kwargs):
         """
-            Constructs the query parameters for the OMDB API request.
+            Constructs the query parameters for the OMDBFetcher API request.
 
             :param kwargs:
                 kwargs (dict): The keyword arguments for constructing query parameters.
@@ -115,7 +115,7 @@ class OMDBAPI(DataFetcher):
             title = kwargs.get(K_TITLE)
             params[P_TITLE] = title
         else:
-            raise ValueError(f"A title is required to query OMDB. Add '{K_TITLE}=[your title]' to the parameters of "
+            raise ValueError(f"A title is required to query OMDBFetcher. Add '{K_TITLE}=[your title]' to the parameters of "
                              f"fetch_data(). Example: fetch_data({K_TITLE}='Alien')")
 
         if K_YEAR in kwargs.keys():
@@ -126,7 +126,7 @@ class OMDBAPI(DataFetcher):
             if val == 'full':
                 params[P_PLOT] = val
             elif val == 'short':
-                # OMDB defaults to short, so we just omit parameter 'plot'. In fact, I'm not sure 'short' is even a
+                # OMDBFetcher defaults to short, so we just omit parameter 'plot'. In fact, I'm not sure 'short' is even a
                 # valid value for this parameter.
                 pass
             else:
@@ -137,7 +137,7 @@ class OMDBAPI(DataFetcher):
         if val in ['json', 'xml']:
             params[P_RETURN] = val
         elif val is None:
-            # OMDB defaults to JSON, so we just omit parameter 'r'.
+            # OMDBFetcher defaults to JSON, so we just omit parameter 'r'.
             pass
         else:
             raise ValueError(f"'{val}' is not a valid parameter for '{K_RETURN}'. Valid parameters are 'json' or 'xml'")
@@ -146,13 +146,13 @@ class OMDBAPI(DataFetcher):
 
     def _query_omdb(self, params):
         """
-            Makes a request to the OMDB API and handles the response.
+            Makes a request to the OMDBFetcher API and handles the response.
 
             :param params:
-                params (dict): The query parameters for the OMDB API request.
+                params (dict): The query parameters for the OMDBFetcher API request.
 
             :returns:
-                dict: The video data retrieved from the OMDB API.
+                dict: The video data retrieved from the OMDBFetcher API.
 
             :raises:
                 requests.HTTPError: If the request fails due to client or server errors.
@@ -165,9 +165,9 @@ class OMDBAPI(DataFetcher):
         if response.status_code == 200:
             data = response.json()
             if response.json()['Response'] == 'True':
-                logging.info(f"OMDB data retrieved for '{title}'")
+                logging.info(f"OMDBFetcher data retrieved for '{title}'")
             else:
-                logging.warning(f"Error requesting OMDB videos for '{title}': {response.json()['Error']}")
+                logging.warning(f"Error requesting OMDBFetcher videos for '{title}': {response.json()['Error']}")
 
         elif response.status_code == 429:
             msg = f"Status code {response.json()['Error']}: Rate limit exceeded."
