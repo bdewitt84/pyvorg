@@ -14,6 +14,48 @@ from source.facade.facade import Facade
 # n/a
 
 
+def handle_parsed_args(parsed_args: Namespace, session: Facade) -> None:
+    if parsed_args.command == 'clear':
+        print(f"Clearing all transactions from command buffer")
+        session.clear_staged_operations()
+
+    if parsed_args.command == 'commit':
+        print("Committing staged operations")
+        session.commit_staged_operations()
+
+    elif parsed_args.command == 'export':
+        print(f"Exporting collection data to '{parsed_args.path}'")
+        session.export_collection_metadata(parsed_args.path)
+
+    elif parsed_args.command == 'fetch':
+        print(f"Staging fetch from {parsed_args.plugins}")
+        session.stage_update_api_metadata(parsed_args.plugins, parsed_args.filters)
+
+    elif parsed_args.command == 'organize':
+        print(f"Staging files for organization at '{parsed_args.path}'")
+        session.stage_organize_video_files(parsed_args.dest_path, parsed_args.format_str, parsed_args.filters)
+
+    elif parsed_args.command == 'profile':
+        print(f"Switching profile to {parsed_args.name}")
+        # facade.set_profile(parsed_args.name)
+
+    elif parsed_args.command == 'scan':
+        print(f"Scanning '{parsed_args.path}'")
+        session.scan_files_in_path(parsed_args.path)
+
+    elif parsed_args.command == 'undo':
+        print(f"Undoing last commit")
+        session.undo_transaction()
+
+    elif parsed_args.command == 'view':
+        print(f"Viewing staged operations")
+        print(session.get_preview_of_staged_operations())
+
+    else:
+        print(f"Unrecognized command. Use -h or --help to see list of commands. Use <command> -h to see help specific "
+              f"to the command.")
+
+
 def parse_args(args):
 
     usage_help = 'usage message for CLI'
@@ -129,48 +171,6 @@ def parse_args(args):
         help=view_help)
 
     return parser.parse_args(args)
-
-
-def handle_parsed_args(parsed_args: Namespace, session: Facade) -> None:
-    if parsed_args.command == 'clear':
-        print(f"Clearing all transactions from command buffer")
-        session.clear_staged_operations()
-
-    if parsed_args.command == 'commit':
-        print("Committing staged operations")
-        session.commit_staged_operations()
-
-    elif parsed_args.command == 'export':
-        print(f"Exporting collection data to '{parsed_args.path}'")
-        session.export_collection_metadata(parsed_args.path)
-
-    elif parsed_args.command == 'fetch':
-        print(f"Staging fetch from {parsed_args.plugins}")
-        session.stage_update_api_metadata(parsed_args.plugins, parsed_args.filters)
-
-    elif parsed_args.command == 'organize':
-        print(f"Staging files for organization at '{parsed_args.path}'")
-        session.stage_organize_video_files(parsed_args.dest_path, parsed_args.format_str, parsed_args.filters)
-
-    elif parsed_args.command == 'profile':
-        print(f"Switching profile to {parsed_args.name}")
-        # facade.set_profile(parsed_args.name)
-
-    elif parsed_args.command == 'scan':
-        print(f"Scanning '{parsed_args.path}'")
-        session.scan_files_in_path(parsed_args.path)
-
-    elif parsed_args.command == 'undo':
-        print(f"Undoing last commit")
-        session.undo_transaction()
-
-    elif parsed_args.command == 'view':
-        print(f"Viewing staged operations")
-        print(session.get_preview_of_staged_operations())
-
-    else:
-        print(f"Unrecognized command. Use -h or --help to see list of commands. Use <command> -h to see help specific "
-              f"to the command.")
 
 
 def run(args: list[str], session: Facade):
