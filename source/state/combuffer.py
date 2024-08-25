@@ -19,16 +19,35 @@ class CommandBuffer:
         self.cmd_buffer = deque()
         self.undo_buffer = []
 
+    def add_command(self, cmd: Command) -> None:
+        if not isinstance(cmd, Command):
+            raise ValueError("Only objects with type <Command> may be added to the command buffer.")
+        self.cmd_buffer.append(cmd)
+
     def clear_exec_buffer(self):
         self.cmd_buffer.clear()
 
     def clear_undo_buffer(self):
         self.undo_buffer.clear()
 
+    def execute_cmd_buffer(self):
+        if self.cmd_buffer:
+            while self.cmd_buffer:
+                self.exec_command()
+        else:
+            raise IndexError("Cannot execute; command buffer is empty.\n")
+
     def exec_command(self):
         cmd = self.cmd_buffer.popleft()
         cmd.exec()
         self.undo_buffer.append(cmd)
+
+    def execute_undo_buffer(self):
+        if self.undo_buffer:
+            while self.undo_buffer:
+                self.undo_cmd()
+        else:
+            raise IndexError("Cannot undo; undo buffer is empty.\n")
 
     def from_dict(self):
         # TODO: implement
@@ -38,10 +57,9 @@ class CommandBuffer:
         # TODO: implement
         pass
 
-    def add_command(self, cmd: Command) -> None:
-        if not isinstance(cmd, Command):
-            raise ValueError("Only objects with type <Command> may be added to the command buffer.")
-        self.cmd_buffer.append(cmd)
+    def preview_buffer(self):
+        for cmd in self.cmd_buffer:
+            print(cmd)
 
     def undo_cmd(self):
         if self.undo_buffer:
@@ -65,24 +83,6 @@ class CommandBuffer:
                 cmd.validate_undo()
         else:
             print('Nothing to validate, undo_buffer is empty.\n')
-
-    def execute_cmd_buffer(self):
-        if self.cmd_buffer:
-            while self.cmd_buffer:
-                self.exec_command()
-        else:
-            raise IndexError("Cannot execute; command buffer is empty.\n")
-
-    def execute_undo_buffer(self):
-        if self.undo_buffer:
-            while self.undo_buffer:
-                self.undo_cmd()
-        else:
-            raise IndexError("Cannot undo; undo buffer is empty.\n")
-
-    def preview_buffer(self):
-        for cmd in self.cmd_buffer:
-            print(cmd)
 
     def to_dict(self):
         # TODO: Implement
