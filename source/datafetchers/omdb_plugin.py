@@ -97,8 +97,7 @@ class OMDBFetcher(DataFetcher):
 
     def _construct_params(self, kwargs):
         """
-            Constructs the query parameters for the OMDBFetcher API request.
-
+            Constructs the query parameters for the OMDBFetcher API request
             :param kwargs:
                 kwargs (dict): The keyword arguments for constructing query parameters.
 
@@ -116,8 +115,8 @@ class OMDBFetcher(DataFetcher):
             title = kwargs.get(K_TITLE)
             params[P_TITLE] = title
         else:
-            raise ValueError(f"A title is required to query OMDBFetcher. Add '{K_TITLE}=[your title]' to the parameters of "
-                             f"fetch_data(). Example: fetch_data({K_TITLE}='Alien')")
+            raise ValueError(f"A title is required to query OMDBFetcher. Add '{K_TITLE}=[your title]' to the "
+                             f"parameters of fetch_data(). Example: fetch_data({K_TITLE}='Alien')")
 
         if K_YEAR in kwargs.keys():
             params[P_YEAR] = kwargs.get(K_YEAR)
@@ -127,8 +126,8 @@ class OMDBFetcher(DataFetcher):
             if val == 'full':
                 params[P_PLOT] = val
             elif val == 'short':
-                # OMDBFetcher defaults to short, so we just omit parameter 'plot'. In fact, I'm not sure 'short' is even a
-                # valid value for this parameter.
+                # OMDBFetcher defaults to short, so we just omit parameter 'plot'. In fact, I'm not sure 'short' is even
+                # a valid value for this parameter.
                 pass
             else:
                 raise ValueError(f"'{val}' is not a valid parameter for '{K_PLOT}'. Valid parameters are 'full' or "
@@ -147,8 +146,7 @@ class OMDBFetcher(DataFetcher):
 
     def _query_omdb(self, params):
         """
-            Makes a request to the OMDBFetcher API and handles the response.
-
+            Makes a request to the OMDBFetcher API and handles the response
             :param params:
                 params (dict): The query parameters for the OMDBFetcher API request.
 
