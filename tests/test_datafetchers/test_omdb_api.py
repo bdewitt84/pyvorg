@@ -9,7 +9,7 @@ from unittest import TestCase
 from unittest.mock import Mock, patch
 
 # Local imports
-from source.datafetchers.omdb_plugin import OMDBAPI
+from source.datafetchers.omdb_plugin import OMDBFetcher
 
 # Third-party packages
 import requests
@@ -18,7 +18,7 @@ import requests
 class TestOMDBAPI(TestCase):
     def setUp(self) -> None:
         self.mock_response = Mock()
-        self.api = OMDBAPI()
+        self.api = OMDBFetcher()
 
     def tearDown(self) -> None:
         pass
