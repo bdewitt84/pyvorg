@@ -25,6 +25,12 @@ class Video:
         if path is not None:
             self.update_file_data(path)
 
+    def append_available_sources(self, sources: list) -> None:
+        # TODO: This belongs in services
+        for source in self.get_source_names():
+            if source not in sources:
+                sources.append(source)
+
     @staticmethod
     def from_dict(source: dict):
         # TODO: validate video dict
@@ -46,24 +52,6 @@ class Video:
         new.data = data
         return new
 
-    def get_source_data(self, api_name: str, key: Optional[str] = None) -> Any:
-        data = self.data.get(api_name)
-        if key is not None:
-            data = data.get(key)
-        return data
-
-    def get_source_names(self) -> list[str]:
-        return list(self.data.keys())
-
-    def get_source_keys(self, source_name: Optional[str] = None) -> list:
-        if source_name:
-            if self.data.get(source_name):
-                return list(self.data.get(source_name).keys())
-            else:
-                return []
-        else:
-            return [key for source in self.data.values() for key in source.keys()]
-
     def get_filename(self) -> str:
         return self.data[FILE_DATA][FILENAME]
 
@@ -72,11 +60,6 @@ class Video:
 
     def get_path(self) -> Path:
         return Path(self.data[FILE_DATA][PATH]).resolve()
-
-    def append_available_sources(self, sources: list) -> None:
-        for source in self.get_source_names():
-            if source not in sources:
-                sources.append(source)
 
     def get_pref_data(self, key: str, default: Optional[str] = None, fill: bool = True) -> Any:
         ordered_sources = get_preferred_sources()
@@ -93,8 +76,29 @@ class Video:
     def get_root(self) -> Path:
         return Path(self.data[FILE_DATA][ROOT])
 
+    def get_source_data(self, api_name: str, key: Optional[str] = None) -> Any:
+        data = self.data.get(api_name)
+        if key is not None:
+            data = data.get(key)
+        return data
+
+    def get_source_keys(self, source_name: Optional[str] = None) -> list:
+        if source_name:
+            if self.data.get(source_name):
+                return list(self.data.get(source_name).keys())
+            else:
+                return []
+        else:
+            return [key for source in self.data.values() for key in source.keys()]
+
+    def get_source_names(self) -> list[str]:
+        return list(self.data.keys())
+
     def get_user_data(self, key: str) -> str:
         return self.data[USER_DATA][key]
+
+    def set_hash(self, sha256) -> None:
+        self.data[FILE_DATA][HASH] = sha256
 
     def set_source_data(self, api_name: str, data: dict) -> None:
         self.data.update({api_name: data})
@@ -140,6 +144,3 @@ class Video:
     def update_hash(self) -> None:
         # TODO: Should this be Videos responsibility?
         self.set_hash(hash_sha256(self.get_path()))
-
-    def set_hash(self, sha256) -> None:
-        self.data[FILE_DATA][HASH] = sha256
