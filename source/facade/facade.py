@@ -10,17 +10,16 @@ from itertools import repeat
 from pathlib import Path
 from typing import Optional
 
-
 # Local imports
 from state.col import Collection
 from state.combuffer import CommandBuffer
 
-from service import cmd_svc as cmdsvc,\
-                    config_svc as cfg_svc,\
-                    video_svc as vidsvc,\
-                    collection_svc as colsvc,\
-                    plugin_svc as pluginsvc,\
-                    file_svc as filesvc
+from service import cmd_svc as cmdsvc, \
+    config_svc as cfg_svc, \
+    video_svc as vidsvc, \
+    collection_svc as colsvc, \
+    plugin_svc as pluginsvc, \
+    file_svc as filesvc
 
 
 # Third-party packages
@@ -63,13 +62,18 @@ class Facade:
         videos = vidsvc.create_videos_from_file_paths(file_paths)
         colsvc.add_videos(self.collection, videos)
 
-    def stage_organize_video_files(self, format_str: Optional[str] = None, filter_strings: Optional[list[str]] = None) -> None:
+    def stage_organize_video_files(self,
+                                   destination: Optional[str] = None,
+                                   format_str: Optional[str] = None,
+                                   filter_strings: Optional[list[str]] = None) -> None:
         # Assign defaults
+        if destination is None:
+            destination = cfg_svc.get_default_organize_path()
         if format_str is None:
             format_str = cfg_svc.get_default_format_str()
         # Collect parameter data
         videos = colsvc.get_filtered_videos(self.collection, filter_strings)
-        paths = vidsvc.generate_destination_paths(videos, format_str)
+        paths = vidsvc.generate_destination_paths(videos, destination, format_str)
         # Pack parameters
         params = zip(videos, paths)
         # Build commands

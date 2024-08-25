@@ -25,9 +25,9 @@ def parse_args(args):
     )
 
     # TODO: write help strings
-    filter_help = "Write help string for filter_help"
-    export_path_help = "Write help string for export_path_help"
-    profile_path_help = "Write help string for profile_path_help"
+    filter_help = "write help string for filter_help"
+    export_path_help = "write help string for export_path_help"
+    profile_path_help = "write help string for profile_path_help"
 
     subparsers = parser.add_subparsers(dest='command')
 
@@ -70,9 +70,17 @@ def parse_args(args):
 
     # Organize
     organize_help = "stage files in collection to be moved to a subdirectory in 'dest'"
+    organize_dest_path_help = "write a help string for organize_dest_path_help"
     organize_parser = subparsers.add_parser(
         'organize',
         help=organize_help)
+    organize_parser.add_argument(
+        'destination_folder',
+        dest='dest_path',
+        help=organize_dest_path_help,
+        metavar='<PATH>',
+        defailt=None
+    )
     format_str_help = 'format string for generating directory names'
     organize_parser.add_argument(
         'format_string',
@@ -142,7 +150,7 @@ def handle_parsed_args(parsed_args: Namespace, session: Facade) -> None:
 
     elif parsed_args.command == 'organize':
         print(f"Staging files for organization at '{parsed_args.path}'")
-        session.stage_organize_video_files(parsed_args.filters, parsed_args.format_str)
+        session.stage_organize_video_files(parsed_args.dest_path, parsed_args.format_str, parsed_args.filters)
 
     elif parsed_args.command == 'profile':
         print(f"Switching profile to {parsed_args.name}")
