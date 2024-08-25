@@ -85,6 +85,13 @@ class TestCollection(TestCase):
         with self.assertRaises(FileNotFoundError):
             self.test_collection.add_video_file(bad_path)
 
+    def test_add_video_instance(self):
+        # TODO: Implement
+        # Arrange
+        # Act
+        # Assert
+        pass
+
     @patch('source.state.col.Collection.generate_video_id')
     def test_from_dict_(self, mock_generate_video_id):
         # Arrange
@@ -117,6 +124,13 @@ class TestCollection(TestCase):
         # Assert
         expected_dict = {'test_key': 'test_value'}
         mock_from_dict.assert_called_once_with(expected_dict)
+
+    def test_generate_video_id(self):
+        # TODO: Implement
+        # Arrange
+        # Act
+        # Assert
+        pass
 
     def test_get_video(self):
         expected_value = 'test_value'
