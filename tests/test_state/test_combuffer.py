@@ -17,34 +17,34 @@ class TestCommandBuffer(unittest.TestCase):
     def setUp(self) -> None:
         self.buffer = CommandBuffer()
 
-    def test_stage_command_valid(self):
+    def tearDown(self) -> None:
+        pass
+
+    def test_add_command_valid(self):
         cmd = TestCommand()
         self.buffer.add_command(cmd)
         self.assertTrue(cmd in self.buffer.cmd_buffer)
 
-    def test_stage_command_invalid(self):
+    def test_add_command_invalid(self):
         cmd = False
         with self.assertRaises(ValueError):
             self.buffer.add_command(cmd)  # type:ignore
 
-    def test_exec_command(self):
-        cmd = TestCommand()
-        self.buffer.cmd_buffer.append(cmd)
+    def test_clear_exec_buffer(self):
+        # TODO: Implement
+        # Arrange
+        # Act
+        # Assert
+        pass
 
-        self.buffer.exec_command()
-        self.assertTrue(cmd.execute_called)
-        self.assertFalse(self.buffer.cmd_buffer)
-        self.assertTrue(cmd in self.buffer.undo_buffer)
+    def test_clear_undo_buffer(self):
+        # TODO: Implement
+        # Arrange
+        # Act
+        # Assert
+        pass
 
-    def test_undo_cmd(self):
-        cmd = TestCommand()
-        self.buffer.undo_buffer.append(cmd)
-
-        self.buffer.undo_cmd()
-        self.assertTrue(cmd.undo_called)
-        self.assertFalse(self.buffer.undo_buffer)
-
-    def test_execute_buffer(self):
+    def test_execute_cmd_buffer(self):
         cmd1 = TestCommand()
         cmd2 = TestCommand()
         cmd3 = TestCommand()
@@ -58,6 +58,15 @@ class TestCommandBuffer(unittest.TestCase):
         self.assertTrue(cmd2.execute_called)
         self.assertTrue(cmd3.execute_called)
         self.assertTrue(self.buffer.undo_buffer == [cmd1, cmd2, cmd3])
+
+    def test_exec_command(self):
+        cmd = TestCommand()
+        self.buffer.cmd_buffer.append(cmd)
+
+        self.buffer.exec_command()
+        self.assertTrue(cmd.execute_called)
+        self.assertFalse(self.buffer.cmd_buffer)
+        self.assertTrue(cmd in self.buffer.undo_buffer)
 
     def test_execute_undo_buffer(self):
         # Arrange
@@ -77,16 +86,61 @@ class TestCommandBuffer(unittest.TestCase):
         self.assertTrue(cmd2.undo_called)
         self.assertTrue(cmd3.undo_called)
 
-    def preview_buffer(self):
+    def test_from_dict(self):
+        # TODO: Implement in source
         pass
 
-    def save_buffer(self):
-        vid = Mock()
-        cmd = Mock()
-        cmd.video = vid
-        cmd.str = 'string'
-        cmd.int = 1
-        self.buffer.cmd_buffer.put(cmd)
+    def test_from_json(self):
+        # TODO: Implement in source
+        pass
 
-    def load_buffer(self):
+
+    def test_preview_buffer(self):
+        # TODO: Implement
+        # Arrange
+        # Act
+        # Assert
+        pass
+
+    def test_undo_cmd(self):
+        cmd = TestCommand()
+        self.buffer.undo_buffer.append(cmd)
+
+        self.buffer.undo_cmd()
+        self.assertTrue(cmd.undo_called)
+        self.assertFalse(self.buffer.undo_buffer)
+
+    def test_validate_exec_buffer(self):
+        # TODO: Implement
+        # Arrange
+        # Act
+        # Assert
+        pass
+
+    def test_validate_undo_buffer(self):
+        # TODO: Implement
+        # Arrange
+        # Act
+        # Assert
+        pass
+
+    def test_to_dict(self):
+        # TODO: Implement
+        # Arrange
+        # Act
+        # Assert
+        pass
+
+    def test_to_json(self):
+        # TODO: Implement
+        # Arrange
+        # Act
+        # Assert
+        pass
+
+    def test__str__(self):
+        # TODO: Implement
+        # Arrange
+        # Act
+        # Assert
         pass
