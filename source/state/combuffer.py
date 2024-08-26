@@ -63,7 +63,7 @@ class CommandBuffer:
         else:
             raise IndexError("Cannot undo; command history is empty")
 
-    # Todo: Generate list of errors, present it to user
+    # TODO: Generate list of errors, present it to user
     def validate_exec_buffer(self):
         if self.cmd_buffer:
             for cmd in self.cmd_buffer:
@@ -71,7 +71,7 @@ class CommandBuffer:
         else:
             print('Nothing to validate, exec_buffer is empty.\n')
 
-    # Todo: Generate list of errors, present it to user
+    # TODO: Generate list of errors, present it to user
     def validate_undo_buffer(self):
         if self.undo_buffer:
             for cmd in self.undo_buffer:
