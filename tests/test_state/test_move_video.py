@@ -14,6 +14,7 @@ from unittest.mock import call, Mock, patch
 from source.state.move_video import MoveVideo
 
 # Third-party packages
+# n/a
 
 
 class TestMoveVideoCommand(unittest.TestCase):
@@ -60,11 +61,27 @@ class TestMoveVideoCommand(unittest.TestCase):
         mock_move.assert_called_once_with(self.dest_dir)
 
     def test_to_dict(self):
-        # TODO: Implement
         # Arrange
+        self.test_cmd.dest_dir = Path('dest_dir')
+        self.test_cmd.origin_dir = Path('origin_dir')
+        self.test_cmd.created_dirs = [
+            Path('created_dir_1'),
+            Path('created_dir_2')
+        ]
+        self.vid.to_dict.return_value = {'vid_key': 'vid_val'}
+
         # Act
+        result = self.test_cmd.to_dict()
+
         # Assert
-        pass
+        self.assertIsInstance(result.get('video'), dict)
+        self.assertEqual(result.get('video').get('vid_key'), 'vid_val')
+        self.assertEqual(result.get('dest_dir'), Path('dest_dir'))
+        self.assertEqual(result.get('origin_dir'), Path('origin_dir'))
+        self.assertEqual(result.get('created_dirs'), [
+            Path('created_dir_1'),
+            Path('created_dir_2')
+        ])
 
     @patch('source.state.move_video.MoveVideo._undo_make_dirs')
     @patch('source.state.move_video.MoveVideo._move')
