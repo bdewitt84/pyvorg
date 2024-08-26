@@ -20,18 +20,7 @@ class Command:
     def exec(self):
         raise NotImplementedError
 
-    @staticmethod
-    def from_dict(d):
-        raise NotImplementedError
-
-    @staticmethod
-    def from_json(j):
-        raise NotImplementedError
-
     def to_dict(self):
-        raise NotImplementedError
-
-    def to_json(self):
         raise NotImplementedError
 
     def validate_exec(self):
@@ -42,6 +31,3 @@ class Command:
 
     def undo(self):
         raise NotImplementedError
-
-
-
