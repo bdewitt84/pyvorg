@@ -9,7 +9,7 @@
 from collections import deque
 
 # Local imports
-from state.command import Command
+from source.state.command import Command
 
 # Third-party packages
 

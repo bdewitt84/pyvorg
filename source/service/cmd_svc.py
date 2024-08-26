@@ -4,9 +4,10 @@
 from typing import Iterable, Type
 
 # Local imports
-from state.combuffer import Command, CommandBuffer
-from state.update_video_data import UpdateVideoData
-from state.move_video import MoveVideo
+from source.state.combuffer import CommandBuffer
+from source.state.command import Command
+from source.state.update_video_data import UpdateVideoData
+from source.state.move_video import MoveVideo
 
 # Third-party packages
 
