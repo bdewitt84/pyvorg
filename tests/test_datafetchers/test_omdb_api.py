@@ -55,43 +55,69 @@ class TestOMDBAPI(TestCase):
         with self.assertRaises(requests.HTTPError):
             self.api.fetch_data(title='test title')
 
-    def test_get_name(self):
-        # TODO: Implement
+    def test_get_api_url(self):
         # Arrange
         # Act
+        result = self.api.get_api_url()
+
         # Assert
-        pass
+        self.assertEqual(type(result), str)
 
     def test_get_omdb_api_key(self):
-        # TODO: Implement
         # Arrange
         # Act
+        result = self.api.get_omdb_api_key()
+
         # Assert
-        pass
+        self.assertEqual(type(result), str)
 
     def test_get_optional_params(self):
-        # TODO: Implement
         # Arrange
         # Act
+        result = self.api.get_optional_params()
+
         # Assert
-        pass
+        self.assertIsInstance(result, list)
+        self.assertTrue(all(isinstance(elem, str) for elem in result))
 
     def test_get_required_params(self):
-        # TODO: Implement
         # Arrange
         # Act
+        result = self.api.get_required_params()
+
         # Assert
-        pass
+        self.assertIsInstance(result, list)
+        self.assertTrue(all(isinstance(elem, str) for elem in result))
 
     def test_construct_params(self):
-        # TODO: Implement
         # Arrange
-        # Act
-        # Assert
-        pass
+        kwargs = {
+            'title': 'kwarg_title',
+            'year': 'kwarg_year',
+        }
 
-    def test_query_omdb(self):
-        # Arrange
         # Act
+        result = self.api._construct_params(kwargs)
+        print(result)
+
         # Assert
-        pass
+        self.assertIsInstance(result, dict)
+        self.assertIn('t', result.keys())
+        self.assertTrue(result.get('t'), 'kwarg_title')
+        self.assertIn('y', result.keys())
+        self.assertTrue(result.get('y'), 'kwarg_title')
+
+    @patch('source.datafetchers.omdb_plugin.requests.get')
+    def test_query_omdb(self, mock_get):
+        # Arrange
+        params = {}
+        response = Mock()
+        response.status_code = 200
+        response.json.return_value = {'Response': 'True'}
+        mock_get.return_value = response
+
+        # Act
+        result = self.api._query_omdb(params)
+
+        # Assert
+        self.assertEqual({'Response': 'True'}, result)
