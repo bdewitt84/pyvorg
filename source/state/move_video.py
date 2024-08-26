@@ -37,25 +37,10 @@ class MoveVideo(Command):
         self.origin_dir = self.video.get_root()
         self._move(self.dest_dir)
 
-    @staticmethod
-    def from_dict(d):
-        new = MoveVideo(None, Path())
-        new.__dict__ = d
-        new.video = d.get('video')
-        return new
-
-    @staticmethod
-    def from_json(j):
-        serialized = json.loads(j)
-        return MoveVideo.from_dict(serialized)
-
     def to_dict(self):
         d = self.__dict__
         d.update({'video': self.video.to_dict()})
         return d
-
-    def to_json(self):
-        return json.dumps(self.to_dict())
 
     def undo(self):
         self._move(self.origin_dir)
