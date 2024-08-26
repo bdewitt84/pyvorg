@@ -1,4 +1,4 @@
-# ./tests/test_command/test_video_update_data.py
+# ./tests/test_command/test_update_video_data.py
 
 """
     Unit tests for MoveVideoCommand
