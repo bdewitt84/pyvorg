@@ -7,8 +7,6 @@
 """
 
 # Standard library
-import logging
-import os
 
 # Local imports
 
