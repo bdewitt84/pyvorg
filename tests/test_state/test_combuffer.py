@@ -102,11 +102,6 @@ class TestCommandBuffer(unittest.TestCase):
         # TODO: Implement in source
         pass
 
-    def test_from_json(self):
-        # TODO: Implement in source
-        pass
-
-
     def test_preview_buffer(self):
         # Arrange
         mock_cmd_1 = MagicMock()
@@ -163,13 +158,6 @@ class TestCommandBuffer(unittest.TestCase):
 
     def test_to_dict(self):
         # TODO: Implement in source
-        # Arrange
-        # Act
-        # Assert
-        pass
-
-    def test_to_json(self):
-        # TODO: Implement
         # Arrange
         # Act
         # Assert
