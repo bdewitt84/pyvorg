@@ -59,28 +59,7 @@ class TestMoveVideoCommand(unittest.TestCase):
         self.assertEqual(self.test_cmd.origin_dir, self.src_dir)
         mock_move.assert_called_once_with(self.dest_dir)
 
-    def test_from_dict(self):
-        # TODO: Implement
-        # Arrange
-        # Act
-        # Assert
-        pass
-
-    def test_from_json(self):
-        # TODO: Implement
-        # Arrange
-        # Act
-        # Assert
-        pass
-
     def test_to_dict(self):
-        # TODO: Implement
-        # Arrange
-        # Act
-        # Assert
-        pass
-
-    def test_to_json(self):
         # TODO: Implement
         # Arrange
         # Act
