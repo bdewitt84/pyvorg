@@ -163,7 +163,7 @@ class OMDBFetcher(DataFetcher):
         # Handle specific status codes
         if response.status_code == 200:
             data = response.json()
-            if response.json()['Response'] == 'True':
+            if data['Response'] == 'True':
                 logging.info(f"OMDBFetcher data retrieved for '{title}'")
             else:
                 logging.warning(f"Error requesting OMDBFetcher videos for '{title}': {response.json()['Error']}")
