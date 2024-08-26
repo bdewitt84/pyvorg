@@ -38,9 +38,13 @@ class MoveVideo(Command):
         self._move(self.dest_dir)
 
     def to_dict(self):
-        d = self.__dict__
-        d.update({'video': self.video.to_dict()})
-        return d
+        output_dict = {
+            'video': self.video.to_dict(),
+            'dest_dir': self.dest_dir,
+            'origin_dir': self.origin_dir,
+            'created_dirs': self.created_dirs
+        }
+        return output_dict
 
     def undo(self):
         self._move(self.origin_dir)
