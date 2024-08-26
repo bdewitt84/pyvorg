@@ -26,6 +26,10 @@ class UpdateVideoData(Command):
         self.undo_data = self.video.get_source_data(self.api.get_name)
         update_api_data(self.video, self.api)
 
+    def to_dict(self):
+        # TODO: Implement
+        pass
+
     def undo(self):
         if self.undo_data is None:
             self.video.data.pop(self.api.get_name())
