@@ -32,24 +32,9 @@ class Video:
                 sources.append(source)
 
     @staticmethod
-    def from_dict(source: dict):
-        # TODO: validate video dict
-        new = Video()
-        new.data = source
-        return new
-
-    @staticmethod
     def from_file(file_path: Path):
         new = Video()
         new.update_file_data(file_path)
-        return new
-
-    @staticmethod
-    def from_json(source_json: str):
-        data = json.loads(source_json)
-        # TODO: Validate video json
-        new = Video()
-        new.data = data
         return new
 
     def get_filename(self) -> str:
@@ -116,9 +101,6 @@ class Video:
 
     def to_dict(self) -> dict:
         return self.data
-
-    def to_json(self) -> str:
-        return json.dumps(self.data)
 
     def update_file_data(self, path: Path, skip_hash: bool = False) -> None:
         if not path.exists() or not path.is_file():
