@@ -6,7 +6,7 @@
 
 # Standard library
 import unittest
-from unittest.mock import Mock
+from unittest.mock import MagicMock, Mock
 
 # Local imports
 from state.combuffer import *
@@ -31,18 +31,30 @@ class TestCommandBuffer(unittest.TestCase):
             self.buffer.add_command(cmd)  # type:ignore
 
     def test_clear_exec_buffer(self):
-        # TODO: Implement
         # Arrange
+        mock_cmd_1 = Mock()
+        mock_cmd_2 = Mock()
+        self.buffer.cmd_buffer.append(mock_cmd_1)
+        self.buffer.cmd_buffer.append(mock_cmd_2)
+
         # Act
+        self.buffer.clear_exec_buffer()
+
         # Assert
-        pass
+        self.assertEqual(0, len(self.buffer.cmd_buffer))
 
     def test_clear_undo_buffer(self):
-        # TODO: Implement
         # Arrange
+        mock_cmd_1 = Mock()
+        mock_cmd_2 = Mock()
+        self.buffer.undo_buffer.append(mock_cmd_1)
+        self.buffer.undo_buffer.append(mock_cmd_2)
+
         # Act
+        self.buffer.clear_undo_buffer()
+
         # Assert
-        pass
+        self.assertEqual(0, len(self.buffer.undo_buffer))
 
     def test_execute_cmd_buffer(self):
         cmd1 = FauxCmd()
@@ -96,11 +108,22 @@ class TestCommandBuffer(unittest.TestCase):
 
 
     def test_preview_buffer(self):
-        # TODO: Implement
         # Arrange
+        mock_cmd_1 = MagicMock()
+        mock_cmd_2 = MagicMock()
+
+        mock_cmd_1.__str__ = lambda x: 'mock 1\n'
+        mock_cmd_2.__str__ = lambda x: 'mock 2\n'
+
+        self.buffer.cmd_buffer.append(mock_cmd_1)
+        self.buffer.cmd_buffer.append(mock_cmd_2)
+
         # Act
+        result = self.buffer.preview_buffer()
+
         # Assert
-        pass
+        self.assertIn('mock 1', result)
+        self.assertIn('mock 2', result)
 
     def test_undo_cmd(self):
         cmd = FauxCmd()
@@ -111,21 +134,35 @@ class TestCommandBuffer(unittest.TestCase):
         self.assertFalse(self.buffer.undo_buffer)
 
     def test_validate_exec_buffer(self):
-        # TODO: Implement
         # Arrange
+        mock_cmd_1 = Mock()
+        mock_cmd_2 = Mock()
+        self.buffer.cmd_buffer.append(mock_cmd_1)
+        self.buffer.cmd_buffer.append(mock_cmd_2)
+
         # Act
+        self.buffer.validate_exec_buffer()
+
         # Assert
-        pass
+        mock_cmd_1.validate_exec.assert_called_once()
+        mock_cmd_2.validate_exec.assert_called_once()
 
     def test_validate_undo_buffer(self):
-        # TODO: Implement
         # Arrange
+        mock_cmd_1 = Mock()
+        mock_cmd_2 = Mock()
+        self.buffer.undo_buffer.append(mock_cmd_1)
+        self.buffer.undo_buffer.append(mock_cmd_2)
+
         # Act
+        self.buffer.validate_undo_buffer()
+
         # Assert
-        pass
+        mock_cmd_1.validate_undo.assert_called_once()
+        mock_cmd_2.validate_undo.assert_called_once()
 
     def test_to_dict(self):
-        # TODO: Implement
+        # TODO: Implement in source
         # Arrange
         # Act
         # Assert
@@ -139,8 +176,19 @@ class TestCommandBuffer(unittest.TestCase):
         pass
 
     def test__str__(self):
-        # TODO: Implement
         # Arrange
+        mock_cmd_1 = MagicMock()
+        mock_cmd_2 = MagicMock()
+
+        mock_cmd_1.__str__ = lambda x: 'mock 1\n'
+        mock_cmd_2.__str__ = lambda x: 'mock 2\n'
+
+        self.buffer.cmd_buffer.append(mock_cmd_1)
+        self.buffer.cmd_buffer.append(mock_cmd_2)
+
         # Act
+        result = str(self.buffer)
+
         # Assert
-        pass
+        self.assertIn('mock 1', result)
+        self.assertIn('mock 2', result)
