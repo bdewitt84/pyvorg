@@ -54,8 +54,7 @@ class CommandBuffer:
         pass
 
     def preview_buffer(self):
-        for cmd in self.cmd_buffer:
-            print(cmd)
+        return str(self)
 
     def undo_cmd(self):
         if self.undo_buffer:
