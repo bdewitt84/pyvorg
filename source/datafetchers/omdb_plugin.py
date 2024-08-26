@@ -54,7 +54,7 @@ class OMDBFetcher(DataFetcher):
         if not self.get_omdb_api_key():
             raise ValueError(f"No API key set. Add '{ENV_OMDB_KEY} = [your omdb key]' to {ENV_FILE_PATH}.")
 
-    def fetch_data(self, **kwargs):
+    def fetch_data(self, **kwargs) -> dict:
         """
             Fetches video data from the OMDBFetcher API based on provided parameters.
 
@@ -82,20 +82,20 @@ class OMDBFetcher(DataFetcher):
         return data
 
     @staticmethod
-    def get_api_url():
+    def get_api_url() -> str:
         return 'https://www.omdbapi.com'
 
     @staticmethod
-    def get_omdb_api_key():
+    def get_omdb_api_key() -> str:
         return os.getenv(ENV_OMDB_KEY)
 
-    def get_optional_params(self):
+    def get_optional_params(self) -> list[str]:
         return [K_YEAR, K_PLOT, K_RETURN]
 
-    def get_required_params(self):
+    def get_required_params(self) -> list[str]:
         return [K_TITLE]
 
-    def _construct_params(self, kwargs):
+    def _construct_params(self, kwargs: dict) -> dict:
         """
             Constructs the query parameters for the OMDBFetcher API request
             :param kwargs:
@@ -144,7 +144,7 @@ class OMDBFetcher(DataFetcher):
 
         return params
 
-    def _query_omdb(self, params):
+    def _query_omdb(self, params: dict) -> dict:
         """
             Makes a request to the OMDBFetcher API and handles the response
             :param params:
