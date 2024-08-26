@@ -168,6 +168,7 @@ class OMDBFetcher(DataFetcher):
             else:
                 logging.warning(f"Error requesting OMDBFetcher videos for '{title}': {response.json()['Error']}")
 
+        # TODO: refactor into error handler
         elif response.status_code == 429:
             msg = f"Status code {response.json()['Error']}: Rate limit exceeded."
             logging.error(msg)
