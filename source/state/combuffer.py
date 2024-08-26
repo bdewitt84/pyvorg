@@ -53,10 +53,6 @@ class CommandBuffer:
         # TODO: implement
         pass
 
-    def from_json(self):
-        # TODO: implement
-        pass
-
     def preview_buffer(self):
         for cmd in self.cmd_buffer:
             print(cmd)
@@ -85,10 +81,6 @@ class CommandBuffer:
             print('Nothing to validate, undo_buffer is empty.\n')
 
     def to_dict(self):
-        # TODO: Implement
-        pass
-
-    def to_json(self):
         # TODO: Implement
         pass
 
