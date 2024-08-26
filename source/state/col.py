@@ -6,14 +6,12 @@
 """
 
 # Standard library
-import json
 import logging
 import os
 from pathlib import Path
 
 # Local imports
 from state.video import Video
-from source.utils.helper import default_serializer
 from service.file_svc import get_file_type
 
 # Third-party packages
@@ -59,10 +57,6 @@ class Collection:
         return new_col
 
     @staticmethod
-    def from_json(source: str):
-        return Collection.from_dict(json.loads(source))
-
-    @staticmethod
     def generate_video_id(video: Video):
         return video.get_hash()
 
@@ -86,17 +80,9 @@ class Collection:
             for video
             in self.get_videos()
         }
-
-    def to_graph(self):
-        # TODO: Implement later
-        pass
-
-    def to_json(self) -> str:
-        return json.dumps(self.to_dict(),
-                          indent=4,
-                          skipkeys=True,
-                          default=default_serializer)
-
-    def to_tsv(self):
-        # TODO: Implement later
-        pass
+    #
+    # def to_json(self) -> str:
+    #     return json.dumps(self.to_dict(),
+    #                       indent=4,
+    #                       skipkeys=True,
+    #                       default=default_serializer)
