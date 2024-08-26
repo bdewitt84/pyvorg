@@ -55,8 +55,16 @@ class TestVideoUpdate(TestCase):
         self.assertEqual(expected_value, result)
         self.assertTrue(self.test_cmd.undo_data is None)
 
-    # def test_validate_exec(self):
-    #     pass
-    #
-    # def test_validate_undo(self):
-    #     pass
+    def test_validate_exec(self):
+        # TODO: Implement in source
+        # Arrange
+        # Act
+        # Assert
+        pass
+
+    def test_validate_undo(self):
+        # TODO: Implement in source
+        # Arrange
+        # Act
+        # Assert
+        pass
