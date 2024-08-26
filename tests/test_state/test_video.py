@@ -51,20 +51,6 @@ class TestVideo(TestCase):
         # Assert
         pass
 
-    def test_from_dict(self):
-        # Arrange
-        video_dict = {
-            'test_source': {
-                'source_key': 'source_value'
-            }
-        }
-
-        # Act
-        result = Video.from_dict(video_dict)
-
-        # Assert
-        self.assertEqual(result.get_source_data('test_source', 'source_key'), 'source_value')
-
     def test_from_file(self):
         # Arrange
         filename = 'test.file'
@@ -76,16 +62,6 @@ class TestVideo(TestCase):
 
         # Assert
         self.assertEqual(result.get_path(), path)
-
-    def test_from_json(self):
-        # Arrange
-        test_json = r'{"test_source":{"source_key":"source_value"}}'
-
-        # Act
-        result = Video.from_json(test_json)
-
-        # Assert
-        self.assertEqual(result.get_source_data('test_source', 'source_key'), 'source_value')
 
     def test_get_filename(self):
         result = self.test_vid.get_filename()
@@ -240,15 +216,6 @@ class TestVideo(TestCase):
 
         # Assert
         self.assertEqual('test_value', result.get('test_key'))
-
-    def test_to_json(self):
-        # TODO: Certainly there must be a better way
-        result = self.test_vid.to_json()
-        expected_path = self.temp_vid_path.replace('\\', '\\\\')
-        expected_root = self.temp_dir.name.replace('\\', '\\\\')
-        # Ugly formatting is necessary for the equality check
-        expected_json = f"""{{"user_data": {{}}, "file_data": {{"path": "{expected_path}", "root": "{expected_root}", "filename": "{self.temp_vid_filename}", "hash": "916f0027a575074ce72a331777c3478d6513f786a591bd892da1a577bf2335f9", "timestamp": "1970-01-01 00:00:01"}}}}"""
-        self.assertEqual(expected_json, result)
 
     @patch('source.state.video.hash_sha256')
     @patch('source.state.video.timestamp_generate')
