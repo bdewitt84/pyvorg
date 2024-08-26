@@ -32,6 +32,7 @@ class Video:
                 sources.append(source)
 
     @staticmethod
+    # TODO: This probably belongs in services
     def from_file(file_path: Path):
         new = Video()
         new.update_file_data(file_path)
