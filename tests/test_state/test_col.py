@@ -77,7 +77,7 @@ class TestCollection(TestCase):
         mock_from_file.called_once_with(path)
         self.assertEqual(self.test_collection.videos, {'fake hash': test_video})
 
-    def test_add_video_does_not_exist(self):
+    def test_add_video_file_does_not_exist(self):
         # Arrange
         bad_path = Path(self.test_dir.name, 'does_not_exist.fil')
 
