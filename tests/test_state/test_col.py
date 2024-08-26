@@ -86,11 +86,15 @@ class TestCollection(TestCase):
             self.test_collection.add_video_file(bad_path)
 
     def test_add_video_instance(self):
-        # TODO: Implement
         # Arrange
+        mock_video = Mock()
+        mock_video.get_id.return_value = 'vid_id'
+
         # Act
+        self.test_collection.add_video_instance(mock_video)
+
         # Assert
-        pass
+        self.assertIn(mock_video, self.test_collection.get_videos())
 
     @patch('source.state.col.Collection.generate_video_id')
     def test_from_dict_(self, mock_generate_video_id):
@@ -126,11 +130,15 @@ class TestCollection(TestCase):
         mock_from_dict.assert_called_once_with(expected_dict)
 
     def test_generate_video_id(self):
-        # TODO: Implement
         # Arrange
+        mock_video = Mock()
+        mock_video.get_hash.return_value = 'fake_hash'
+
         # Act
+        result = self.test_collection.generate_video_id(mock_video)
+
         # Assert
-        pass
+        self.assertEqual('fake_hash', result)
 
     def test_get_video(self):
         expected_value = 'test_value'
