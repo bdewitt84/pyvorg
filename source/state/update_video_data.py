@@ -7,7 +7,7 @@
 # Standard library
 
 # Local imports
-from state.command import Command
+from source.state.command import Command
 from source.utils.helper import update_api_data
 
 # Third-party packages
