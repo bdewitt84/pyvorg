@@ -5,7 +5,8 @@ from unittest import TestCase
 from unittest.mock import call, Mock
 
 # Local imports
-import service.collection_svc as col_svc
+import source.service.collection_svc as col_svc
+from source.state.col import Collection
 
 # Third-party packages
 
@@ -48,13 +49,28 @@ class TestCollectionService(TestCase):
         self.assertNotIn(video_2, result)
 
     def test_get_metadata(self):
-        # TODO: Need to fix Collection.to_dict first
         # Arrange
+        video_1 = Mock()
+        video_2 = Mock()
+        video_1.get_hash.return_value = 'vid_1_id'
+        video_2.get_hash.return_value = 'vid_2_id'
+        video_1.to_dict.return_value = {'vid_1_key': 'vid_1_val'}
+        video_2.to_dict.return_value = {'vid_2_key': 'vid_2_val'}
+
+        test_collection = Collection()
+        test_collection.add_video_instance(video_1)
+        test_collection.add_video_instance(video_2)
 
         # Act
+        result = col_svc.get_metadata(test_collection)
 
         # Assert
-        pass
+        self.assertIn('vid_1_id', result.keys())
+        self.assertIn('vid_2_id', result.keys())
+        self.assertIn('vid_1_key', result.get('vid_1_id').keys())
+        self.assertIn('vid_2_key', result.get('vid_2_id').keys())
+        self.assertIn('vid_1_val', result.get('vid_1_id').values())
+        self.assertIn('vid_2_val', result.get('vid_2_id').values())
 
     def test_get_filtered_videos(self):
         # Arrange
