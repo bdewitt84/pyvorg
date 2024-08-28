@@ -11,14 +11,15 @@
         https://guessit.readthedocs.io/en/latest/
 """
 
-from guessit import guessit
 
 # Standard library
+# n/a
 
 # Local imports
 from source.datafetchers.base_fetcher import DataFetcher
 
 # Third-party packages
+from guessit import guessit
 
 
 class GuessitAPI(DataFetcher):
@@ -30,7 +31,7 @@ class GuessitAPI(DataFetcher):
             filename = kwargs.get('filename')
             guessit_data = guessit(filename)
         else:
-            raise ValueError("")
+            raise ValueError("'filename', a required keyword, was not found in the argument dict'")
 
         return dict(guessit_data)
 
