@@ -86,11 +86,11 @@ class Facade:
         videos = colsvc.get_filtered_videos(self.collection, filter_strings)
         api_instance = pluginsvc.get_plugin_instance(api_name)
         req_plugin_params = pluginsvc.get_required_params(api_instance)
-        cmd_kwargs = vidsvc.build_cmd_kwargs(videos, req_plugin_params)
-        # Pack parameters
-        params = zip(videos, repeat(api_instance), cmd_kwargs)
+        cmd_kwargs_dicts = vidsvc.build_cmd_kwargs(videos, req_plugin_params)
+        # Pack args
+        cmd_args_tuples = zip(videos, repeat(api_instance))
         # Build commands
-        cmds = cmdsvc.build_commands('UpdateVideoData', params)
+        cmds = cmdsvc.build_commands('UpdateVideoData', cmd_args_tuples, cmd_kwargs_dicts)
         # Stage commands
         cmdsvc.stage_commands(self.command_buffer, cmds)
 

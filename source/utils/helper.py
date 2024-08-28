@@ -44,13 +44,6 @@ def default_serializer(obj):
     return f"Object '{class_name(obj)}' is not serializable"
 
 
-def fill_kwargs_from_metadata(video, params: dict, keys: list[str]):
-    for key in keys:
-        if key not in params.keys():
-            val = video.get_pref_data(key)
-            params.update({key: val})
-
-
 def find_missing_params(required_params: list[str], params: dict):
     return [key for key in required_params if params.get(key) is None]
 
@@ -100,7 +93,6 @@ def timestamp_validate(timestamp):
 
 def update_api_data(video, api: DataFetcher, **kwargs) -> None:
     required_params = api.get_required_params()
-    fill_kwargs_from_metadata(video, kwargs, required_params)
     if missing := find_missing_params(required_params, kwargs):
         raise ValueError(f"Parameters {missing} were not supplied and could not be retrieved from '{video}' metadata")
     data = api.fetch_data(**kwargs)

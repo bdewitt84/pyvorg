@@ -29,9 +29,11 @@ def build_command(cmd_name: str, *args, **kwargs):
     return cmd(*args, **kwargs)
 
 
-def build_commands(cmd_name: str, params_list: Iterable[tuple]) -> list[Command]:
+def build_commands(cmd_name: str, cmd_arg_tuples: Iterable[tuple], cmd_kwarg_dicts: Iterable[dict]) -> list[Command]:
     cmd = get_command_from_name(cmd_name)
-    return [cmd(*params) for params in params_list]
+    return [cmd(*cmd_arg_tuple, **cmd_kwarg_dict)
+            for cmd_arg_tuple, cmd_kwarg_dict
+            in zip(cmd_arg_tuples, cmd_kwarg_dicts)]
 
 
 def get_command_from_name(command_name) -> Type:
