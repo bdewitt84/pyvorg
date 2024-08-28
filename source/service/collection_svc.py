@@ -19,8 +19,12 @@ def apply_filter(videos, filter_string) -> list:
     return [video for video in videos if f.matches(video.get_pref_data(f.key))]
 
 
-def get_metadata(collection: Collection) -> str:
-    return collection.to_json()
+def get_metadata(collection: Collection) -> dict:
+    return {
+        video_id: video.to_dict()
+        for video_id, video
+        in zip(collection.get_video_ids(), collection.get_videos())
+    }
 
 
 def get_filtered_videos(collection: Collection, filter_strings: list[str]) -> list:
