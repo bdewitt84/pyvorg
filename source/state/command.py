@@ -7,11 +7,16 @@
 """
 
 # Standard library
+from abc import ABC
 
 # Local imports
+# n/a
+
+# Third-party packages
+# n/a
 
 
-class Command:
+class Command(ABC):
     def __init__(self, *args, **kwargs):
         pass
 
