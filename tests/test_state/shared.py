@@ -7,7 +7,7 @@ Resources shared by tests/test_command unit test package
 # Standard library
 
 # Local imports
-from state.command import Command
+from source.state.command import Command
 
 # Third-party packages
 
