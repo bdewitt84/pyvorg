@@ -32,7 +32,7 @@ def discover_api_modules(package: ModuleType) -> (str, Type):
     }
 
 
-def discover_plugins(package: ModuleType):
+def discover_plugins(package: ModuleType) -> dict[str, type[DataFetcher]]:
     modules = discover_api_modules(package)
     return {
         clsname: cls
@@ -50,5 +50,5 @@ def get_plugin_instance(api_name: str, package: ModuleType) -> Optional[DataFetc
     return plugin_class()
 
 
-def get_required_params(api: DataFetcher):
+def get_required_params(api: DataFetcher) -> list[str]:
     return api.get_required_params()
