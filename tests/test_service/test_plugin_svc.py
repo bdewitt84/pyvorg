@@ -4,7 +4,7 @@
 import importlib
 import os
 from unittest import TestCase
-from unittest.mock import patch, MagicMock
+from unittest.mock import patch, MagicMock, Mock
 from tempfile import TemporaryDirectory
 import sys
 
@@ -112,15 +112,25 @@ class TestPluginService(TestCase):
         self.assertNotIn('not_a_plugin_class', result.keys())
 
     def test_get_plugin_instance(self):
-        # TODO: Implement
         # Arrange
+        test_pkg = importlib.import_module(self.fake_pkg_name)
+        importlib.reload(test_pkg)  # Avoids using cache with outdated path from other unit tests
+
         # Act
+        result_1 = plugin_svc.get_plugin_instance('FakeAPI1', test_pkg)
+        result_2 = plugin_svc.get_plugin_instance('FakeAPI2', test_pkg)
+
         # Assert
-        pass
+        self.assertIsInstance(result_1, DataFetcher)
+        self.assertIsInstance(result_2, DataFetcher)
 
     def test_get_required_params(self):
-        # TODO: Implement
         # Arrange
+        mock_plugin = Mock()
+        mock_plugin.get_required_params.return_value = ['param_1', 'param_2']
+
         # Act
+        result = plugin_svc.get_required_params(mock_plugin)
+
         # Assert
-        pass
+        self.assertEqual(['param_1', 'param_2'], result)
