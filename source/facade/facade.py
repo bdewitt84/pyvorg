@@ -13,7 +13,7 @@ from typing import Optional
 # Local imports
 from state.col import Collection
 from state.combuffer import CommandBuffer
-
+import source.datafetchers
 from service import cmd_svc as cmdsvc, \
     config_svc as cfg_svc, \
     video_svc as vidsvc, \
@@ -84,7 +84,7 @@ class Facade:
     def stage_update_api_metadata(self, api_name: str, filter_strings: Optional[list[str]]) -> None:
         # Collect parameter data
         videos = colsvc.get_filtered_videos(self.collection, filter_strings)
-        api_instance = pluginsvc.get_plugin_instance(api_name)
+        api_instance = pluginsvc.get_plugin_instance(api_name, source.datafetchers)
         req_plugin_params = pluginsvc.get_required_params(api_instance)
         cmd_kwargs_dicts = vidsvc.build_cmd_kwargs(videos, req_plugin_params)
         # Pack args

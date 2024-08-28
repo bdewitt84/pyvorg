@@ -9,7 +9,6 @@ from types import ModuleType
 
 # Local imports
 from source.datafetchers.base_fetcher import DataFetcher
-import source.datafetchers
 
 # Third-party plugins
 
@@ -44,10 +43,10 @@ def discover_plugins(package: ModuleType):
     }
 
 
-def get_plugin_instance(api_name: str) -> Optional[DataFetcher]:
+def get_plugin_instance(api_name: str, package: ModuleType) -> Optional[DataFetcher]:
     # TODO: Consider raising if None
     # TODO: need to request or pass the plugin package instead
-    plugin_class = discover_plugins(source.datafetchers).get(api_name)
+    plugin_class = discover_plugins(package).get(api_name)
     return plugin_class()
 
 
