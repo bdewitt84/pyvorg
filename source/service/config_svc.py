@@ -1,5 +1,9 @@
 # source/service/config_svc.py
 
+"""
+
+"""
+
 # Standard library
 import os
 from pathlib import Path
@@ -11,6 +15,13 @@ from constants import APP_NAME,\
 
 # Third-party packages
 # n\a
+
+
+# TODO: Consider re-implementing a completely decoupled
+#       version of config_svc. It might actually make more
+#       sense to write a stateful class, i.e. a config
+#       manager. Look at other implementations for
+#       inspiration
 
 
 def get_default_organize_path():
