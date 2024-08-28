@@ -60,6 +60,9 @@ class Collection:
     def generate_video_id(video: Video):
         return video.get_hash()
 
+    def get_video_ids(self):
+        return self.videos.keys()
+
     def get_video(self, key: str) -> Video:
         return self.videos.get(key)
 
