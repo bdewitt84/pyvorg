@@ -22,7 +22,6 @@ from source.service import cmd_svc as cmdsvc, \
                            serialize_svc as serial_svc, \
                            video_svc as vidsvc
 
-
 # Third-party packages
 # n\a
 
@@ -73,14 +72,17 @@ class Facade:
             destination = cfg_svc.get_default_organize_path()
         if format_str is None:
             format_str = cfg_svc.get_default_format_str()
-        # Collect parameter data
+        # Collect argument data
         videos = colsvc.get_filtered_videos(self.collection, filter_strings)
         paths = vidsvc.generate_destination_paths(videos, destination, format_str)
-        # Pack parameters
-        params = zip(videos, paths)
+        print(paths)
+        # Pack arguments
+        cmd_arg_tuples = zip(videos, paths)
+        # Pack (empty) kwargs
+        cmd_kwarg_dicts = [{} for _ in range(len(videos))]
         # Build commands
-        # TODO: pack args tupes and kwargs dict, pass to build_commands
-        cmds = cmdsvc.build_commands('MoveVideo', params)
+        cmds = cmdsvc.build_commands('MoveVideo', cmd_arg_tuples, cmd_kwarg_dicts)
+        print(cmds)
         # Stage commands
         cmdsvc.stage_commands(self.command_buffer, cmds)
 
