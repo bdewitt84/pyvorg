@@ -9,6 +9,7 @@
 import logging
 import os
 from pathlib import Path
+from typing import Optional
 
 # Local imports
 from state.video import Video
@@ -27,22 +28,29 @@ class Collection:
             # TODO: Make/Use getter in helper module for this
             self.path = Path(os.getenv('SOURCE_PATH'))
 
-    def add_file(self, file_path: Path) -> None:
+    def add_file(self, file_path: Path) -> Optional[Video]:
         # TODO: Refactor to service later
+        new = None
         if get_file_type(file_path) == 'video':
-            self.add_video_file(file_path)
+            new = self.add_video_file(file_path)
+        return new
         # Placeholder for other media types
 
-    def add_files(self, file_paths: list[Path]) -> None:
+    def add_files(self, file_paths: list[Path]) -> list[Video]:
         # TODO: Refactor to service later
+        added = []
         for path in file_paths:
-            self.add_file(path)
+            new = self.add_file(path)
+            if new:
+                added.append(new)
+        return added
 
-    def add_video_file(self, file_path: Path) -> None:
+    def add_video_file(self, file_path: Path) -> Video:
         # TODO: Refactor to service later
         new_video = Video.from_file(file_path)
         self.videos.update({new_video.get_hash(): new_video})
         logging.info(f"Added '{file_path}' to collection")
+        return new_video
 
     def add_video_instance(self, video: Video) -> None:
         self.videos.update({self.generate_video_id(video): video})
