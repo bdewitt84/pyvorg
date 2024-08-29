@@ -35,9 +35,9 @@ from source.service import cmd_svc as cmdsvc, \
 
 class Facade:
     # Todo: Decouple components once we get things hammered out
-    def __init__(self):
-        self.command_buffer = CommandBuffer()
-        self.collection = Collection()
+    def __init__(self, collection: Collection, command_buffer: CommandBuffer):
+        self.collection = collection
+        self.command_buffer = command_buffer
 
     def clear_staged_operations(self) -> None:
         cmdsvc.clear_exec_buffer(self.command_buffer)
