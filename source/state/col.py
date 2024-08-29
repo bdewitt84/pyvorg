@@ -52,8 +52,10 @@ class Collection:
         logging.info(f"Added '{file_path}' to collection")
         return new_video
 
-    def add_video_instance(self, video: Video) -> None:
-        self.videos.update({self.generate_video_id(video): video})
+    def add_video_instance(self, video: Video) -> Optional[str]:
+        video_id = self.generate_video_id(video)
+        self.videos.update({video_id: video})
+        return video_id
 
     # @staticmethod
     # def from_dict(source: dict):
