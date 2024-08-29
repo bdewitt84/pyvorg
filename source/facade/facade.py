@@ -15,11 +15,12 @@ from state.col import Collection
 from state.combuffer import CommandBuffer
 import source.datafetchers
 from service import cmd_svc as cmdsvc, \
-    config_svc as cfg_svc, \
-    video_svc as vidsvc, \
-    collection_svc as colsvc, \
-    plugin_svc as pluginsvc, \
-    file_svc as filesvc
+                    config_svc as cfg_svc, \
+                    collection_svc as colsvc, \
+                    file_svc as filesvc, \
+                    plugin_svc as pluginsvc, \
+                    serialize_svc as serial_svc, \
+                    video_svc as vidsvc
 
 
 # Third-party packages
@@ -46,7 +47,8 @@ class Facade:
 
     def export_collection_metadata(self, path: Path) -> None:
         metadata = colsvc.get_metadata(self.collection)
-        filesvc.file_write(path, metadata)
+        write_data = serial_svc.dict_to_json(metadata)
+        filesvc.file_write(path, write_data)
 
     def get_preview_of_staged_operations(self) -> str:
         return cmdsvc.get_exec_preview(self.command_buffer)
@@ -77,6 +79,7 @@ class Facade:
         # Pack parameters
         params = zip(videos, paths)
         # Build commands
+        # TODO: pack args tupes and kwargs dict, pass to build_commands
         cmds = cmdsvc.build_commands('MoveVideo', params)
         # Stage commands
         cmdsvc.stage_commands(self.command_buffer, cmds)
