@@ -11,16 +11,16 @@ from pathlib import Path
 from typing import Optional
 
 # Local imports
-from state.col import Collection
-from state.combuffer import CommandBuffer
+from source.state.col import Collection
+from source.state.combuffer import CommandBuffer
 import source.datafetchers
-from service import cmd_svc as cmdsvc, \
-                    config_svc as cfg_svc, \
-                    collection_svc as colsvc, \
-                    file_svc as filesvc, \
-                    plugin_svc as pluginsvc, \
-                    serialize_svc as serial_svc, \
-                    video_svc as vidsvc
+from source.service import cmd_svc as cmdsvc, \
+                           config_svc as cfg_svc, \
+                           collection_svc as colsvc, \
+                           file_svc as filesvc, \
+                           plugin_svc as pluginsvc, \
+                           serialize_svc as serial_svc, \
+                           video_svc as vidsvc
 
 
 # Third-party packages
