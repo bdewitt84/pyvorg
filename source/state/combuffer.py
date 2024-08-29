@@ -56,6 +56,9 @@ class CommandBuffer:
         # TODO: implement
         pass
 
+    def _get_commands(self):
+        return [cmd for cmd in self.cmd_buffer]
+
     def preview_buffer(self):
         return str(self)
 
