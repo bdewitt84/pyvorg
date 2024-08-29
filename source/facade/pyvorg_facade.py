@@ -86,11 +86,12 @@ class Facade:
         # Stage commands
         cmdsvc.stage_commands(self.command_buffer, cmds)
 
-    def stage_update_api_metadata(self, api_name: str, filter_strings: Optional[list[str]]) -> None:
+    def stage_update_api_metadata(self, api_name: str, filter_strings: Optional[list[str]] = None) -> None:
         # Collect parameter data
         videos = colsvc.get_filtered_videos(self.collection, filter_strings)
         api_instance = pluginsvc.get_plugin_instance(api_name, source.datafetchers)
         req_plugin_params = pluginsvc.get_required_params(api_instance)
+        # Pack kwargs
         cmd_kwargs_dicts = vidsvc.build_cmd_kwargs(videos, req_plugin_params)
         # Pack args
         cmd_args_tuples = zip(videos, repeat(api_instance))
