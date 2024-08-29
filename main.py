@@ -3,7 +3,7 @@ import sys
 
 # Local imports
 from source.ui.cli import run
-from source.facade.facade import Facade
+from source.facade.pyvorg_facade import Facade
 
 # Third-party packages
 

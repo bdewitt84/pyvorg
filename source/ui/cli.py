@@ -8,7 +8,7 @@
 from argparse import ArgumentParser, HelpFormatter, Namespace
 
 # Local imports
-from source.facade.facade import Facade
+from source.facade.pyvorg_facade import Facade
 
 # Third-party packages
 # n/a
