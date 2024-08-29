@@ -42,6 +42,9 @@ class CommandBuffer:
         cmd.exec()
         self.undo_buffer.append(cmd)
 
+    def exec_is_empty(self) -> bool:
+        return not bool(len(self.cmd_buffer))
+
     def execute_undo_buffer(self):
         if self.undo_buffer:
             while self.undo_buffer:
