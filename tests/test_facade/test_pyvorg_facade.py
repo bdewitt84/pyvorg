@@ -134,7 +134,7 @@ class TestFacade(TestCase):
 
         for cmd in cmds:
             self.assertIn(cmd.video, videos)
-            self.assertIn(cmd.origin_dir, files)
+            self.assertIn(str(Path(self.temp_dir.name) / 'dest'), str(cmd.dest_dir))
 
     @patch('source.service.plugin_svc.get_plugin_instance')
     def test_stage_update_api_metadata(self, mock_get_plugin_instance):
