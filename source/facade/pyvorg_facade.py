@@ -26,14 +26,14 @@ from source.service import cmd_svc as cmd_svc, \
 # n\a
 
 
-# TODO: Moving file_paths needs to take associated subtitles, at the very least.
-#       consider adding a function that searches for the file_paths with an
-#       identical prefix but different extension. key:value pair could be
-#       filename:type, ie video.srt:subtitles
+# TODO: We'll refactor Video to be any arbitrary media file.
+#       Maybe use MediaFile as a base, with Video and Subtitle as subclasses
+#       when we scan we can add media files to the collection based on file extension
+#       consider simply adding 'type:value' key value pair to file info
+#       then we can easily apply filters
 
 
 class Facade:
-    # Todo: Decouple components once we get things hammered out
     def __init__(self, collection: Collection, command_buffer: CommandBuffer):
         self.collection = collection
         self.command_buffer = command_buffer
