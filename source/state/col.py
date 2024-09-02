@@ -29,7 +29,8 @@ class Collection:
             self.path = Path(os.getenv('SOURCE_PATH'))
 
     def add_file(self, file_path: Path) -> Optional[Video]:
-        # TODO: Refactor to service later
+        # TODO: Consider factoring this out so that Collection
+        #       doesn't need to use FileService
         new = None
         if get_file_type(file_path) == 'video':
             new = self.add_video_file(file_path)
@@ -37,7 +38,6 @@ class Collection:
         # Placeholder for other media types
 
     def add_files(self, file_paths: list[Path]) -> list[Video]:
-        # TODO: Refactor to service later
         added = []
         for path in file_paths:
             new = self.add_file(path)
@@ -46,7 +46,6 @@ class Collection:
         return added
 
     def add_video_file(self, file_path: Path) -> Video:
-        # TODO: Refactor to service later
         new_video = Video.from_file(file_path)
         self.videos.update({new_video.get_hash(): new_video})
         logging.info(f"Added '{file_path}' to collection")
