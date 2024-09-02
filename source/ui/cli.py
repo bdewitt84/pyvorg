@@ -176,4 +176,12 @@ def parse_args(args):
 
 def run(args: list[str], session: Facade):
     parsed_args = parse_args(args)
-    handle_parsed_args(parsed_args, session)
+    try:
+        handle_parsed_args(parsed_args, session)
+    except Exception as exception:
+        handle_exceptions(exception)
+
+
+def handle_exceptions(exception: Exception) -> None:
+    # TODO: Implement error handling
+    raise exception
