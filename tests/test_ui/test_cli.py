@@ -6,6 +6,7 @@
 # Standard library
 from tempfile import TemporaryDirectory
 from unittest import TestCase
+from unittest.mock import Mock
 
 # Local imports
 from source.facade.pyvorg_facade import Facade
@@ -16,7 +17,9 @@ from source.facade.pyvorg_facade import Facade
 class TestUI(TestCase):
     def setUp(self) -> None:
         self.test_dir = TemporaryDirectory()
-        self.session = Facade()
+        self.collection = Mock()
+        self.command_buffer = Mock()
+        self.session = Facade(self.collection, self.command_buffer)
 
     def tearDown(self) -> None:
         self.test_dir.cleanup()
