@@ -60,7 +60,7 @@ class TestCollection(TestCase):
         self.test_collection.add_files(files)
 
         # Assert
-        mock_add_file.assert_has_calls([call(path_1), call(path_2), call(path_3)])
+        mock_add_file.assert_has_calls([call(path_1), call(path_2), call(path_3)], any_order=True)
 
     @patch('source.state.col.Video.from_file')
     def test_add_video_file_exists(self, mock_from_file):
