@@ -24,6 +24,14 @@ from constants import APP_NAME,\
 #       inspiration
 
 
+def get_default_collection_path():
+    return get_user_profile_dir() / 'default_collection.state'
+
+
+def get_default_command_buffer_path():
+    return get_user_profile_dir() / 'default_command_buffer.state'
+
+
 def get_default_organize_path():
     return os.getenv(ENV_ORGANIZE_PATH)
 
