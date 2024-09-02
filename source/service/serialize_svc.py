@@ -14,7 +14,8 @@ def dict_to_json(input_dict: dict):
 
 
 def dict_to_xml(input_dict: dict):
-    pass
+    raise NotImplementedError("dict_to_xml has not been implemented")
+
 
 def obj_to_pickle(input_obj: type(object)) -> bytes:
     return pickle.dumps(input_obj)
