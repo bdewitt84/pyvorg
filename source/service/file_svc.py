@@ -42,6 +42,13 @@ def file_write(path: Path, data: str, overwrite=False) -> None:
         file.write(data)
 
 
+def file_write_bytes(path: Path, data: bytes, overwrite=False) -> None:
+    if path.exists() and not overwrite:
+        raise FileExistsError(f"The file '{path}' already exists")
+    with path.open('wb') as file:
+        file.write(data)
+
+
 def file_read(path: Path) -> str:
     """
     Reads data from file at 'path'
@@ -51,6 +58,13 @@ def file_read(path: Path) -> str:
     if not path.exists():
         raise FileNotFoundError(f"The file '{path}' cannot be found")
     with path.open('r') as file:
+        return file.read()
+
+
+def file_read_bytes(path: Path) -> bytes:
+    if not path.exists():
+        raise FileNotFoundError(f"The file '{path}' cannot be found")
+    with path.open('rb') as file:
         return file.read()
 
 
