@@ -1,13 +1,19 @@
+# ./main.py
+
 # Standard Python imports
 import sys
 
 # Local imports
-from source.ui.cli import run
+from source.state.col import Collection
+from source.state.combuffer import CommandBuffer
 from source.facade.pyvorg_facade import Facade
+from source.ui.cli import run
 
 # Third-party packages
 
 
 if __name__ == "__main__":
-    session = Facade()
+    collection = Collection()
+    command_buffer = CommandBuffer()
+    session = Facade(collection, command_buffer)
     run(sys.argv[1:], session)
