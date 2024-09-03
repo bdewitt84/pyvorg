@@ -6,6 +6,7 @@
 
 # Standard library
 from pathlib import Path
+import pickle
 from unittest import TestCase
 from unittest.mock import patch, Mock
 from tempfile import TemporaryDirectory
@@ -67,6 +68,38 @@ class TestFacade(TestCase):
     def test_export_collection_metadata(self):
         pass
 
+    @patch('source.facade.pyvorg_facade.cfg_svc.get_default_command_buffer_path')
+    @patch('source.facade.pyvorg_facade.cfg_svc.get_default_collection_path')
+    def test_load_state(self, mock_get_collection_path, mock_get_command_buffer_path):
+        # Arrange
+        test_collection = Collection()
+        test_command_buffer = CommandBuffer()
+
+        test_collection.videos = {'test_key': 'test_value'}
+        test_command_buffer.cmd_buffer.append('test_object')
+
+        collection_path = Path(self.temp_dir.name) / 'test_collection.file'
+        command_buffer_path = Path(self.temp_dir.name) / 'test_command_buffer.file'
+
+        mock_get_collection_path.return_value = collection_path
+        mock_get_command_buffer_path.return_value = command_buffer_path
+
+        with open(collection_path, 'wb') as file:
+            pickle.dump(test_collection, file)
+
+        with open(command_buffer_path, 'wb') as file:
+            pickle.dump(test_command_buffer, file)
+
+        # Act
+        self.facade.load_state()
+
+        # Assert
+        self.assertIsInstance(self.facade.collection, Collection)
+        self.assertIsInstance(self.facade.command_buffer, CommandBuffer)
+        self.assertIn('test_key', self.facade.collection.videos.keys())
+        self.assertEqual('test_value', self.facade.collection.videos.get('test_key'))
+        self.assertEqual('test_object', self.facade.command_buffer.cmd_buffer.pop())
+
     def test_preview_of_staged_operations(self):
         # Arrange
         test_cmd_1 = Mock()
@@ -90,6 +123,30 @@ class TestFacade(TestCase):
         # Act
         # Assert
         pass
+
+    @patch('source.facade.pyvorg_facade.cfg_svc.get_default_command_buffer_path')
+    @patch('source.facade.pyvorg_facade.cfg_svc.get_default_collection_path')
+    def test_save_state(self, mock_get_collection_path, mock_get_command_buffer_path):
+        # Arrange
+        collection_path = Path(self.temp_dir.name) / 'mock_collection.file'
+        command_buffer_path = Path(self.temp_dir.name) / 'mock_command_buffer.file'
+        mock_get_collection_path.return_value = collection_path
+        mock_get_command_buffer_path.return_value = command_buffer_path
+
+        # Act
+        self.facade.save_state()
+
+        # Assert
+        self.assertTrue(collection_path.exists())
+        self.assertTrue(command_buffer_path.exists())
+
+        with open(collection_path, 'rb') as file:
+            result_collection = pickle.load(file)
+            self.assertIsInstance(result_collection, Collection)
+
+        with open(command_buffer_path, 'rb') as file:
+            result_command_buffer = pickle.load(file)
+            self.assertIsInstance(result_command_buffer, CommandBuffer)
 
     def test_scan_files_in_path(self):
         # Arrange
