@@ -25,11 +25,17 @@ from constants import APP_NAME,\
 
 
 def get_default_collection_path():
-    return get_user_profile_dir() / 'default_collection.state'
+    path = get_user_profile_dir() / 'default_collection.state'
+    if not path.exists():
+        path.touch()
+    return path
 
 
 def get_default_command_buffer_path():
-    return get_user_profile_dir() / 'default_command_buffer.state'
+    path = get_user_profile_dir() / 'default_command_buffer.state'
+    if not path.exists():
+        path.touch()
+    return path
 
 
 def get_default_organize_path():
