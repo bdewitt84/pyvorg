@@ -176,10 +176,13 @@ def parse_args(args):
 
 def run(args: list[str], session: Facade):
     parsed_args = parse_args(args)
+    session.load_state()
     try:
         handle_parsed_args(parsed_args, session)
     except Exception as exception:
         handle_exceptions(exception)
+    else:
+        session.save_state()
 
 
 def handle_exceptions(exception: Exception) -> None:
