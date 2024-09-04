@@ -191,8 +191,6 @@ class TestCollection(TestCase):
         # Act
         result = self.test_collection.to_dict()
 
-        print(result)
-
         # Assert
         mock_get_videos.assert_called_once()
         expected_result = {

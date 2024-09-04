@@ -98,7 +98,6 @@ class TestOMDBAPI(TestCase):
 
         # Act
         result = self.api._construct_params(kwargs)
-        print(result)
 
         # Assert
         self.assertIsInstance(result, dict)
