@@ -112,9 +112,9 @@ class Video:
         path = path.resolve()
 
         file_data = {
-            PATH: path,
-            ROOT: path.parent,
-            FILENAME: path.name,
+            PATH: str(path),
+            ROOT: str(path.parent),
+            FILENAME: str(path.name),
             HASH: '',
             TIMESTAMP: timestamp_generate()
         }
