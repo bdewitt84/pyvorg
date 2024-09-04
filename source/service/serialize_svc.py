@@ -10,7 +10,7 @@ import json
 
 
 def dict_to_json(input_dict: dict):
-    return json.dumps(dict)
+    return json.dumps(input_dict)
 
 
 def dict_to_xml(input_dict: dict):
