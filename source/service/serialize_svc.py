@@ -10,7 +10,9 @@ import json
 
 
 def dict_to_json(input_dict: dict):
-    return json.dumps(input_dict)
+    return json.dumps(input_dict,
+                      indent=4,
+                      skipkeys=True)
 
 
 def dict_to_xml(input_dict: dict):
