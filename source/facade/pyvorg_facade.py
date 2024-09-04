@@ -78,8 +78,9 @@ class Facade:
         command_buffer_path = cfg_svc.get_default_command_buffer_path()
         serialized_collection = file_svc.file_read_bytes(collection_path)
         serialized_command_buffer = file_svc.file_read_bytes(command_buffer_path)
-        self.collection = serial_svc.pickle_to_object(serialized_collection)
-        self.command_buffer = serial_svc.pickle_to_object(serialized_command_buffer)
+        # TODO: Verify and validate that loaded objects are the correct classes
+        self.collection = serial_svc.pickle_to_object(serialized_collection) or Collection()
+        self.command_buffer = serial_svc.pickle_to_object(serialized_command_buffer) or CommandBuffer()
 
     def stage_organize_video_files(self,
                                    destination: Optional[str] = None,
