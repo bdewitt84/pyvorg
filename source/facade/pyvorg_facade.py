@@ -70,8 +70,8 @@ class Facade:
         command_buffer_path = cfg_svc.get_default_command_buffer_path()
         serialized_collection = serial_svc.obj_to_pickle(self.collection)
         serialized_command_buffer = serial_svc.obj_to_pickle(self.command_buffer)
-        file_svc.file_write_bytes(collection_path, serialized_collection)
-        file_svc.file_write_bytes(command_buffer_path, serialized_command_buffer)
+        file_svc.file_write_bytes(collection_path, serialized_collection, overwrite=True)
+        file_svc.file_write_bytes(command_buffer_path, serialized_command_buffer, overwrite=True)
 
     def load_state(self):
         collection_path = cfg_svc.get_default_collection_path()
