@@ -24,4 +24,9 @@ def obj_to_pickle(input_obj: type(object)) -> bytes:
 
 
 def pickle_to_object(pickle_bytes: bytes) -> type(object):
-    return pickle.loads(pickle_bytes)
+    try:
+        obj = pickle.loads(pickle_bytes)
+        if isinstance(obj, object):
+            return obj
+    except EOFError:
+        return None
