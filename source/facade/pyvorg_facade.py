@@ -44,10 +44,10 @@ class Facade:
     def commit_staged_operations(self) -> None:
         cmd_svc.execute_cmd_buffer(self.command_buffer)
 
-    def export_collection_metadata(self, path: Path) -> None:
-        metadata = col_svc.get_metadata(self.collection)
-        write_data = serial_svc.dict_to_json(metadata)
-        file_svc.file_write(path, write_data)
+    def export_collection_metadata(self, path: str) -> None:
+        metadata_dict = col_svc.get_metadata(self.collection)
+        write_data = serial_svc.dict_to_json(metadata_dict)
+        file_svc.file_write(Path(path), write_data)
 
     def get_preview_of_staged_operations(self) -> str:
         return cmd_svc.get_exec_preview(self.command_buffer)
