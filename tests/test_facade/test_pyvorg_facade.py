@@ -68,9 +68,8 @@ class TestFacade(TestCase):
     def test_export_collection_metadata(self):
         pass
 
-    @patch('source.facade.pyvorg_facade.cfg_svc.get_default_command_buffer_path')
-    @patch('source.facade.pyvorg_facade.cfg_svc.get_default_collection_path')
-    def test_load_state(self, mock_get_collection_path, mock_get_command_buffer_path):
+    @patch('source.facade.pyvorg_facade.cfg_svc.get_default_state_path')
+    def test_load_state(self, mock_get_state_path):
         # Arrange
         test_collection = Collection()
         test_command_buffer = CommandBuffer()
@@ -78,17 +77,13 @@ class TestFacade(TestCase):
         test_collection.videos = {'test_key': 'test_value'}
         test_command_buffer.cmd_buffer.append('test_object')
 
-        collection_path = Path(self.temp_dir.name) / 'test_collection.file'
-        command_buffer_path = Path(self.temp_dir.name) / 'test_command_buffer.file'
+        from source.state.application_state import PickleJar
+        test_state = PickleJar(test_collection, test_command_buffer)
 
-        mock_get_collection_path.return_value = collection_path
-        mock_get_command_buffer_path.return_value = command_buffer_path
-
-        with open(collection_path, 'wb') as file:
-            pickle.dump(test_collection, file)
-
-        with open(command_buffer_path, 'wb') as file:
-            pickle.dump(test_command_buffer, file)
+        state_path = Path(self.temp_dir.name) / 'test_collection.file'
+        mock_get_state_path.return_value = state_path
+        with open(state_path, 'wb') as file:
+            pickle.dump(test_state, file)
 
         # Act
         self.facade.load_state()
@@ -124,29 +119,22 @@ class TestFacade(TestCase):
         # Assert
         pass
 
-    @patch('source.facade.pyvorg_facade.cfg_svc.get_default_command_buffer_path')
-    @patch('source.facade.pyvorg_facade.cfg_svc.get_default_collection_path')
-    def test_save_state(self, mock_get_collection_path, mock_get_command_buffer_path):
+    @patch('source.facade.pyvorg_facade.cfg_svc.get_default_state_path')
+    def test_save_state(self, mock_get_state_path):
         # Arrange
-        collection_path = Path(self.temp_dir.name) / 'mock_collection.file'
-        command_buffer_path = Path(self.temp_dir.name) / 'mock_command_buffer.file'
-        mock_get_collection_path.return_value = collection_path
-        mock_get_command_buffer_path.return_value = command_buffer_path
+        state_path = Path(self.temp_dir.name) / 'mock_state.file'
+        mock_get_state_path.return_value = state_path
 
         # Act
         self.facade.save_state()
 
         # Assert
-        self.assertTrue(collection_path.exists())
-        self.assertTrue(command_buffer_path.exists())
+        self.assertTrue(state_path.exists())
 
-        with open(collection_path, 'rb') as file:
+        with open(state_path, 'rb') as file:
             result_collection = pickle.load(file)
-            self.assertIsInstance(result_collection, Collection)
-
-        with open(command_buffer_path, 'rb') as file:
-            result_command_buffer = pickle.load(file)
-            self.assertIsInstance(result_command_buffer, CommandBuffer)
+            self.assertIsInstance(result_collection.collection, Collection)
+            self.assertIsInstance(result_collection.command_buffer, CommandBuffer)
 
     def test_scan_files_in_path(self):
         # Arrange
