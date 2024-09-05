@@ -24,15 +24,8 @@ from constants import APP_NAME,\
 #       inspiration
 
 
-def get_default_collection_path():
-    path = get_user_profile_dir() / 'default_collection.state'
-    if not path.exists():
-        path.touch()
-    return path
-
-
-def get_default_command_buffer_path():
-    path = get_user_profile_dir() / 'default_command_buffer.state'
+def get_default_state_path():
+    path = get_user_profile_dir() / 'default_state.pickle'
     if not path.exists():
         path.touch()
     return path
