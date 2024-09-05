@@ -9,7 +9,7 @@ from source.filter import Filter
 # Third-party packages
 
 
-def add_videos(collection, videos) -> None:
+def add_videos(collection: Collection, videos) -> None:
     for video in videos:
         collection.add_video_instance(video)
 
