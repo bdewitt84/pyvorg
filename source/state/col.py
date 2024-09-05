@@ -12,8 +12,8 @@ from pathlib import Path
 from typing import Optional
 
 # Local imports
-from state.video import Video
-from service.file_svc import get_file_type
+from source.state.video import Video
+from source.service.file_svc import get_file_type
 
 # Third-party packages
 # N/A

@@ -3,7 +3,7 @@
 # Standard library
 
 # Local imports
-from state.col import Collection
+from source.state.col import Collection
 from source.filter import Filter
 
 # Third-party packages
