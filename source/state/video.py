@@ -114,7 +114,7 @@ class Video:
         file_data = {
             PATH: str(path),
             ROOT: str(path.parent),
-            FILENAME: str(path.name),
+            FILENAME: path.name,
             HASH: '',
             TIMESTAMP: timestamp_generate()
         }
