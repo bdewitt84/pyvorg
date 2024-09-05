@@ -33,6 +33,12 @@ from source.service import cmd_svc as cmd_svc, \
 #       then we can easily apply filters
 
 
+class PickleJar:
+    def __init__(self):
+        self.collection = Collection()
+        self.command_buffer = CommandBuffer()
+
+
 class Facade:
     def __init__(self, collection: Collection, command_buffer: CommandBuffer):
         self.collection = collection
@@ -66,21 +72,21 @@ class Facade:
         col_svc.add_videos(self.collection, videos)
 
     def save_state(self):
-        collection_path = cfg_svc.get_default_collection_path()
-        command_buffer_path = cfg_svc.get_default_command_buffer_path()
-        serialized_collection = serial_svc.obj_to_pickle(self.collection)
-        serialized_command_buffer = serial_svc.obj_to_pickle(self.command_buffer)
-        file_svc.file_write_bytes(collection_path, serialized_collection, overwrite=True)
-        file_svc.file_write_bytes(command_buffer_path, serialized_command_buffer, overwrite=True)
+        # TODO: We need to combine Collection and CommandBuffer into one State object
+        jar = PickleJar()
+        jar.collection = self.collection
+        jar.command_buffer = self.command_buffer
+        jar_path = cfg_svc.get_default_collection_path()
+        serialized_state = serial_svc.obj_to_pickle(jar)
+        file_svc.file_write_bytes(jar_path, serialized_state, overwrite=True)
 
     def load_state(self):
-        collection_path = cfg_svc.get_default_collection_path()
-        command_buffer_path = cfg_svc.get_default_command_buffer_path()
-        serialized_collection = file_svc.file_read_bytes(collection_path)
-        serialized_command_buffer = file_svc.file_read_bytes(command_buffer_path)
+        jar_path = cfg_svc.get_default_collection_path()
+        serialized_state = file_svc.file_read_bytes(jar_path)
+        state: PickleJar = serial_svc.pickle_to_object(serialized_state) or PickleJar()
         # TODO: Verify and validate that loaded objects are the correct classes
-        self.collection = serial_svc.pickle_to_object(serialized_collection) or Collection()
-        self.command_buffer = serial_svc.pickle_to_object(serialized_command_buffer) or CommandBuffer()
+        self.collection = state.collection
+        self.command_buffer = state.command_buffer
 
     def stage_organize_video_files(self,
                                    destination: Optional[str] = None,
