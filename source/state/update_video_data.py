@@ -23,7 +23,7 @@ class UpdateVideoData(Command):
         self.kwargs = kwargs
 
     def exec(self):
-        self.undo_data = self.video.get_source_data(self.api.get_name)
+        self.undo_data = self.video.get_source_data(self.api.get_name())
         update_api_data(self.video, self.api, **self.kwargs)
 
     def to_dict(self):
