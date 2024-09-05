@@ -11,6 +11,7 @@ from pathlib import Path
 from typing import Optional
 
 # Local imports
+from source.state.application_state import PickleJar
 from source.state.col import Collection
 from source.state.combuffer import CommandBuffer
 import source.datafetchers
@@ -31,12 +32,6 @@ from source.service import cmd_svc as cmd_svc, \
 #       when we scan we can add media files to the collection based on file extension
 #       consider simply adding 'type:value' key value pair to file info
 #       then we can easily apply filters
-
-
-class PickleJar:
-    def __init__(self):
-        self.collection = Collection()
-        self.command_buffer = CommandBuffer()
 
 
 class Facade:
@@ -72,16 +67,13 @@ class Facade:
         col_svc.add_videos(self.collection, videos)
 
     def save_state(self):
-        # TODO: We need to combine Collection and CommandBuffer into one State object
-        jar = PickleJar()
-        jar.collection = self.collection
-        jar.command_buffer = self.command_buffer
-        jar_path = cfg_svc.get_default_collection_path()
+        jar = PickleJar(self.collection, self.command_buffer)
+        jar_path = cfg_svc.get_default_state_path()
         serialized_state = serial_svc.obj_to_pickle(jar)
         file_svc.file_write_bytes(jar_path, serialized_state, overwrite=True)
 
     def load_state(self):
-        jar_path = cfg_svc.get_default_collection_path()
+        jar_path = cfg_svc.get_default_state_path()
         serialized_state = file_svc.file_read_bytes(jar_path)
         state: PickleJar = serial_svc.pickle_to_object(serialized_state) or PickleJar()
         # TODO: Verify and validate that loaded objects are the correct classes
