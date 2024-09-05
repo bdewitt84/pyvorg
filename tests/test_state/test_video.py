@@ -232,8 +232,8 @@ class TestVideo(TestCase):
 
         # Assert
         expected = {
-                PATH: test_file,
-                ROOT: test_file.parent,
+                PATH: str(test_file),
+                ROOT: str(test_file.parent),
                 FILENAME: test_file.name,
                 HASH: 'fake hash',
                 TIMESTAMP: 'fake timestamp'
