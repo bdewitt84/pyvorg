@@ -32,7 +32,7 @@ def handle_parsed_args(parsed_args: Namespace, session: Facade) -> None:
         session.stage_update_api_metadata(parsed_args.plugins, parsed_args.filters)
 
     elif parsed_args.command == 'organize':
-        print(f"Staging files for organization at '{parsed_args.path}'")
+        print(f"Staging files for organization at '{parsed_args.destination_folder}'")
         session.stage_organize_video_files(parsed_args.destination_folder,
                                            parsed_args.dir_name_format,
                                            parsed_args.filters)
