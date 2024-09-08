@@ -84,6 +84,7 @@ class Facade:
                                    destination: Optional[str] = None,
                                    format_str: Optional[str] = None,
                                    filter_strings: Optional[list[str]] = None) -> None:
+        # TODO: Validate destination path
         if destination is None:
             destination = cfg_svc.get_default_organize_path()
         if format_str is None:
