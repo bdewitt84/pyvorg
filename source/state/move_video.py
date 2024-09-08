@@ -70,7 +70,9 @@ class MoveVideo(Command):
             make_dir(directory)
 
     def _move(self, dest_dir: Path):
-        self._make_dirs(dest_dir)
+        self._make_dirs(dest_dir.resolve())
+        if not dest_dir.exists():
+            raise FileNotFoundError(f"path '{dest_dir}' could not be created")
         dest_path = Path(dest_dir) / self.video.get_filename()
         move_file(self.video.get_path(), dest_path)
         self.video.update_file_data(dest_path)
