@@ -112,7 +112,7 @@ class TestFacade(TestCase):
         self.assertTrue('Test cmd 1' in result)
         self.assertTrue('Test cmd 2' in result)
 
-    def test_import_collections_metadata(self):
+    def test_import_collection_metadata(self):
         # TODO: Implement
         # Arrange
         # Act
