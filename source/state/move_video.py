@@ -61,9 +61,10 @@ class MoveVideo(Command):
         return self._validate_move(current_path, origin_path)
 
     def _make_dirs(self, dest_dir: Path):
-        while dest_dir and not os.path.dirname(dest_dir):
+        # TODO: Can be refactored into two functions
+        while not dest_dir.exists():
             self.created_dirs.append(dest_dir)
-            dest_dir = os.path.dirname(dest_dir)
+            dest_dir = dest_dir.parent
 
         for directory in reversed(self.created_dirs):
             make_dir(directory)
