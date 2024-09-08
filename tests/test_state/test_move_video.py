@@ -126,6 +126,20 @@ class TestMoveVideoCommand(unittest.TestCase):
         dest_path = Path('original dir') / 'video.file'
         mock_validate_move.assert_called_with(src_path, dest_path)
 
+    def test_make_dirs(self):
+        # Arrange
+        root_path = Path(self.temp_dir.name)
+        l1_path = root_path / 'lvl1'
+        l2_path = l1_path / 'lvl2'
+        l3_path = l2_path / 'lvl3'
+
+        # Act
+        self.test_cmd._make_dirs(l3_path)
+
+        # Assert
+        self.assertTrue(l3_path.exists())
+        self.assertEqual([l3_path, l2_path, l1_path], self.test_cmd.created_dirs)
+
     @patch('source.state.move_video.move_file')
     @patch('source.state.move_video.MoveVideo._make_dirs')
     def test_move(self, mock_make_dirs, mock_move_file):
