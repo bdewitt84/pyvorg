@@ -152,7 +152,7 @@ class TestMoveVideoCommand(unittest.TestCase):
         # Assert
         mock_make_dirs.assert_called_once_with(self.dest_dir)
         mock_move_file.assert_called_once_with(self.vid.get_path(), dest_path)
-        self.vid.update_file_data.assert_called_once_with(dest_path)
+        self.vid.update_file_data.assert_called_once_with(dest_path, skip_hash=True)
 
     @patch('source.state.move_video.dir_is_empty')
     def test_undo_make_dirs(self, mock_dir_is_empty):
