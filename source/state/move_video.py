@@ -22,6 +22,9 @@ from service.file_svc import \
 # Third-party packages
 
 
+# TODO: Refactor to move_media_file.py
+
+
 class MoveVideo(Command):
     def __init__(self, video, dest_dir: Path, *args, **kwargs):
         super().__init__(*args, **kwargs)

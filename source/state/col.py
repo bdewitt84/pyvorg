@@ -19,6 +19,12 @@ from source.service.file_svc import get_file_type
 # N/A
 
 
+# TODO: Implement support for other media
+#       Add methods:
+#           add_poster_file()
+#           add_trailer_file()
+#           add_subtitle_file()
+
 class Collection:
     def __init__(self, path: Path = None):
         self.videos = {}

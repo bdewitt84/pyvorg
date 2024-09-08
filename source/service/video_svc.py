@@ -10,6 +10,12 @@ from state.video import Video
 # Third-party packages
 
 
+# TODO: Refactor to media_service.py
+#       add methods:
+#           create_posters_from_file_paths()
+#           create_trailers_from_file_paths()
+
+
 def create_videos_from_file_paths(file_paths: list[Path]) -> list[Video]:
     return [Video.from_file(path) for path in file_paths]
 

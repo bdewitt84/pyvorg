@@ -42,6 +42,7 @@ def handle_parsed_args(parsed_args: Namespace, session: Facade) -> None:
         # facade.set_profile(parsed_args.name)
 
     elif parsed_args.command == 'scan':
+        # TODO: Plan and implement option for discriminating based on file type
         print(f"Scanning '{parsed_args.path}'")
         session.scan_files_in_path(parsed_args.path)
 

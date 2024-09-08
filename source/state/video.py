@@ -19,6 +19,9 @@ from source.utils.helper import get_preferred_sources, timestamp_generate
 # Third-party packages
 
 
+# TODO: Refactor to Media
+
+
 class Video:
     def __init__(self, path: Path = None):
         self.data = {USER_DATA: {}}
@@ -104,6 +107,7 @@ class Video:
         return self.data
 
     def update_file_data(self, path: Path, skip_hash: bool = False) -> None:
+        # TODO: Add member for 'media_type'
         if not path.exists() or not path.is_file():
             msg = f"Cannot update info for '{path}': file not found."
             logging.error(msg)

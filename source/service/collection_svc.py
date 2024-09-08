@@ -8,6 +8,10 @@ from source.filter import Filter
 
 # Third-party packages
 
+# TODO: Implement support for other media types
+#       Add methods:
+#           add_media()
+
 
 def add_videos(collection: Collection, videos) -> None:
     for video in videos:

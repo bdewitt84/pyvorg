@@ -100,6 +100,7 @@ class Facade:
     def stage_update_api_metadata(self,
                                   api_name: str,
                                   filter_strings: Optional[list[str]] = None) -> None:
+        # TODO: refactor to stage_fetch_data
 
         videos = col_svc.get_filtered_videos(self.collection, filter_strings)
         api_instance = plugin_svc.get_plugin_instance(api_name, source.datafetchers)
