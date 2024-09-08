@@ -75,7 +75,7 @@ class MoveVideo(Command):
             raise FileNotFoundError(f"path '{dest_dir}' could not be created")
         dest_path = Path(dest_dir) / self.video.get_filename()
         move_file(self.video.get_path(), dest_path)
-        self.video.update_file_data(dest_path)
+        self.video.update_file_data(dest_path, skip_hash=True)
 
     def _undo_make_dirs(self):
         for directory in self.created_dirs:
