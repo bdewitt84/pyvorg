@@ -1,7 +1,7 @@
 # source/command/move_video.py
 
 """
-    Implementation of MoveVideo command used by CommandBuffer
+Implementation of MoveVideo command used by CommandBuffer
 """
 
 # Standard library
@@ -73,6 +73,7 @@ class MoveVideo(Command):
             make_dir(directory)
 
     def _move(self, dest_dir: Path):
+        # TODO: logic needs to be refactored to another layer
         self._make_dirs(dest_dir.resolve())
         if not dest_dir.exists():
             raise FileNotFoundError(f"path '{dest_dir}' could not be created")

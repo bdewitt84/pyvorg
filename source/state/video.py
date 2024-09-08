@@ -28,8 +28,8 @@ class Video:
         if path is not None:
             self.update_file_data(path)
 
+    # TODO: This belongs in services
     def append_available_sources(self, sources: list) -> None:
-        # TODO: This belongs in services
         for source in self.get_source_names():
             if source not in sources:
                 sources.append(source)
