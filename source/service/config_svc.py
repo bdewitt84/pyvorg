@@ -17,13 +17,6 @@ from constants import APP_NAME,\
 # n\a
 
 
-# TODO: Consider re-implementing a completely decoupled
-#       version of config_svc. It might actually make more
-#       sense to write a stateful class, i.e. a config
-#       manager. Look at other implementations for
-#       inspiration
-
-
 def get_default_state_path():
     path = get_user_profile_dir() / 'default_state.pickle'
     if not path.exists():
