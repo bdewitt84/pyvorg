@@ -161,7 +161,6 @@ class OMDBFetcher(DataFetcher):
         data = self._get_response_data(response)
         response_code = response.status_code
         self._handle_response_status_code(data, response_code, title)
-
         return data
 
     def _get_response_data(self, response: requests.Response) -> dict:
@@ -176,6 +175,7 @@ class OMDBFetcher(DataFetcher):
         return data
 
     def _handle_response_status_code(self, data, status_code, title: str):
+        # TODO: use response.raise_for_status() instead
 
         if status_code == 200:
             if data['Response'] == 'True':
