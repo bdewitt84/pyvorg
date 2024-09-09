@@ -64,13 +64,18 @@ class MoveVideo(Command):
         return self._validate_move(current_path, origin_path)
 
     def _make_dirs(self, dest_dir: Path):
-        # TODO: Can be refactored into two functions
-        while not dest_dir.exists():
-            self.created_dirs.append(dest_dir)
-            dest_dir = dest_dir.parent
-
+        self.created_dirs = self._generate_dirs_to_create(dest_dir)
         for directory in reversed(self.created_dirs):
             make_dir(directory)
+
+    @staticmethod
+    def _generate_dirs_to_create(dest_dir: Path) -> list[Path]:
+        # TODO: refactor to helper / service
+        dirs = []
+        while not dest_dir.exists():
+            dirs.append(dest_dir)
+            dest_dir = dest_dir.parent
+        return dirs
 
     def _move(self, dest_dir: Path):
         # TODO: logic needs to be refactored to another layer
