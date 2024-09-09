@@ -7,7 +7,6 @@
 
 # Standard library
 import logging
-import os
 from pathlib import Path
 from typing import Optional
 
@@ -26,13 +25,8 @@ from source.service.file_svc import get_file_type
 #           add_subtitle_file()
 
 class Collection:
-    def __init__(self, path: Path = None):
+    def __init__(self):
         self.videos = {}
-        if path is not None:
-            self.path = path
-        else:
-            # TODO: Make/Use getter in helper module for this
-            self.path = Path(os.getenv('SOURCE_PATH'))
 
     def add_file(self, file_path: Path) -> Optional[Video]:
         # TODO: Consider factoring this out so that Collection
