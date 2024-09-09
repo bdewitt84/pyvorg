@@ -45,7 +45,6 @@ def discover_plugins(package: ModuleType) -> dict[str, type[DataFetcher]]:
 
 def get_plugin_instance(api_name: str, package: ModuleType) -> Optional[DataFetcher]:
     # TODO: Consider raising if None
-    # TODO: need to request or pass the plugin package instead
     plugin_class = discover_plugins(package).get(api_name)
     return plugin_class()
 
