@@ -157,37 +157,49 @@ class OMDBFetcher(DataFetcher):
                 requests.HTTPError: If the request fails due to client or server errors.
         """
         response = requests.get(self.get_api_url(), params=params)
+        title = params.get(P_TITLE, 'Err: Unknown Title')
+        data = self._get_response_data(response)
+        response_code = response.status_code
+        self._handle_response_status_code(data, response_code, title)
 
-        title = params.get(P_TITLE)
+        return data
 
-        # Handle specific status codes
-        if response.status_code == 200:
+    def _get_response_data(self, response: requests.Response) -> dict:
+        # response.json() raises
+        #   requests.exceptions.JSONDecodeError – If the response body does not contain valid json.
+        try:
             data = response.json()
+        except requests.exceptions.JSONDecodeError:
+            msg = f"{response.status_code}: There was a problem decoding the response JSON: {response.text}"
+            logging.error(msg)
+            raise requests.HTTPError(msg)
+        return data
+
+    def _handle_response_status_code(self, data, status_code, title: str):
+
+        if status_code == 200:
             if data['Response'] == 'True':
                 logging.info(f"OMDBFetcher data retrieved for '{title}'")
             else:
-                logging.warning(f"Error requesting OMDBFetcher videos for '{title}': {response.json()['Error']}")
+                logging.warning(f"Error requesting OMDBFetcher videos for '{title}': {data['Error']}")
 
-        # TODO: refactor into error handler
-        elif response.status_code == 429:
-            msg = f"Status code {response.json()['Error']}: Rate limit exceeded."
+        elif status_code == 429:
+            msg = f"Status code {data['Error']}: Rate limit exceeded."
             logging.error(msg)
             raise requests.HTTPError(msg)
 
         # Handle unspecified status codes
-        elif 400 <= response.status_code <= 499:
-            msg = f"Status code {response.json()['Error']}: Undefined client error"
+        elif 400 <= status_code <= 499:
+            msg = f"Status code {data['Error']}: Undefined client error"
             logging.error(msg)
             raise requests.HTTPError(msg)
 
-        elif 500 <= response.status_code <= 599:
-            msg = f"Status code {response.json()['Error']}: Undefined server error"
+        elif 500 <= status_code <= 599:
+            msg = f"Status code {data['Error']}: Undefined server error"
             logging.error(msg)
             raise requests.HTTPError(msg)
 
         else:
-            msg = f"Status code {response.status_code}: Undefined error"
+            msg = f"Status code {status_code}: Undefined error"
             logging.error(msg)
             raise requests.HTTPError(msg)
-
-        return data
