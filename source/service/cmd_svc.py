@@ -39,7 +39,8 @@ def build_commands(cmd_name: str, cmd_arg_tuples: Iterable[tuple], cmd_kwarg_dic
 def get_command_from_name(command_name) -> Type:
     # TODO: Use discovery like plugins, or use a registry instead. I think we might try
     #       the registry approach, since it does not imply that the user should be
-    #       adding their own commands
+    #       adding their own commands. It also means we don't have to modify this
+    #       class when adding a new command.
     if command_name == 'MoveVideo':
         return MoveVideo
     elif command_name == 'UpdateVideoData':
