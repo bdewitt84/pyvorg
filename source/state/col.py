@@ -56,15 +56,6 @@ class Collection:
         self.videos.update({video_id: video})
         return video_id
 
-    # @staticmethod
-    # def from_dict(source: dict):
-    #     # Todo: Validate input dictionary
-    #     new_col = Collection()
-    #     for nested_dictionary in source.values():
-    #         new_vid = Video.from_dict(nested_dictionary)
-    #         new_col.add_video_instance(new_vid)
-    #     return new_col
-
     @staticmethod
     def generate_video_id(video: Video):
         return video.get_hash()
