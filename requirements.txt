@@ -1,0 +1,5 @@
+requests~=2.32.3
+colorlog~=6.8.2
+tqdm~=4.66.5
+guessit~=3.8.0
+setuptools~=60.2.0
