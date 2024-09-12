@@ -5,7 +5,7 @@ from pathlib import Path
 import re
 
 # Local imports
-from state.video import Video
+from source.state.video import Video
 
 # Third-party packages
 

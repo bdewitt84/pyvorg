@@ -12,7 +12,7 @@ from pathlib import Path
 import shutil
 
 # Local imports
-from constants import *
+from source.constants import *
 
 # Third-party packages
 from tqdm import tqdm
