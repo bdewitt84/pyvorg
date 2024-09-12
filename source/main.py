@@ -12,7 +12,7 @@ from source.ui.cli import run
 # Third-party packages
 
 
-if __name__ == "__main__":
+def main():
     collection = Collection()
     command_buffer = CommandBuffer()
     session = Facade(collection, command_buffer)
