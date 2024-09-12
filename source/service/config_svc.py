@@ -10,7 +10,7 @@ from pathlib import Path
 import platform
 
 # Local imports
-from constants import APP_NAME,\
+from source.constants import APP_NAME,\
                       ENV_ORGANIZE_PATH
 
 # Third-party packages
