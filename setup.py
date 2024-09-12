@@ -14,7 +14,7 @@ setup(
     packages=find_packages(),
     entry_points={
         'console_scripts': [
-            'pyvorg=your_package.main:main',  # This defines the CLI command
+            'pyvorg=source.main:main',  # This defines the CLI command
         ],
     },
     install_requires=[
