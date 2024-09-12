@@ -12,7 +12,7 @@ from typing import Callable
 
 # Local imports
 from source.datafetchers.base_fetcher import DataFetcher
-from constants import DATA_PREF_ORDER
+from source.constants import DATA_PREF_ORDER
 
 # Third-party imports
 import colorlog
