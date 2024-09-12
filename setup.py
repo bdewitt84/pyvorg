@@ -20,6 +20,7 @@ setup(
     install_requires=[
         'colorlog',
         'guessit',
+        'python-dotenv~=1.0.1',
         'requests',
         'setuptools',
         'tqdm',
