@@ -24,6 +24,10 @@ def generate_destination_paths(videos, dst_tree: Path, format_string: str) -> li
     return [Path(dst_tree) / generate_str_from_metadata(video, format_string) for video in videos]
 
 
+def generate_destination_path(video, dst_tree: Path, format_string:str) -> Path:
+    return Path(dst_tree) / generate_str_from_metadata(video, format_string)
+
+
 def generate_str_from_metadata(video, format_string: str) -> str:
     matches = re.findall(r"(%\w+)(=[\w()_,.]*)?", format_string)
     for specifier, default_value in matches:
