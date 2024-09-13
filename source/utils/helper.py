@@ -22,6 +22,26 @@ def class_name(obj):
     return obj.__class__.__name__
 
 
+def create_demo_folder(path: Path):
+    src_path = path / 'source'
+    src_path.mkdir()
+
+    dst_path = path / 'dest'
+    dst_path.mkdir()
+
+    mock_vids = [
+        src_path / '[Kuraze] Neo Tokyo - (D-KIDS 1920x1036 H264 Hi10p AC3 Chap) [DC38A5F2].1080.mp4',
+        src_path / 'Extraction.2.2023.1080p.NF.WEBRip.1400MB.DD5.1.x264-GalaxyRG.mkv',
+        src_path / 'Namakura Gatana 1917 restoration.mp4',
+        src_path / 'Alien.Directors.Cut.1979.1080p.BRrip.x264.GAZ.YIFY.mp4',
+        src_path / 'Double.Suicide.1969.JAPANESE.ENSUBBED.1080p.WEBRip.x264.AAC-[YTS.MX].mp4'
+    ]
+
+    for vid in mock_vids:
+        with open(vid, 'w') as file:
+            file.write(vid.name)
+
+
 def create_dummy_files(path: Path, n, func: Callable = lambda x: 'dummy_file_' + str(x) + '.file'):
     """
     Creates n dummy videos at directory 'path'
