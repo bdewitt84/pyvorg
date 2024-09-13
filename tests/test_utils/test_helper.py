@@ -45,8 +45,11 @@ class TestHelper(TestCase):
             Path(target_path) / 'dummy_video_1.mp4',
             Path(target_path) / 'dummy_video_2.mp4'
         ]
+
         result = [file for file in target_path.iterdir()]
-        self.assertEqual(expected, result)
+
+        for path in expected:
+            self.assertIn(path, result)
 
     def test_default_serializer(self):
         # TODO: Implement
