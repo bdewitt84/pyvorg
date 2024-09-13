@@ -85,10 +85,9 @@ class Facade:
                                    format_str: Optional[str] = None,
                                    filter_strings: Optional[list[str]] = None) -> None:
         # TODO: Validate destination path
-        if destination is None:
-            destination = cfg_svc.get_default_organize_path()
-        if format_str is None:
-            format_str = cfg_svc.get_default_format_str()
+
+        destination = destination or cfg_svc.get_default_organize_path()
+        format_str = format_str or cfg_svc.get_default_format_str()
 
         videos = col_svc.get_filtered_videos(self.collection, filter_strings)
         paths = video_svc.generate_destination_paths(videos, destination, format_str)
