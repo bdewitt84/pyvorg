@@ -44,7 +44,7 @@ def handle_parsed_args(parsed_args: Namespace, session: Facade) -> None:
     elif parsed_args.command == 'scan':
         # TODO: Plan and implement option for discriminating based on file type
         print(f"Scanning '{parsed_args.path}'")
-        session.scan_files_in_path(parsed_args.path)
+        session.scan_files_in_path(parsed_args.path, parsed_args.recurse)
 
     elif parsed_args.command == 'undo':
         print(f"Undoing last commit")
@@ -158,6 +158,12 @@ def parse_args(args):
         'path',
         metavar='<PATH>',
         help=scan_path_help
+    )
+    scan_path_recurse_help = 'scan subdirectories recursively'
+    scan_parser.add_argument(
+        '-r', '--recurse',
+        action='store_true',
+        help=scan_path_recurse_help
     )
 
     # Undo
