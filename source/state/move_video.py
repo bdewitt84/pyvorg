@@ -5,9 +5,7 @@ Implementation of MoveVideo command used by CommandBuffer
 """
 
 # Standard library
-import os
 from pathlib import Path
-import json
 import logging
 
 # Local imports
