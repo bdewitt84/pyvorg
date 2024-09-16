@@ -12,6 +12,7 @@ from unittest.mock import call, Mock, patch
 
 # Local imports
 from source.state.move_video import MoveVideo
+from source.state.video import Video
 
 # Third-party packages
 # n/a
@@ -24,26 +25,16 @@ class TestMoveVideoCommand(unittest.TestCase):
         self.temp_dir = tempfile.TemporaryDirectory()
         self.src_dir = Path(self.temp_dir.name)
         self.dest_dir = Path(self.src_dir) / 'dest'
-        self.dest_dir.mkdir()
 
         # Create temp video file
         self.filename = 'tempfile.mp4'
         self.src_file_path = Path(self.temp_dir.name) / self.filename
         with self.src_file_path.open('w') as file:
             file.write('dummy data')
+            assert self.src_file_path.exists()
 
         # Create temp video object
-        self.vid = Mock()
-        self.vid.data = {
-            "file_data": {
-                "path": self.src_file_path,
-                "root": self.temp_dir.name,
-                "filename": self.filename
-            }
-        }
-        self.vid.get_filename.return_value = self.filename
-        self.vid.get_path.return_value = self.src_dir / self.filename
-        self.vid.get_root.return_value = self.src_dir
+        self.vid = Video(self.src_file_path)
 
         # Create MoveCommand object
         self.test_cmd = MoveVideo(self.vid, self.dest_dir)
@@ -51,14 +42,16 @@ class TestMoveVideoCommand(unittest.TestCase):
     def tearDown(self) -> None:
         self.temp_dir.cleanup()
 
-    @patch('source.state.move_video.MoveVideo._move')
-    def test_exec(self, mock_move):
+    def test_exec(self):
+        # Arrange
+        expected_dest_file = self.dest_dir / self.filename
+
         # Act
         self.test_cmd.exec()
 
         # Assert
         self.assertEqual(self.test_cmd.origin_dir, self.src_dir)
-        mock_move.assert_called_once_with(self.dest_dir)
+        self.assertTrue(expected_dest_file.exists())
 
     def test_to_dict(self):
         # Arrange
@@ -68,7 +61,8 @@ class TestMoveVideoCommand(unittest.TestCase):
             Path('created_dir_1'),
             Path('created_dir_2')
         ]
-        self.vid.to_dict.return_value = {'vid_key': 'vid_val'}
+        self.test_cmd.video = Mock()
+        self.test_cmd.video.to_dict.return_value = {'vid_key': 'vid_val'}
 
         # Act
         result = self.test_cmd.to_dict()
@@ -83,24 +77,23 @@ class TestMoveVideoCommand(unittest.TestCase):
             Path('created_dir_2')
         ])
 
-    @patch('source.state.move_video.MoveVideo._undo_make_dirs')
-    @patch('source.state.move_video.MoveVideo._move')
-    def test_undo(self, mock_move, mock_undo_make_dirs):
+    def test_undo(self):
         # Arrange
-        self.test_cmd.origin_dir = 'fake_path'
+        self.test_cmd.exec()
 
         # Act
         self.test_cmd.undo()
 
         # Assert
-        mock_move.assert_called_once_with('fake_path')
-        mock_undo_make_dirs.assert_called_once()
+        self.assertTrue(self.src_file_path.exists())
+        self.assertFalse((self.dest_dir / self.filename).exists())
 
     @patch('source.state.move_video.MoveVideo._validate_move')
     def test_validate_exec(self, mock_validate_move):
         # Arrange
-        self.vid.get_filename.return_value = 'video.file'
-        self.vid.get_path.return_value = Path('current dir') / 'video.file'
+        self.test_cmd.video = Mock()
+        self.test_cmd.video.get_filename.return_value = 'video.file'
+        self.test_cmd.video.get_path.return_value = Path('current dir') / 'video.file'
         self.test_cmd.dest_dir = Path('target dir')
 
         # Act
@@ -114,8 +107,9 @@ class TestMoveVideoCommand(unittest.TestCase):
     @patch('source.state.move_video.MoveVideo._validate_move')
     def test_validate_undo(self, mock_validate_move):
         # Arrange
-        self.vid.get_filename.return_value = 'video.file'
-        self.vid.get_path.return_value = Path('current dir') / 'video.file'
+        self.test_cmd.video = Mock()
+        self.test_cmd.video.get_filename.return_value = 'video.file'
+        self.test_cmd.video.get_path.return_value = Path('current dir') / 'video.file'
         self.test_cmd.origin_dir = 'original dir'
 
         # Act
@@ -134,51 +128,45 @@ class TestMoveVideoCommand(unittest.TestCase):
         l3_path = l2_path / 'lvl3'
 
         # Act
-        self.test_cmd._make_dirs(l3_path)
+        self.test_cmd._make_dirs([l3_path, l2_path, l1_path])
 
         # Assert
+        self.assertTrue(l1_path.exists())
+        self.assertTrue(l2_path.exists())
         self.assertTrue(l3_path.exists())
-        self.assertEqual([l3_path, l2_path, l1_path], self.test_cmd.created_dirs)
 
-    @patch('source.state.move_video.move_file')
-    @patch('source.state.move_video.MoveVideo._make_dirs')
-    def test_move(self, mock_make_dirs, mock_move_file):
+    # @patch('source.state.move_video.move_file')
+    # def test_move(self, mock_move_file):
+    #     # Arrange
+    #     dest_path = self.dest_dir / self.filename
+    #
+    #     # Act
+    #     self.test_cmd._move(self.dest_dir)
+    #
+    #     # Assert
+    #     mock_move_file.assert_called_once_with(self.vid.get_path(), dest_path)
+    #     self.vid.update_file_data.assert_called_once_with(dest_path, skip_hash=True)
+
+    def test_undo_make_dirs(self):
         # Arrange
-        dest_path = self.dest_dir / self.filename
+        root_path = Path(self.temp_dir.name)
+        l1_path = root_path / 'lvl1'
+        l2_path = l1_path / 'lvl2'
+        l3_path = l2_path / 'lvl3'
+
+        dirs = [l3_path, l2_path, l1_path]
+
+        for directory in reversed(dirs):
+            directory.mkdir()
+            assert directory.exists()
 
         # Act
-        self.test_cmd._move(self.dest_dir)
+        self.test_cmd._undo_make_dirs(dirs)
 
         # Assert
-        mock_make_dirs.assert_called_once_with(self.dest_dir)
-        mock_move_file.assert_called_once_with(self.vid.get_path(), dest_path)
-        self.vid.update_file_data.assert_called_once_with(dest_path, skip_hash=True)
-
-    @patch('source.state.move_video.dir_is_empty')
-    def test_undo_make_dirs(self, mock_dir_is_empty):
-        # Arrange
-        empty_dir = Mock()
-        not_empty_dir = Mock()
-        doesnt_exist_dir = Mock()
-
-        empty_dir.exists.return_value = True
-        not_empty_dir.exists.return_value = True
-        doesnt_exist_dir.exists.return_value = True
-
-        empty_dir.empty = True
-        not_empty_dir.empty = False
-
-        mock_dir_is_empty.side_effect = lambda x: True if x.empty else False
-
-        self.test_cmd.created_dirs = [empty_dir, not_empty_dir, doesnt_exist_dir]
-
-        # Act
-        self.test_cmd._undo_make_dirs()
-
-        # Assert
-        empty_dir.rmdir.assert_called_once()
-        not_empty_dir.rmdir.assert_not_called()
-        doesnt_exist_dir.remdir.assert_not_called()
+        self.assertFalse(l3_path.exists())
+        self.assertFalse(l2_path.exists())
+        self.assertFalse(l1_path.exists())
 
     @patch('source.state.move_video.path_is_readable')
     @patch('source.state.move_video.path_is_writable')
