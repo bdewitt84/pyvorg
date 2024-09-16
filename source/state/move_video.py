@@ -10,12 +10,7 @@ import logging
 
 # Local imports
 from source.state.command import Command
-from source.service.file_svc import \
-    dir_is_empty, \
-    make_dir, \
-    move_file, \
-    path_is_readable, \
-    path_is_writable
+import source.service.file_svc as file_svc
 
 # Third-party packages
 
@@ -42,7 +37,7 @@ class MoveVideo(Command):
         # Perform the move
         self._make_dirs(self.created_dirs)
         dest_path = self.dest_dir / self.video.get_filename()
-        move_file(self.video.get_path(), dest_path)
+        file_svc.move_file(self.video.get_path(), dest_path)
 
         # Update metadata
         self.video.update_file_data(dest_path, skip_hash=True)
@@ -58,7 +53,7 @@ class MoveVideo(Command):
 
     def undo(self):
         dest_path = self.origin_dir / self.video.get_filename()
-        move_file(self.video.get_path(), dest_path)
+        file_svc.move_file(self.video.get_path(), dest_path)
         self._undo_make_dirs(self.created_dirs)
 
     def validate_exec(self):
@@ -74,7 +69,7 @@ class MoveVideo(Command):
     @staticmethod
     def _make_dirs(dirs: list[Path]):
         for directory in reversed(dirs):
-            make_dir(directory)
+            file_svc.make_dir(directory)
 
     @staticmethod
     def _generate_dirs_to_create(dest_dir: Path) -> list[Path]:
@@ -110,13 +105,13 @@ class MoveVideo(Command):
         if not dest_path.exists():
             err.append(f"The destination '{dest_path}' already exists.")
 
-        if not path_is_readable(src_path):
+        if not file_svc.path_is_readable(src_path):
             err.append(f"No permission to read from source '{src_path}'")
 
-        if not path_is_writable(src_path):
+        if not file_svc.path_is_writable(src_path):
             err.append(f"No permission to write to source '{src_path}'")
 
-        if not path_is_writable(dest_path.parent):
+        if not file_svc.path_is_writable(dest_path.parent):
             err.append(f"No permission to write to destination '{dest_path.parent}'")
 
         return len(err) == 0, err
