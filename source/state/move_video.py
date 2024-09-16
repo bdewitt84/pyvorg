@@ -31,10 +31,9 @@ class MoveVideo(Command):
     def exec(self):
         # Create undo information
         self.origin_dir = self.video.get_root()
-        self.created_dirs = self._generate_dirs_to_create(self.dest_dir)
+        self.created_dirs = file_svc.make_dirs(self.dest_dir)
 
         # Perform the move
-        self._make_dirs(self.created_dirs)
         dest_path = self.dest_dir / self.video.get_filename()
         file_svc.move_file(self.video.get_path(), dest_path)
 
@@ -64,21 +63,6 @@ class MoveVideo(Command):
         current_path = self.video.get_path()
         origin_path = Path(self.origin_dir, self.video.get_filename())
         return self._validate_move(current_path, origin_path)
-
-    @staticmethod
-    def _make_dirs(dirs: list[Path]):
-        for directory in reversed(dirs):
-            file_svc.make_dir(directory)
-
-    @staticmethod
-    def _generate_dirs_to_create(dest_dir: Path) -> list[Path]:
-        # TODO: refactor to helper / service
-        # TODO: consider folding this into mkdirs, just return the directories created
-        dirs = []
-        while not dest_dir.exists():
-            dirs.append(dest_dir)
-            dest_dir = dest_dir.parent
-        return dirs
 
     @staticmethod
     def _validate_move(src_path: Path, dest_path: Path):

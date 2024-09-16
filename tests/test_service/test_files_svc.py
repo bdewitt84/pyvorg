@@ -134,6 +134,22 @@ class TestFileService(TestCase):
         self.assertTrue(path.exists())
         self.assertTrue(path.is_dir())
 
+    def test_make_dirs(self):
+        # Arrange
+        root_path = Path(self.temp_dir.name)
+        l1_path = root_path / 'lvl1'
+        l2_path = l1_path / 'lvl2'
+        l3_path = l2_path / 'lvl3'
+
+        # Act
+        result = file_svc.make_dirs(l3_path)
+
+        # Assert
+        self.assertTrue(l1_path.exists())
+        self.assertTrue(l2_path.exists())
+        self.assertTrue(l3_path.exists())
+        self.assertEqual([l3_path, l2_path, l1_path], result)
+
     def test_mimic_folder(self):
         # Arrange
         temp_dir = Path(self.temp_dir.name)

@@ -110,6 +110,16 @@ def make_dir(path: Path):
         logging.info(f"Directory '{path}' already exists")
 
 
+def make_dirs(dest_dir: Path) -> list[Path]:
+    dirs = []
+    while not dest_dir.exists():
+        dirs.append(dest_dir)
+        dest_dir = dest_dir.parent
+    for directory in reversed(dirs):
+        make_dir(directory)
+    return dirs
+
+
 def mimic_folder(src_tree: Path, dest_tree: Path) -> None:
     def integer_generator():
         num = 0
