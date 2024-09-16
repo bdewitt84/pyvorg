@@ -27,7 +27,7 @@ class MoveVideo(Command):
     def __init__(self, video, dest_dir: Path, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.video = video
-        self.dest_dir = dest_dir
+        self.dest_dir = dest_dir.resolve()
         self.origin_dir = None
         self.created_dirs = []
 
@@ -35,8 +35,17 @@ class MoveVideo(Command):
         return f"Move \t{self.video.get_path()} \nto \t\t{self.dest_dir}\n"
 
     def exec(self):
+        # Create undo information
         self.origin_dir = self.video.get_root()
-        self._move(self.dest_dir)
+        self.created_dirs = self._generate_dirs_to_create(self.dest_dir)
+
+        # Perform the move
+        self._make_dirs(self.created_dirs)
+        dest_path = self.dest_dir / self.video.get_filename()
+        move_file(self.video.get_path(), dest_path)
+
+        # Update metadata
+        self.video.update_file_data(dest_path, skip_hash=True)
 
     def to_dict(self):
         output_dict = {
@@ -48,8 +57,9 @@ class MoveVideo(Command):
         return output_dict
 
     def undo(self):
-        self._move(self.origin_dir)
-        self._undo_make_dirs()
+        dest_path = self.origin_dir / self.video.get_filename()
+        move_file(self.video.get_path(), dest_path)
+        self._undo_make_dirs(self.created_dirs)
 
     def validate_exec(self):
         src_path = self.video.get_path()
@@ -61,35 +71,34 @@ class MoveVideo(Command):
         origin_path = Path(self.origin_dir, self.video.get_filename())
         return self._validate_move(current_path, origin_path)
 
-    def _make_dirs(self, dest_dir: Path):
-        self.created_dirs = self._generate_dirs_to_create(dest_dir)
-        for directory in reversed(self.created_dirs):
+    @staticmethod
+    def _make_dirs(dirs: list[Path]):
+        for directory in reversed(dirs):
             make_dir(directory)
 
     @staticmethod
     def _generate_dirs_to_create(dest_dir: Path) -> list[Path]:
         # TODO: refactor to helper / service
+        # TODO: consider folding this into mkdirs, just return the directories created
         dirs = []
         while not dest_dir.exists():
             dirs.append(dest_dir)
             dest_dir = dest_dir.parent
         return dirs
 
-    def _move(self, dest_dir: Path):
-        # TODO: logic needs to be refactored to another layer
-        self._make_dirs(dest_dir.resolve())
-        if not dest_dir.exists():
-            raise FileNotFoundError(f"path '{dest_dir}' could not be created")
-        dest_path = Path(dest_dir) / self.video.get_filename()
-        move_file(self.video.get_path(), dest_path)
-        self.video.update_file_data(dest_path, skip_hash=True)
-
-    def _undo_make_dirs(self):
-        for directory in self.created_dirs:
-            if directory.exists() and dir_is_empty(directory):
+    @staticmethod
+    def _undo_make_dirs(dirs: list[Path]):
+        for directory in dirs:
+            try:
                 directory.rmdir()
-            else:
-                logging.info(f"Cannot remove directory: '{directory}' does not exist or is not empty")
+            except FileNotFoundError:
+                msg = f"Cannot remove directory: '{directory}' does not exist"
+                logging.info(msg)
+                raise
+            except OSError:
+                msg = f"Cannot remove directory: '{directory}' is not empty"
+                logging.info(msg)
+                raise
 
     @staticmethod
     def _validate_move(src_path: Path, dest_path: Path):
