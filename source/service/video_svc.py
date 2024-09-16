@@ -36,7 +36,7 @@ def generate_destination_paths(videos, dst_tree: Path, format_string: str) -> li
     return [Path(dst_tree) / generate_str_from_metadata(video, format_string) for video in videos]
 
 
-def generate_destination_path(video, dst_tree: Path, format_string:str) -> Path:
+def generate_destination_path(video, dst_tree: Path, format_string: str) -> Path:
     return Path(dst_tree) / generate_str_from_metadata(video, format_string)
 
 
