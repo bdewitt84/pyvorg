@@ -6,7 +6,6 @@ Implementation of MoveVideo command used by CommandBuffer
 
 # Standard library
 from pathlib import Path
-import logging
 
 # Local imports
 from source.state.command import Command
@@ -54,7 +53,7 @@ class MoveVideo(Command):
     def undo(self):
         dest_path = self.origin_dir / self.video.get_filename()
         file_svc.move_file(self.video.get_path(), dest_path)
-        self._undo_make_dirs(self.created_dirs)
+        file_svc.remove_dirs(self.created_dirs)
 
     def validate_exec(self):
         src_path = self.video.get_path()
@@ -80,20 +79,6 @@ class MoveVideo(Command):
             dirs.append(dest_dir)
             dest_dir = dest_dir.parent
         return dirs
-
-    @staticmethod
-    def _undo_make_dirs(dirs: list[Path]):
-        for directory in dirs:
-            try:
-                directory.rmdir()
-            except FileNotFoundError:
-                msg = f"Cannot remove directory: '{directory}' does not exist"
-                logging.info(msg)
-                raise
-            except OSError:
-                msg = f"Cannot remove directory: '{directory}' is not empty"
-                logging.info(msg)
-                raise
 
     @staticmethod
     def _validate_move(src_path: Path, dest_path: Path):

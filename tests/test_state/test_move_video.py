@@ -147,29 +147,8 @@ class TestMoveVideoCommand(unittest.TestCase):
     #     mock_move_file.assert_called_once_with(self.vid.get_path(), dest_path)
     #     self.vid.update_file_data.assert_called_once_with(dest_path, skip_hash=True)
 
-    def test_undo_make_dirs(self):
-        # Arrange
-        root_path = Path(self.temp_dir.name)
-        l1_path = root_path / 'lvl1'
-        l2_path = l1_path / 'lvl2'
-        l3_path = l2_path / 'lvl3'
-
-        dirs = [l3_path, l2_path, l1_path]
-
-        for directory in reversed(dirs):
-            directory.mkdir()
-            assert directory.exists()
-
-        # Act
-        self.test_cmd._undo_make_dirs(dirs)
-
-        # Assert
-        self.assertFalse(l3_path.exists())
-        self.assertFalse(l2_path.exists())
-        self.assertFalse(l1_path.exists())
-
-    @patch('source.state.move_video.path_is_readable')
-    @patch('source.state.move_video.path_is_writable')
+    @patch('source.state.move_video.file_svc.path_is_readable')
+    @patch('source.state.move_video.file_svc.path_is_writable')
     def test_validate_move(self, mock_path_is_writable, mock_path_is_readable):
         # Notes: Mocks return True by default when used as a condition in an
         #        if statement. This unit test doesn't test the false branch

@@ -151,3 +151,17 @@ def path_is_writable(path: Path) -> bool:
 
 def path_is_readable(path: Path) -> bool:
     return os.access(path, os.R_OK)
+
+
+def remove_dirs(dirs: list[Path]):
+    for directory in dirs:
+        try:
+            directory.rmdir()
+        except FileNotFoundError:
+            msg = f"Cannot remove directory: '{directory}' does not exist"
+            logging.info(msg)
+            raise
+        except OSError:
+            msg = f"Cannot remove directory: '{directory}' is not empty"
+            logging.info(msg)
+            raise

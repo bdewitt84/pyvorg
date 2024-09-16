@@ -228,3 +228,24 @@ class TestFileService(TestCase):
         self.assertTrue(file_svc.path_is_readable(readable_target_path))
         # This test will always fail on Windows
         # self.assertFalse(path_is_readable(non_readable_target_path))
+
+    def test_remove_dirs(self):
+        # Arrange
+        root_path = Path(self.temp_dir.name)
+        l1_path = root_path / 'lvl1'
+        l2_path = l1_path / 'lvl2'
+        l3_path = l2_path / 'lvl3'
+
+        dirs = [l3_path, l2_path, l1_path]
+
+        for directory in reversed(dirs):
+            directory.mkdir()
+            assert directory.exists()
+
+        # Act
+        file_svc.remove_dirs(dirs)
+
+        # Assert
+        self.assertFalse(l3_path.exists())
+        self.assertFalse(l2_path.exists())
+        self.assertFalse(l1_path.exists())
