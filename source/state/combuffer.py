@@ -31,13 +31,14 @@ class CommandBuffer:
         self.undo_buffer.clear()
 
     def execute_cmd_buffer(self):
-        if self.cmd_buffer:
-            while self.cmd_buffer:
-                self.exec_command()
-        else:
+        if not self.cmd_buffer:
             raise IndexError("Cannot execute; command buffer is empty.\n")
+        while self.cmd_buffer:
+            self.exec_command()
 
     def exec_command(self):
+        if not self.cmd_buffer:
+            raise IndexError("No commands in buffer to execute")
         cmd = self.cmd_buffer.popleft()
         cmd.exec()
         self.undo_buffer.append(cmd)
@@ -46,11 +47,10 @@ class CommandBuffer:
         return not bool(len(self.cmd_buffer))
 
     def execute_undo_buffer(self):
-        if self.undo_buffer:
-            while self.undo_buffer:
-                self.undo_cmd()
-        else:
+        if not self.undo_buffer:
             raise IndexError("Cannot undo; undo buffer is empty.\n")
+        while self.undo_buffer:
+            self.undo_cmd()
 
     def from_dict(self):
         # TODO: implement
@@ -63,11 +63,10 @@ class CommandBuffer:
         return str(self)
 
     def undo_cmd(self):
-        if self.undo_buffer:
-            cmd = self.undo_buffer.pop()
-            cmd.undo()
-        else:
+        if not self.undo_buffer:
             raise IndexError("Cannot undo; command history is empty")
+        cmd = self.undo_buffer.pop()
+        cmd.undo()
 
     # TODO: Generate list of errors, present it to user
     def validate_exec_buffer(self):
