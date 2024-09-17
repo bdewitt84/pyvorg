@@ -46,7 +46,3 @@ def generate_str_from_metadata(video, format_string: str) -> str:
         metadata_value = video.get_pref_data(specifier[1:], default_value[1:])
         format_string = format_string.replace(specifier+default_value, metadata_value)
     return format_string.strip()
-
-
-def update_file_data(video: Video, path: Path, skip_hash: bool) -> None:
-    video.update_file_data(path, skip_hash)
