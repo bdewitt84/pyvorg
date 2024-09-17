@@ -57,30 +57,9 @@ class MoveVideo(Command):
     def validate_exec(self):
         src_path = self.video.get_path()
         dest_path = Path(self.dest_dir) / self.video.get_filename()
-        return self._validate_move(src_path, dest_path)
+        return file_svc.validate_move(src_path, dest_path)
 
     def validate_undo(self):
         current_path = self.video.get_path()
         origin_path = Path(self.origin_dir, self.video.get_filename())
-        return self._validate_move(current_path, origin_path)
-
-    @staticmethod
-    def _validate_move(src_path: Path, dest_path: Path):
-        err = []
-
-        if not src_path.exists():
-            err.append(f"The source '{src_path}' does not exist\n")
-
-        if not dest_path.exists():
-            err.append(f"The destination '{dest_path}' already exists.")
-
-        if not file_svc.path_is_readable(src_path):
-            err.append(f"No permission to read from source '{src_path}'")
-
-        if not file_svc.path_is_writable(src_path):
-            err.append(f"No permission to write to source '{src_path}'")
-
-        if not file_svc.path_is_writable(dest_path.parent):
-            err.append(f"No permission to write to destination '{dest_path.parent}'")
-
-        return len(err) == 0, err
+        return file_svc.validate_move(current_path, origin_path)

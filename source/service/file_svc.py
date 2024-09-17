@@ -175,3 +175,24 @@ def remove_dirs(dirs: list[Path]):
             msg = f"Cannot remove directory: '{directory}' is not empty"
             logging.info(msg)
             raise
+
+
+def validate_move(src_path: Path, dest_path: Path):
+    err = []
+
+    if not src_path.exists():
+        err.append(f"The source '{src_path}' does not exist\n")
+
+    if not dest_path.exists():
+        err.append(f"The destination '{dest_path}' already exists.")
+
+    if not path_is_readable(src_path):
+        err.append(f"No permission to read from source '{src_path}'")
+
+    if not path_is_writable(src_path):
+        err.append(f"No permission to write to source '{src_path}'")
+
+    if not path_is_writable(dest_path.parent):
+        err.append(f"No permission to write to destination '{dest_path.parent}'")
+
+    return len(err) == 0, err
