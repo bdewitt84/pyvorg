@@ -4,7 +4,7 @@
 
 # Local imports
 from source.state.col import Collection
-from source.filter import Filter
+from source.utils.filter import Filter
 
 # Third-party packages
 
