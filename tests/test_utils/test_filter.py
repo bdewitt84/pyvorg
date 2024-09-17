@@ -9,7 +9,7 @@ from unittest import TestCase
 from unittest.mock import patch
 
 # Local imports
-from source.filter import Filter
+from source.utils.filter import Filter
 
 # Third-party packages
 # n\a
@@ -36,7 +36,7 @@ class TestFilter(TestCase):
         self.assertTrue(Filter.compare_numeric(1, "=", 1))
         self.assertFalse(Filter.compare_numeric(1, "=", 2))
 
-    @patch('source.filter.Filter.parse_filter_string', return_value=("key", "op", "val"))
+    @patch('source.utils.filter.Filter.parse_filter_string', return_value=("key", "op", "val"))
     def test_from_String(self, mock_parse):
         # Arrange
         test_string = "test_string"
