@@ -24,12 +24,16 @@ def get_exec_preview(command_buffer):
     return str(command_buffer)
 
 
-def build_command(cmd_name: str, *args, **kwargs):
+def build_command(cmd_name: str,
+                  *args,
+                  **kwargs):
     cmd = get_command_from_name(cmd_name)
     return cmd(*args, **kwargs)
 
 
-def build_commands(cmd_name: str, cmd_arg_tuples: Iterable[tuple], cmd_kwarg_dicts: Iterable[dict]) -> list[Command]:
+def build_commands(cmd_name: str,
+                   cmd_arg_tuples: Iterable[tuple],
+                   cmd_kwarg_dicts: Iterable[dict]) -> list[Command]:
     cmd = get_command_from_name(cmd_name)
     return [cmd(*cmd_arg_tuple, **cmd_kwarg_dict)
             for cmd_arg_tuple, cmd_kwarg_dict
@@ -49,7 +53,8 @@ def get_command_from_name(command_name) -> Type:
         raise ValueError(f"'{command_name}' is not a valid command name")
 
 
-def stage_commands(command_buffer: CommandBuffer, cmds: list[Command]) -> None:
+def stage_commands(command_buffer: CommandBuffer,
+                   cmds: list[Command]) -> None:
     for cmd in cmds:
         command_buffer.add_command(cmd)
 
