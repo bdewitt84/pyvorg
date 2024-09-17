@@ -70,11 +70,15 @@ class CommandBuffer:
 
     # TODO: Generate list of errors, present it to user
     def validate_exec_buffer(self):
-        if self.cmd_buffer:
-            for cmd in self.cmd_buffer:
-                cmd.validate_exec()
-        else:
-            print('Nothing to validate, exec_buffer is empty.\n')
+        if not self.cmd_buffer:
+            raise IndexError("Cannot validate empty exec buffer")
+        all_errs: bool = False
+        all_msgs: list[str] = []
+        for cmd in self.cmd_buffer:
+            err, msgs = cmd.validate_exec()
+            all_errs = all_errs or err
+            all_msgs.extend(msgs)
+        return all_errs, all_msgs
 
     # TODO: Generate list of errors, present it to user
     def validate_undo_buffer(self):

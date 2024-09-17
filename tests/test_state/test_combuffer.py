@@ -132,6 +132,10 @@ class TestCommandBuffer(unittest.TestCase):
         # Arrange
         mock_cmd_1 = Mock()
         mock_cmd_2 = Mock()
+
+        mock_cmd_1.validate_exec.return_value = (0, 'err msg 1')
+        mock_cmd_2.validate_exec.return_value = (0, 'err msg 2')
+
         self.buffer.cmd_buffer.append(mock_cmd_1)
         self.buffer.cmd_buffer.append(mock_cmd_2)
 
