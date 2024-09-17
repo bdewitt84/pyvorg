@@ -8,7 +8,7 @@
 from pathlib import Path
 import tempfile
 import unittest
-from unittest.mock import call, Mock, patch
+from unittest.mock import Mock, patch
 
 # Local imports
 from source.state.move_video import MoveVideo
@@ -88,7 +88,7 @@ class TestMoveVideoCommand(unittest.TestCase):
         self.assertTrue(self.src_file_path.exists())
         self.assertFalse((self.dest_dir / self.filename).exists())
 
-    @patch('source.state.move_video.MoveVideo._validate_move')
+    @patch('source.state.move_video.file_svc.validate_move')
     def test_validate_exec(self, mock_validate_move):
         # Arrange
         self.test_cmd.video = Mock()
@@ -104,7 +104,7 @@ class TestMoveVideoCommand(unittest.TestCase):
         dest_path = Path('target dir') / 'video.file'
         mock_validate_move.assert_called_once_with(src_path, dest_path)
 
-    @patch('source.state.move_video.MoveVideo._validate_move')
+    @patch('source.service.file_svc.validate_move')
     def test_validate_undo(self, mock_validate_move):
         # Arrange
         self.test_cmd.video = Mock()
@@ -119,41 +119,3 @@ class TestMoveVideoCommand(unittest.TestCase):
         src_path = Path('current dir') / 'video.file'
         dest_path = Path('original dir') / 'video.file'
         mock_validate_move.assert_called_with(src_path, dest_path)
-
-    # @patch('source.state.move_video.move_file')
-    # def test_move(self, mock_move_file):
-    #     # Arrange
-    #     dest_path = self.dest_dir / self.filename
-    #
-    #     # Act
-    #     self.test_cmd._move(self.dest_dir)
-    #
-    #     # Assert
-    #     mock_move_file.assert_called_once_with(self.vid.get_path(), dest_path)
-    #     self.vid.update_file_data.assert_called_once_with(dest_path, skip_hash=True)
-
-    @patch('source.state.move_video.file_svc.path_is_readable')
-    @patch('source.state.move_video.file_svc.path_is_writable')
-    def test_validate_move(self, mock_path_is_writable, mock_path_is_readable):
-        # Notes: Mocks return True by default when used as a condition in an
-        #        if statement. This unit test doesn't test the false branch
-        #        of these statements since they only append strings to a list
-
-        # Arrange
-        src_path = Mock()
-        dest_dir = Mock()
-        dest_path = Mock()
-        dest_path.parent = dest_dir
-
-        # Act
-        result_valid, result_msg = self.test_cmd._validate_move(src_path, dest_path)
-
-        # Assert
-        src_path.exists.assert_called_once()
-        dest_path.exists.assert_called_once()
-        mock_path_is_readable.assert_called_once_with(src_path)
-        expected_calls_writable = [call(src_path), call(dest_dir)]
-        mock_path_is_writable.assert_has_calls(expected_calls_writable, any_order=True)
-
-        self.assertTrue(result_valid)
-        self.assertEqual(result_msg, [])

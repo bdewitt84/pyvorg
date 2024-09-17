@@ -38,12 +38,15 @@ class Facade:
     def __init__(self, collection: Collection, command_buffer: CommandBuffer):
         self.collection = collection
         self.command_buffer = command_buffer
+        self.command_buffer_history: list[command_buffer] = []
 
     def clear_staged_operations(self) -> None:
         cmd_svc.clear_exec_buffer(self.command_buffer)
 
     def commit_staged_operations(self) -> None:
         cmd_svc.execute_cmd_buffer(self.command_buffer)
+        self.command_buffer_history.append(self.command_buffer)
+        self.command_buffer = CommandBuffer()
 
     def export_collection_metadata(self, path: str) -> None:
         metadata_dict = col_svc.get_metadata(self.collection)
@@ -67,7 +70,9 @@ class Facade:
         col_svc.add_videos(self.collection, videos)
 
     def save_state(self):
-        jar = PickleJar(self.collection, self.command_buffer)
+        jar = PickleJar(self.collection,
+                        self.command_buffer,
+                        self.command_buffer_history)
         jar_path = cfg_svc.get_default_state_path()
         serialized_state = serial_svc.obj_to_pickle(jar)
         file_svc.file_write_bytes(jar_path, serialized_state, overwrite=True)
@@ -79,6 +84,7 @@ class Facade:
         # TODO: Verify and validate that loaded objects are the correct classes
         self.collection = state.collection
         self.command_buffer = state.command_buffer
+        self.command_buffer_history = state.batch_history
 
     def stage_organize_video_files(self,
                                    destination: Optional[str] = None,
@@ -110,4 +116,6 @@ class Facade:
         cmd_svc.stage_commands(self.command_buffer, cmds)
 
     def undo_transaction(self) -> None:
-        cmd_svc.execute_undo_buffer(self.command_buffer)
+        if self.command_buffer_history:
+            batch = self.command_buffer_history.pop()
+            cmd_svc.execute_undo_buffer(batch)

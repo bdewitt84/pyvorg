@@ -12,6 +12,9 @@ from source.state.combuffer import CommandBuffer
 
 
 class PickleJar:
-    def __init__(self, collection: Optional[Collection] = None, command_buffer: Optional[CommandBuffer] = None):
+    def __init__(self, collection: Optional[Collection] = None,
+                 command_buffer: Optional[CommandBuffer] = None,
+                 batch_history: Optional[list[CommandBuffer]] = None):
         self.collection = collection or Collection()
         self.command_buffer = command_buffer or CommandBuffer()
+        self.batch_history = batch_history or []

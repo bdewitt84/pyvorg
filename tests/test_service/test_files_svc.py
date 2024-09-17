@@ -5,6 +5,7 @@ import os
 from pathlib import Path
 from tempfile import TemporaryDirectory
 from unittest import TestCase
+from unittest.mock import call, patch, Mock
 
 # Local imports
 import source.service.file_svc as file_svc
@@ -265,3 +266,29 @@ class TestFileService(TestCase):
         self.assertFalse(l3_path.exists())
         self.assertFalse(l2_path.exists())
         self.assertFalse(l1_path.exists())
+
+    @patch('source.service.file_svc.path_is_readable')
+    @patch('source.service.file_svc.path_is_writable')
+    def test_validate_move(self, mock_path_is_writable, mock_path_is_readable):
+        # Notes: Mocks return True by default when used as a condition in an
+        #        if statement. This unit test doesn't test the false branch
+        #        of these statements since they only append strings to a list
+
+        # Arrange
+        src_path = Mock()
+        dest_dir = Mock()
+        dest_path = Mock()
+        dest_path.parent = dest_dir
+
+        # Act
+        result_valid, result_msg = file_svc.validate_move(src_path, dest_path)
+
+        # Assert
+        src_path.exists.assert_called_once()
+        dest_path.exists.assert_called_once()
+        mock_path_is_readable.assert_called_once_with(src_path)
+        expected_calls_writable = [call(src_path), call(dest_dir)]
+        mock_path_is_writable.assert_has_calls(expected_calls_writable, any_order=True)
+
+        self.assertTrue(result_valid)
+        self.assertEqual(result_msg, [])

@@ -211,14 +211,23 @@ class TestFacade(TestCase):
         # Arrange
         test_cmd_1 = FauxCmd()
         test_cmd_2 = FauxCmd()
+        transaction_1 = CommandBuffer()
+        transaction_1.undo_buffer.append(test_cmd_1)
+        transaction_1.undo_buffer.append(test_cmd_2)
+        self.facade.command_buffer_history.append(transaction_1)
 
-        self.facade.command_buffer.undo_buffer.append(test_cmd_1)
-        self.facade.command_buffer.undo_buffer.append(test_cmd_2)
+        test_cmd_3 = FauxCmd()
+        test_cmd_4 = FauxCmd()
+        transaction_2 = CommandBuffer()
+        transaction_2.undo_buffer.append(test_cmd_3)
+        transaction_2.undo_buffer.append(test_cmd_4)
+        self.facade.command_buffer_history.append(transaction_2)
 
         # Act
         self.facade.undo_transaction()
 
         # Assert
-        self.assertTrue(test_cmd_1.undo_called)
-        self.assertTrue(test_cmd_2.undo_called)
-        self.assertFalse(self.facade.command_buffer.undo_buffer)
+        self.assertTrue(test_cmd_3.undo_called)
+        self.assertTrue(test_cmd_4.undo_called)
+        self.assertFalse(test_cmd_1.undo_called)
+        self.assertFalse(test_cmd_2.undo_called)
