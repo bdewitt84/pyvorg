@@ -60,4 +60,5 @@ def stage_commands(command_buffer: CommandBuffer,
 
 
 def execute_undo_buffer(command_buffer: CommandBuffer):
+    # TODO: try block, log and raise
     command_buffer.execute_undo_buffer()
