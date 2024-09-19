@@ -13,6 +13,7 @@ from typing import Optional
 # Local imports
 from source.state.video import Video
 from source.service.file_svc import get_file_type
+from source.service.video_svc import create_video_from_file_path
 
 # Third-party packages
 # N/A
@@ -46,7 +47,7 @@ class Collection:
         return added
 
     def add_video_file(self, file_path: Path) -> Video:
-        new_video = Video.from_file(file_path)
+        new_video = create_video_from_file_path(file_path)
         self.videos.update({new_video.get_hash(): new_video})
         logging.info(f"Added '{file_path}' to collection")
         return new_video

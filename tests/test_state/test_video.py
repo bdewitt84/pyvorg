@@ -51,18 +51,6 @@ class TestVideo(TestCase):
         # Assert
         pass
 
-    def test_from_file(self):
-        # Arrange
-        filename = 'test.file'
-        path = Path(self.temp_dir.name) / filename
-        path.touch()
-
-        # Act
-        result = Video.from_file(path)
-
-        # Assert
-        self.assertEqual(result.get_path(), path)
-
     def test_get_filename(self):
         result = self.test_vid.get_filename()
         expected_filename = self.temp_vid_filename

@@ -21,6 +21,18 @@ class TestVideoService(TestCase):
     def tearDown(self) -> None:
         self.temp_dir.cleanup()
 
+    def test_from_file(self):
+        # Arrange
+        filename = 'test.file'
+        path = Path(self.temp_dir.name) / filename
+        path.touch()
+
+        # Act
+        result = vid_svc.create_video_from_file_path(path)
+
+        # Assert
+        self.assertEqual(result.get_path(), path)
+
     def test_create_videos_from_file_paths(self):
         # Arrange
         files = create_dummy_files(self.temp_dir.name, 3, lambda x: 'test_file_' + str(x) + '.mp4')

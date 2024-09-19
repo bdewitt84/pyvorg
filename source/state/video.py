@@ -34,13 +34,6 @@ class Video:
             if source not in sources:
                 sources.append(source)
 
-    @staticmethod
-    # TODO: This probably belongs in services
-    def from_file(file_path: Path):
-        new = Video()
-        new.update_file_data(file_path)
-        return new
-
     def get_filename(self) -> str:
         return self.data[FILE_DATA][FILENAME]
 

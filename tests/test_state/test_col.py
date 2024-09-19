@@ -62,7 +62,7 @@ class TestCollection(TestCase):
         # Assert
         mock_add_file.assert_has_calls([call(path_1), call(path_2), call(path_3)], any_order=True)
 
-    @patch('source.state.col.Video.from_file')
+    @patch('source.state.col.create_video_from_file_path')
     def test_add_video_file_exists(self, mock_from_file):
         # Arrange
         path = Path('fake path')

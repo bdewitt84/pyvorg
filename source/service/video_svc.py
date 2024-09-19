@@ -29,7 +29,13 @@ def build_cmd_kwargs(videos: list[Video], req_params: list[str]) -> list[dict]:
 
 
 def create_videos_from_file_paths(file_paths: list[Path]) -> list[Video]:
-    return [Video.from_file(path) for path in file_paths]
+    return [create_video_from_file_path(path) for path in file_paths]
+
+
+def create_video_from_file_path(file_path: Path):
+    new = Video()
+    new.update_file_data(file_path)
+    return new
 
 
 def generate_destination_paths(videos, dst_tree: Path, format_string: str) -> list[Path]:
@@ -46,3 +52,5 @@ def generate_str_from_metadata(video, format_string: str) -> str:
         metadata_value = video.get_pref_data(specifier[1:], default_value[1:])
         format_string = format_string.replace(specifier+default_value, metadata_value)
     return format_string.strip()
+
+
