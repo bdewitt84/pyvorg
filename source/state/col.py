@@ -84,9 +84,3 @@ class Collection:
             for video
             in self.get_videos()
         }
-    #
-    # def to_json(self) -> str:
-    #     return json.dumps(self.to_dict(),
-    #                       indent=4,
-    #                       skipkeys=True,
-    #                       default=default_serializer)
