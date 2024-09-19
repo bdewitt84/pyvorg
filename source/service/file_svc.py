@@ -137,12 +137,20 @@ def mimic_folder(src_tree: Path, dest_tree: Path) -> None:
 
 
 def move_file(src: Path, dst: Path, overwrite=False) -> None:
+    if not src.exists():
+        raise FileNotFoundError(f"'source '{src}' does not exist")
+    if not src.is_file():
+        raise FileNotFoundError(f"source '{src}' is not a file")
+
     if dst.exists():
-        if not overwrite:
-            msg = f"Cannot move file: '{dst}' already exists"
-            logging.error(msg)
-            raise FileExistsError(msg)
-        logging.warning(f"Overwriting '{dst}' with '{src}'")
+        if dst.is_dir():
+            dst = dst / src.name
+
+        if dst.exists() and not overwrite:
+            raise FileExistsError(f"destination '{dst}' already exist")
+        else:
+            logging.info(f"overwriting '{dst}'")
+
     shutil.move(src, dst)
     logging.info(f"Moved '{src}' to '{dst}'")
 
