@@ -45,7 +45,7 @@ class Video:
         ordered_sources = get_preferred_sources()
 
         if fill is True:
-            self.append_available_sources(ordered_sources)
+            self._append_available_sources(ordered_sources)
 
         for source in ordered_sources:
             for source_key in self.get_source_keys(source):
