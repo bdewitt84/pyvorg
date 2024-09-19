@@ -1,7 +1,7 @@
 # tests/test_datafetchers/test_base_fetcher.py
 
 """
-    Unit tests for base_fetcher.py
+    Unit tests for base_metadata_source.py
 """
 
 # Standard library
@@ -9,7 +9,7 @@ from unittest import TestCase
 from unittest.mock import Mock
 
 # Local imports
-from source.datasources.base_fetcher import DataFetcher
+from source.datasources.base_metadata_source import MetadataSource
 
 # Third-party packages
 
@@ -17,7 +17,7 @@ from source.datasources.base_fetcher import DataFetcher
 class TestDataFetcher(TestCase):
 
     def setUp(self) -> None:
-        class SubClass(DataFetcher):
+        class SubClass(MetadataSource):
             def __init__(self):
                 super().__init__()
 

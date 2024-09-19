@@ -8,17 +8,17 @@ from typing import Optional, Type
 from types import ModuleType
 
 # Local imports
-from source.datasources.base_fetcher import DataFetcher
+from source.datasources.base_metadata_source import MetadataSource
 
 # Third-party plugins
 
 
-def discover_api_classes(api_mod) -> (str, Type[DataFetcher]):
+def discover_api_classes(api_mod) -> (str, Type[MetadataSource]):
     return {
         class_name: obj
         for class_name, obj
         in inspect.getmembers(api_mod, inspect.isclass)
-        if issubclass(obj, DataFetcher) and obj is not DataFetcher
+        if issubclass(obj, MetadataSource) and obj is not MetadataSource
     }
 
 
@@ -32,7 +32,7 @@ def discover_api_modules(package: ModuleType) -> (str, Type):
     }
 
 
-def discover_plugins(package: ModuleType) -> dict[str, type[DataFetcher]]:
+def discover_plugins(package: ModuleType) -> dict[str, type[MetadataSource]]:
     modules = discover_api_modules(package)
     return {
         clsname: cls
@@ -43,11 +43,11 @@ def discover_plugins(package: ModuleType) -> dict[str, type[DataFetcher]]:
     }
 
 
-def get_plugin_instance(api_name: str, package: ModuleType) -> Optional[DataFetcher]:
+def get_plugin_instance(api_name: str, package: ModuleType) -> Optional[MetadataSource]:
     # TODO: Consider raising if None
     plugin_class = discover_plugins(package).get(api_name)
     return plugin_class()
 
 
-def get_required_params(api: DataFetcher) -> list[str]:
+def get_required_params(api: MetadataSource) -> list[str]:
     return api.get_required_params()

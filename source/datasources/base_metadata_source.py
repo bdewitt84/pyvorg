@@ -1,4 +1,4 @@
-# source/datasources/base_fetcher.py
+# source/datasources/base_metadata_source.py
 
 """
     Base class for the plugin interface. Plugins must inherit from this class
@@ -9,8 +9,8 @@ import json
 from abc import ABC, abstractmethod
 
 
-# class DataFetcher(ABC, metaclass=MetaAPI):
-class DataFetcher(ABC):
+# class MetadataSource(ABC, metaclass=MetaAPI):
+class MetadataSource(ABC):
     def __init__(self):
         pass
 

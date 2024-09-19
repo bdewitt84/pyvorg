@@ -16,13 +16,13 @@
 # n/a
 
 # Local imports
-from source.datasources.base_fetcher import DataFetcher
+from source.datasources.base_metadata_source import MetadataSource
 
 # Third-party packages
 from guessit import guessit
 
 
-class GuessitAPI(DataFetcher):
+class GuessitAPI(MetadataSource):
     def __init__(self):
         super().__init__()
 

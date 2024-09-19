@@ -16,7 +16,7 @@ import logging
 
 # Local imports
 from source.constants import *
-from source.datasources.base_fetcher import DataFetcher
+from source.datasources.base_metadata_source import MetadataSource
 
 # Third-party packages
 import requests
@@ -35,7 +35,7 @@ K_PLOT = 'plot'
 K_RETURN = 'rtype'
 
 
-class OMDBFetcher(DataFetcher):
+class OMDBFetcher(MetadataSource):
     """
         A class to interact with the OMDBFetcher API.
 

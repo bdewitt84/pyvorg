@@ -11,7 +11,7 @@ from pathlib import Path
 from typing import Callable
 
 # Local imports
-from source.datasources.base_fetcher import DataFetcher
+from source.datasources.base_metadata_source import MetadataSource
 from source.constants import DATA_PREF_ORDER
 
 # Third-party imports
@@ -111,7 +111,7 @@ def timestamp_validate(timestamp):
     return valid
 
 
-def update_api_data(video, api: DataFetcher, **kwargs) -> None:
+def update_api_data(video, api: MetadataSource, **kwargs) -> None:
     required_params = api.get_required_params()
     if missing := find_missing_params(required_params, kwargs):
         raise ValueError(f"Parameters {missing} were not supplied and could not be retrieved from '{video}' metadata")

@@ -10,7 +10,7 @@ import sys
 
 # Local imports
 from source.service import plugin_svc as plugin_svc
-from source.datasources.base_fetcher import DataFetcher
+from source.datasources.base_metadata_source import MetadataSource
 
 # Third-party packages
 
@@ -35,10 +35,10 @@ class TestPluginService(TestCase):
         fake_mod_2_path = os.path.join(fake_pkg_path, self.fake_mod_2_name + '.py')
         with open(fake_mod_1_path, 'w') as file:
             file.write(
-                """from source.datasources.base_fetcher import DataFetcher\nclass FakeAPI1(DataFetcher):\n    def fetch_data(self, **kwargs):\n        pass\n    def get_optional_params(self):\n        pass\n    def get_required_params(self):\n        pass""")
+                """from source.datasources.base_metadata_source import MetadataSource\nclass FakeAPI1(MetadataSource):\n    def fetch_data(self, **kwargs):\n        pass\n    def get_optional_params(self):\n        pass\n    def get_required_params(self):\n        pass""")
         with open(fake_mod_2_path, 'w') as file:
             file.write(
-                """from source.datasources.base_fetcher import DataFetcher\nclass FakeAPI2(DataFetcher):\n    def fetch_data(self, **kwargs):\n        pass\n    def get_optional_params(self):\n        pass\n    def get_required_params(self):\n        pass""")
+                """from source.datasources.base_metadata_source import MetadataSource\nclass FakeAPI2(MetadataSource):\n    def fetch_data(self, **kwargs):\n        pass\n    def get_optional_params(self):\n        pass\n    def get_required_params(self):\n        pass""")
 
         # Prepare path for imports
         sys.path.insert(0, self.temp_dir.name)
@@ -48,7 +48,7 @@ class TestPluginService(TestCase):
         sys.path.pop(0)
 
     def test_discover_api_classes(self):
-        class FakeAPI(DataFetcher):
+        class FakeAPI(MetadataSource):
             pass
 
         class NotAnAPI:
@@ -90,7 +90,7 @@ class TestPluginService(TestCase):
     @patch('source.service.plugin_svc.discover_api_modules')
     def test_discover_plugins(self, mock_discover_api_modules):
         # Arrange
-        class FakePlugin(DataFetcher):
+        class FakePlugin(MetadataSource):
             pass
 
         class NotAPlugin:
@@ -121,8 +121,8 @@ class TestPluginService(TestCase):
         result_2 = plugin_svc.get_plugin_instance('FakeAPI2', test_pkg)
 
         # Assert
-        self.assertIsInstance(result_1, DataFetcher)
-        self.assertIsInstance(result_2, DataFetcher)
+        self.assertIsInstance(result_1, MetadataSource)
+        self.assertIsInstance(result_2, MetadataSource)
 
     def test_get_required_params(self):
         # Arrange
