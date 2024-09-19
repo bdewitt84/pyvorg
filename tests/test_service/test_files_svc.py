@@ -192,23 +192,40 @@ class TestFileService(TestCase):
     def test_move_file(self):
         # Arrange
         src_exists_path = Path(self.temp_dir.name) / 'exists.file'
-        src_does_not_exist_path = Path(self.temp_dir.name) / 'does_not_exist.file'
-        with src_exists_path.open('w'):
-            pass
+        src_exists_path.touch()
         dst_path = Path(self.temp_dir.name) / 'dst_folder'
+        dst_path.mkdir()
 
         # Act
-        with self.assertRaises(FileNotFoundError):
-            file_svc.move_file(src_does_not_exist_path, dst_path)
-
         file_svc.move_file(src_exists_path, dst_path)
 
         # Assert
-        with self.assertRaises(FileExistsError):
-            file_svc.move_file(src_exists_path, dst_path)
-
         self.assertFalse(src_exists_path.exists())
         self.assertTrue(dst_path.exists())
+
+    def test_move_file_dst_exists(self):
+        # Arrange
+        src_exists_path = Path(self.temp_dir.name) / 'exists.file'
+        src_exists_path.touch()
+
+        dest_dir = Path(self.temp_dir.name) / 'dest_dir'
+        dest_dir.mkdir()
+        dest_exists_path = dest_dir / 'exists.file'
+        dest_exists_path.touch()
+
+        # Act and Assert
+        with self.assertRaises(FileExistsError):
+            file_svc.move_file(src_exists_path, dest_exists_path)
+
+    def test_move_file_src_does_not_exist(self):
+        # Arrange
+        src_does_not_exist_path = Path(self.temp_dir.name) / 'does_not_exist.file'
+        dst_path = Path(self.temp_dir.name) / 'dst_folder'
+        dst_path.mkdir()
+
+        # Act / Assert
+        with self.assertRaises(FileNotFoundError):
+            file_svc.move_file(src_does_not_exist_path, dst_path)
 
     def test_parse_glob_string(self):
         # Arrange

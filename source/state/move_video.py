@@ -8,9 +8,10 @@ Implementation of MoveVideo command used by CommandBuffer
 from pathlib import Path
 
 # Local imports
+import source.service.file_svc as file_svc
+import source.service.video_svc as video_svc
 from source.state.command import Command
 from source.state.video import Video
-import source.service.file_svc as file_svc
 
 # Third-party packages
 
@@ -19,10 +20,11 @@ import source.service.file_svc as file_svc
 
 
 class MoveVideo(Command):
-    def __init__(self, video: Video, dest_dir: Path, *args, **kwargs):
+    def __init__(self, video: Video, dest_dir: Path, format_string: str, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.video = video
         self.dest_dir = dest_dir.resolve()
+        self.format_string = format_string
         self.origin_dir = None
         self.created_dirs = []
 
@@ -30,16 +32,15 @@ class MoveVideo(Command):
         return f"Move \t{self.video.get_path()} \nto \t\t{self.dest_dir}\n"
 
     def exec(self) -> None:
-        # Create undo information
-        self.origin_dir = self.video.get_root()
-        self.created_dirs = file_svc.make_dirs(self.dest_dir)
-
-        # Perform the move
-        dest_path = self.dest_dir / self.video.get_filename()
+        dest_dir = video_svc.generate_destination_path(self.video, self.dest_dir, self.format_string)
+        dest_path = dest_dir / self.video.get_filename()
+        self._update_undo_data(self.video.get_root(), file_svc.make_dirs(dest_dir))
         file_svc.move_file(self.video.get_path(), dest_path)
-
-        # Update metadata
         self.video.update_file_data(dest_path, skip_hash=True)
+
+    def _update_undo_data(self, origin_dir: Path, created_dirs: list[Path]):
+        self.origin_dir = origin_dir
+        self.created_dirs = created_dirs
 
     def to_dict(self) -> dict:
         output_dict = {

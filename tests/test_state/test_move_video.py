@@ -37,14 +37,14 @@ class TestMoveVideoCommand(unittest.TestCase):
         self.vid = Video(self.src_file_path)
 
         # Create MoveCommand object
-        self.test_cmd = MoveVideo(self.vid, self.dest_dir)
+        self.test_cmd = MoveVideo(self.vid, self.dest_dir, 'format_str')
 
     def tearDown(self) -> None:
         self.temp_dir.cleanup()
 
     def test_exec(self):
         # Arrange
-        expected_dest_file = self.dest_dir / self.filename
+        expected_dest_file = self.dest_dir / 'format_str' / self.filename
 
         # Act
         self.test_cmd.exec()

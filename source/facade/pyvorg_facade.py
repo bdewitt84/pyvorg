@@ -90,14 +90,12 @@ class Facade:
                                    destination: Optional[str] = None,
                                    format_str: Optional[str] = None,
                                    filter_strings: Optional[list[str]] = None) -> None:
-        # TODO: Validate destination path
 
-        destination = destination or cfg_svc.get_default_organize_path()
+        destination = Path(destination).resolve() or cfg_svc.get_default_organize_path()
         format_str = format_str or cfg_svc.get_default_format_str()
 
         videos = col_svc.get_filtered_videos(self.collection, filter_strings)
-        paths = video_svc.generate_destination_paths(videos, destination, format_str)
-        cmd_arg_tuples = zip(videos, paths)
+        cmd_arg_tuples = zip(videos, repeat(destination), repeat(format_str))
         cmd_kwarg_dicts = repeat({})
         cmds = cmd_svc.build_commands('MoveVideo', cmd_arg_tuples, cmd_kwarg_dicts)
         cmd_svc.stage_commands(self.command_buffer, cmds)
@@ -106,7 +104,6 @@ class Facade:
                                   api_name: str,
                                   filter_strings: Optional[list[str]] = None) -> None:
         # TODO: refactor to stage_fetch_data
-
         videos = col_svc.get_filtered_videos(self.collection, filter_strings)
         api_instance = plugin_svc.get_plugin_instance(api_name, source.datafetchers)
         req_plugin_params = plugin_svc.get_required_params(api_instance)
