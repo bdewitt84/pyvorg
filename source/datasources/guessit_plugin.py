@@ -1,4 +1,4 @@
-# source/datafetchers/guessit_plugin.py
+# source/datasources/guessit_plugin.py
 
 """
     API interface for Guessit
@@ -16,7 +16,7 @@
 # n/a
 
 # Local imports
-from source.datafetchers.base_fetcher import DataFetcher
+from source.datasources.base_fetcher import DataFetcher
 
 # Third-party packages
 from guessit import guessit

@@ -9,7 +9,7 @@ from unittest import TestCase
 from unittest.mock import Mock
 
 # Local imports
-from source.datafetchers.guessit_plugin import GuessitAPI
+from source.datasources.guessit_plugin import GuessitAPI
 
 # Third-party packages
 

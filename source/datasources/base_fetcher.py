@@ -1,4 +1,4 @@
-# source/datafetchers/base_fetcher.py
+# source/datasources/base_fetcher.py
 
 """
     Base class for the plugin interface. Plugins must inherit from this class

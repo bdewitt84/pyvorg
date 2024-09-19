@@ -8,7 +8,7 @@ from typing import Optional, Type
 from types import ModuleType
 
 # Local imports
-from source.datafetchers.base_fetcher import DataFetcher
+from source.datasources.base_fetcher import DataFetcher
 
 # Third-party plugins
 

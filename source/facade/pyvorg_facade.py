@@ -14,7 +14,7 @@ from typing import Optional
 from source.state.application_state import PickleJar
 from source.state.col import Collection
 from source.state.combuffer import CommandBuffer
-import source.datafetchers
+import source.datasources
 from source.service import cmd_svc as cmd_svc, \
                            config_svc as cfg_svc, \
                            collection_svc as col_svc, \
@@ -105,7 +105,7 @@ class Facade:
                                   filter_strings: Optional[list[str]] = None) -> None:
         # TODO: refactor to stage_fetch_data
         videos = col_svc.get_filtered_videos(self.collection, filter_strings)
-        api_instance = plugin_svc.get_plugin_instance(api_name, source.datafetchers)
+        api_instance = plugin_svc.get_plugin_instance(api_name, source.datasources)
         req_plugin_params = plugin_svc.get_required_params(api_instance)
         cmd_args_tuples = zip(videos, repeat(api_instance))
         cmd_kwargs_dicts = video_svc.build_cmd_kwargs(videos, req_plugin_params)

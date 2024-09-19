@@ -1,4 +1,4 @@
-# source/datafetchers/omdb_plugin.py
+# source/datasources/omdb_plugin.py
 
 """
     API interface for OMDBFetcher (Open Movie Database)
@@ -16,7 +16,7 @@ import logging
 
 # Local imports
 from source.constants import *
-from source.datafetchers.base_fetcher import DataFetcher
+from source.datasources.base_fetcher import DataFetcher
 
 # Third-party packages
 import requests

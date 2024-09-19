@@ -1,7 +1,7 @@
 # tests/test_datafetchers/test_omdb_api.py
 
 """
-    Unit tests for source/datafetchers/omdb_plugin.py
+    Unit tests for source/datasources/omdb_plugin.py
 """
 
 # Standard library
@@ -9,7 +9,7 @@ from unittest import TestCase
 from unittest.mock import Mock, patch
 
 # Local imports
-from source.datafetchers.omdb_plugin import OMDBFetcher
+from source.datasources.omdb_plugin import OMDBFetcher
 
 # Third-party packages
 import requests
@@ -106,7 +106,7 @@ class TestOMDBAPI(TestCase):
         self.assertIn('y', result.keys())
         self.assertTrue(result.get('y'), 'kwarg_title')
 
-    @patch('source.datafetchers.omdb_plugin.requests.get')
+    @patch('source.datasources.omdb_plugin.requests.get')
     def test_query_omdb(self, mock_get):
         # Arrange
         params = {}
