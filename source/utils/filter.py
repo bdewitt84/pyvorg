@@ -7,6 +7,7 @@ import re
 
 # Third-party packages
 
+# TODO: Add '+' operator for 'contains', '-' operator for 'does not contain'
 
 class Filter:
     def __init__(self, key, operator, right_operand):
