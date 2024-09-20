@@ -48,3 +48,12 @@ VIDEO_EXTENSIONS = (
         '.mts', '.mxf', '.mxg', '.nsv', '.ogm', '.ogv', '.qt', '.rm', '.rmvb', '.roq',
         '.scm', '.smv', '.swf', '.ts', '.vob', '.webm', '.wmv', '.yuv'
     )
+
+SUBTITLE_EXTENSIONS = (
+    '.srt', '.sub', '.idx', '.ssa', '.ass', '.vtt', '.ttml', '.dfxp', '.sbv', '.scc',
+    '.stl', '.usf', '.dvb', '.sup', '.pjs', '.mpl2', '.mks', '.txt'
+)
+
+IMAGE_EXTENSIONS = (
+    '.jpg', '.jpeg', '.png', '.gif', '.bmp', '.tiff', '.webp', '.svg'
+)
