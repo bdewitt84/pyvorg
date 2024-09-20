@@ -9,7 +9,7 @@ from unittest import TestCase
 from unittest.mock import Mock, patch
 
 # Local imports
-from source.state.video import Video
+from source.state.mediafile import MediaFile
 from source.state.update_video_data import UpdateVideoData
 from source.constants import *
 
@@ -25,7 +25,7 @@ class TestVideoUpdate(TestCase):
         self.mock_api = Mock()
         self.mock_api.get_name.return_value = self.mock_api_name
         self.mock_api.fetch_video_data.return_value = {self.test_key: self.test_value}
-        self.test_vid = Video()
+        self.test_vid = MediaFile()
         self.test_cmd = UpdateVideoData(self.test_vid, self.mock_api)
 
     def tearDown(self) -> None:

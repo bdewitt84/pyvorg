@@ -1,7 +1,7 @@
-# source/video.py
+# source/mediafile.py
 
 """
-    Video class representing individual videos and their related functions
+    MediaFile class representing individual videos and their related functions
     for use by the Collection class.
 """
 
@@ -21,7 +21,7 @@ from source.utils.helper import get_preferred_sources, timestamp_generate
 # TODO: Refactor to Media
 
 
-class Video:
+class MediaFile:
     def __init__(self, path: Path = None):
         self.data = {USER_DATA: {}}
         if path is not None:

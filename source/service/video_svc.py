@@ -5,7 +5,7 @@ from pathlib import Path
 import re
 
 # Local imports
-from source.state.video import Video
+from source.state.mediafile import MediaFile
 
 # Third-party packages
 
@@ -16,7 +16,7 @@ from source.state.video import Video
 #           create_trailers_from_file_paths()
 
 
-def build_cmd_kwargs(videos: list[Video], req_params: list[str]) -> list[dict]:
+def build_cmd_kwargs(videos: list[MediaFile], req_params: list[str]) -> list[dict]:
     list_of_param_dicts: [dict] = []
     for video in videos:
         cur_dict = {}
@@ -28,12 +28,12 @@ def build_cmd_kwargs(videos: list[Video], req_params: list[str]) -> list[dict]:
     return list_of_param_dicts
 
 
-def create_videos_from_file_paths(file_paths: list[Path]) -> list[Video]:
+def create_videos_from_file_paths(file_paths: list[Path]) -> list[MediaFile]:
     return [create_video_from_file_path(path) for path in file_paths]
 
 
 def create_video_from_file_path(file_path: Path):
-    new = Video()
+    new = MediaFile()
     new.update_file_data(file_path)
     return new
 

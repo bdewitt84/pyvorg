@@ -11,7 +11,7 @@ from pathlib import Path
 import source.service.file_svc as file_svc
 import source.service.video_svc as video_svc
 from source.state.command import Command
-from source.state.video import Video
+from source.state.mediafile import MediaFile
 
 # Third-party packages
 
@@ -20,7 +20,7 @@ from source.state.video import Video
 
 
 class MoveVideo(Command):
-    def __init__(self, video: Video, dest_dir: Path, format_string: str, *args, **kwargs):
+    def __init__(self, video: MediaFile, dest_dir: Path, format_string: str, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.video = video
         self.dest_dir = dest_dir.resolve()

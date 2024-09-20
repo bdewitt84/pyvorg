@@ -27,8 +27,8 @@ from source.service import cmd_svc as cmd_svc, \
 # n\a
 
 
-# TODO: We'll refactor Video to be any arbitrary media file.
-#       Maybe use MediaFile as a base, with Video and Subtitle as subclasses
+# TODO: We'll refactor MediaFile to be any arbitrary media file.
+#       Maybe use MediaFile as a base, with MediaFile and Subtitle as subclasses
 #       when we scan we can add media files to the collection based on file extension
 #       consider simply adding 'type:value' key value pair to file info
 #       then we can easily apply filters

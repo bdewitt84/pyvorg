@@ -12,7 +12,7 @@ from unittest.mock import Mock, patch
 
 # Local imports
 from source.state.move_video import MoveVideo
-from source.state.video import Video
+from source.state.mediafile import MediaFile
 
 # Third-party packages
 # n/a
@@ -34,7 +34,7 @@ class TestMoveVideoCommand(unittest.TestCase):
             assert self.src_file_path.exists()
 
         # Create temp video object
-        self.vid = Video(self.src_file_path)
+        self.vid = MediaFile(self.src_file_path)
 
         # Create MoveCommand object
         self.test_cmd = MoveVideo(self.vid, self.dest_dir, 'format_str')

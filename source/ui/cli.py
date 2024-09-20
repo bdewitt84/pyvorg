@@ -63,7 +63,7 @@ def parse_args(args):
 
     usage_help = 'usage message for CLI'
     parser = ArgumentParser(
-        prog='Video Manager',
+        prog='Pyvorg',
         usage=usage_help,
         formatter_class=HelpFormatter,
         add_help=True

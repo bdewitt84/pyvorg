@@ -1,7 +1,7 @@
 # source/test_state/test_video.py
 
 """
-    Unit tests for source/collection/video.py
+    Unit tests for source/collection/mediafile.py
 """
 
 # Standard library
@@ -13,7 +13,7 @@ from unittest import TestCase
 
 # Local imports
 from source.constants import *
-from source.state.video import Video
+from source.state.mediafile import MediaFile
 
 
 # Third-party packages
@@ -38,7 +38,7 @@ class TestVideo(TestCase):
             }
         }
 
-        self.test_vid = Video()
+        self.test_vid = MediaFile()
         self.test_vid.data = temp_vid_data
 
     def tearDown(self) -> None:
@@ -205,8 +205,8 @@ class TestVideo(TestCase):
         # Assert
         self.assertEqual('test_value', result.get('test_key'))
 
-    @patch('source.state.video.hash_sha256')
-    @patch('source.state.video.timestamp_generate')
+    @patch('source.state.mediafile.hash_sha256')
+    @patch('source.state.mediafile.timestamp_generate')
     def test_update_file_data(self, mock_timestamp_generate, mock_hash_sha256):
         # Arrange
         test_file = Path(self.temp_dir.name, 'fake.file')
