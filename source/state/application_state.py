@@ -5,7 +5,7 @@ from typing import Optional
 
 # Local Imports
 from source.state.col import Collection
-from source.state.cmdbuffer import CommandBuffer
+from source.commands.cmdbuffer import CommandBuffer
 
 # Third-party packages
 # n/a

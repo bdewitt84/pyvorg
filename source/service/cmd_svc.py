@@ -4,7 +4,7 @@
 from typing import Iterable, Type
 
 # Local imports
-from source.state.cmdbuffer import CommandBuffer
+from source.commands.cmdbuffer import CommandBuffer
 from source.commands.command_base import Command
 from source.commands.updatemetadata_cmd import UpdateVideoData
 from source.commands.movevideo_cmd import MoveVideo

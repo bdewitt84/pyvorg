@@ -14,7 +14,7 @@ from tempfile import TemporaryDirectory
 # Local imports
 from source.facade.pyvorg_facade import Facade
 from source.state.col import Collection
-from source.state.cmdbuffer import CommandBuffer
+from source.commands.cmdbuffer import CommandBuffer
 from source.utils.helper import create_dummy_files
 from tests.test_state.shared import FauxCmd
 

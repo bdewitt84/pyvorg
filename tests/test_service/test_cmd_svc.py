@@ -10,7 +10,7 @@ from unittest.mock import call, patch, MagicMock, Mock
 
 # Local imports
 import source.service.cmd_svc as cmd_svc
-from source.state.cmdbuffer import CommandBuffer
+from source.commands.cmdbuffer import CommandBuffer
 from source.commands.command_base import Command
 from source.commands.movevideo_cmd import MoveVideo
 from source.commands.updatemetadata_cmd import UpdateVideoData

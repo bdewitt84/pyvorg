@@ -5,7 +5,7 @@ import sys
 
 # Local imports
 from source.state.col import Collection
-from source.state.cmdbuffer import CommandBuffer
+from source.commands.cmdbuffer import CommandBuffer
 from source.facade.pyvorg_facade import Facade
 from source.ui.cli import run
 

@@ -9,7 +9,7 @@ import unittest
 from unittest.mock import MagicMock, Mock
 
 # Local imports
-from state.cmdbuffer import *
+from source.commands.cmdbuffer import *
 from test_state.shared import FauxCmd
 
 
