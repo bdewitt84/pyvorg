@@ -1,4 +1,4 @@
-# source/command/move_video.py
+# source/command/movevideo_cmd.py
 
 """
 Implementation of MoveVideo command used by CommandBuffer
