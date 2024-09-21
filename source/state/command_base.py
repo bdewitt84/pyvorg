@@ -1,4 +1,4 @@
-# source/command.py
+# source/command_base.py
 
 """
     Command base class and derived classes providing functions for use

@@ -1,7 +1,7 @@
 # tests/test_command.py
 
 """
-    Unit tests for source/state/command.py
+    Unit tests for source/state/command_base.py
 """
 
 # Standard library
