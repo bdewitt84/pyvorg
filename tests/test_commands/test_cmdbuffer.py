@@ -1,4 +1,4 @@
-# tests/test_combuffer.py
+# tests/test_cmdbuffer.py
 
 """
     Unit tests for source/command/cmdbuffer.py
