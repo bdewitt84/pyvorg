@@ -10,7 +10,7 @@ from pathlib import Path
 # Local imports
 import source.service.file_svc as file_svc
 import source.service.video_svc as video_svc
-from source.state.command_base import Command
+from source.commands.command_base import Command
 from source.state.mediafile import MediaFile
 
 # Third-party packages
