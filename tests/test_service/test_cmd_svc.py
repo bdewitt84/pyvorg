@@ -13,7 +13,7 @@ import source.service.cmd_svc as cmd_svc
 from source.state.combuffer import CommandBuffer
 from source.state.command import Command
 from source.commands.movevideo_cmd import MoveVideo
-from source.state.updatemetadata_cmd import UpdateVideoData
+from source.commands.updatemetadata_cmd import UpdateVideoData
 
 # Third-party packages
 # n/a

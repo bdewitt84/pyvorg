@@ -10,7 +10,7 @@ from unittest.mock import Mock, patch
 
 # Local imports
 from source.state.mediafile import MediaFile
-from source.state.updatemetadata_cmd import UpdateVideoData
+from source.commands.updatemetadata_cmd import UpdateVideoData
 from source.constants import *
 
 # Third-party packages
@@ -31,7 +31,7 @@ class TestVideoUpdate(TestCase):
     def tearDown(self) -> None:
         pass
 
-    @patch('source.state.updatemetadata_cmd.update_api_data')
+    @patch('source.commands.updatemetadata_cmd.update_api_data')
     def test_exec(self, mock_update_api_data):
         # TODO: mock call to fill_kwargs_from_metadata
         # Arrange

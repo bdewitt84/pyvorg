@@ -18,7 +18,7 @@ from source.state.combuffer import CommandBuffer
 from source.utils.helper import create_dummy_files
 from tests.test_state.shared import FauxCmd
 
-from source.state.updatemetadata_cmd import UpdateVideoData
+from source.commands.updatemetadata_cmd import UpdateVideoData
 from source.commands.movevideo_cmd import MoveVideo
 
 # Third-party Packages
