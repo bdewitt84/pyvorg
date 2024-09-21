@@ -11,7 +11,7 @@ import unittest
 from unittest.mock import Mock, patch
 
 # Local imports
-from source.state.movevideo_cmd import MoveVideo
+from source.commands.movevideo_cmd import MoveVideo
 from source.state.mediafile import MediaFile
 
 # Third-party packages
@@ -88,7 +88,7 @@ class TestMoveVideoCommand(unittest.TestCase):
         self.assertTrue(self.src_file_path.exists())
         self.assertFalse((self.dest_dir / self.filename).exists())
 
-    @patch('source.state.movevideo_cmd.file_svc.validate_move')
+    @patch('source.commands.movevideo_cmd.file_svc.validate_move')
     def test_validate_exec(self, mock_validate_move):
         # Arrange
         self.test_cmd.video = Mock()

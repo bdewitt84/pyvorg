@@ -7,7 +7,7 @@ from typing import Iterable, Type
 from source.state.combuffer import CommandBuffer
 from source.state.command import Command
 from source.state.updatemetadata_cmd import UpdateVideoData
-from source.state.movevideo_cmd import MoveVideo
+from source.commands.movevideo_cmd import MoveVideo
 
 # Third-party packages
 

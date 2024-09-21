@@ -19,7 +19,7 @@ from source.utils.helper import create_dummy_files
 from tests.test_state.shared import FauxCmd
 
 from source.state.updatemetadata_cmd import UpdateVideoData
-from source.state.movevideo_cmd import MoveVideo
+from source.commands.movevideo_cmd import MoveVideo
 
 # Third-party Packages
 # n/a
