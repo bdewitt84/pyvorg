@@ -1,4 +1,4 @@
-# tests/test_command/test_move_video.py
+# tests/test_command/test_movevideo_cmd.py
 
 """
     Unit tests for source/command/movevideo_cmd.py
