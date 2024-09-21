@@ -12,7 +12,7 @@ from unittest.mock import call, patch, MagicMock, Mock
 import source.service.cmd_svc as cmd_svc
 from source.commands.cmdbuffer import CommandBuffer
 from source.commands.command_base import Command
-from source.commands.movevideo_cmd import MoveVideo
+from source.commands.movevideo_cmd import MoveVideoCmd
 from source.commands.updatemetadata_cmd import UpdateVideoData
 
 # Third-party packages
@@ -118,11 +118,11 @@ class TestCmdSvc(TestCase):
     def test_get_command_from_name(self):
         # Arrange
         # Act
-        result_move_video = cmd_svc.get_command_from_name('MoveVideo')
+        result_move_video = cmd_svc.get_command_from_name('MoveVideoCmd')
         result_update_video_data = cmd_svc.get_command_from_name('UpdateVideoData')
 
         # Assert
-        self.assertEqual(result_move_video, MoveVideo)
+        self.assertEqual(result_move_video, MoveVideoCmd)
         self.assertEqual(result_update_video_data, UpdateVideoData)
 
     def test_stage_commands(self):

@@ -7,7 +7,7 @@ from typing import Iterable, Type
 from source.commands.cmdbuffer import CommandBuffer
 from source.commands.command_base import Command
 from source.commands.updatemetadata_cmd import UpdateVideoData
-from source.commands.movevideo_cmd import MoveVideo
+from source.commands.movevideo_cmd import MoveVideoCmd
 
 # Third-party packages
 
@@ -45,8 +45,8 @@ def get_command_from_name(command_name) -> Type:
     #       the registry approach, since it does not imply that the user should be
     #       adding their own commands. It also means we don't have to modify this
     #       class when adding a new command.
-    if command_name == 'MoveVideo':
-        return MoveVideo
+    if command_name == 'MoveVideoCmd':
+        return MoveVideoCmd
     elif command_name == 'UpdateVideoData':
         return UpdateVideoData
     else:

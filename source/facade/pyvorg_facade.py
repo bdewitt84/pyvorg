@@ -97,7 +97,7 @@ class Facade:
         videos = col_svc.get_filtered_videos(self.collection, filter_strings)
         cmd_arg_tuples = zip(videos, repeat(destination), repeat(format_str))
         cmd_kwarg_dicts = repeat({})
-        cmds = cmd_svc.build_commands('MoveVideo', cmd_arg_tuples, cmd_kwarg_dicts)
+        cmds = cmd_svc.build_commands('MoveVideoCmd', cmd_arg_tuples, cmd_kwarg_dicts)
         cmd_svc.stage_commands(self.command_buffer, cmds)
 
     def stage_update_api_metadata(self,

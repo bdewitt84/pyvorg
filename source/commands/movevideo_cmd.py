@@ -1,7 +1,7 @@
 # source/command/movevideo_cmd.py
 
 """
-Implementation of MoveVideo command used by CommandBuffer
+Implementation of MoveVideoCmd command used by CommandBuffer
 """
 
 # Standard library
@@ -19,8 +19,13 @@ from source.state.mediafile import MediaFile
 # TODO: Refactor to move_media_file.py
 
 
-class MoveVideo(Command):
-    def __init__(self, video: MediaFile, dest_dir: Path, format_string: str, *args, **kwargs):
+class MoveVideoCmd(Command):
+    def __init__(self,
+                 video: MediaFile,
+                 dest_dir: Path,
+                 format_string: str,
+                 *args,
+                 **kwargs):
         super().__init__(*args, **kwargs)
         self.video = video
         self.dest_dir = dest_dir.resolve()

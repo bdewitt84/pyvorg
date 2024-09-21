@@ -11,7 +11,7 @@ import unittest
 from unittest.mock import Mock, patch
 
 # Local imports
-from source.commands.movevideo_cmd import MoveVideo
+from source.commands.movevideo_cmd import MoveVideoCmd
 from source.state.mediafile import MediaFile
 
 # Third-party packages
@@ -37,7 +37,7 @@ class TestMoveVideoCommand(unittest.TestCase):
         self.vid = MediaFile(self.src_file_path)
 
         # Create MoveCommand object
-        self.test_cmd = MoveVideo(self.vid, self.dest_dir, 'format_str')
+        self.test_cmd = MoveVideoCmd(self.vid, self.dest_dir, 'format_str')
 
     def tearDown(self) -> None:
         self.temp_dir.cleanup()

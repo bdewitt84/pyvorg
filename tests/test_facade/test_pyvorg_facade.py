@@ -19,7 +19,7 @@ from source.utils.helper import create_dummy_files
 from tests.test_state.shared import FauxCmd
 
 from source.commands.updatemetadata_cmd import UpdateVideoData
-from source.commands.movevideo_cmd import MoveVideo
+from source.commands.movevideo_cmd import MoveVideoCmd
 
 # Third-party Packages
 # n/a
@@ -173,7 +173,7 @@ class TestFacade(TestCase):
 
         # Assert
         videos = self.collection.get_videos()
-        cmds: list[MoveVideo] = self.command_buffer._get_commands()
+        cmds: list[MoveVideoCmd] = self.command_buffer._get_commands()
 
         self.assertEqual(3, len(cmds))
 
