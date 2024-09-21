@@ -1,4 +1,4 @@
-# source/command/update_video_data.py
+# source/command/updatemetadata_cmd.py
 
 """
     Implementation of UpdateVideoData command used by CommandBuffer

@@ -10,7 +10,7 @@ from unittest.mock import Mock, patch
 
 # Local imports
 from source.state.mediafile import MediaFile
-from source.state.update_video_data import UpdateVideoData
+from source.state.updatemetadata_cmd import UpdateVideoData
 from source.constants import *
 
 # Third-party packages
