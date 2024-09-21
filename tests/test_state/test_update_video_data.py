@@ -31,7 +31,7 @@ class TestVideoUpdate(TestCase):
     def tearDown(self) -> None:
         pass
 
-    @patch('source.state.update_video_data.update_api_data')
+    @patch('source.state.updatemetadata_cmd.update_api_data')
     def test_exec(self, mock_update_api_data):
         # TODO: mock call to fill_kwargs_from_metadata
         # Arrange
