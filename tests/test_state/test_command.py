@@ -8,7 +8,7 @@
 from unittest import TestCase
 
 # Local imports
-from state.combuffer import *
+from state.cmdbuffer import *
 
 
 class TestCommand(TestCase):

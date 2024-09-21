@@ -1,4 +1,4 @@
-# source/combuffer.py
+# source/cmdbuffer.py
 
 """
     Command buffer implementation used by Collection to enable batching

@@ -13,7 +13,7 @@ from typing import Optional
 # Local imports
 from source.state.application_state import PickleJar
 from source.state.col import Collection
-from source.state.combuffer import CommandBuffer
+from source.state.cmdbuffer import CommandBuffer
 import source.datasources
 from source.service import cmd_svc as cmd_svc, \
                            config_svc as cfg_svc, \

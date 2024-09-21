@@ -1,7 +1,7 @@
 # tests/test_combuffer.py
 
 """
-    Unit tests for source/command/combuffer.py
+    Unit tests for source/command/cmdbuffer.py
 """
 
 # Standard library
@@ -9,7 +9,7 @@ import unittest
 from unittest.mock import MagicMock, Mock
 
 # Local imports
-from state.combuffer import *
+from state.cmdbuffer import *
 from test_state.shared import FauxCmd
 
 
