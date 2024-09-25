@@ -53,30 +53,6 @@ class TestMoveVideoCommand(unittest.TestCase):
         self.assertEqual(self.test_cmd.origin_dir, self.src_dir)
         self.assertTrue(expected_dest_file.exists())
 
-    def test_to_dict(self):
-        # Arrange
-        self.test_cmd.dest_dir = Path('dest_dir')
-        self.test_cmd.origin_dir = Path('origin_dir')
-        self.test_cmd.created_dirs = [
-            Path('created_dir_1'),
-            Path('created_dir_2')
-        ]
-        self.test_cmd.video = Mock()
-        self.test_cmd.video.to_dict.return_value = {'vid_key': 'vid_val'}
-
-        # Act
-        result = self.test_cmd.to_dict()
-
-        # Assert
-        self.assertIsInstance(result.get('video'), dict)
-        self.assertEqual(result.get('video').get('vid_key'), 'vid_val')
-        self.assertEqual(result.get('dest_dir'), Path('dest_dir'))
-        self.assertEqual(result.get('origin_dir'), Path('origin_dir'))
-        self.assertEqual(result.get('created_dirs'), [
-            Path('created_dir_1'),
-            Path('created_dir_2')
-        ])
-
     def test_undo(self):
         # Arrange
         self.test_cmd.exec()

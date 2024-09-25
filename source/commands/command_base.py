@@ -23,9 +23,6 @@ class Command(ABC):
     def exec(self):
         raise NotImplementedError
 
-    def to_dict(self):
-        raise NotImplementedError
-
     def validate_exec(self):
         raise NotImplementedError
 

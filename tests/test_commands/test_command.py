@@ -42,13 +42,6 @@ class TestCommand(TestCase):
         with self.assertRaises(NotImplementedError):
             self.subclass.exec()
 
-    def test_to_dict(self):
-        # Arrange
-        # Act
-        # Assert
-        with self.assertRaises(NotImplementedError):
-            self.subclass.to_dict()
-
     def test_validate_exec(self):
         # Arrange
         # Act
