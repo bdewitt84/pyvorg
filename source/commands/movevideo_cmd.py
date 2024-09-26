@@ -11,7 +11,7 @@ from pathlib import Path
 import source.utils.fileutils as file_svc
 from source.commands.command_base import Command
 from source.state.mediafile import MediaFile
-from source.service.videoutils import generate_destination_path
+from source.utils.videoutils import generate_destination_path
 
 # Third-party packages
 

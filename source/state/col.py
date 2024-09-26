@@ -13,7 +13,7 @@ from typing import Optional
 # Local imports
 from source.state.mediafile import MediaFile
 from source.utils.fileutils import get_file_type
-from source.service.videoutils import create_video_from_file_path
+from source.utils.videoutils import create_video_from_file_path
 
 # Third-party packages
 # N/A
