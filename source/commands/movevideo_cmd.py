@@ -9,9 +9,9 @@ from pathlib import Path
 
 # Local imports
 import source.service.file_svc as file_svc
-import source.service.video_svc as video_svc
 from source.commands.command_base import Command
 from source.state.mediafile import MediaFile
+from source.service.video_svc import generate_destination_path
 
 # Third-party packages
 
@@ -37,24 +37,10 @@ class MoveVideoCmd(Command):
         return f"Move \t{self.video.get_path()} \nto \t\t{self.dest_dir}\n"
 
     def exec(self) -> None:
-        dest_dir = video_svc.generate_destination_path(self.video, self.dest_dir, self.format_string)
-        dest_path = dest_dir / self.video.get_filename()
-        self._update_undo_data(self.video.get_root(), file_svc.make_dirs(dest_dir))
-        file_svc.move_file(self.video.get_path(), dest_path)
-        self.video.update_file_data(dest_path, skip_hash=True)
-
-    def _update_undo_data(self, origin_dir: Path, created_dirs: list[Path]):
-        self.origin_dir = origin_dir
-        self.created_dirs = created_dirs
-
-    def to_dict(self) -> dict:
-        output_dict = {
-            'video': self.video.to_dict(),
-            'dest_dir': self.dest_dir,
-            'origin_dir': self.origin_dir,
-            'created_dirs': self.created_dirs
-        }
-        return output_dict
+        self._update_source_root()
+        self._generate_destination_dir_name()
+        self._make_dirs()
+        self._move_video()
 
     def undo(self):
         dest_path = self.origin_dir / self.video.get_filename()
@@ -70,3 +56,17 @@ class MoveVideoCmd(Command):
         current_path = self.video.get_path()
         origin_path = Path(self.origin_dir, self.video.get_filename())
         return file_svc.validate_move(current_path, origin_path)
+
+    def _move_video(self):
+        self.created_dirs = file_svc.make_dirs(self.dest_dir)
+        file_svc.move_file(self.video.get_path(), self.dest_path, False)
+        self.video.update_file_data(self.dest_path / self.video.get_filename(), True)
+
+    def _update_source_root(self):
+        self.origin_dir = self.video.get_root()
+
+    def _generate_destination_dir_name(self):
+        self.dest_path = generate_destination_path(self.video, self.dest_dir, self.format_string)
+
+    def _make_dirs(self):
+        self.created_dirs = file_svc.make_dirs(self.dest_path)
