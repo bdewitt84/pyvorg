@@ -7,7 +7,7 @@ from unittest import TestCase
 from unittest.mock import patch, Mock
 
 # Local imports
-import source.service.video_svc as vid_svc
+from source.service import videoutils
 from source.utils.helper import create_dummy_files
 
 # Third-party packages
@@ -28,7 +28,7 @@ class TestVideoService(TestCase):
         path.touch()
 
         # Act
-        result = vid_svc.create_video_from_file_path(path)
+        result = videoutils.create_video_from_file_path(path)
 
         # Assert
         self.assertEqual(result.get_path(), path)
@@ -38,7 +38,7 @@ class TestVideoService(TestCase):
         files = create_dummy_files(self.temp_dir.name, 3, lambda x: 'test_file_' + str(x) + '.mp4')
 
         # Act
-        result = vid_svc.create_videos_from_file_paths(files)
+        result = videoutils.create_videos_from_file_paths(files)
 
         # Assert
         self.assertTrue(any(files[0] == video.get_path() for video in result))
@@ -46,7 +46,7 @@ class TestVideoService(TestCase):
         self.assertTrue(any(files[2] == video.get_path() for video in result))
         self.assertFalse(any('not_a_real_path' == video.get_path() for video in result))
 
-    @patch('source.service.video_svc.generate_str_from_metadata')
+    @patch.object(videoutils, 'generate_str_from_metadata')
     def test_generate_destination_paths(self, mock_generate_str):
         # Arrange
         mock_vid_1 = Mock()
@@ -60,7 +60,7 @@ class TestVideoService(TestCase):
         videos = [mock_vid_1, mock_vid_2]
 
         # Act
-        result = vid_svc.generate_destination_paths(videos, Path('fake_dest_tree'), 'format_str')
+        result = videoutils.generate_destination_paths(videos, Path('fake_dest_tree'), 'format_str')
 
         # Assert
         expected = [
@@ -75,7 +75,7 @@ class TestVideoService(TestCase):
         mock_vid.get_pref_data.side_effect = lambda x, y: x + '_return'
 
         # Act
-        result = vid_svc.generate_str_from_metadata(mock_vid, '%title (%year)')
+        result = videoutils.generate_str_from_metadata(mock_vid, '%title (%year)')
 
         # Assert
         self.assertEqual('title_return (year_return)', result)
@@ -93,7 +93,7 @@ class TestVideoService(TestCase):
         req_params = ['param_1', 'param_2']
 
         # Act
-        result = vid_svc.build_cmd_kwargs(videos, req_params)
+        result = videoutils.build_cmd_kwargs(videos, req_params)
 
         # Assert
         self.assertIn({'param_1': 'param_1_return', 'param_2': 'param_2_return'}, result)

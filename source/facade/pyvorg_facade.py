@@ -21,7 +21,7 @@ from source.service import cmdutils as cmd_svc, \
                            file_svc as file_svc, \
                            plugin_svc as plugin_svc, \
                            serialize_svc as serial_svc, \
-                           video_svc as video_svc
+                           videoutils as video_svc
 
 # Third-party packages
 # n\a
