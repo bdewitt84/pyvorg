@@ -43,9 +43,8 @@ class MoveVideoCmd(Command):
         self._move_video()
 
     def undo(self):
-        dest_path = self.origin_dir / self.video.get_filename()
-        file_svc.move_file(self.video.get_path(), dest_path)
-        file_svc.remove_dirs(self.created_dirs)
+        self._undo_move_video()
+        self._undo_make_dirs()
 
     def validate_exec(self) -> tuple[bool, list[str]]:
         src_path = self.video.get_path()
@@ -70,3 +69,10 @@ class MoveVideoCmd(Command):
 
     def _make_dirs(self):
         self.created_dirs = file_svc.make_dirs(self.dest_path)
+
+    def _undo_move_video(self):
+        dest_path = self.origin_dir / self.video.get_filename()
+        file_svc.move_file(self.video.get_path(), dest_path)
+
+    def _undo_make_dirs(self):
+        file_svc.remove_dirs(self.created_dirs)
