@@ -1,4 +1,4 @@
-# source/service/cmd_svc.py
+# source/service/cmdutils.py
 
 # Standard library
 from typing import Iterable, Type

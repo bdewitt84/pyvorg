@@ -10,7 +10,7 @@ from unittest import TestCase
 from unittest.mock import call, patch, Mock
 
 # Local imports
-import source.service.cmd_svc as cmd_svc
+import source.service.cmdutils as cmd_svc
 
 # Third-party packages
 # n/a

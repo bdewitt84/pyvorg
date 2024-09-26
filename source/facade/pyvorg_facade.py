@@ -15,7 +15,7 @@ from source.state.application_state import PickleJar
 from source.state.col import Collection
 from source.commands.cmdbuffer import CommandBuffer
 import source.datasources
-from source.service import cmd_svc as cmd_svc, \
+from source.service import cmdutils as cmd_svc, \
                            config_svc as cfg_svc, \
                            collection_svc as col_svc, \
                            file_svc as file_svc, \

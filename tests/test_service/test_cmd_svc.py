@@ -1,7 +1,7 @@
 # ./source/tests/test_service/test_cmd_svc.py
 
 """
-    Unit tests for cmd_svc.py
+    Unit tests for cmdutils.py
 """
 
 # Standard library
@@ -9,11 +9,11 @@ from unittest import TestCase
 from unittest.mock import call, patch, MagicMock, Mock
 
 # Local imports
-import source.service.cmd_svc as cmd_svc
 from source.commands.cmdbuffer import CommandBuffer
 from source.commands.command_base import Command
 from source.commands.movevideo_cmd import MoveVideoCmd
 from source.commands.updatemetadata_cmd import UpdateVideoData
+from source.service import cmdutils
 
 # Third-party packages
 # n/a
@@ -34,7 +34,7 @@ class TestCmdSvc(TestCase):
         self.command_buffer.cmd_buffer.append(mock_cmd_2)
 
         # Act
-        cmd_svc.clear_exec_buffer(self.command_buffer)
+        cmdutils.clear_exec_buffer(self.command_buffer)
 
         # Assert
         self.assertEqual(0, len(self.command_buffer.cmd_buffer))
@@ -47,7 +47,7 @@ class TestCmdSvc(TestCase):
         self.command_buffer.cmd_buffer.append(cmd2)
 
         # Act
-        cmd_svc.execute_cmd_buffer(self.command_buffer)
+        cmdutils.execute_cmd_buffer(self.command_buffer)
 
         # Assert
         self.assertFalse(self.command_buffer.cmd_buffer)
@@ -68,13 +68,13 @@ class TestCmdSvc(TestCase):
 
         # Act
         # result = self.command_buffer.preview_buffer()
-        result = cmd_svc.get_exec_preview(self.command_buffer)
+        result = cmdutils.get_exec_preview(self.command_buffer)
 
         # Assert
         self.assertIn('mock 1', result)
         self.assertIn('mock 2', result)
 
-    @patch('source.service.cmd_svc.get_command_from_name')
+    @patch.object(cmdutils, 'get_command_from_name')
     def test_build_command(self, mock_get_command_from_name):
         # Arrange
         mock_cmd = Mock()
@@ -83,12 +83,12 @@ class TestCmdSvc(TestCase):
         kwargs = {'test_key': 'test_val'}
 
         # Act
-        cmd_svc.build_command('any_cmd', *args, **kwargs)
+        cmdutils.build_command('any_cmd', *args, **kwargs)
 
         # Assert
         mock_cmd.assert_called_with('arg_1', 'arg_2', test_key='test_val')
 
-    @patch('source.service.cmd_svc.get_command_from_name')
+    @patch.object(cmdutils, 'get_command_from_name')
     def test_build_commands(self, mock_get_command_from_name):
         # Arrange
         mock_cmd = Mock()
@@ -105,7 +105,7 @@ class TestCmdSvc(TestCase):
         ]
 
         # Act
-        cmd_svc.build_commands('any_cmd', cmd_args_tuples, cmd_kwargs_dicts)
+        cmdutils.build_commands('any_cmd', cmd_args_tuples, cmd_kwargs_dicts)
 
         # Assert
         mock_cmd.assert_has_calls(
@@ -118,8 +118,8 @@ class TestCmdSvc(TestCase):
     def test_get_command_from_name(self):
         # Arrange
         # Act
-        result_move_video = cmd_svc.get_command_from_name('MoveVideoCmd')
-        result_update_video_data = cmd_svc.get_command_from_name('UpdateVideoData')
+        result_move_video = cmdutils.get_command_from_name('MoveVideoCmd')
+        result_update_video_data = cmdutils.get_command_from_name('UpdateVideoData')
 
         # Assert
         self.assertEqual(result_move_video, MoveVideoCmd)
@@ -135,7 +135,7 @@ class TestCmdSvc(TestCase):
         cmds = [cmd_1, cmd_2]
 
         # Act
-        cmd_svc.stage_commands(self.command_buffer, cmds)
+        cmdutils.stage_commands(self.command_buffer, cmds)
 
         # Assert
         self.assertIn(cmd_1, self.command_buffer.cmd_buffer)
@@ -149,7 +149,7 @@ class TestCmdSvc(TestCase):
         self.command_buffer.undo_buffer.append(cmd2)
 
         # Act
-        cmd_svc.execute_undo_buffer(self.command_buffer)
+        cmdutils.execute_undo_buffer(self.command_buffer)
 
         # Assert
         self.assertFalse(self.command_buffer.undo_buffer)
