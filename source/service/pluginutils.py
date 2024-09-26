@@ -1,4 +1,4 @@
-# source/service/plugin_svc.py
+# source/service/pluginutils.py
 
 # Standard library
 import importlib

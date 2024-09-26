@@ -17,9 +17,9 @@ from source.state.col import Collection
 from source.commands.cmdbuffer import CommandBuffer
 from source.utils.helper import create_dummy_files
 from tests.test_state.shared import FauxCmd
-
 from source.commands.updatemetadata_cmd import UpdateVideoData
 from source.commands.movevideo_cmd import MoveVideoCmd
+from source.service import pluginutils
 
 # Third-party Packages
 # n/a
@@ -181,7 +181,7 @@ class TestFacade(TestCase):
             self.assertIn(cmd.video, videos)
             self.assertIn(str(Path(self.temp_dir.name) / 'dest'), str(cmd.dest_dir))
 
-    @patch('source.service.plugin_svc.get_plugin_instance')
+    @patch.object(pluginutils, 'get_plugin_instance')
     def test_stage_update_api_metadata(self, mock_get_plugin_instance):
         # Arrange
         files = create_dummy_files(self.temp_dir.name, 3, lambda x: 'dummy_' + str(x) + '.mp4')

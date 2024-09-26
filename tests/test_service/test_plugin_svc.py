@@ -9,7 +9,7 @@ from tempfile import TemporaryDirectory
 import sys
 
 # Local imports
-from source.service import plugin_svc as plugin_svc
+from source.service import pluginutils
 from source.datasources.base_metadata_source import MetadataSource
 
 # Third-party packages
@@ -63,7 +63,7 @@ class TestPluginService(TestCase):
         fake_mod.class_2 = mod_class_2
 
         # Act
-        result = plugin_svc.discover_api_classes(fake_mod)
+        result = pluginutils.discover_api_classes(fake_mod)
 
         # Assert
         self.assertIn('class_1', result.keys())
@@ -77,7 +77,7 @@ class TestPluginService(TestCase):
         importlib.reload(test_pkg)  # Avoids using cache with outdated path from other unit tests
 
         # Act
-        result = plugin_svc.discover_api_modules(test_pkg)
+        result = pluginutils.discover_api_modules(test_pkg)
 
         # Assert
         expected_value = {
@@ -87,7 +87,7 @@ class TestPluginService(TestCase):
         self.assertEqual(expected_value, set(result.keys()))
         self.assertTrue(all(mod.__name__ in expected_value for mod in result.values()))
 
-    @patch('source.service.plugin_svc.discover_api_modules')
+    @patch.object(pluginutils, 'discover_api_modules')
     def test_discover_plugins(self, mock_discover_api_modules):
         # Arrange
         class FakePlugin(MetadataSource):
@@ -103,7 +103,7 @@ class TestPluginService(TestCase):
         mock_discover_api_modules.return_value = {'test_module': test_module}
 
         # Act
-        result = plugin_svc.discover_plugins(test_module)
+        result = pluginutils.discover_plugins(test_module)
 
         # Assert
         self.assertIn(FakePlugin, result.values())
@@ -117,8 +117,8 @@ class TestPluginService(TestCase):
         importlib.reload(test_pkg)  # Avoids using cache with outdated path from other unit tests
 
         # Act
-        result_1 = plugin_svc.get_plugin_instance('FakeAPI1', test_pkg)
-        result_2 = plugin_svc.get_plugin_instance('FakeAPI2', test_pkg)
+        result_1 = pluginutils.get_plugin_instance('FakeAPI1', test_pkg)
+        result_2 = pluginutils.get_plugin_instance('FakeAPI2', test_pkg)
 
         # Assert
         self.assertIsInstance(result_1, MetadataSource)
@@ -130,7 +130,7 @@ class TestPluginService(TestCase):
         mock_plugin.get_required_params.return_value = ['param_1', 'param_2']
 
         # Act
-        result = plugin_svc.get_required_params(mock_plugin)
+        result = pluginutils.get_required_params(mock_plugin)
 
         # Assert
         self.assertEqual(['param_1', 'param_2'], result)
