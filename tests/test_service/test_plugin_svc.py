@@ -9,7 +9,7 @@ from tempfile import TemporaryDirectory
 import sys
 
 # Local imports
-from source.service import pluginutils
+from source.utils import pluginutils
 from source.datasources.base_metadata_source import MetadataSource
 
 # Third-party packages

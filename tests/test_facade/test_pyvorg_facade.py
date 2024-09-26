@@ -19,7 +19,8 @@ from source.utils.helper import create_dummy_files
 from tests.test_state.shared import FauxCmd
 from source.commands.updatemetadata_cmd import UpdateVideoData
 from source.commands.movevideo_cmd import MoveVideoCmd
-from source.service import pluginutils
+from source.utils import pluginutils
+
 
 # Third-party Packages
 # n/a
