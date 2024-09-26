@@ -1,4 +1,4 @@
-# source/service/serialize_svc.py
+# source/service/serializeutils.py
 
 # Standard library
 import pickle
