@@ -13,7 +13,8 @@ from source.commands.cmdbuffer import CommandBuffer
 from source.commands.command_base import Command
 from source.commands.movevideo_cmd import MoveVideoCmd
 from source.commands.updatemetadata_cmd import UpdateVideoData
-from source.service import cmdutils
+from utils import cmdutils
+
 
 # Third-party packages
 # n/a
