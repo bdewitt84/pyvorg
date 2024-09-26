@@ -8,7 +8,8 @@ from unittest import TestCase
 from unittest.mock import call, patch, Mock
 
 # Local imports
-import source.service.file_svc as file_svc
+import source.service.fileutils as fileutils
+from source.service import fileutils
 
 # Third-party packages
 
@@ -31,8 +32,8 @@ class TestFileService(TestCase):
         dummy_file.touch()
 
         # Act
-        result_empty = file_svc.dir_is_empty(empty_dir)
-        result_not_empty = file_svc.dir_is_empty(not_empty_dir)
+        result_empty = fileutils.dir_is_empty(empty_dir)
+        result_not_empty = fileutils.dir_is_empty(not_empty_dir)
 
         # Assert
         self.assertTrue(result_empty)
@@ -46,14 +47,14 @@ class TestFileService(TestCase):
             pass
 
         # Act and Assert
-        file_svc.file_write(write_ok, self.test_data)
+        fileutils.file_write(write_ok, self.test_data)
         self.assertTrue(write_ok.exists())
         with open(write_ok, 'r') as file:
             written_data = file.read()
         self.assertEqual(written_data, self.test_data)
 
         with self.assertRaises(FileExistsError):
-            file_svc.file_write(already_exists, self.test_data)
+            fileutils.file_write(already_exists, self.test_data)
 
     def test_file_read(self):
         # Arrange
@@ -63,10 +64,10 @@ class TestFileService(TestCase):
         file_exists.write_text(self.test_data)
 
         # Act and assert
-        file_svc.file_read(file_exists)
+        fileutils.file_read(file_exists)
 
         with self.assertRaises(FileNotFoundError):
-            file_svc.file_read(file_does_not_exist)
+            fileutils.file_read(file_does_not_exist)
 
     def test_get_files_from_path(self):
         # Arrange
@@ -79,7 +80,7 @@ class TestFileService(TestCase):
         test_file_2.touch()
 
         # Act
-        result = file_svc.get_files_from_path(test_path)
+        result = fileutils.get_files_from_path(test_path)
 
         # Assert
         self.assertIn(test_file_1, result)
@@ -98,9 +99,9 @@ class TestFileService(TestCase):
             file.touch()
 
         # Act
-        result_mp4 = file_svc.get_file_type(dummy_mp4)
-        result_avi = file_svc.get_file_type(dummy_avi)
-        result_txt = file_svc.get_file_type(dummy_txt)
+        result_mp4 = fileutils.get_file_type(dummy_mp4)
+        result_avi = fileutils.get_file_type(dummy_avi)
+        result_txt = fileutils.get_file_type(dummy_txt)
 
         # Assert
         self.assertEqual(result_mp4, 'video')
@@ -115,21 +116,21 @@ class TestFileService(TestCase):
             file.write(b'test_data')
 
         # Act
-        computed_hash = file_svc.hash_sha256(file_path)
+        computed_hash = fileutils.hash_sha256(file_path)
 
         # Assert
         expected_hash = 'e7d87b738825c33824cf3fd32b7314161fc8c425129163ff5e7260fc7288da36'
         self.assertEqual(expected_hash, computed_hash)
 
         with self.assertRaises(FileNotFoundError):
-            file_svc.hash_sha256('bogus_file_name')  # type:ignore
+            fileutils.hash_sha256('bogus_file_name')  # type:ignore
 
     def test_make_dir(self):
         # Arrange
         path = Path(self.temp_dir.name)
 
         # Act
-        file_svc.make_dir(path)
+        fileutils.make_dir(path)
 
         # Assert
         self.assertTrue(path.exists())
@@ -143,7 +144,7 @@ class TestFileService(TestCase):
         l3_path = l2_path / 'lvl3'
 
         # Act
-        result = file_svc.make_dirs(l3_path)
+        result = fileutils.make_dirs(l3_path)
 
         # Assert
         self.assertTrue(l1_path.exists())
@@ -176,7 +177,7 @@ class TestFileService(TestCase):
                 path.mkdir()
 
         # Act
-        file_svc.mimic_folder(src_tree, dst_tree)
+        fileutils.mimic_folder(src_tree, dst_tree)
 
         result = []
         for dirpath, _, files in os.walk(dst_tree):
@@ -197,7 +198,7 @@ class TestFileService(TestCase):
         dst_path.mkdir()
 
         # Act
-        file_svc.move_file(src_exists_path, dst_path)
+        fileutils.move_file(src_exists_path, dst_path)
 
         # Assert
         self.assertFalse(src_exists_path.exists())
@@ -215,7 +216,7 @@ class TestFileService(TestCase):
 
         # Act and Assert
         with self.assertRaises(FileExistsError):
-            file_svc.move_file(src_exists_path, dest_exists_path)
+            fileutils.move_file(src_exists_path, dest_exists_path)
 
     def test_move_file_src_does_not_exist(self):
         # Arrange
@@ -225,14 +226,14 @@ class TestFileService(TestCase):
 
         # Act / Assert
         with self.assertRaises(FileNotFoundError):
-            file_svc.move_file(src_does_not_exist_path, dst_path)
+            fileutils.move_file(src_does_not_exist_path, dst_path)
 
     def test_parse_glob_string(self):
         # Arrange
         glob_str = './fake_root/fake_sub/*.*'
 
         # Act
-        result_path, result_glob = file_svc.parse_glob_string(glob_str)
+        result_path, result_glob = fileutils.parse_glob_string(glob_str)
 
         # Assert
         self.assertEqual(result_path, Path('fake_root/fake_sub'))
@@ -247,8 +248,8 @@ class TestFileService(TestCase):
         non_writable_target_path.touch(555)
 
         # Act and Assert
-        self.assertTrue(file_svc.path_is_writable(writable_target_path))
-        self.assertFalse(file_svc.path_is_writable(non_writable_target_path))
+        self.assertTrue(fileutils.path_is_writable(writable_target_path))
+        self.assertFalse(fileutils.path_is_writable(non_writable_target_path))
 
     def test_path_is_readable(self):
         # Arrange
@@ -259,7 +260,7 @@ class TestFileService(TestCase):
         non_readable_target_path.touch(333)
 
         # Act and Assert
-        self.assertTrue(file_svc.path_is_readable(readable_target_path))
+        self.assertTrue(fileutils.path_is_readable(readable_target_path))
         # This test will always fail on Windows
         # self.assertFalse(path_is_readable(non_readable_target_path))
 
@@ -277,15 +278,15 @@ class TestFileService(TestCase):
             assert directory.exists()
 
         # Act
-        file_svc.remove_dirs(dirs)
+        fileutils.remove_dirs(dirs)
 
         # Assert
         self.assertFalse(l3_path.exists())
         self.assertFalse(l2_path.exists())
         self.assertFalse(l1_path.exists())
 
-    @patch('source.service.file_svc.path_is_readable')
-    @patch('source.service.file_svc.path_is_writable')
+    @patch.object(fileutils, 'path_is_readable')
+    @patch.object(fileutils, 'path_is_writable')
     def test_validate_move(self, mock_path_is_writable, mock_path_is_readable):
         # Notes: Mocks return True by default when used as a condition in an
         #        if statement. This unit test doesn't test the false branch
@@ -298,7 +299,7 @@ class TestFileService(TestCase):
         dest_path.parent = dest_dir
 
         # Act
-        result_valid, result_msg = file_svc.validate_move(src_path, dest_path)
+        result_valid, result_msg = fileutils.validate_move(src_path, dest_path)
 
         # Assert
         src_path.exists.assert_called_once()

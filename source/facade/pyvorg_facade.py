@@ -18,7 +18,7 @@ import source.datasources
 from source.service import cmdutils as cmd_svc, \
                            configutils as cfg_svc, \
                            collectionutils as col_svc, \
-                           file_svc as file_svc, \
+                           fileutils as file_svc, \
                            pluginutils as plugin_svc, \
                            serializeutils as serial_svc, \
                            videoutils as video_svc

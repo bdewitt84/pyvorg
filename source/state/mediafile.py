@@ -12,7 +12,7 @@ from typing import Any, Optional
 
 # Local imports
 from source.constants import *
-from source.service.file_svc import hash_sha256
+from source.service.fileutils import hash_sha256
 from source.utils.helper import get_preferred_sources, timestamp_generate
 
 # Third-party packages
