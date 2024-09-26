@@ -16,7 +16,7 @@ from source.state.col import Collection
 from source.commands.cmdbuffer import CommandBuffer
 import source.datasources
 from source.service import cmdutils as cmd_svc, \
-                           config_svc as cfg_svc, \
+                           configutils as cfg_svc, \
                            collectionutils as col_svc, \
                            file_svc as file_svc, \
                            plugin_svc as plugin_svc, \

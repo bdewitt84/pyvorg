@@ -1,7 +1,7 @@
 # ./source/tests/test_service/test_config_svc.py
 
 """
-    Unit tests for config_svc.py
+    Unit tests for configutils.py
 """
 
 # Standard library
