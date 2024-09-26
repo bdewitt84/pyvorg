@@ -15,10 +15,10 @@ from source.state.application_state import PickleJar
 from source.state.col import Collection
 from source.commands.cmdbuffer import CommandBuffer
 import source.datasources
-from source.service import fileutils as file_svc, \
-                           pluginutils as plugin_svc, \
+from source.service import pluginutils as plugin_svc, \
                            serializeutils as serial_svc, \
                            videoutils as video_svc
+from source.utils import fileutils as file_svc
 from source.utils import configutils as cfg_svc
 from source.utils import cmdutils as cmd_svc, collectionutils as col_svc
 

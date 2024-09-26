@@ -8,7 +8,7 @@ Implementation of MoveVideoCmd command used by CommandBuffer
 from pathlib import Path
 
 # Local imports
-import source.service.fileutils as file_svc
+import source.utils.fileutils as file_svc
 from source.commands.command_base import Command
 from source.state.mediafile import MediaFile
 from source.service.videoutils import generate_destination_path

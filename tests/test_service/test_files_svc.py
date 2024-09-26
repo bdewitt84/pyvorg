@@ -8,8 +8,8 @@ from unittest import TestCase
 from unittest.mock import call, patch, Mock
 
 # Local imports
-import source.service.fileutils as fileutils
-from source.service import fileutils
+from source.utils import fileutils
+
 
 # Third-party packages
 

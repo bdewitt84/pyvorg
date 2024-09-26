@@ -13,7 +13,8 @@ from unittest.mock import Mock, patch
 # Local imports
 from source.commands.movevideo_cmd import MoveVideoCmd
 from source.state.mediafile import MediaFile
-from source.service import fileutils
+from source.utils import fileutils
+
 
 # Third-party packages
 # n/a
