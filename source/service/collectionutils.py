@@ -1,4 +1,4 @@
-# source/service/collection_svc.py
+# source/service/collectionutils.py
 
 # Standard library
 

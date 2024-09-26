@@ -17,7 +17,7 @@ from source.commands.cmdbuffer import CommandBuffer
 import source.datasources
 from source.service import cmdutils as cmd_svc, \
                            config_svc as cfg_svc, \
-                           collection_svc as col_svc, \
+                           collectionutils as col_svc, \
                            file_svc as file_svc, \
                            plugin_svc as plugin_svc, \
                            serialize_svc as serial_svc, \
