@@ -1,4 +1,4 @@
-# source/service/videoservice/py
+# source/services/videoservice/py
 
 # Standard library
 from pathlib import Path

@@ -2,7 +2,7 @@
 
 """
     Acts as entry point for user interface.
-    Should only interact with the service layer.
+    Should only interact with the services layer.
 """
 
 # Standard library

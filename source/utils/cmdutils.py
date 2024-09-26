@@ -1,4 +1,4 @@
-# source/service/cmdutils.py
+# source/services/cmdutils.py
 
 # Standard library
 from typing import Iterable, Type

@@ -1,4 +1,4 @@
-# source/service/pluginutils.py
+# source/services/pluginutils.py
 
 # Standard library
 import importlib

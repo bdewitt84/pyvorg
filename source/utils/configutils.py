@@ -1,4 +1,4 @@
-# source/service/configutils.py
+# source/services/configutils.py
 
 """
 
