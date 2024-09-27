@@ -209,7 +209,7 @@ class TestFileService(TestCase):
         src_exists_path = Path(self.temp_dir.name) / 'exists.file'
         src_exists_path.touch()
 
-        dest_dir = Path(self.temp_dir.name) / 'dest_dir'
+        dest_dir = Path(self.temp_dir.name) / 'target_root'
         dest_dir.mkdir()
         dest_exists_path = dest_dir / 'exists.file'
         dest_exists_path.touch()

@@ -180,7 +180,7 @@ class TestFacade(TestCase):
 
         for cmd in cmds:
             self.assertIn(cmd.video, videos)
-            self.assertIn(str(Path(self.temp_dir.name) / 'dest'), str(cmd.dest_dir))
+            self.assertIn(str(Path(self.temp_dir.name) / 'dest'), str(cmd.target_root))
 
     @patch.object(pluginutils, 'get_plugin_instance')
     def test_stage_update_api_metadata(self, mock_get_plugin_instance):
