@@ -72,14 +72,14 @@ class TestMoveVideoCommand(unittest.TestCase):
         self.test_cmd.video = Mock()
         self.test_cmd.video.get_filename.return_value = 'video.file'
         self.test_cmd.video.get_path.return_value = Path('current dir') / 'video.file'
-        self.test_cmd.dest_dir = Path('target dir')
+        self.test_cmd.target_root = Path('target dir')
 
         # Act
         self.test_cmd.validate_exec()
 
         # Assert
         src_path = Path('current dir') / 'video.file'
-        dest_path = Path('target dir') / 'video.file'
+        dest_path = Path('target dir') / 'format_str' / 'video.file'
         mock_validate_move.assert_called_once_with(src_path, dest_path)
 
     @patch.object(fileutils, 'validate_move')
@@ -88,7 +88,7 @@ class TestMoveVideoCommand(unittest.TestCase):
         self.test_cmd.video = Mock()
         self.test_cmd.video.get_filename.return_value = 'video.file'
         self.test_cmd.video.get_path.return_value = Path('current dir') / 'video.file'
-        self.test_cmd.origin_dir = 'original dir'
+        self.test_cmd.origin_dir = Path('original dir')
 
         # Act
         self.test_cmd.validate_undo()
