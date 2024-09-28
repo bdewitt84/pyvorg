@@ -64,10 +64,8 @@ class Facade:
     def scan_files_in_path(self,
                            path_string: str,
                            recursive: bool = False) -> None:
-        root, glob_pattern = file_svc.parse_glob_string(path_string)
-        file_paths = file_svc.get_files_from_path(root, recursive, glob_pattern)
-        videos = video_svc.create_videos_from_file_paths(file_paths)
-        col_svc.add_videos(self.collection, videos)
+        from source.services.scanfilesinpath_svc import ScanFilesInPath
+        ScanFilesInPath().call(self.collection, path_string, recursive)
 
     def save_state(self):
         jar = PickleJar(self.collection,
