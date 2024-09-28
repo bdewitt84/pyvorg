@@ -102,6 +102,5 @@ class Facade:
                                    filter_strings)
 
     def undo_transaction(self) -> None:
-        if self.command_buffer_history:
-            batch = self.command_buffer_history.pop()
-            cmd_svc.execute_undo_buffer(batch)
+        from source.services.undotransaction_svc import UndoTransaction
+        UndoTransaction().call(self.command_buffer_history)
