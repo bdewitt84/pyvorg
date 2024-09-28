@@ -6,7 +6,6 @@
 """
 
 # Standard library
-from itertools import repeat
 from pathlib import Path
 from typing import Optional
 
@@ -86,14 +85,12 @@ class Facade:
                                    format_str: Optional[str] = None,
                                    filter_strings: Optional[list[str]] = None) -> None:
 
-        destination = Path(destination).resolve() or cfg_svc.get_default_organize_path()
-        format_str = format_str or cfg_svc.get_default_format_str()
-
-        videos = col_svc.get_filtered_videos(self.collection, filter_strings)
-        cmd_arg_tuples = zip(videos, repeat(destination), repeat(format_str))
-        cmd_kwarg_dicts = repeat({})
-        cmds = cmd_svc.build_commands('MoveVideoCmd', cmd_arg_tuples, cmd_kwarg_dicts)
-        cmd_svc.stage_commands(self.command_buffer, cmds)
+        from source.services.stageorganizevideofiles_svc import StageOrganizeVideoFiles
+        StageOrganizeVideoFiles().call(self.collection,
+                                       self.command_buffer,
+                                       destination,
+                                       format_str,
+                                       filter_strings)
 
     def stage_update_api_metadata(self,
                                   api_name: str,
