@@ -53,9 +53,8 @@ class Facade:
         return cmd_svc.get_exec_preview(self.command_buffer)
 
     def import_collection_metadata(self, path: Path) -> None:
-        metadata = file_svc.file_read(path)
-        col_svc.validate_metadata(metadata)
-        col_svc.import_metadata(self.collection, metadata)
+        from source.services.importcollectionmetadata_svc import ImportCollectionMetadata
+        ImportCollectionMetadata().call(self.collection, path)
 
     def scan_files_in_path(self,
                            path_string: str,
