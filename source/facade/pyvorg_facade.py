@@ -14,10 +14,7 @@ from typing import Optional
 from source.state.application_state import PickleJar
 from source.state.col import Collection
 from source.commands.cmdbuffer import CommandBuffer
-import source.datasources
 from source.utils import serializeutils as serial_svc
-from source.utils import videoutils as video_svc
-from source.utils import pluginutils as plugin_svc
 from source.utils import fileutils as file_svc
 from source.utils import configutils as cfg_svc
 from source.utils import cmdutils as cmd_svc, collectionutils as col_svc
@@ -101,14 +98,11 @@ class Facade:
     def stage_update_api_metadata(self,
                                   api_name: str,
                                   filter_strings: Optional[list[str]] = None) -> None:
-        # TODO: refactor to stage_fetch_data
-        videos = col_svc.get_filtered_videos(self.collection, filter_strings)
-        api_instance = plugin_svc.get_plugin_instance(api_name, source.datasources)
-        req_plugin_params = plugin_svc.get_required_params(api_instance)
-        cmd_args_tuples = zip(videos, repeat(api_instance))
-        cmd_kwargs_dicts = video_svc.build_cmd_kwargs(videos, req_plugin_params)
-        cmds = cmd_svc.build_commands('UpdateVideoData', cmd_args_tuples, cmd_kwargs_dicts)
-        cmd_svc.stage_commands(self.command_buffer, cmds)
+        from source.services.stageupdatemetadata_svc import StageUpdateMetadata
+        StageUpdateMetadata().call(self.collection,
+                                   self.command_buffer,
+                                   api_name,
+                                   filter_strings)
 
     def undo_transaction(self) -> None:
         if self.command_buffer_history:
