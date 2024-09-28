@@ -47,17 +47,19 @@ class UpdateVideoData(Command):
             self.video.data.pop(self.api.get_name())
         else:
             self.video.set_source_data(self.api.get_name(), self.undo_data)
-        
+
     def _nullify_undo_data(self):
         self.undo_data = None
 
     def validate_exec(self):
+        # TODO: Implement
         # command will fail if the video does not exist
         # if the api is not valid
         # if the api is not accessible
         pass
 
     def validate_undo(self):
+        # TODO: Implement
         pass
 
     def __str__(self):
