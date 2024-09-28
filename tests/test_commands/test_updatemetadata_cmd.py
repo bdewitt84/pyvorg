@@ -6,7 +6,7 @@
 
 # Standard library
 from unittest import TestCase
-from unittest.mock import Mock, patch
+from unittest.mock import Mock
 
 # Local imports
 from source.state.mediafile import MediaFile
@@ -24,27 +24,25 @@ class TestVideoUpdate(TestCase):
         self.test_value = 'test_value'
         self.mock_api = Mock()
         self.mock_api.get_name.return_value = self.mock_api_name
-        self.mock_api.fetch_video_data.return_value = {self.test_key: self.test_value}
+        self.mock_api.fetch_data.return_value = 'return_fetch_data'
         self.test_vid = MediaFile()
         self.test_cmd = UpdateVideoData(self.test_vid, self.mock_api)
 
     def tearDown(self) -> None:
         pass
 
-    @patch('source.commands.updatemetadata_cmd.update_api_data')
-    def test_exec(self, mock_update_api_data):
-        # TODO: mock call to fill_kwargs_from_metadata
+    def test_exec(self):
         # Arrange
         test_video = Mock()
-        test_video.get_source_data.return_value = 'return data'
+        test_video.get_source_data.return_value = 'return_source_data'
         self.test_cmd.video = test_video
 
         # Act
         self.test_cmd.exec()
 
         # Assert
-        mock_update_api_data.assert_called_with(test_video, self.mock_api)
-        self.assertEqual(self.test_cmd.undo_data, 'return data')
+        test_video.set_source_data.assert_called_once_with('mock_api', 'return_fetch_data')
+        self.assertEqual(self.test_cmd.undo_data, 'return_source_data')
 
     def test_undo(self):
         self.test_cmd.undo_data = {self.test_key: self.test_value}
