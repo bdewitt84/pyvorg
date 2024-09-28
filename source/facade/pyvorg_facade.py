@@ -32,6 +32,9 @@ from source.utils import cmdutils as cmd_svc, collectionutils as col_svc
 
 class Facade:
     def __init__(self, collection: Collection, command_buffer: CommandBuffer):
+        # TODO: need to implement members as a state object in order to
+        #       implement load_state() and save_state() as a service
+        #       currently, we have to pass
         self.collection = collection
         self.command_buffer = command_buffer
         self.command_buffer_history: list[command_buffer] = []
@@ -41,6 +44,7 @@ class Facade:
         ClearStagedOperations().call(self.command_buffer)
 
     def commit_staged_operations(self) -> None:
+        # TODO: Implement state first
         cmd_svc.execute_cmd_buffer(self.command_buffer)
         self.command_buffer_history.append(self.command_buffer)
         self.command_buffer = CommandBuffer()
@@ -50,6 +54,7 @@ class Facade:
         ExportCollectionMetadata().call(self.collection, path)
 
     def get_preview_of_staged_operations(self) -> str:
+        # TODO: Figure out what to do with this one
         return cmd_svc.get_exec_preview(self.command_buffer)
 
     def import_collection_metadata(self, path: Path) -> None:
@@ -63,6 +68,7 @@ class Facade:
         ScanFilesInPath().call(self.collection, path_string, recursive)
 
     def save_state(self):
+        # TODO: Implement state first
         jar = PickleJar(self.collection,
                         self.command_buffer,
                         self.command_buffer_history)
@@ -71,6 +77,7 @@ class Facade:
         file_svc.file_write_bytes(jar_path, serialized_state, overwrite=True)
 
     def load_state(self):
+        # TODO: Implement state first
         jar_path = cfg_svc.get_default_state_path()
         serialized_state = file_svc.file_read_bytes(jar_path)
         state: PickleJar = serial_svc.pickle_to_object(serialized_state) or PickleJar()
