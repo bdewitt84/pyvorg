@@ -39,10 +39,16 @@ class UpdateVideoData(Command):
         self.video.set_source_data(self.api.get_name(), self.metadata)
 
     def undo(self):
+        self._restore_video_metadata()
+        self._nullify_undo_data()
+
+    def _restore_video_metadata(self):
         if self.undo_data is None:
             self.video.data.pop(self.api.get_name())
         else:
             self.video.set_source_data(self.api.get_name(), self.undo_data)
+        
+    def _nullify_undo_data(self):
         self.undo_data = None
 
     def validate_exec(self):
