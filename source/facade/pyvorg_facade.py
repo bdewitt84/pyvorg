@@ -46,9 +46,8 @@ class Facade:
         self.command_buffer = CommandBuffer()
 
     def export_collection_metadata(self, path: str) -> None:
-        metadata_dict = col_svc.get_metadata(self.collection)
-        write_data = serial_svc.dict_to_json(metadata_dict)
-        file_svc.file_write(Path(path), write_data)
+        from source.services.exportcollectionmetadata_svc import ExportCollectionMetadata
+        ExportCollectionMetadata().call(self.collection, path)
 
     def get_preview_of_staged_operations(self) -> str:
         return cmd_svc.get_exec_preview(self.command_buffer)
