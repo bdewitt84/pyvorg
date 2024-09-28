@@ -16,7 +16,7 @@ from source.commands.cmdbuffer import CommandBuffer
 from source.utils import serializeutils as serial_svc
 from source.utils import fileutils as file_svc
 from source.utils import configutils as cfg_svc
-from source.utils import cmdutils as cmd_svc, collectionutils as col_svc
+from source.utils import cmdutils as cmd_svc
 
 
 # Third-party packages
@@ -51,7 +51,8 @@ class Facade:
 
     def export_collection_metadata(self, path: str) -> None:
         from source.services.exportcollectionmetadata_svc import ExportCollectionMetadata
-        ExportCollectionMetadata().call(self.collection, path)
+        ExportCollectionMetadata().call(self.collection,
+                                        path)
 
     def get_preview_of_staged_operations(self) -> str:
         # TODO: Figure out what to do with this one
@@ -64,8 +65,11 @@ class Facade:
     def scan_files_in_path(self,
                            path_string: str,
                            recursive: bool = False) -> None:
+
         from source.services.scanfilesinpath_svc import ScanFilesInPath
-        ScanFilesInPath().call(self.collection, path_string, recursive)
+        ScanFilesInPath().call(self.collection,
+                               path_string,
+                               recursive)
 
     def save_state(self):
         # TODO: Implement state first
@@ -101,6 +105,7 @@ class Facade:
     def stage_update_api_metadata(self,
                                   api_name: str,
                                   filter_strings: Optional[list[str]] = None) -> None:
+
         from source.services.stageupdatemetadata_svc import StageUpdateMetadata
         StageUpdateMetadata().call(self.collection,
                                    self.command_buffer,
