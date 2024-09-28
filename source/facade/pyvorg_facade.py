@@ -37,7 +37,8 @@ class Facade:
         self.command_buffer_history: list[command_buffer] = []
 
     def clear_staged_operations(self) -> None:
-        cmd_svc.clear_exec_buffer(self.command_buffer)
+        from source.services.clearstagedoperations_svc import ClearStagedOperations
+        ClearStagedOperations().call(self.command_buffer)
 
     def commit_staged_operations(self) -> None:
         cmd_svc.execute_cmd_buffer(self.command_buffer)
