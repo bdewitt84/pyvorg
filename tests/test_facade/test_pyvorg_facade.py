@@ -12,16 +12,17 @@ from unittest.mock import patch, Mock
 from tempfile import TemporaryDirectory
 
 # Local imports
-from source.facade.pyvorg_facade import Facade
-from source.state.col import Collection
 from source.commands.cmdbuffer import CommandBuffer
-from source.utils.helper import create_dummy_files
-from tests.test_state.shared import FauxCmd
-from source.commands.updatemetadata_cmd import UpdateVideoData
 from source.commands.movevideo_cmd import MoveVideoCmd
-from source.utils import pluginutils
+from source.commands.updatemetadata_cmd import UpdateVideoData
+from source.facade.pyvorg_facade import Facade
 from source.state.application_state import PyvorgState
+from source.state.col import Collection
+from tests.test_state.shared import FauxCmd
 from source.utils import configutils
+from source.utils import pluginutils
+from source.utils.helper import create_dummy_files
+
 
 # Third-party Packages
 # n/a
