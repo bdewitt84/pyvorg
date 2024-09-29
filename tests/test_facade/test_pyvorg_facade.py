@@ -21,7 +21,7 @@ from source.commands.updatemetadata_cmd import UpdateVideoData
 from source.commands.movevideo_cmd import MoveVideoCmd
 from source.utils import pluginutils
 from source.state.application_state import PyvorgState
-
+from source.utils import configutils
 
 # Third-party Packages
 # n/a
@@ -69,7 +69,7 @@ class TestFacade(TestCase):
     def test_export_collection_metadata(self):
         pass
 
-    @patch('source.facade.pyvorg_facade.cfg_svc.get_default_state_path')
+    @patch.object(configutils, 'get_default_state_path')
     def test_load_state(self, mock_get_state_path):
         # Arrange
         test_collection = Collection()
@@ -120,7 +120,7 @@ class TestFacade(TestCase):
         # Assert
         pass
 
-    @patch('source.facade.pyvorg_facade.cfg_svc.get_default_state_path')
+    @patch.object(configutils, 'get_default_state_path')
     def test_save_state(self, mock_get_state_path):
         # Arrange
         state_path = Path(self.temp_dir.name) / 'mock_state.file'
