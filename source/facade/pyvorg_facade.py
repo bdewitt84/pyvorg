@@ -43,10 +43,8 @@ class Facade:
         ClearStagedOperations().call(self.state.get_command_buffer())
 
     def commit_staged_operations(self) -> None:
-        # TODO: Implement state first
-        cmd_svc.execute_cmd_buffer(self.state.get_command_buffer())
-        self.state.get_batch_history().append(self.state.get_command_buffer())
-        self.state.clear_command_buffer()
+        from source.services.commitstagedoperations_svc import CommitStagedOperations
+        CommitStagedOperations().call(self.state)
 
     def export_collection_metadata(self, path: str) -> None:
         from source.services.exportcollectionmetadata_svc import ExportCollectionMetadata
