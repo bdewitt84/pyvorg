@@ -11,11 +11,7 @@ from typing import Optional
 
 # Local imports
 from source.state.application_state import PyvorgState
-from source.utils import serializeutils as serial_svc
-from source.utils import fileutils as file_svc
-from source.utils import configutils as cfg_svc
 from source.utils import cmdutils as cmd_svc
-
 
 # Third-party packages
 # n\a
@@ -30,13 +26,7 @@ from source.utils import cmdutils as cmd_svc
 
 class Facade:
     def __init__(self, state: PyvorgState = None):
-        # TODO: need to implement members as a state object in order to
-        #       implement load_state() and save_state() as a service
-        #       currently, we have to pass
         self.state = state or PyvorgState()
-        # self.collection = collection
-        # self.command_buffer = command_buffer
-        # self.command_buffer_history: list[command_buffer] = []
 
     def clear_staged_operations(self) -> None:
         from source.services.clearstagedoperations_svc import ClearStagedOperations
