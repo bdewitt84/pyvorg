@@ -68,6 +68,10 @@ class TestFacade(TestCase):
         test_cmd_2.exec.assert_called_once()
 
     def test_export_collection_metadata(self):
+        # TODO: Implement
+        # Arrange
+        # Act
+        # Assert
         pass
 
     @patch.object(configutils, 'get_default_state_path')
