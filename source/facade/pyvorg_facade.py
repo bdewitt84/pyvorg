@@ -69,13 +69,8 @@ class Facade:
                                recursive)
 
     def save_state(self):
-        # TODO: Implement state first
-        # jar = PyvorgState(self.collection,
-        #                   self.command_buffer,
-        #                   self.command_buffer_history)
-        jar_path = cfg_svc.get_default_state_path()
-        serialized_state = serial_svc.obj_to_pickle(self.state)
-        file_svc.file_write_bytes(jar_path, serialized_state, overwrite=True)
+        from source.services.savestate_svc import SaveState
+        SaveState().call(self.state)
 
     def load_state(self):
         from source.services.loadstate_svc import LoadState
