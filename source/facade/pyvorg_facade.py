@@ -12,6 +12,16 @@ from typing import Optional
 # Local imports
 from source.state.application_state import PyvorgState
 from source.utils import cmdutils as cmd_svc
+from source.services.clearstagedoperations_svc import ClearStagedOperations
+from source.services.commitstagedoperations_svc import CommitStagedOperations
+from source.services.exportcollectionmetadata_svc import ExportCollectionMetadata
+from source.services.importcollectionmetadata_svc import ImportCollectionMetadata
+from source.services.savestate_svc import SaveState
+from source.services.loadstate_svc import LoadState
+from source.services.stageorganizevideofiles_svc import StageOrganizeVideoFiles
+from source.services.stageupdatemetadata_svc import StageUpdateMetadata
+from source.services.undotransaction_svc import UndoTransaction
+
 
 # Third-party packages
 # n\a
@@ -29,15 +39,12 @@ class Facade:
         self.state = state or PyvorgState()
 
     def clear_staged_operations(self) -> None:
-        from source.services.clearstagedoperations_svc import ClearStagedOperations
         ClearStagedOperations().call(self.state.get_command_buffer())
 
     def commit_staged_operations(self) -> None:
-        from source.services.commitstagedoperations_svc import CommitStagedOperations
         CommitStagedOperations().call(self.state)
 
     def export_collection_metadata(self, path: str) -> None:
-        from source.services.exportcollectionmetadata_svc import ExportCollectionMetadata
         ExportCollectionMetadata().call(self.state.get_collection(),
                                         path)
 
@@ -46,7 +53,6 @@ class Facade:
         return cmd_svc.get_exec_preview(self.state.get_command_buffer())
 
     def import_collection_metadata(self, path: Path) -> None:
-        from source.services.importcollectionmetadata_svc import ImportCollectionMetadata
         ImportCollectionMetadata().call(self.state.get_collection(), path)
 
     def scan_files_in_path(self,
@@ -59,11 +65,9 @@ class Facade:
                                recursive)
 
     def save_state(self):
-        from source.services.savestate_svc import SaveState
         SaveState().call(self.state)
 
     def load_state(self):
-        from source.services.loadstate_svc import LoadState
         LoadState().call(self.state)
 
     def stage_organize_video_files(self,
@@ -71,7 +75,6 @@ class Facade:
                                    format_str: Optional[str] = None,
                                    filter_strings: Optional[list[str]] = None) -> None:
 
-        from source.services.stageorganizevideofiles_svc import StageOrganizeVideoFiles
         StageOrganizeVideoFiles().call(self.state.get_collection(),
                                        self.state.get_command_buffer(),
                                        destination,
@@ -82,12 +85,10 @@ class Facade:
                                   api_name: str,
                                   filter_strings: Optional[list[str]] = None) -> None:
 
-        from source.services.stageupdatemetadata_svc import StageUpdateMetadata
         StageUpdateMetadata().call(self.state.get_collection(),
                                    self.state.get_command_buffer(),
                                    api_name,
                                    filter_strings)
 
     def undo_transaction(self) -> None:
-        from source.services.undotransaction_svc import UndoTransaction
         UndoTransaction().call(self.state.get_batch_history())
