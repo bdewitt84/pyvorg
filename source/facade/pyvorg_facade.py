@@ -80,14 +80,8 @@ class Facade:
         file_svc.file_write_bytes(jar_path, serialized_state, overwrite=True)
 
     def load_state(self):
-        # TODO: Implement state first
-        pickle_path = cfg_svc.get_default_state_path()
-        serialized_state = file_svc.file_read_bytes(pickle_path)
-        self.state = serial_svc.pickle_to_object(serialized_state) or PyvorgState()
-        # TODO: Verify and validate that loaded objects are the correct classes
-        # self.collection = state.collection
-        # self.command_buffer = state.command_buffer
-        # self.command_buffer_history = state.batch_history
+        from source.services.loadstate_svc import LoadState
+        LoadState().call(self.state)
 
     def stage_organize_video_files(self,
                                    destination: Optional[str] = None,
