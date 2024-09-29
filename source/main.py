@@ -13,7 +13,5 @@ from source.ui.cli import run
 
 
 def main():
-    collection = Collection()
-    command_buffer = CommandBuffer()
-    session = Facade(collection, command_buffer)
+    session = Facade()
     run(sys.argv[1:], session)

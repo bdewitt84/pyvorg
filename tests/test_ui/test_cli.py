@@ -10,6 +10,7 @@ from unittest.mock import Mock
 
 # Local imports
 from source.facade.pyvorg_facade import Facade
+from source.state.application_state import PyvorgState
 
 # Third-party packages
 
@@ -17,9 +18,10 @@ from source.facade.pyvorg_facade import Facade
 class TestUI(TestCase):
     def setUp(self) -> None:
         self.test_dir = TemporaryDirectory()
-        self.collection = Mock()
-        self.command_buffer = Mock()
-        self.session = Facade(self.collection, self.command_buffer)
+        # self.collection = Mock()
+        # self.command_buffer = Mock()
+        self.state = PyvorgState()
+        self.session = Facade(self.state)
 
     def tearDown(self) -> None:
         self.test_dir.cleanup()
