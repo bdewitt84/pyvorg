@@ -70,9 +70,10 @@ def file_read_bytes(path: Path) -> bytes:
 
 def get_files_from_path(root: Path, recursive: bool = False, glob_pattern: str = '*') -> list[Path]:
     if recursive:
-        return list(root.rglob(glob_pattern))
+        return [item for item in root.rglob(glob_pattern) if item.is_file()]
+
     else:
-        return list(root.glob(glob_pattern))
+        return [item for item in root.glob(glob_pattern) if item.is_file()]
 
 
 def get_file_type(path: Path) -> str:
