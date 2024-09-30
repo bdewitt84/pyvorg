@@ -99,10 +99,14 @@ class MediaFile:
 
     def update_file_data(self, path: Path, skip_hash: bool = False) -> None:
         # TODO: Add member for 'media_type'
-        if not path.exists() or not path.is_file():
+        if not path.exists():
             msg = f"Cannot update info for '{path}': file not found."
             logging.error(msg)
             raise FileNotFoundError(msg)
+        if not path.is_file():
+            msg = f"Cannot update info for '{path}': path is not a file."
+            logging.error(msg)
+            raise IsADirectoryError(msg)
 
         path = path.resolve()
 
