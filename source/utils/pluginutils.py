@@ -9,6 +9,7 @@ from types import ModuleType
 
 # Local imports
 from source.datasources.base_metadata_source import MetadataSource
+from source.utils import packageutils
 
 # Third-party plugins
 
@@ -45,7 +46,7 @@ def discover_plugins(package: ModuleType) -> dict[str, type[MetadataSource]]:
 
 def get_plugin_instance(api_name: str, package: ModuleType) -> Optional[MetadataSource]:
     # TODO: Consider raising if None
-    plugin_class = discover_plugins(package).get(api_name)
+    plugin_class = packageutils.discover_plugins(package, MetadataSource, '_plugin').get(api_name)
     return plugin_class()
 
 
