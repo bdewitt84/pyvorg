@@ -42,6 +42,7 @@ My focus throughout development was on building a reliable and extensible system
 
 **Robust error handling**: Having survived re-architecting, error handling needs to be revisted to provide a more reliable and seamless user experience.
 
+
 ## Installation
 
 To install Pyvorg, follow these steps:
@@ -62,9 +63,36 @@ To install Pyvorg, follow these steps:
     pip install .
     ```
 
+
+## Configuration
+
+To run Pyvorg, you must create a configuration file named config.env in the root directory. This file is essential for storing user-specific settings and sensitive information, such as API keys.
+
+A template file, config.env.template, is provided to simplify the setup. Simply copy this file to config.env and fill in the values.
+
+```ini, TOML
+# Your OMDB API key.
+# A free key can be obtained from http://www.omdbapi.com/apikey.aspx
+OMDB_KEY = your_api_key_here
+
+# The default path to scan for video files.
+SOURCE_PATH = /path/to/your/video/collection
+
+# The default destination path for organized files.
+DEST_PATH = /path/to/your/organized/library
+
+# The default format string for organizing files.
+# Examples:
+#   %title (%year)
+#   %genre/%title
+DEFAULT_FORMAT_STRING = %title (%year)
+```
+
+
 ## Usage
 
 Pyvorg operates through a command-line interface, providing a git-like workflow for managing your video collection. Operations are first "staged" in a buffer and then "committed" to ensure user control and provide a history of changes.
+
 
 ### Example Workflow
 
@@ -126,37 +154,16 @@ After the commands are committed, your directory structure will be transformed i
 
 This clear, step-by-step example shows the utility of your application and demonstrates your ability to build a reliable, user-friendly, and repeatable workflow.
 
-## Configuration
-
-To run Pyvorg, you must create a configuration file named config.env in the root directory. This file is essential for storing user-specific settings and sensitive information, such as API keys.
-
-A template file, config.env.template, is provided to simplify the setup. Simply copy this file to config.env and fill in the values.
-
-```ini, TOML
-# Your OMDB API key.
-# A free key can be obtained from http://www.omdbapi.com/apikey.aspx
-OMDB_KEY = your_api_key_here
-
-# The default path to scan for video files.
-SOURCE_PATH = /path/to/your/video/collection
-
-# The default destination path for organized files.
-DEST_PATH = /path/to/your/organized/library
-
-# The default format string for organizing files.
-# Examples:
-#   %title (%year)
-#   %genre/%title
-DEFAULT_FORMAT_STRING = %title (%year)
-```
 
 ## Contributing
 
 Contributions are welcome! If you have suggestions, bug reports, or improvements, please create an issue or submit a pull request on GitHub.
 
+
 ## License
 
 This project is licensed under the MIT License. The software is provided "as is" and the original authors are not liable for any damages or issues arising from its use. Remember, this is a personal project developed by an undergrad ;) - see the [LICENSE](LICENSE) file for details.
+
 
 ## Contact
 
