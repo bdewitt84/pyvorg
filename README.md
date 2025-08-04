@@ -128,7 +128,27 @@ This clear, step-by-step example shows the utility of your application and demon
 
 ## Configuration
 
-Provide details on how to configure the application, if applicable. This may include environment variables, configuration files, or other setup instructions.
+To run Pyvorg, you must create a configuration file named config.env in the root directory. This file is essential for storing user-specific settings and sensitive information, such as API keys.
+
+A template file, config.env.template, is provided to simplify the setup. Simply copy this file to config.env and fill in the values.
+
+```ini, TOML
+# Your OMDB API key.
+# A free key can be obtained from http://www.omdbapi.com/apikey.aspx
+OMDB_KEY = your_api_key_here
+
+# The default path to scan for video files.
+SOURCE_PATH = /path/to/your/video/collection
+
+# The default destination path for organized files.
+DEST_PATH = /path/to/your/organized/library
+
+# The default format string for organizing files.
+# Examples:
+#   %title (%year)
+#   %genre/%title
+DEFAULT_FORMAT_STRING = %title (%year)
+```
 
 ## Contributing
 
